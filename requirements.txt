@@ -1,3 +1,7 @@
 jupyter-book
 matplotlib
 numpy
+openai
+azure-identity
+ghp-import
+azure-search-documents==11.4.0b8 
