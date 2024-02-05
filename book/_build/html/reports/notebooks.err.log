@@ -18,134 +18,59 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-embeddings = client.embeddings
-response = embeddings.create(input=["test"], model="embeddings")
-embedding = response.data[0].embedding
+from azure.search.documents.indexes import SearchIndexClient
+from azure.search.documents.indexes.models import *
 
+index = SearchIndex(
+    name="tinyvectors",
+    fields=[
+        SimpleField(name="id", type=SearchFieldDataType.String, key=True),
+        SimpleField(name="category", type=SearchFieldDataType.String, filterable=True, sortable=True),
+        SearchField(name="myVector",
+                    type=SearchFieldDataType.Collection(SearchFieldDataType.Single),
+                    searchable=True,
+                    vector_search_dimensions=3,
+                    vector_search_profile="vprofile"                    )
+    ],
+vector_search=VectorSearch(
+    algorithms=[HnswAlgorithmConfiguration(name="algo",
+                                           parameters=HnswParameters(metric="cosine"))],
+    profiles=[VectorSearchProfile(name="vprofile", algorithm_configuration_name="algo")]
+)
+)
+
+index_client = SearchIndexClient(AZURE_SEARCH_SERVICE, credential=creds)
+index_client.create_index(index)
 ------------------
 
 ----- stderr -----
-DefaultAzureCredential failed to retrieve a token from the included credentials.
-Attempted credentials:
-	EnvironmentCredential: EnvironmentCredential authentication unavailable. Environment variables are not fully configured.
-Visit https://aka.ms/azsdk/python/identity/environmentcredential/troubleshoot to troubleshoot this issue.
-	ManagedIdentityCredential: "get_token" requires at least one scope
-To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/python/identity/defaultazurecredential/troubleshoot.
+vector_search_profile is not a known attribute of class <class 'azure.search.documents.indexes.models._index.SearchField'> and will be ignored
 ------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mClientAuthenticationError[0m                 Traceback (most recent call last)
-Cell [1;32mIn[4], line 2[0m
-[0;32m      1[0m embeddings [38;5;241m=[39m client[38;5;241m.[39membeddings
-[1;32m----> 2[0m response [38;5;241m=[39m [43membeddings[49m[38;5;241;43m.[39;49m[43mcreate[49m[43m([49m[38;5;28;43minput[39;49m[38;5;241;43m=[39;49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mtest[39;49m[38;5;124;43m"[39;49m[43m][49m[43m,[49m[43m [49m[43mmodel[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43membeddings[39;49m[38;5;124;43m"[39;49m[43m)[49m
-[0;32m      3[0m embedding [38;5;241m=[39m response[38;5;241m.[39mdata[[38;5;241m0[39m][38;5;241m.[39membedding
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[7], line 16[0m
+[0;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mazure[39;00m[38;5;21;01m.[39;00m[38;5;21;01msearch[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdocuments[39;00m[38;5;21;01m.[39;00m[38;5;21;01mindexes[39;00m [38;5;28;01mimport[39;00m SearchIndexClient
+[0;32m      2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mazure[39;00m[38;5;21;01m.[39;00m[38;5;21;01msearch[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdocuments[39;00m[38;5;21;01m.[39;00m[38;5;21;01mindexes[39;00m[38;5;21;01m.[39;00m[38;5;21;01mmodels[39;00m [38;5;28;01mimport[39;00m [38;5;241m*[39m
+[0;32m      4[0m index [38;5;241m=[39m SearchIndex(
+[0;32m      5[0m     name[38;5;241m=[39m[38;5;124m"[39m[38;5;124mtinyvectors[39m[38;5;124m"[39m,
+[0;32m      6[0m     fields[38;5;241m=[39m[
+[0;32m      7[0m         SimpleField(name[38;5;241m=[39m[38;5;124m"[39m[38;5;124mid[39m[38;5;124m"[39m, [38;5;28mtype[39m[38;5;241m=[39mSearchFieldDataType[38;5;241m.[39mString, key[38;5;241m=[39m[38;5;28;01mTrue[39;00m),
+[0;32m      8[0m         SimpleField(name[38;5;241m=[39m[38;5;124m"[39m[38;5;124mcategory[39m[38;5;124m"[39m, [38;5;28mtype[39m[38;5;241m=[39mSearchFieldDataType[38;5;241m.[39mString, filterable[38;5;241m=[39m[38;5;28;01mTrue[39;00m, sortable[38;5;241m=[39m[38;5;28;01mTrue[39;00m),
+[0;32m      9[0m         SearchField(name[38;5;241m=[39m[38;5;124m"[39m[38;5;124mmyVector[39m[38;5;124m"[39m,
+[0;32m     10[0m                     [38;5;28mtype[39m[38;5;241m=[39mSearchFieldDataType[38;5;241m.[39mCollection(SearchFieldDataType[38;5;241m.[39mSingle),
+[0;32m     11[0m                     searchable[38;5;241m=[39m[38;5;28;01mTrue[39;00m,
+[0;32m     12[0m                     vector_search_dimensions[38;5;241m=[39m[38;5;241m3[39m,
+[0;32m     13[0m                     vector_search_profile[38;5;241m=[39m[38;5;124m"[39m[38;5;124mvprofile[39m[38;5;124m"[39m                    )
+[0;32m     14[0m     ],
+[0;32m     15[0m vector_search[38;5;241m=[39mVectorSearch(
+[1;32m---> 16[0m     algorithms[38;5;241m=[39m[[43mHnswAlgorithmConfiguration[49m(name[38;5;241m=[39m[38;5;124m"[39m[38;5;124malgo[39m[38;5;124m"[39m,
+[0;32m     17[0m                                            parameters[38;5;241m=[39mHnswParameters(metric[38;5;241m=[39m[38;5;124m"[39m[38;5;124mcosine[39m[38;5;124m"[39m))],
+[0;32m     18[0m     profiles[38;5;241m=[39m[VectorSearchProfile(name[38;5;241m=[39m[38;5;124m"[39m[38;5;124mvprofile[39m[38;5;124m"[39m, algorithm_configuration_name[38;5;241m=[39m[38;5;124m"[39m[38;5;124malgo[39m[38;5;124m"[39m)]
+[0;32m     19[0m )
+[0;32m     20[0m )
+[0;32m     22[0m index_client [38;5;241m=[39m SearchIndexClient(AZURE_SEARCH_SERVICE, credential[38;5;241m=[39mcreds)
+[0;32m     23[0m index_client[38;5;241m.[39mcreate_index(index)
 
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\openai\resources\embeddings.py:108[0m, in [0;36mEmbeddings.create[1;34m(self, input, model, encoding_format, user, extra_headers, extra_query, extra_body, timeout)[0m
-[0;32m    102[0m         embedding[38;5;241m.[39membedding [38;5;241m=[39m np[38;5;241m.[39mfrombuffer(  [38;5;66;03m# type: ignore[no-untyped-call][39;00m
-[0;32m    103[0m             base64[38;5;241m.[39mb64decode(data), dtype[38;5;241m=[39m[38;5;124m"[39m[38;5;124mfloat32[39m[38;5;124m"[39m
-[0;32m    104[0m         )[38;5;241m.[39mtolist()
-[0;32m    106[0m     [38;5;28;01mreturn[39;00m obj
-[1;32m--> 108[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_post[49m[43m([49m
-[0;32m    109[0m [43m    [49m[38;5;124;43m"[39;49m[38;5;124;43m/embeddings[39;49m[38;5;124;43m"[39;49m[43m,[49m
-[0;32m    110[0m [43m    [49m[43mbody[49m[38;5;241;43m=[39;49m[43mmaybe_transform[49m[43m([49m[43mparams[49m[43m,[49m[43m [49m[43membedding_create_params[49m[38;5;241;43m.[39;49m[43mEmbeddingCreateParams[49m[43m)[49m[43m,[49m
-[0;32m    111[0m [43m    [49m[43moptions[49m[38;5;241;43m=[39;49m[43mmake_request_options[49m[43m([49m
-[0;32m    112[0m [43m        [49m[43mextra_headers[49m[38;5;241;43m=[39;49m[43mextra_headers[49m[43m,[49m
-[0;32m    113[0m [43m        [49m[43mextra_query[49m[38;5;241;43m=[39;49m[43mextra_query[49m[43m,[49m
-[0;32m    114[0m [43m        [49m[43mextra_body[49m[38;5;241;43m=[39;49m[43mextra_body[49m[43m,[49m
-[0;32m    115[0m [43m        [49m[43mtimeout[49m[38;5;241;43m=[39;49m[43mtimeout[49m[43m,[49m
-[0;32m    116[0m [43m        [49m[43mpost_parser[49m[38;5;241;43m=[39;49m[43mparser[49m[43m,[49m
-[0;32m    117[0m [43m    [49m[43m)[49m[43m,[49m
-[0;32m    118[0m [43m    [49m[43mcast_to[49m[38;5;241;43m=[39;49m[43mCreateEmbeddingResponse[49m[43m,[49m
-[0;32m    119[0m [43m[49m[43m)[49m
-
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\openai\_base_client.py:1179[0m, in [0;36mSyncAPIClient.post[1;34m(self, path, cast_to, body, options, files, stream, stream_cls)[0m
-[0;32m   1165[0m [38;5;28;01mdef[39;00m [38;5;21mpost[39m(
-[0;32m   1166[0m     [38;5;28mself[39m,
-[0;32m   1167[0m     path: [38;5;28mstr[39m,
-[1;32m   (...)[0m
-[0;32m   1174[0m     stream_cls: [38;5;28mtype[39m[_StreamT] [38;5;241m|[39m [38;5;28;01mNone[39;00m [38;5;241m=[39m [38;5;28;01mNone[39;00m,
-[0;32m   1175[0m ) [38;5;241m-[39m[38;5;241m>[39m ResponseT [38;5;241m|[39m _StreamT:
-[0;32m   1176[0m     opts [38;5;241m=[39m FinalRequestOptions[38;5;241m.[39mconstruct(
-[0;32m   1177[0m         method[38;5;241m=[39m[38;5;124m"[39m[38;5;124mpost[39m[38;5;124m"[39m, url[38;5;241m=[39mpath, json_data[38;5;241m=[39mbody, files[38;5;241m=[39mto_httpx_files(files), [38;5;241m*[39m[38;5;241m*[39moptions
-[0;32m   1178[0m     )
-[1;32m-> 1179[0m     [38;5;28;01mreturn[39;00m cast(ResponseT, [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mrequest[49m[43m([49m[43mcast_to[49m[43m,[49m[43m [49m[43mopts[49m[43m,[49m[43m [49m[43mstream[49m[38;5;241;43m=[39;49m[43mstream[49m[43m,[49m[43m [49m[43mstream_cls[49m[38;5;241;43m=[39;49m[43mstream_cls[49m[43m)[49m)
-
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\openai\_base_client.py:868[0m, in [0;36mSyncAPIClient.request[1;34m(self, cast_to, options, remaining_retries, stream, stream_cls)[0m
-[0;32m    859[0m [38;5;28;01mdef[39;00m [38;5;21mrequest[39m(
-[0;32m    860[0m     [38;5;28mself[39m,
-[0;32m    861[0m     cast_to: Type[ResponseT],
-[1;32m   (...)[0m
-[0;32m    866[0m     stream_cls: [38;5;28mtype[39m[_StreamT] [38;5;241m|[39m [38;5;28;01mNone[39;00m [38;5;241m=[39m [38;5;28;01mNone[39;00m,
-[0;32m    867[0m ) [38;5;241m-[39m[38;5;241m>[39m ResponseT [38;5;241m|[39m _StreamT:
-[1;32m--> 868[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_request[49m[43m([49m
-[0;32m    869[0m [43m        [49m[43mcast_to[49m[38;5;241;43m=[39;49m[43mcast_to[49m[43m,[49m
-[0;32m    870[0m [43m        [49m[43moptions[49m[38;5;241;43m=[39;49m[43moptions[49m[43m,[49m
-[0;32m    871[0m [43m        [49m[43mstream[49m[38;5;241;43m=[39;49m[43mstream[49m[43m,[49m
-[0;32m    872[0m [43m        [49m[43mstream_cls[49m[38;5;241;43m=[39;49m[43mstream_cls[49m[43m,[49m
-[0;32m    873[0m [43m        [49m[43mremaining_retries[49m[38;5;241;43m=[39;49m[43mremaining_retries[49m[43m,[49m
-[0;32m    874[0m [43m    [49m[43m)[49m
-
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\openai\_base_client.py:886[0m, in [0;36mSyncAPIClient._request[1;34m(self, cast_to, options, remaining_retries, stream, stream_cls)[0m
-[0;32m    876[0m [38;5;28;01mdef[39;00m [38;5;21m_request[39m(
-[0;32m    877[0m     [38;5;28mself[39m,
-[0;32m    878[0m     [38;5;241m*[39m,
-[1;32m   (...)[0m
-[0;32m    883[0m     stream_cls: [38;5;28mtype[39m[_StreamT] [38;5;241m|[39m [38;5;28;01mNone[39;00m,
-[0;32m    884[0m ) [38;5;241m-[39m[38;5;241m>[39m ResponseT [38;5;241m|[39m _StreamT:
-[0;32m    885[0m     cast_to [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_maybe_override_cast_to(cast_to, options)
-[1;32m--> 886[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_prepare_options[49m[43m([49m[43moptions[49m[43m)[49m
-[0;32m    888[0m     retries [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_remaining_retries(remaining_retries, options)
-[0;32m    889[0m     request [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_build_request(options)
-
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\openai\lib\azure.py:282[0m, in [0;36mAzureOpenAI._prepare_options[1;34m(self, options)[0m
-[0;32m    279[0m headers: [38;5;28mdict[39m[[38;5;28mstr[39m, [38;5;28mstr[39m [38;5;241m|[39m Omit] [38;5;241m=[39m {[38;5;241m*[39m[38;5;241m*[39moptions[38;5;241m.[39mheaders} [38;5;28;01mif[39;00m is_given(options[38;5;241m.[39mheaders) [38;5;28;01melse[39;00m {}
-[0;32m    280[0m options[38;5;241m.[39mheaders [38;5;241m=[39m headers
-[1;32m--> 282[0m azure_ad_token [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_get_azure_ad_token[49m[43m([49m[43m)[49m
-[0;32m    283[0m [38;5;28;01mif[39;00m azure_ad_token [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
-[0;32m    284[0m     [38;5;28;01mif[39;00m headers[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mAuthorization[39m[38;5;124m"[39m) [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
-
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\openai\lib\azure.py:268[0m, in [0;36mAzureOpenAI._get_azure_ad_token[1;34m(self)[0m
-[0;32m    266[0m provider [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_azure_ad_token_provider
-[0;32m    267[0m [38;5;28;01mif[39;00m provider [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
-[1;32m--> 268[0m     token [38;5;241m=[39m [43mprovider[49m[43m([49m[43m)[49m
-[0;32m    269[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m token [38;5;129;01mor[39;00m [38;5;129;01mnot[39;00m [38;5;28misinstance[39m(token, [38;5;28mstr[39m):  [38;5;66;03m# pyright: ignore[reportUnnecessaryIsInstance][39;00m
-[0;32m    270[0m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
-[0;32m    271[0m             [38;5;124mf[39m[38;5;124m"[39m[38;5;124mExpected `azure_ad_token_provider` argument to return a string but it returned [39m[38;5;132;01m{[39;00mtoken[38;5;132;01m}[39;00m[38;5;124m"[39m,
-[0;32m    272[0m         )
-
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\azure\identity\_bearer_token_provider.py:43[0m, in [0;36mget_bearer_token_provider.<locals>.wrapper[1;34m()[0m
-[0;32m     41[0m [38;5;28;01mdef[39;00m [38;5;21mwrapper[39m() [38;5;241m-[39m[38;5;241m>[39m [38;5;28mstr[39m:
-[0;32m     42[0m     request [38;5;241m=[39m _make_request()
-[1;32m---> 43[0m     [43mpolicy[49m[38;5;241;43m.[39;49m[43mon_request[49m[43m([49m[43mrequest[49m[43m)[49m
-[0;32m     44[0m     [38;5;28;01mreturn[39;00m request[38;5;241m.[39mhttp_request[38;5;241m.[39mheaders[[38;5;124m"[39m[38;5;124mAuthorization[39m[38;5;124m"[39m][[38;5;28mlen[39m([38;5;124m"[39m[38;5;124mBearer [39m[38;5;124m"[39m) :]
-
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\policies\_authentication.py:99[0m, in [0;36mBearerTokenCredentialPolicy.on_request[1;34m(self, request)[0m
-[0;32m     97[0m         [38;5;28mself[39m[38;5;241m.[39m_token [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_credential[38;5;241m.[39mget_token([38;5;241m*[39m[38;5;28mself[39m[38;5;241m.[39m_scopes, enable_cae[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39m_enable_cae)
-[0;32m     98[0m     [38;5;28;01melse[39;00m:
-[1;32m---> 99[0m         [38;5;28mself[39m[38;5;241m.[39m_token [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_credential[49m[38;5;241;43m.[39;49m[43mget_token[49m[43m([49m[38;5;241;43m*[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_scopes[49m[43m)[49m
-[0;32m    100[0m [38;5;28mself[39m[38;5;241m.[39m_update_headers(request[38;5;241m.[39mhttp_request[38;5;241m.[39mheaders, [38;5;28mself[39m[38;5;241m.[39m_token[38;5;241m.[39mtoken)
-
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\azure\identity\_credentials\default.py:225[0m, in [0;36mDefaultAzureCredential.get_token[1;34m(self, claims, tenant_id, *scopes, **kwargs)[0m
-[0;32m    223[0m     [38;5;28;01mreturn[39;00m token
-[0;32m    224[0m within_dac[38;5;241m.[39mset([38;5;28;01mTrue[39;00m)
-[1;32m--> 225[0m token [38;5;241m=[39m [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[43mget_token[49m[43m([49m[38;5;241;43m*[39;49m[43mscopes[49m[43m,[49m[43m [49m[43mclaims[49m[38;5;241;43m=[39;49m[43mclaims[49m[43m,[49m[43m [49m[43mtenant_id[49m[38;5;241;43m=[39;49m[43mtenant_id[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
-[0;32m    226[0m within_dac[38;5;241m.[39mset([38;5;28;01mFalse[39;00m)
-[0;32m    227[0m [38;5;28;01mreturn[39;00m token
-
-File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\azure\identity\_credentials\chained.py:124[0m, in [0;36mChainedTokenCredential.get_token[1;34m(self, claims, tenant_id, *scopes, **kwargs)[0m
-[0;32m    116[0m message [38;5;241m=[39m (
-[0;32m    117[0m     [38;5;28mself[39m[38;5;241m.[39m[38;5;18m__class__[39m[38;5;241m.[39m[38;5;18m__name__[39m
-[0;32m    118[0m     [38;5;241m+[39m [38;5;124m"[39m[38;5;124m failed to retrieve a token from the included credentials.[39m[38;5;124m"[39m
-[1;32m   (...)[0m
-[0;32m    121[0m     [38;5;124m"[39m[38;5;124mhttps://aka.ms/azsdk/python/identity/defaultazurecredential/troubleshoot.[39m[38;5;124m"[39m
-[0;32m    122[0m )
-[0;32m    123[0m _LOGGER[38;5;241m.[39mwarning(message)
-[1;32m--> 124[0m [38;5;28;01mraise[39;00m ClientAuthenticationError(message[38;5;241m=[39mmessage)
-
-[1;31mClientAuthenticationError[0m: DefaultAzureCredential failed to retrieve a token from the included credentials.
-Attempted credentials:
-	EnvironmentCredential: EnvironmentCredential authentication unavailable. Environment variables are not fully configured.
-Visit https://aka.ms/azsdk/python/identity/environmentcredential/troubleshoot to troubleshoot this issue.
-	ManagedIdentityCredential: "get_token" requires at least one scope
-To mitigate this issue, please refer to the troubleshooting guidelines here at https://aka.ms/azsdk/python/identity/defaultazurecredential/troubleshoot.
+[1;31mNameError[0m: name 'HnswAlgorithmConfiguration' is not defined
 
