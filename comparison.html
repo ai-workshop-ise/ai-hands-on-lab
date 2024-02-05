@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; AI Workshop</title>
+    <title>Comparison of existing Azure Studios &#8212; AI Workshop</title>
   
   
   
@@ -62,9 +62,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'README';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'comparison';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Vector search in Azure AI Search" href="aisearch.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +127,6 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -170,11 +169,13 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rag.html">Retrieval Augmented Generation (RAG)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aisearch.html">Vector search in Azure AI Search</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Comparison of existing Azure Studios</a></li>
 </ul>
 
     </div>
@@ -246,7 +247,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FREADME.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcomparison.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -276,7 +277,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/README.md" target="_blank"
+      <li><a href="_sources/comparison.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -347,9 +348,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -360,19 +359,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Comparison of existing Azure Studios</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -382,7 +373,46 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  
+  <section class="tex2jax_ignore mathjax_ignore" id="comparison-of-existing-azure-studios">
+<h1>Comparison of existing Azure Studios<a class="headerlink" href="#comparison-of-existing-azure-studios" title="Permalink to this heading">#</a></h1>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Studio name</p></th>
+<th class="head"><p>Link</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Supported models</p></th>
+<th class="head"><p>RAG</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Azure Machine Learning Studio</p></td>
+<td><p><a class="reference external" href="https://ml.azure.com/">https://ml.azure.com/</a></p></td>
+<td><p>A cloud-based platform that allows you to build, train, deploy, and manage machine learning models at scale. You can use various tools and frameworks, such as Python, R, PyTorch, TensorFlow, and Scikit-learn, to create custom models for any scenario. You can also leverage automated machine learning and designer features to simplify and accelerate the model development process.</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Azure AI Studio</p></td>
+<td><p><a class="reference external" href="https://ai.azure.com/">https://ai.azure.com/</a></p></td>
+<td><p>A hub that enables you to explore and use all the Azure AI Services. You can also test and evaluate pre-trained LLMs from various sources, including Microsoft, OpenAI, and Hugging Face, and build innovative solutions with them. Azure AI Studio provides a playground experience for models in addition to those provisioned via Azure OpenAI Studio</p></td>
+<td><p>OpenAi, Hugging Face, Meta models etc</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Azure OpenAI Studio</p></td>
+<td><p><a class="reference external" href="https://oai.azure.com/">https://oai.azure.com/</a></p></td>
+<td><p>Web-based interface that allows you to access and deploy pre-trained LLMs from OpenAI (such as GPT-3, Codex). You can use these models to create natural language applications, such as chatbots, assistants, code generators, and more. You can also customize the models with your own data and fine-tune them for specific domains or tasks</p></td>
+<td><p>OpenAI models (GPT-4, GPT-3.5, Embeddings, DALL-E, Whisper)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Azure Copilot Studio</p></td>
+<td><p><a class="reference external" href="https://copilotstudio.preview.microsoft.com/">https://copilotstudio.preview.microsoft.com/</a></p></td>
+<td><p>A <strong>low-code tool</strong> that helps you build your own copilot. You can use Copilot Studio to create conversational AI apps that can answer questions based on your own knowledge bases and data sources. You can also integrate your copilot with Microsoft Teams and other platforms to enable new collaboration scenarios.</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -413,6 +443,15 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="aisearch.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Vector search in Azure AI Search</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
@@ -420,20 +459,7 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
+                <div class="bd-sidebar-secondary bd-toc"></div>
               
             
           </div>

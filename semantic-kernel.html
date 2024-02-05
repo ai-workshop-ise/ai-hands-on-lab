@@ -1,0 +1,596 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; AI Workshop</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'semantic-kernel';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="AI Workshop - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="AI Workshop - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your AI Hands-On Workshop
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rag.html">Retrieval Augmented Generation (RAG)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aisearch.html">Vector search in Azure AI Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison of existing Azure Studios</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsemantic-kernel.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/semantic-kernel.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><no title></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>Semantic Kernel</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>semantic-kernel<span class="o">==</span><span class="m">0</span>.4.7.dev0
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: semantic-kernel==0.4.7.dev0 in c:\projects\workshop2024\.venv\lib\site-packages (0.4.7.dev0)
+Requirement already satisfied: aiofiles&lt;24.0.0,&gt;=23.1.0 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (23.2.1)
+Requirement already satisfied: aiohttp&lt;4.0,&gt;=3.8 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (3.9.3)
+Requirement already satisfied: motor&lt;4.0.0,&gt;=3.3.1 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (3.3.2)
+Requirement already satisfied: numpy&lt;2.0.0,&gt;=1.24.2 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (1.26.3)
+Requirement already satisfied: openai&gt;=1.0 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (1.9.0)
+Requirement already satisfied: openapi_core&lt;0.19.0,&gt;=0.18.0 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (0.18.2)
+Requirement already satisfied: prance&lt;24.0.0.0,&gt;=23.6.21.0 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (23.6.21.0)
+Requirement already satisfied: pydantic&gt;2 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (2.5.3)
+Requirement already satisfied: python-dotenv==1.0.0 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (1.0.0)
+Requirement already satisfied: regex&lt;2024.0.0,&gt;=2023.6.3 in c:\projects\workshop2024\.venv\lib\site-packages (from semantic-kernel==0.4.7.dev0) (2023.12.25)
+Requirement already satisfied: aiosignal&gt;=1.1.2 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp&lt;4.0,&gt;=3.8-&gt;semantic-kernel==0.4.7.dev0) (1.3.1)
+Requirement already satisfied: attrs&gt;=17.3.0 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp&lt;4.0,&gt;=3.8-&gt;semantic-kernel==0.4.7.dev0) (23.2.0)
+Requirement already satisfied: frozenlist&gt;=1.1.1 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp&lt;4.0,&gt;=3.8-&gt;semantic-kernel==0.4.7.dev0) (1.4.1)
+Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp&lt;4.0,&gt;=3.8-&gt;semantic-kernel==0.4.7.dev0) (6.0.4)
+Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp&lt;4.0,&gt;=3.8-&gt;semantic-kernel==0.4.7.dev0) (1.9.4)
+Requirement already satisfied: pymongo&lt;5,&gt;=4.5 in c:\projects\workshop2024\.venv\lib\site-packages (from motor&lt;4.0.0,&gt;=3.3.1-&gt;semantic-kernel==0.4.7.dev0) (4.6.1)
+Requirement already satisfied: anyio&lt;5,&gt;=3.5.0 in c:\projects\workshop2024\.venv\lib\site-packages (from openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (4.2.0)
+Requirement already satisfied: distro&lt;2,&gt;=1.7.0 in c:\projects\workshop2024\.venv\lib\site-packages (from openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (1.9.0)
+Requirement already satisfied: httpx&lt;1,&gt;=0.23.0 in c:\projects\workshop2024\.venv\lib\site-packages (from openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (0.26.0)
+Requirement already satisfied: sniffio in c:\projects\workshop2024\.venv\lib\site-packages (from openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (1.3.0)
+Requirement already satisfied: tqdm&gt;4 in c:\projects\workshop2024\.venv\lib\site-packages (from openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (4.66.1)
+Requirement already satisfied: typing-extensions&lt;5,&gt;=4.7 in c:\projects\workshop2024\.venv\lib\site-packages (from openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (4.9.0)
+Requirement already satisfied: asgiref&lt;4.0.0,&gt;=3.6.0 in c:\projects\workshop2024\.venv\lib\site-packages (from openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (3.7.2)
+Requirement already satisfied: isodate in c:\projects\workshop2024\.venv\lib\site-packages (from openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (0.6.1)
+Requirement already satisfied: jsonschema&lt;5.0.0,&gt;=4.18.0 in c:\projects\workshop2024\.venv\lib\site-packages (from openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (4.21.1)
+Requirement already satisfied: jsonschema-spec&lt;0.3.0,&gt;=0.2.3 in c:\projects\workshop2024\.venv\lib\site-packages (from openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (0.2.4)
+Requirement already satisfied: more-itertools in c:\projects\workshop2024\.venv\lib\site-packages (from openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (10.2.0)
+Requirement already satisfied: openapi-schema-validator&lt;0.7.0,&gt;=0.6.0 in c:\projects\workshop2024\.venv\lib\site-packages (from openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (0.6.2)
+Requirement already satisfied: openapi-spec-validator&lt;0.8.0,&gt;=0.7.1 in c:\projects\workshop2024\.venv\lib\site-packages (from openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (0.7.1)
+Requirement already satisfied: parse in c:\projects\workshop2024\.venv\lib\site-packages (from openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (1.20.1)
+Requirement already satisfied: werkzeug in c:\projects\workshop2024\.venv\lib\site-packages (from openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (3.0.1)
+Requirement already satisfied: chardet&gt;=3.0 in c:\projects\workshop2024\.venv\lib\site-packages (from prance&lt;24.0.0.0,&gt;=23.6.21.0-&gt;semantic-kernel==0.4.7.dev0) (5.2.0)
+Requirement already satisfied: ruamel.yaml&gt;=0.17.10 in c:\projects\workshop2024\.venv\lib\site-packages (from prance&lt;24.0.0.0,&gt;=23.6.21.0-&gt;semantic-kernel==0.4.7.dev0) (0.18.5)
+Requirement already satisfied: requests&gt;=2.25 in c:\projects\workshop2024\.venv\lib\site-packages (from prance&lt;24.0.0.0,&gt;=23.6.21.0-&gt;semantic-kernel==0.4.7.dev0) (2.31.0)
+Requirement already satisfied: six~=1.15 in c:\projects\workshop2024\.venv\lib\site-packages (from prance&lt;24.0.0.0,&gt;=23.6.21.0-&gt;semantic-kernel==0.4.7.dev0) (1.16.0)
+Requirement already satisfied: packaging&gt;=21.3 in c:\projects\workshop2024\.venv\lib\site-packages (from prance&lt;24.0.0.0,&gt;=23.6.21.0-&gt;semantic-kernel==0.4.7.dev0) (23.2)
+Requirement already satisfied: annotated-types&gt;=0.4.0 in c:\projects\workshop2024\.venv\lib\site-packages (from pydantic&gt;2-&gt;semantic-kernel==0.4.7.dev0) (0.6.0)
+Requirement already satisfied: pydantic-core==2.14.6 in c:\projects\workshop2024\.venv\lib\site-packages (from pydantic&gt;2-&gt;semantic-kernel==0.4.7.dev0) (2.14.6)
+Requirement already satisfied: idna&gt;=2.8 in c:\projects\workshop2024\.venv\lib\site-packages (from anyio&lt;5,&gt;=3.5.0-&gt;openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (3.6)
+Requirement already satisfied: certifi in c:\projects\workshop2024\.venv\lib\site-packages (from httpx&lt;1,&gt;=0.23.0-&gt;openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (2023.11.17)
+Requirement already satisfied: httpcore==1.* in c:\projects\workshop2024\.venv\lib\site-packages (from httpx&lt;1,&gt;=0.23.0-&gt;openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (1.0.2)
+Requirement already satisfied: h11&lt;0.15,&gt;=0.13 in c:\projects\workshop2024\.venv\lib\site-packages (from httpcore==1.*-&gt;httpx&lt;1,&gt;=0.23.0-&gt;openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (0.14.0)
+Requirement already satisfied: jsonschema-specifications&gt;=2023.03.6 in c:\projects\workshop2024\.venv\lib\site-packages (from jsonschema&lt;5.0.0,&gt;=4.18.0-&gt;openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (2023.7.1)
+Requirement already satisfied: referencing&gt;=0.28.4 in c:\projects\workshop2024\.venv\lib\site-packages (from jsonschema&lt;5.0.0,&gt;=4.18.0-&gt;openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (0.30.2)
+Requirement already satisfied: rpds-py&gt;=0.7.1 in c:\projects\workshop2024\.venv\lib\site-packages (from jsonschema&lt;5.0.0,&gt;=4.18.0-&gt;openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (0.17.1)
+Requirement already satisfied: PyYAML&gt;=5.1 in c:\projects\workshop2024\.venv\lib\site-packages (from jsonschema-spec&lt;0.3.0,&gt;=0.2.3-&gt;openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (6.0.1)
+Requirement already satisfied: pathable&lt;0.5.0,&gt;=0.4.1 in c:\projects\workshop2024\.venv\lib\site-packages (from jsonschema-spec&lt;0.3.0,&gt;=0.2.3-&gt;openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (0.4.3)
+Requirement already satisfied: rfc3339-validator in c:\projects\workshop2024\.venv\lib\site-packages (from openapi-schema-validator&lt;0.7.0,&gt;=0.6.0-&gt;openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (0.1.4)
+Requirement already satisfied: jsonschema-path&lt;0.4.0,&gt;=0.3.1 in c:\projects\workshop2024\.venv\lib\site-packages (from openapi-spec-validator&lt;0.8.0,&gt;=0.7.1-&gt;openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (0.3.2)
+Requirement already satisfied: lazy-object-proxy&lt;2.0.0,&gt;=1.7.1 in c:\projects\workshop2024\.venv\lib\site-packages (from openapi-spec-validator&lt;0.8.0,&gt;=0.7.1-&gt;openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (1.10.0)
+Requirement already satisfied: dnspython&lt;3.0.0,&gt;=1.16.0 in c:\projects\workshop2024\.venv\lib\site-packages (from pymongo&lt;5,&gt;=4.5-&gt;motor&lt;4.0.0,&gt;=3.3.1-&gt;semantic-kernel==0.4.7.dev0) (2.5.0)
+Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.25-&gt;prance&lt;24.0.0.0,&gt;=23.6.21.0-&gt;semantic-kernel==0.4.7.dev0) (3.3.2)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.25-&gt;prance&lt;24.0.0.0,&gt;=23.6.21.0-&gt;semantic-kernel==0.4.7.dev0) (2.1.0)
+Requirement already satisfied: ruamel.yaml.clib&gt;=0.2.7 in c:\projects\workshop2024\.venv\lib\site-packages (from ruamel.yaml&gt;=0.17.10-&gt;prance&lt;24.0.0.0,&gt;=23.6.21.0-&gt;semantic-kernel==0.4.7.dev0) (0.2.8)
+Requirement already satisfied: colorama in c:\projects\workshop2024\.venv\lib\site-packages (from tqdm&gt;4-&gt;openai&gt;=1.0-&gt;semantic-kernel==0.4.7.dev0) (0.4.6)
+Requirement already satisfied: MarkupSafe&gt;=2.1.1 in c:\projects\workshop2024\.venv\lib\site-packages (from werkzeug-&gt;openapi_core&lt;0.19.0,&gt;=0.18.0-&gt;semantic-kernel==0.4.7.dev0) (2.1.4)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 23.3.2 -&gt; 24.0
+[notice] To update, run: python.exe -m pip install --upgrade pip
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">semantic_kernel</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="kn">from</span> <span class="nn">semantic_kernel.connectors.ai.open_ai</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AzureChatCompletion</span><span class="p">,</span>
+    <span class="n">AzureTextCompletion</span>
+<span class="p">)</span>
+<span class="n">deployment</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">azure_openai_settings_from_dot_env</span><span class="p">()</span>
+
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Kernel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Text completion services: </span><span class="si">{</span><span class="n">kernel</span><span class="o">.</span><span class="n">all_text_completion_services</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chat completion services: </span><span class="si">{</span><span class="n">kernel</span><span class="o">.</span><span class="n">all_chat_services</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Text embedding generation services: </span><span class="si">{</span><span class="n">kernel</span><span class="o">.</span><span class="n">all_text_embedding_generation_services</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">kernel</span><span class="o">.</span><span class="n">add_chat_service</span><span class="p">(</span>
+    <span class="s2">&quot;chat_completion&quot;</span><span class="p">,</span>
+    <span class="n">AzureChatCompletion</span><span class="p">(</span><span class="n">deployment_name</span><span class="o">=</span><span class="n">deployment</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text completion services: []
+Chat completion services: []
+Text embedding generation services: []
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;semantic_kernel.kernel.Kernel at 0x17f22ab6250&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Raouf Aliouat & Adina Stoll
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
