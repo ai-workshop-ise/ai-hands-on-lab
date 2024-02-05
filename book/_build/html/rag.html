@@ -65,6 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'rag';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Vector search in Azure AI Search" href="aisearch.html" />
     <link rel="prev" title="Notebooks with MyST Markdown" href="markdown-notebooks.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -174,6 +175,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Retrieval Augmented Generation (RAG)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aisearch.html">Vector search in Azure AI Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison of existing Azure Studios</a></li>
 </ul>
 
     </div>
@@ -369,7 +372,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-for-rag-with-azure-ai-search">Approaches for RAG with Azure AI Search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-for-rag-with-azure-ai-search">Approaches for RAG with Azure AI Search</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#azure-ai-studio">1. Azure AI Studio</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -391,16 +397,25 @@ document.write(`
 <li><p>Read <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview">Retrieval Augmented Generation (RAG) in Azure AI Search</a></p></li>
 </ul>
 </div>
+<p>RAG is not the only solution for incorporating domain knowledge:
+<img alt="domain-knowledge" src="_images/domain-knowledge.png" /></p>
 <p>How does RAG work?</p>
 <p><img alt="RAG_pattern" src="_images/rag-pattern.png" /></p>
 <section id="approaches-for-rag-with-azure-ai-search">
 <h2>Approaches for RAG with Azure AI Search<a class="headerlink" href="#approaches-for-rag-with-azure-ai-search" title="Permalink to this heading">#</a></h2>
 <p>Microsoft has several built-in implementations for using Azure AI Search in a RAG solution.</p>
-<ul class="simple">
-<li><p>Azure AI Studio, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-studio/concepts/retrieval-augmented-generation">use a vector index and retrieval augmentation</a>.</p></li>
-<li><p>Azure OpenAI Studio, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/use-your-data?tabs=ai-search">use a search index with or without vectors</a>.</p></li>
-<li><p>Azure Machine Learning, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/how-to-create-vector-index?view=azureml-api-2">use a search index as a vector store in a prompt flow</a>.</p></li>
-</ul>
+<ol class="arabic simple">
+<li><p>Azure AI Studio, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-studio/concepts/retrieval-augmented-generation">use a vector index and retrieval augmentation - Preview</a>.</p></li>
+<li><p>Azure OpenAI Studio, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/use-your-data?tabs=ai-search">use a search index with or without vectors - Preview</a>.</p></li>
+<li><p>Azure Machine Learning, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/how-to-create-vector-index?view=azureml-api-2">use a search index as a vector store in a prompt flow - Preview</a>.</p></li>
+</ol>
+<section id="azure-ai-studio">
+<h3>1. Azure AI Studio<a class="headerlink" href="#azure-ai-studio" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Go to <code class="docutils literal notranslate"><span class="pre">ai.azure.com</span></code></p></li>
+<li></li>
+</ol>
+</section>
 </section>
 </section>
 
@@ -443,6 +458,15 @@ document.write(`
         <p class="prev-next-title">Notebooks with MyST Markdown</p>
       </div>
     </a>
+    <a class="right-next"
+       href="aisearch.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Vector search in Azure AI Search</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -459,7 +483,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-for-rag-with-azure-ai-search">Approaches for RAG with Azure AI Search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-for-rag-with-azure-ai-search">Approaches for RAG with Azure AI Search</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#azure-ai-studio">1. Azure AI Studio</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

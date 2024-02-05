@@ -8,3 +8,5 @@ chapters:
 - file: notebooks
 - file: markdown-notebooks
 - file: rag
+- file: aisearch
+- file: comparison
