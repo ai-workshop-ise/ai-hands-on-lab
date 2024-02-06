@@ -1,3 +1,17 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.11.5
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
 # Retrieval Augmented Generation (RAG)
 
 ```{seealso}
@@ -20,6 +34,18 @@ Microsoft has several built-in implementations for using Azure AI Search in a RA
 2. Azure OpenAI Studio, [use a search index with or without vectors - Preview](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/use-your-data?tabs=ai-search).
 3. Azure Machine Learning, [use a search index as a vector store in a prompt flow - Preview](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-create-vector-index?view=azureml-api-2).
 
-### 1. Azure AI Studio
-1. Go to `ai.azure.com`
-2. 
+### Create an Azure Cognitive Search based Vector Index for Document Retrieval with AzureML
+
+```{code-cell}
+
+```
+
+Pre-requisites:
+- Azure Search Service (which can host one or more search indexes) - portal?
+
+To create the index:
+- Data Source - a `link` to some data storage
+- Azure Cognitive Index - defines the data structure over which to search
+    - Create an empty index based on an index schema
+    - Fill in the data using the Search Indexer (below_)
+- Azure (Cognitive) Search Indexer - which indexes the data.

@@ -67,8 +67,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Notebooks with MyST Markdown" href="markdown-notebooks.html" />
-    <link rel="prev" title="Markdown Files" href="markdown.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -130,6 +128,8 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -172,11 +172,11 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Content with notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rag.html">Retrieval Augmented Generation (RAG)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rag-ml.html">Retrieval Augmented Generation</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="aisearch.html">Vector search in Azure AI Search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison of existing Azure Studios</a></li>
 </ul>
@@ -434,7 +434,7 @@ For example, here’s some sample Matplotlib code:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;contextlib.ExitStack at 0x18276c00110&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;contextlib.ExitStack at 0x1ad7eebd3d0&gt;
 </pre></div>
 </div>
 </div>
@@ -1572,31 +1572,147 @@ The new movie is awesome 		 The new movie is awesome 		 Score: 1.0000
 </pre></div>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">16</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">azure.search.documents.indexes</span> <span class="kn">import</span> <span class="n">SearchIndexClient</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">azure.search.documents.indexes.models</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="ne">ServiceRequestError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">23</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">index</span> <span class="o">=</span> <span class="n">SearchIndex</span><span class="p">(</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;tinyvectors&quot;</span><span class="p">,</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>         <span class="n">SimpleField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>         <span class="n">SimpleField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="n">filterable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="n">SearchField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;myVector&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>                     <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Collection</span><span class="p">(</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Single</span><span class="p">),</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span>                     <span class="n">searchable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span>                     <span class="n">vector_search_dimensions</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span>                     <span class="n">vector_search_profile</span><span class="o">=</span><span class="s2">&quot;vprofile&quot;</span>                    <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="p">],</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="n">vector_search</span><span class="o">=</span><span class="n">VectorSearch</span><span class="p">(</span>
-<span class="ne">---&gt; </span><span class="mi">16</span>     <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="n">HnswAlgorithmConfiguration</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;algo&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span>                                            <span class="n">parameters</span><span class="o">=</span><span class="n">HnswParameters</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">))],</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">profiles</span><span class="o">=</span><span class="p">[</span><span class="n">VectorSearchProfile</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;vprofile&quot;</span><span class="p">,</span> <span class="n">algorithm_configuration_name</span><span class="o">=</span><span class="s2">&quot;algo&quot;</span><span class="p">)]</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="n">index_client</span> <span class="o">=</span> <span class="n">SearchIndexClient</span><span class="p">(</span><span class="n">AZURE_SEARCH_SERVICE</span><span class="p">,</span> <span class="n">credential</span><span class="o">=</span><span class="n">creds</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="n">index_client</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">23</span> <span class="n">index_client</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
 
-<span class="ne">NameError</span>: name &#39;HnswAlgorithmConfiguration&#39; is not defined
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\tracing\decorator.py:78,</span> in <span class="ni">distributed_trace.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper_use_tracer</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="n">span_impl_type</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">tracing_implementation</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="k">if</span> <span class="n">span_impl_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">78</span>     <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="c1"># Merge span is parameter is set, but only if no explicit parent are passed</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="k">if</span> <span class="n">merge_span</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">passed_in_parent</span><span class="p">:</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\search\documents\indexes\_search_index_client.py:219,</span> in <span class="ni">SearchIndexClient.create_index</span><span class="nt">(self, index, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">217</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;headers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_client_headers</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;headers&quot;</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">218</span> <span class="n">patched_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">_to_generated</span><span class="p">()</span>  <span class="c1"># pylint:disable=protected-access</span>
+<span class="ne">--&gt; </span><span class="mi">219</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">indexes</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">patched_index</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">220</span> <span class="k">return</span> <span class="n">SearchIndex</span><span class="o">.</span><span class="n">_from_generated</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\tracing\decorator.py:78,</span> in <span class="ni">distributed_trace.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper_use_tracer</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="n">span_impl_type</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">tracing_implementation</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="k">if</span> <span class="n">span_impl_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">78</span>     <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="c1"># Merge span is parameter is set, but only if no explicit parent are passed</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="k">if</span> <span class="n">merge_span</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">passed_in_parent</span><span class="p">:</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\search\documents\indexes\_generated\operations\_indexes_operations.py:393,</span> in <span class="ni">IndexesOperations.create</span><span class="nt">(self, index, request_options, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">390</span> <span class="n">_request</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">format_url</span><span class="p">(</span><span class="n">_request</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">path_format_arguments</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">392</span> <span class="n">_stream</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="ne">--&gt; </span><span class="mi">393</span> <span class="n">pipeline_response</span><span class="p">:</span> <span class="n">PipelineResponse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>  <span class="c1"># pylint: disable=protected-access</span>
+<span class="g g-Whitespace">    </span><span class="mi">394</span>     <span class="n">_request</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">_stream</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="g g-Whitespace">    </span><span class="mi">395</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">397</span> <span class="n">response</span> <span class="o">=</span> <span class="n">pipeline_response</span><span class="o">.</span><span class="n">http_response</span>
+<span class="g g-Whitespace">    </span><span class="mi">399</span> <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">201</span><span class="p">]:</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\_base.py:230,</span> in <span class="ni">Pipeline.run</span><span class="nt">(self, request, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">228</span> <span class="n">pipeline_request</span><span class="p">:</span> <span class="n">PipelineRequest</span><span class="p">[</span><span class="n">HTTPRequestType</span><span class="p">]</span> <span class="o">=</span> <span class="n">PipelineRequest</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">229</span> <span class="n">first_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl_policies</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl_policies</span> <span class="k">else</span> <span class="n">_TransportRunner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transport</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">230</span> <span class="k">return</span> <span class="n">first_node</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">pipeline_request</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\_base.py:86,</span> in <span class="ni">_SansIOHTTPPolicyRunner.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_request</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">86</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+<span class="g g-Whitespace">     </span><span class="mi">88</span>     <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_exception</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\_base.py:86,</span> in <span class="ni">_SansIOHTTPPolicyRunner.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_request</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">86</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+<span class="g g-Whitespace">     </span><span class="mi">88</span>     <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_exception</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="o">...</span> <span class="n">skipping</span> <span class="n">similar</span> <span class="n">frames</span><span class="p">:</span> <span class="n">_SansIOHTTPPolicyRunner</span><span class="o">.</span><span class="n">send</span> <span class="n">at</span> <span class="n">line</span> <span class="mi">86</span> <span class="p">(</span><span class="mi">2</span> <span class="n">times</span><span class="p">)]</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\_base.py:86,</span> in <span class="ni">_SansIOHTTPPolicyRunner.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_request</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">86</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+<span class="g g-Whitespace">     </span><span class="mi">88</span>     <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_exception</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\policies\_redirect.py:197,</span> in <span class="ni">RedirectPolicy.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">195</span> <span class="n">original_domain</span> <span class="o">=</span> <span class="n">get_domain</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">http_request</span><span class="o">.</span><span class="n">url</span><span class="p">)</span> <span class="k">if</span> <span class="n">redirect_settings</span><span class="p">[</span><span class="s2">&quot;allow&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">196</span> <span class="k">while</span> <span class="n">retryable</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">197</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">198</span>     <span class="n">redirect_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_redirect_location</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">199</span>     <span class="k">if</span> <span class="n">redirect_location</span> <span class="ow">and</span> <span class="n">redirect_settings</span><span class="p">[</span><span class="s2">&quot;allow&quot;</span><span class="p">]:</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\policies\_retry.py:553,</span> in <span class="ni">RetryPolicy.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">551</span>                 <span class="n">is_response_error</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="g g-Whitespace">    </span><span class="mi">552</span>             <span class="k">continue</span>
+<span class="ne">--&gt; </span><span class="mi">553</span>     <span class="k">raise</span> <span class="n">err</span>
+<span class="g g-Whitespace">    </span><span class="mi">554</span> <span class="k">finally</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">555</span>     <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\policies\_retry.py:531,</span> in <span class="ni">RetryPolicy.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">530</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_configure_timeout</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">absolute_timeout</span><span class="p">,</span> <span class="n">is_response_error</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">531</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">532</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_retry</span><span class="p">(</span><span class="n">retry_settings</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">533</span>         <span class="n">retry_active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">retry_settings</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\policies\_authentication.py:126,</span> in <span class="ni">BearerTokenCredentialPolicy.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">124</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">126</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span>     <span class="bp">self</span><span class="o">.</span><span class="n">on_response</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint:disable=broad-except</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\_base.py:86,</span> in <span class="ni">_SansIOHTTPPolicyRunner.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_request</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">86</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+<span class="g g-Whitespace">     </span><span class="mi">88</span>     <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_exception</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\_base.py:86,</span> in <span class="ni">_SansIOHTTPPolicyRunner.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_request</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">86</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+<span class="g g-Whitespace">     </span><span class="mi">88</span>     <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_exception</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="o">...</span> <span class="n">skipping</span> <span class="n">similar</span> <span class="n">frames</span><span class="p">:</span> <span class="n">_SansIOHTTPPolicyRunner</span><span class="o">.</span><span class="n">send</span> <span class="n">at</span> <span class="n">line</span> <span class="mi">86</span> <span class="p">(</span><span class="mi">2</span> <span class="n">times</span><span class="p">)]</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\_base.py:86,</span> in <span class="ni">_SansIOHTTPPolicyRunner.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_request</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">86</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+<span class="g g-Whitespace">     </span><span class="mi">88</span>     <span class="n">_await_result</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">on_exception</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\_base.py:119,</span> in <span class="ni">_TransportRunner.send</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">109</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;HTTP transport send method.</span>
+<span class="g g-Whitespace">    </span><span class="mi">110</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span><span class="sd"> :param request: The PipelineRequest object.</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">114</span><span class="sd"> :rtype: ~azure.core.pipeline.PipelineResponse</span>
+<span class="g g-Whitespace">    </span><span class="mi">115</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">116</span> <span class="n">cleanup_kwargs_for_transport</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">117</span> <span class="k">return</span> <span class="n">PipelineResponse</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">118</span>     <span class="n">request</span><span class="o">.</span><span class="n">http_request</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">119</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_sender</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">http_request</span><span class="p">,</span> <span class="o">**</span><span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">options</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">120</span>     <span class="n">context</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">121</span> <span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline\transport\_requests_basic.py:386,</span> in <span class="ni">RequestsTransport.send</span><span class="nt">(self, request, proxies, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">383</span>     <span class="n">error</span> <span class="o">=</span> <span class="n">ServiceRequestError</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">err</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">385</span> <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">386</span>     <span class="k">raise</span> <span class="n">error</span>
+<span class="g g-Whitespace">    </span><span class="mi">387</span> <span class="k">if</span> <span class="n">_is_rest</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">388</span>     <span class="kn">from</span> <span class="nn">azure.core.rest._requests_basic</span> <span class="kn">import</span> <span class="n">RestRequestsTransportResponse</span>
+
+<span class="ne">ServiceRequestError</span>: &lt;urllib3.connection.HTTPSConnection object at 0x000001AD06F04310&gt;: Failed to resolve &#39;gptkb-qqdtlyqowrlw4.search.windows.net&#39; ([Errno 11001] getaddrinfo failed)
 </pre></div>
 </div>
 </div>
@@ -1862,24 +1978,6 @@ Model not found in registry
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="markdown.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Markdown Files</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="markdown-notebooks.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Notebooks with MyST Markdown</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
