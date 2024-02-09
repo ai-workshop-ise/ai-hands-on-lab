@@ -188,5 +188,5 @@ File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\pipeline
 [0;32m    387[0m [38;5;28;01mif[39;00m _is_rest(request):
 [0;32m    388[0m     [38;5;28;01mfrom[39;00m [38;5;21;01mazure[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01mrest[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_requests_basic[39;00m [38;5;28;01mimport[39;00m RestRequestsTransportResponse
 
-[1;31mServiceRequestError[0m: <urllib3.connection.HTTPSConnection object at 0x000001AD06F04310>: Failed to resolve 'gptkb-qqdtlyqowrlw4.search.windows.net' ([Errno 11001] getaddrinfo failed)
+[1;31mServiceRequestError[0m: <urllib3.connection.HTTPSConnection object at 0x0000024B9CF7BD90>: Failed to resolve 'gptkb-qqdtlyqowrlw4.search.windows.net' ([Errno 11001] getaddrinfo failed)
 

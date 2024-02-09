@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; AI Workshop</title>
+    <title>3. Experiments &#8212; AI Workshop</title>
   
   
   
@@ -62,9 +62,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'datasets';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3.experiment';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3.1. Chunking" href="3.1.experiment_chunking.html" />
+    <link rel="prev" title="2. Workshop Setup" href="2.rag-implementation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -170,10 +170,10 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2. Workshop Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
 </ul>
@@ -247,7 +247,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fdatasets.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F3.experiment.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -277,7 +277,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/datasets.ipynb" target="_blank"
+      <li><a href="_sources/3.experiment.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -348,9 +348,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -361,19 +359,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>3. Experiments</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -383,76 +373,16 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
-
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;openbookqa&quot;</span><span class="p">)</span>
-</pre></div>
+  <section id="experiments">
+<h1>3. Experiments<a class="headerlink" href="#experiments" title="Permalink to this heading">#</a></h1>
+<p>When creating/running search experiments, there are multiple factors that shape the outcome of each experiment. These are small changes that add up over time and change the functionality and effectiveness of your search experience.</p>
+<p>These tweaks should help you determine which combination of document shaping and indexing techniques will provide the most relevant set of documents returned for the set of queries that you care about.</p>
+<p>Each situation is different, and the techniques you use will depend on the type of documents you have, the type of queries you expect to receive, and the type of results you want to return.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/topics/RAG_ThingsToConsider.md">microsoft/rag-openai</a></p>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Projects\Workshop2024\.venv\Lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>datasets
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: datasets in c:\projects\workshop2024\.venv\lib\site-packages (2.16.1)
-Requirement already satisfied: filelock in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (3.13.1)
-Requirement already satisfied: numpy&gt;=1.17 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (1.26.3)
-Requirement already satisfied: pyarrow&gt;=8.0.0 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (15.0.0)
-Requirement already satisfied: pyarrow-hotfix in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (0.6)
-Requirement already satisfied: dill&lt;0.3.8,&gt;=0.3.0 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (0.3.7)
-Requirement already satisfied: pandas in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (2.2.0)
-Requirement already satisfied: requests&gt;=2.19.0 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (2.31.0)
-Requirement already satisfied: tqdm&gt;=4.62.1 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (4.66.1)
-Requirement already satisfied: xxhash in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (3.4.1)
-Requirement already satisfied: multiprocess in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (0.70.15)
-Requirement already satisfied: fsspec&lt;=2023.10.0,&gt;=2023.1.0 in c:\projects\workshop2024\.venv\lib\site-packages (from fsspec[http]&lt;=2023.10.0,&gt;=2023.1.0-&gt;datasets) (2023.10.0)
-Requirement already satisfied: aiohttp in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (3.9.3)
-Requirement already satisfied: huggingface-hub&gt;=0.19.4 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (0.20.3)
-Requirement already satisfied: packaging in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (23.2)
-Requirement already satisfied: pyyaml&gt;=5.1 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (6.0.1)
-Requirement already satisfied: aiosignal&gt;=1.1.2 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (1.3.1)
-Requirement already satisfied: attrs&gt;=17.3.0 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (23.2.0)
-Requirement already satisfied: frozenlist&gt;=1.1.1 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (1.4.1)
-Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (6.0.4)
-Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (1.9.4)
-Requirement already satisfied: typing-extensions&gt;=3.7.4.3 in c:\projects\workshop2024\.venv\lib\site-packages (from huggingface-hub&gt;=0.19.4-&gt;datasets) (4.9.0)
-Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.19.0-&gt;datasets) (3.3.2)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.19.0-&gt;datasets) (3.6)
-Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.19.0-&gt;datasets) (2.1.0)
-Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.19.0-&gt;datasets) (2023.11.17)
-Requirement already satisfied: colorama in c:\projects\workshop2024\.venv\lib\site-packages (from tqdm&gt;=4.62.1-&gt;datasets) (0.4.6)
-Requirement already satisfied: python-dateutil&gt;=2.8.2 in c:\projects\workshop2024\.venv\lib\site-packages (from pandas-&gt;datasets) (2.8.2)
-Requirement already satisfied: pytz&gt;=2020.1 in c:\projects\workshop2024\.venv\lib\site-packages (from pandas-&gt;datasets) (2023.4)
-Requirement already satisfied: tzdata&gt;=2022.7 in c:\projects\workshop2024\.venv\lib\site-packages (from pandas-&gt;datasets) (2023.4)
-Requirement already satisfied: six&gt;=1.5 in c:\projects\workshop2024\.venv\lib\site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas-&gt;datasets) (1.16.0)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 23.3.2 -&gt; 24.0
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
-
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;openbookqa&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -484,6 +414,24 @@ Requirement already satisfied: six&gt;=1.5 in c:\projects\workshop2024\.venv\lib
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="2.rag-implementation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">2. Workshop Setup</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3.1.experiment_chunking.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">3.1. Chunking</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -491,20 +439,7 @@ Requirement already satisfied: six&gt;=1.5 in c:\projects\workshop2024\.venv\lib
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
+                <div class="bd-sidebar-secondary bd-toc"></div>
               
             
           </div>

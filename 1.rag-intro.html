@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; AI Workshop</title>
+    <title>1. Retrieval Augmented Generation &#8212; AI Workshop</title>
   
   
   
@@ -62,9 +62,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'datasets';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1.rag-intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. Workshop Setup" href="2.rag-implementation.html" />
+    <link rel="prev" title="Welcome" href="0.intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -170,8 +170,8 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Retrieval Augmented Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2. Workshop Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
@@ -247,7 +247,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fdatasets.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F1.rag-intro.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -277,7 +277,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/datasets.ipynb" target="_blank"
+      <li><a href="_sources/1.rag-intro.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -361,7 +361,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>1. Retrieval Augmented Generation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -370,9 +370,12 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-for-rag-with-azure-ai-search">Approaches for RAG with Azure AI Search</a></li>
 </ul>
-
+</li>
+</ul>
             </nav>
         </div>
     </div>
@@ -383,76 +386,61 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
-
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;openbookqa&quot;</span><span class="p">)</span>
-</pre></div>
+  <section class="tex2jax_ignore mathjax_ignore" id="retrieval-augmented-generation">
+<h1>1. Retrieval Augmented Generation<a class="headerlink" href="#retrieval-augmented-generation" title="Permalink to this heading">#</a></h1>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>If you are new to copilot and RAG concepts, consider going through these resources after the workshop:</p>
+<ul class="simple">
+<li><p>Watch <a class="reference external" href="https://ignite.microsoft.com/en-US/sessions/18618ca9-0e4d-4f9d-9a28-0bc3ef5cf54e?source=sessions">Vector search and state of the art retrieval for Generative AI apps.</a></p></li>
+<li><p>Read <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview">Retrieval Augmented Generation (RAG) in Azure AI Search</a></p></li>
+</ul>
 </div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview">Retrieval Augmentation Generation (RAG)</a> is an <em>architecture</em> that augments the capabilities of a Large Language Model (LLM) by adding an <em>information retrieval system</em> that provides grounding data. It is a major architectural pattern for most enterprise GenAI applications, increasingly used in our latest engagements.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>RAG is not the only solution for incorporating domain knowledge, as illustrated below:</p>
+<p><img alt="domain-knowledge" src="_images/domain-knowledge2.png" /></p>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Projects\Workshop2024\.venv\Lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
-</pre></div>
+<p><strong>RAG Architecture</strong></p>
+<p><img alt="RAG_pattern" src="_images/rag-pattern.png" /></p>
+<p><strong>Information retrieval system</strong></p>
+<p>Why is the information retrieval system important? Because it gives you control over the knowledge that the LLM is using to formulate a response. That means that you can constrain the LLM to your <em>own content</em> sources from <em>vectorized</em> documents, images, and other data formats.</p>
+<p><strong>Azure AI Search</strong></p>
+<p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/">Azure AI Search</a> is a proven solution for information retrieval in a RAG architecture. Architecturally, it sits between the external data stores (with un-indexed data) and your client app. The client app sends query requests to a search index and handles the response:</p>
+<p><img alt="search_service" src="_images/search-service.png" /></p>
+<p>For those familiar with relational databases, you can imagine that:</p>
+<ul class="simple">
+<li><p>A (search) index ~= A table</p>
+<ul>
+<li><p>it describes the <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/search-what-is-an-index#schema-of-a-search-index">schema of your data</a></p></li>
+<li><p>it consists of <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/search-what-is-an-index#field-definitions"><code class="docutils literal notranslate"><span class="pre">field</span> <span class="pre">definitions</span></code></a> described by <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/search-what-is-an-index#field-attributes"><code class="docutils literal notranslate"><span class="pre">field</span> <span class="pre">attributes</span></code></a> (searchable, filterable, sortable etc)</p></li>
+</ul>
+</li>
+<li><p>A (search) document ~= A row in your table</p></li>
+</ul>
+<p><strong>Vector search in Azure AI Search - Overview</strong></p>
+<p>Vector search is an approach in information retrieval that stores numeric representations of content for search scenarios.
+<img alt="vector_search" src="_images/vector-search-architecture-diagram.png" /></p>
+<p>The generally available functionality of vector support requires that you call other libraries or models for data chunking and vectorization. However, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-integrated-vectorization">integrated vectorization (preview)</a> embeds these steps.</p>
+<p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/use-your-data?tabs=ai-search#search-options">Search options</a>: keyword search, semantic search, vector search, hybrid search.</p>
+<section id="approaches-for-rag-with-azure-ai-search">
+<h3>Approaches for RAG with Azure AI Search<a class="headerlink" href="#approaches-for-rag-with-azure-ai-search" title="Permalink to this heading">#</a></h3>
+<p>Due to its increased popularity, Microsoft has several built-in implementations for using Azure AI Search in a RAG solution.</p>
+<ol class="arabic simple">
+<li><p>Azure AI Studio, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-studio/concepts/retrieval-augmented-generation">use a vector index and retrieval augmentation - Preview</a>.</p></li>
+<li><p>Azure OpenAI Studio, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/use-your-data?tabs=ai-search">use a search index with or without vectors - Preview</a>.</p></li>
+<li><p>Azure Machine Learning, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/how-to-create-vector-index?view=azureml-api-2">use a search index as a vector store in a prompt flow - Preview</a>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>During this workshop, we will take a code-first approach.</p>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>datasets
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: datasets in c:\projects\workshop2024\.venv\lib\site-packages (2.16.1)
-Requirement already satisfied: filelock in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (3.13.1)
-Requirement already satisfied: numpy&gt;=1.17 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (1.26.3)
-Requirement already satisfied: pyarrow&gt;=8.0.0 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (15.0.0)
-Requirement already satisfied: pyarrow-hotfix in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (0.6)
-Requirement already satisfied: dill&lt;0.3.8,&gt;=0.3.0 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (0.3.7)
-Requirement already satisfied: pandas in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (2.2.0)
-Requirement already satisfied: requests&gt;=2.19.0 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (2.31.0)
-Requirement already satisfied: tqdm&gt;=4.62.1 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (4.66.1)
-Requirement already satisfied: xxhash in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (3.4.1)
-Requirement already satisfied: multiprocess in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (0.70.15)
-Requirement already satisfied: fsspec&lt;=2023.10.0,&gt;=2023.1.0 in c:\projects\workshop2024\.venv\lib\site-packages (from fsspec[http]&lt;=2023.10.0,&gt;=2023.1.0-&gt;datasets) (2023.10.0)
-Requirement already satisfied: aiohttp in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (3.9.3)
-Requirement already satisfied: huggingface-hub&gt;=0.19.4 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (0.20.3)
-Requirement already satisfied: packaging in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (23.2)
-Requirement already satisfied: pyyaml&gt;=5.1 in c:\projects\workshop2024\.venv\lib\site-packages (from datasets) (6.0.1)
-Requirement already satisfied: aiosignal&gt;=1.1.2 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (1.3.1)
-Requirement already satisfied: attrs&gt;=17.3.0 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (23.2.0)
-Requirement already satisfied: frozenlist&gt;=1.1.1 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (1.4.1)
-Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (6.0.4)
-Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in c:\projects\workshop2024\.venv\lib\site-packages (from aiohttp-&gt;datasets) (1.9.4)
-Requirement already satisfied: typing-extensions&gt;=3.7.4.3 in c:\projects\workshop2024\.venv\lib\site-packages (from huggingface-hub&gt;=0.19.4-&gt;datasets) (4.9.0)
-Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.19.0-&gt;datasets) (3.3.2)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.19.0-&gt;datasets) (3.6)
-Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.19.0-&gt;datasets) (2.1.0)
-Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.19.0-&gt;datasets) (2023.11.17)
-Requirement already satisfied: colorama in c:\projects\workshop2024\.venv\lib\site-packages (from tqdm&gt;=4.62.1-&gt;datasets) (0.4.6)
-Requirement already satisfied: python-dateutil&gt;=2.8.2 in c:\projects\workshop2024\.venv\lib\site-packages (from pandas-&gt;datasets) (2.8.2)
-Requirement already satisfied: pytz&gt;=2020.1 in c:\projects\workshop2024\.venv\lib\site-packages (from pandas-&gt;datasets) (2023.4)
-Requirement already satisfied: tzdata&gt;=2022.7 in c:\projects\workshop2024\.venv\lib\site-packages (from pandas-&gt;datasets) (2023.4)
-Requirement already satisfied: six&gt;=1.5 in c:\projects\workshop2024\.venv\lib\site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas-&gt;datasets) (1.16.0)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 23.3.2 -&gt; 24.0
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
-
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;openbookqa&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -484,6 +472,24 @@ Requirement already satisfied: six&gt;=1.5 in c:\projects\workshop2024\.venv\lib
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="0.intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2.rag-implementation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2. Workshop Setup</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -499,9 +505,12 @@ Requirement already satisfied: six&gt;=1.5 in c:\projects\workshop2024\.venv\lib
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approaches-for-rag-with-azure-ai-search">Approaches for RAG with Azure AI Search</a></li>
 </ul>
-
+</li>
+</ul>
   </nav></div>
 
 </div></div>

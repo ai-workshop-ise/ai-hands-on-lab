@@ -1,0 +1,60 @@
+Traceback (most recent call last):
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\anaconda3\Lib\asyncio\base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import requests
+
+def get_query_embedding(
+    query,
+    endpoint=aoai_endpoint,
+    api_key=aoi_api_key,
+    api_version="2023-07-01-preview",
+    embedding_model_deployment=embedding_model_name,
+):
+    request_url = f"{endpoint}/openai/deployments/{embedding_model_deployment}/embeddings?api-version={api_version}"
+    headers = {"Content-Type": "application/json", "api-key": api_key}
+    request_payload = {"input": query}
+    embedding_response = requests.post(
+        request_url, json=request_payload, headers=headers, timeout=None
+    )
+    if embedding_response.status_code == 200:
+        data_values = embedding_response.json()["data"]
+        embeddings_vectors = [data_value["embedding"] for data_value in data_values]
+        return embeddings_vectors
+    else:
+        raise Exception(f"failed to get embedding: {embedding_response.json()}")
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[1], line 5[0m
+[0;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mrequests[39;00m
+[0;32m      3[0m [38;5;28;01mdef[39;00m [38;5;21mget_query_embedding[39m(
+[0;32m      4[0m     query,
+[1;32m----> 5[0m     endpoint[38;5;241m=[39m[43maoai_endpoint[49m,
+[0;32m      6[0m     api_key[38;5;241m=[39maoi_api_key,
+[0;32m      7[0m     api_version[38;5;241m=[39m[38;5;124m"[39m[38;5;124m2023-07-01-preview[39m[38;5;124m"[39m,
+[0;32m      8[0m     embedding_model_deployment[38;5;241m=[39membedding_model_name,
+[0;32m      9[0m ):
+[0;32m     10[0m     request_url [38;5;241m=[39m [38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00mendpoint[38;5;132;01m}[39;00m[38;5;124m/openai/deployments/[39m[38;5;132;01m{[39;00membedding_model_deployment[38;5;132;01m}[39;00m[38;5;124m/embeddings?api-version=[39m[38;5;132;01m{[39;00mapi_version[38;5;132;01m}[39;00m[38;5;124m"[39m
+[0;32m     11[0m     headers [38;5;241m=[39m {[38;5;124m"[39m[38;5;124mContent-Type[39m[38;5;124m"[39m: [38;5;124m"[39m[38;5;124mapplication/json[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mapi-key[39m[38;5;124m"[39m: api_key}
+
+[1;31mNameError[0m: name 'aoai_endpoint' is not defined
+
