@@ -173,10 +173,11 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2. Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">Workshop Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
     </div>
@@ -372,6 +373,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">Goal</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ready-let-s-start">Ready? Let’s start!</a></li>
@@ -388,19 +390,22 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="welcome">
 <h1>Welcome<a class="headerlink" href="#welcome" title="Permalink to this heading">#</a></h1>
-<p>In this workshop, you will go through the core aspects and considerations one should take when working on RAG based GenAI Solutions. RAG has become increasingly important and is currently at the core of most of our engagements.</p>
-<p>We hope that, by the end of the workshop, you will confidently approach such engagements from two perspectives:</p>
+<p>RAG Applications, based on large language models, are a new breed of application. The architecture has become increasingly important and is currently at the core of most of our engagements. In this workshop, you will go through the core aspects and considerations one should take when working on RAG based GenAI Solutions.</p>
+<section id="goal">
+<h2>Goal<a class="headerlink" href="#goal" title="Permalink to this heading">#</a></h2>
+<p>By the end of the workshop, you will have a clear(er) understanding of:</p>
 <ul class="simple">
-<li><p><strong>Pre-production</strong>: how to experiment, evaluate and come up with the best solution for a given use case.</p></li>
-<li><p><strong>Post-production</strong>: after deploying the solution to production, how to monitor and ensure that <em>it works as expected</em>. And in fact, what does that even mean?</p></li>
+<li><p><strong>Pre-production</strong>: how to experiment, evaluate and come up with the best RAG-based solution for a given use case.</p></li>
+<li><p><strong>Post-production</strong>: after deploying the solution to production, how to monitor and ensure that <em>it works as expected</em>. Oh wait, what does that even mean?</p></li>
 </ul>
-<p>During this workshop, you won’t encounter things that are not already documented elsewhere. However, we hope to:</p>
+<p>Through this workshop, we aim to:</p>
 <ul class="simple">
-<li><p>speed up the onboarding process for anyone in ISE</p></li>
+<li><p>speed up the onboarding process on this topic</p></li>
 <li><p>capture key best practices that have already been established in the industry</p></li>
-<li><p>provide a framework that would guide you in your thought process so you can confidently join such engagements</p></li>
-<li><p>HAVE FUN!</p></li>
+<li><p>provide a framework that would guide you in your thought process when building such applications</p></li>
+<li><p>last, but not least, to HAVE FUN!</p></li>
 </ul>
+</section>
 <section id="prerequisites">
 <h2>Prerequisites:<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
@@ -412,16 +417,25 @@ document.write(`
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2. Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">Workshop Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 </div>
 </section>
 <section id="ready-let-s-start">
 <h2>Ready? Let’s start!<a class="headerlink" href="#ready-let-s-start" title="Permalink to this heading">#</a></h2>
 <p><img alt="intro" src="_images/workshop.jpg" /></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>RAG Experiment Accelerator: <a class="github reference external" href="https://github.com/microsoft/rag-experiment-accelerator/tree/development">microsoft/rag-experiment-accelerator</a></p></li>
+<li><p>End-to-End RAG Pattern with OpenAI: <a class="github reference external" href="https://github.com/microsoft/rag-openai/tree/main">microsoft/rag-openai</a></p></li>
+<li><p>Vector samples - Azure AI Search: <a class="github reference external" href="https://github.com/Azure/azure-search-vector-samples/tree/main">Azure/azure-search-vector-samples</a></p></li>
+</ul>
+</div>
 </section>
 </section>
 
@@ -480,6 +494,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">Goal</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ready-let-s-start">Ready? Let’s start!</a></li>

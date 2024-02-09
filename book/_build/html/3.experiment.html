@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="3.1. Chunking" href="3.1.experiment_chunking.html" />
-    <link rel="prev" title="2. Workshop Setup" href="2.rag-implementation.html" />
+    <link rel="prev" title="Workshop Setup" href="2.rag-implementation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -172,10 +172,11 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2. Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">Workshop Setup</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
     </div>
@@ -348,7 +349,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -364,6 +367,21 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">The Role of Experimentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-strategy">Evaluation Strategy</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -373,15 +391,65 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="experiments">
-<h1>3. Experiments<a class="headerlink" href="#experiments" title="Permalink to this heading">#</a></h1>
-<p>When creating/running search experiments, there are multiple factors that shape the outcome of each experiment. These are small changes that add up over time and change the functionality and effectiveness of your search experience.</p>
-<p>These tweaks should help you determine which combination of document shaping and indexing techniques will provide the most relevant set of documents returned for the set of queries that you care about.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="experiments">
+<h1>3. <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingExperimentation.md">Experiments</a><a class="headerlink" href="#experiments" title="Permalink to this heading">#</a></h1>
+<p>It sounds like a simplistic statement, but “the best Search solution is the one that returns the best results”.</p>
+<p>The only way to get the best and most relevant results is via experimentation. As a result, the experimentation phase is crucial and effort should be invested to create experiments that can:</p>
+<ul class="simple">
+<li><p>be tracked and evaluated against a consistent set of metrics</p></li>
+<li><p>be repeatable, and works in a very methodical way to track and record results</p></li>
+</ul>
+<p>When creating/running search experiments, there are multiple factors that shape the outcome of each experiment. These are small changes that add up over time and change the functionality and effectiveness of your search experience. These tweaks should help you determine which combination of document shaping and indexing techniques will provide the most relevant set of documents returned for the set of queries that you care about.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>Each situation is different, and the techniques you use will depend on the type of documents you have, the type of queries you expect to receive, and the type of results you want to return.</p>
+</div>
+<p>As you build out your experimentation process for search, reference the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_ThingsToConsider.md">Things to Consider</a> document which will highlight some important features to include in your experiments. You can see the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-our-engagements-2">existing learnings from engagements </a></p>
+<section id="the-role-of-experimentation">
+<h2>The Role of Experimentation<a class="headerlink" href="#the-role-of-experimentation" title="Permalink to this heading">#</a></h2>
+<p>Creating an effective solution is a delicate balance of several factors:</p>
+<ul class="simple">
+<li><p>Which search mechanism to use - whether it is vector search, semantic search, a combination, or other (the options are discussed on this document Enabling Search )</p></li>
+<li><p>Which model to use - GPT4, GPT3 (Ada, Curie, Da Vinci), GPT Turbo etc. This is discussed on this link: <a class="reference external" href="https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models">https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models</a></p></li>
+<li><p>The prompt - the instruction given to the model in order to produce the desired result. An effective prompt has several components: 1) the actual question a user typed into a box 2) the history of the conversation including both questions and answers 3) and the prompt per-se - scope established for the LLM which helps refine and focus the predictive elements the model uses to answer the question. Writing an effective prompt is referred to as “Prompt Engineering”. It is an empirical and iterative process. This link has more information on prompt engineering: <a class="reference external" href="https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/prompt-engineering">https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/prompt-engineering</a></p></li>
+<li><p>A series of arguments, passed to the OpenAI APIS also impact the result. These are arguments such as “temperature”, “logit_bias”, “presence_penalty” etc. More information can be found here <a class="reference external" href="https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference">https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference</a></p></li>
+</ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/topics/RAG_ThingsToConsider.md">microsoft/rag-openai</a></p>
 </div>
+</section>
+<section id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h2>
+<p>One of the most important aspects of developing a system for production is regular evaluation and iterative experimentation. This process allows you to measure performance, troubleshoot issues, and fine-tune to improve accuracy and efficiency.
+Note that there are different types of metrics and ways to evaluate a system. There is an end-to-end business evaluation, where we want to measure whether the deployed system has met certain business metrics (e.g.: sales increase), and there is a technical evaluation where we want to ensure that each functional part of the system meets certain technical requirements or baseline metrics to ensure that we are pushing a quality system in production.</p>
+<p>In RAG, there are two main components: the retrieval part and the generative part. These components must be evaluated individually before evaluating the end-to-end solution.</p>
+<section id="evaluation-strategy">
+<h3>Evaluation Strategy<a class="headerlink" href="#evaluation-strategy" title="Permalink to this heading">#</a></h3>
+<p>An OpenAI solution (or system) may involve different components that will work together to make up the core functionalities of the chatbot, different group of prompts + an OpenAI endpoint call that will perform different tasks of the system. For example, we could have:</p>
+<ul class="simple">
+<li><p>An agent that takes care of the conversation part of the solution.</p></li>
+<li><p>An agent that detects intent within a conversation.</p></li>
+<li><p>An agent that extracts vehicle information from a conversation</p></li>
+</ul>
+<p>The system may need to be integrated with live services apart from OpenAI. For example, a agent that needs to make calls to a hosted API (service) to help verify that the customer has fully specified the vehicle’s manufacture, model, trim or variant to be able to progress the conversation.</p>
+<p>In evaluating the system, we need to account for evaluating all components of the system individually</p>
+<section id="data">
+<h4>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h4>
+<p><a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md">microsoft/rag-openai</a></p>
+<p>Quality measurement guides the entire development process of the Search solution. The team must know what performance metric they are chasing.</p>
+<p>This is easier said than done. We are developing systems where the results are fuzzy by nature. What documents do you expect to be retrieved when you ask a question?</p>
+<p>We can use three potential approaches:</p>
+<ul class="simple">
+<li><p>We build the test data already knowing the result - <strong>ideal, but not always feasible</strong></p></li>
+<li><p>We have a human analyze each of the results that comes back and score it right or wrong - <strong>laborious and prone to errors</strong></p></li>
+<li><p>We build an artificial intelligent validation mechanism - <strong>dangerous, but sometimes the only method available</strong></p></li>
+</ul>
+<p>Do not set a metric target until the baseline is well known. There are many AI projects out there targeting 99% accuracy, when the current methods produce 10~12% accuracy, and when even humans are not better than that. So, before setting a target, take time to understand what humans can do, what the current process produces. When accepting a target, focus on small improvements. We would never have automated Speech to Text if we had started with ambitious and unrealistic targets.</p>
+<p>Do not set a metric target until the baseline is well known. There are many AI projects out there targeting 99% accuracy, when the current methods produce 10~12% accuracy, and when even humans are not better than that. So, before setting a target, take time to understand what humans can do, what the current process produces. When accepting a target, focus on small improvements. We would never have automated Speech to Text if we had started with ambitious and unrealistic targets. <a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-our-engagements-1">microsoft/rag-openai</a></p>
+</section>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -420,7 +488,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">2. Workshop Setup</p>
+        <p class="prev-next-title">Workshop Setup</p>
       </div>
     </a>
     <a class="right-next"
@@ -439,7 +507,27 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">The Role of Experimentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-strategy">Evaluation Strategy</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

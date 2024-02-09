@@ -12,5 +12,6 @@ chapters:
 - file: 3.experiment
 - file: 3.1.experiment_chunking
 - file: 3.2.experiment_embedding
+- file: 10.evaluation-production.ipynb
 # - file: aisearch
 # - file: comparison

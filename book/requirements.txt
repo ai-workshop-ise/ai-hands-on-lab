@@ -4,4 +4,6 @@ numpy
 openai
 azure-identity
 ghp-import
-azure-search-documents==11.4.0b8 
+azure-search-documents==11.4.0b8
+azure-ai-ml
+semantic-kernel=0.4.7.dev0
