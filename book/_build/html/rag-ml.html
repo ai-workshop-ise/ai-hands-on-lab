@@ -371,14 +371,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Retrieval Augmented Generation</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag-architecture">RAG Architecture</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#information-retrieval-system">Information retrieval system</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#azure-ai-search">Azure AI Search</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-search-in-azure-ai-search-overview">Vector search in Azure AI Search - Overview</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag-architecture">RAG Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#information-retrieval-system">Information retrieval system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#azure-ai-search">Azure AI Search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-search-in-azure-ai-search-overview">Vector search in Azure AI Search - Overview</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop">Workshop</a><ul class="visible nav section-nav flex-column">
@@ -387,7 +383,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-required-libraries-and-environment-variables">Import required libraries and environment variables</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-search-index">1. Create Search Index</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-search-indexer">2. Create a Search Indexer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-search-indexer-is-this-needed-isn-t-it-only-for-automating-data-import">2. Create a Search Indexer - Is this needed? Isn’t it only for automating data import</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-embeddings">3. Create Embeddings</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#which-embeddings-model-to-use">Which Embeddings Model to use?</a></li>
 </ul>
@@ -401,8 +397,15 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-data">3. Upload data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#search">4. Search</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-vector-similarity-search">Perform a vector similarity search</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-pure-vector-search-with-a-filter">Perform a pure vector search with a filter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-hybrid-search">Perform a hybrid search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-semantic-hybrid-search">Perform a semantic hybrid search</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrated-data-chunking-and-embedding-in-azure-ai-search">Integrated data chunking and embedding in Azure AI Search</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking">Chunking</a></li>
 </ul>
 </li>
 </ul>
@@ -422,13 +425,18 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="retrieval-augmented-generation">
 <h1>Retrieval Augmented Generation<a class="headerlink" href="#retrieval-augmented-generation" title="Permalink to this heading">#</a></h1>
 <p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview">Retrieval Augmentation Generation (RAG)</a> is an <em>architecture</em> that augments the capabilities of a Large Language Model (LLM) by adding an <em>information retrieval system</em> that provides grounding data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>RAG is not the only solution for incorporating domain knowledge, as illustrated below:</p>
+<p><img alt="domain-knowledge" src="_images/domain-knowledge2.png" /></p>
+</div>
 <section id="rag-architecture">
 <h2>RAG Architecture<a class="headerlink" href="#rag-architecture" title="Permalink to this heading">#</a></h2>
 <p><img alt="RAG_pattern" src="_images/rag-pattern.png" /></p>
-<section id="information-retrieval-system">
-<h3>Information retrieval system<a class="headerlink" href="#information-retrieval-system" title="Permalink to this heading">#</a></h3>
-<p>Why is the information retrieval system important? Because it gives you control over the knowledge that the LLM is using to formulate a response. That means that you can constrain the LLM to your <em>own content</em> sources from <em>vectorized</em> documents, images, and other data formats.</p>
 </section>
+<section id="information-retrieval-system">
+<h2>Information retrieval system<a class="headerlink" href="#information-retrieval-system" title="Permalink to this heading">#</a></h2>
+<p>Why is the information retrieval system important? Because it gives you control over the knowledge that the LLM is using to formulate a response. That means that you can constrain the LLM to your <em>own content</em> sources from <em>vectorized</em> documents, images, and other data formats.</p>
 </section>
 <section id="azure-ai-search">
 <h2>Azure AI Search<a class="headerlink" href="#azure-ai-search" title="Permalink to this heading">#</a></h2>
@@ -444,19 +452,19 @@ document.write(`
 </li>
 <li><p>A (search) document ~= A row in your table</p></li>
 </ul>
+</section>
 <section id="vector-search-in-azure-ai-search-overview">
-<h3>Vector search in Azure AI Search - Overview<a class="headerlink" href="#vector-search-in-azure-ai-search-overview" title="Permalink to this heading">#</a></h3>
-<p><img alt="vector_search" src="_images/vector-search-architecture-diagram.png" /></p>
+<h2>Vector search in Azure AI Search - Overview<a class="headerlink" href="#vector-search-in-azure-ai-search-overview" title="Permalink to this heading">#</a></h2>
+<p>Vector search is an approach in information retrieval that stores numeric representations of content for search scenarios.
+<img alt="vector_search" src="_images/vector-search-architecture-diagram.png" /></p>
+<p>The generally available functionality of vector support requires that you call other libraries or models for data chunking and vectorization. However, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-integrated-vectorization">integrated vectorization (preview)</a> embeds these steps.</p>
 <p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/use-your-data?tabs=ai-search#search-options">Search options</a>: keyword search, semantic search, vector search, hybrid search.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Read <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search">What’s Azure AI Search?</a></p></li>
-<li><p>Read <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-overview">Vector search in Azure AI Search
-</a></p></li>
-<li><p>Read <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-ranking">Relevance and ranking in vector search</a></p></li>
-</ul>
-</div>
+<!-- ```{seealso}
+- Read [What's Azure AI Search?](https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search)
+- Read [Vector search in Azure AI Search
+](https://learn.microsoft.com/en-us/azure/search/vector-search-overview)
+- Read [Relevance and ranking in vector search](https://learn.microsoft.com/en-us/azure/search/vector-search-ranking)
+``` -->
 <!-- ### Approaches for RAG with Azure AI Search
 
 Due to its increased popularity, Microsoft has several built-in implementations for using Azure AI Search in a RAG solution.
@@ -470,14 +478,13 @@ During this workshop, we will take a code-first approach.
 ``` -->
 </section>
 </section>
-</section>
 <section class="tex2jax_ignore mathjax_ignore" id="workshop">
 <h1>Workshop<a class="headerlink" href="#workshop" title="Permalink to this heading">#</a></h1>
 <section id="pre-requisites">
 <h2>Pre-requisites:<a class="headerlink" href="#pre-requisites" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://aka.ms/oai/access">Request Access to Azure OpenAI Service</a></p></li>
-<li><p>Azure Search Service (which can host one or more search indexes) - portal?</p></li>
+<li><p>Azure Search Service (which can host one or more search indexes) with Semantic Ranker enabled. Note: it is not supported in sweden central <a class="reference external" href="https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/?products=search">https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/?products=search</a></p></li>
 <li><p>Azure OpenAI Service and text-embedding-ada-002 model deployed</p></li>
 </ul>
 </section>
@@ -492,19 +499,12 @@ During this workshop, we will take a code-first approach.
 <li><p>Fill in the data using the Search Indexer (below_)</p></li>
 </ul>
 </li>
-<li><p>Azure Search Indexer - which indexes the data. ??</p></li>
+<li><p>Azure Search Indexer - which acts as a crawler that retrieves data from external sources, can also trigger skillsets (Optical Character Recognition)</p></li>
 </ul>
 <section id="setup">
 <h3>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h3>
 <p>First, we install the necessary dependencies.
 <a class="github reference external" href="https://github.com/openai/openai-cookbook/blob/main/examples/azure/chat_with_your_own_data.ipynb">openai/openai-cookbook</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %pip uninstall azure-search-documents</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %pip install azure-ai-ml</span>
@@ -526,14 +526,8 @@ Note: you may need to restart the kernel to use updated packages.
 [notice] To update, run: python.exe -m pip install --upgrade pip
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: azure-search-documents==11.4.0 in c:\projects\workshop2024\.venv\lib\site-packages (11.4.0)Note: you may need to restart the kernel to use updated packages.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 23.3.2 -&gt; 24.0
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: azure-core&lt;2.0.0,&gt;=1.28.0 in c:\projects\workshop2024\.venv\lib\site-packages (from azure-search-documents==11.4.0) (1.29.7)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: azure-search-documents==11.4.0 in c:\projects\workshop2024\.venv\lib\site-packages (11.4.0)
+Requirement already satisfied: azure-core&lt;2.0.0,&gt;=1.28.0 in c:\projects\workshop2024\.venv\lib\site-packages (from azure-search-documents==11.4.0) (1.29.7)
 Requirement already satisfied: azure-common~=1.1 in c:\projects\workshop2024\.venv\lib\site-packages (from azure-search-documents==11.4.0) (1.1.28)
 Requirement already satisfied: isodate&gt;=0.6.0 in c:\projects\workshop2024\.venv\lib\site-packages (from azure-search-documents==11.4.0) (0.6.1)
 Requirement already satisfied: requests&gt;=2.21.0 in c:\projects\workshop2024\.venv\lib\site-packages (from azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (2.31.0)
@@ -543,6 +537,11 @@ Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in c:\projects\wor
 Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.21.0-&gt;azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (3.6)
 Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.21.0-&gt;azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (2.1.0)
 Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024\.venv\lib\site-packages (from requests&gt;=2.21.0-&gt;azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (2023.11.17)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 23.3.2 -&gt; 24.0
+[notice] To update, run: python.exe -m pip install --upgrade pip
 </pre></div>
 </div>
 </div>
@@ -570,10 +569,13 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">azure.core.credentials</span> <span class="kn">import</span> <span class="n">AzureKeyCredential</span>
-<span class="kn">from</span> <span class="nn">azure.search.documents</span> <span class="kn">import</span> <span class="n">SearchClient</span>  
+<span class="kn">from</span> <span class="nn">azure.search.documents</span> <span class="kn">import</span> <span class="n">SearchClient</span>
 <span class="kn">from</span> <span class="nn">azure.search.documents.models</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">VectorizedQuery</span><span class="p">,</span>
-    <span class="n">VectorFilterMode</span>
+    <span class="n">VectorFilterMode</span><span class="p">,</span>
+    <span class="n">QueryType</span><span class="p">,</span>
+    <span class="n">QueryCaptionType</span><span class="p">,</span>
+    <span class="n">QueryAnswerType</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">azure.search.documents.indexes.models</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">SearchIndex</span><span class="p">,</span>
@@ -590,22 +592,24 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
     <span class="n">HnswParameters</span><span class="p">,</span>
     <span class="n">SemanticPrioritizedFields</span><span class="p">,</span>
     <span class="n">SemanticSearch</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">azure.search.documents.indexes</span> <span class="kn">import</span> <span class="n">SearchIndexClient</span>  
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">azure.search.documents.indexes</span> <span class="kn">import</span> <span class="n">SearchIndexClient</span>
 
-<span class="n">subscription_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;subscription_id&#39;</span><span class="p">]</span>
-<span class="n">resource_group_name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;resource_group_name&#39;</span><span class="p">]</span>
-<span class="n">workspace_name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;workspace_name&#39;</span><span class="p">]</span>
-<span class="n">service_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;service_endpoint&#39;</span><span class="p">]</span><span class="c1"># the endpoint of your Azure Cognitive Search service</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;search_key&#39;</span><span class="p">]</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;subscription_id&quot;</span><span class="p">]</span>
+<span class="n">resource_group_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;resource_group_name&quot;</span><span class="p">]</span>
+<span class="n">workspace_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;workspace_name&quot;</span><span class="p">]</span>
+<span class="n">service_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span>
+    <span class="s2">&quot;service_endpoint&quot;</span>
+<span class="p">]</span>  <span class="c1"># the endpoint of your Azure Cognitive Search service</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;search_key&quot;</span><span class="p">]</span>
 
 <span class="c1"># aoai_connection_name = os.environ[&#39;aoai_connection_name&#39;]</span>
-<span class="n">aoi_api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;aoi_api_key&#39;</span><span class="p">]</span>
-<span class="n">aoai_endpoint</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;aoai_endpoint&#39;</span><span class="p">]</span>
-<span class="n">embedding_model_name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;embeddingModelName&#39;</span><span class="p">]</span>
+<span class="n">aoi_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;aoi_api_key&quot;</span><span class="p">]</span>
+<span class="n">aoai_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;aoai_endpoint&quot;</span><span class="p">]</span>
+<span class="n">embedding_model_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;embeddingModelName&quot;</span><span class="p">]</span>
 
-<span class="n">search_index_name</span> <span class="o">=</span> <span class="s2">&quot;my_index&quot;</span>
-<span class="n">search_index_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_SEARCH_ADMIN_KEY&quot;</span><span class="p">)</span> 
+<span class="n">search_index_name</span> <span class="o">=</span> <span class="s2">&quot;my_index_2&quot;</span>
+<span class="n">search_index_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_SEARCH_ADMIN_KEY&quot;</span><span class="p">)</span>
 <span class="n">credential</span> <span class="o">=</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -614,25 +618,49 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 </section>
 <section id="create-search-index">
 <h3>1. Create Search Index<a class="headerlink" href="#create-search-index" title="Permalink to this heading">#</a></h3>
-<p><a class="github reference external" href="https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/search/azure-search-documents/samples/sample_index_crud_operations.py">Azure/azure-sdk-for-python</a></p>
-<p><a class="github reference external" href="https://github.com/microsoft/rag-experiment-accelerator/blob/development/rag_experiment_accelerator/init_Index/create_index.py">microsoft/rag-experiment-accelerator</a></p>
-<p>Used for overall Fields and Semantic Settings inspiration - <a class="github reference external" href="https://github.com/Azure/azure-search-vector-samples/blob/main/demo-python/code/azure-search-vector-python-huggingface-model-sample.ipynb">Azure/azure-search-vector-samples</a></p>
-<p>Used for SearchField inspiration - <a class="github reference external" href="https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/search/azure-search-documents/samples/sample_vector_search.py">Azure/azure-sdk-for-python</a></p>
+<!-- https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/search/azure-search-documents/samples/sample_index_crud_operations.py
+
+https://github.com/microsoft/rag-experiment-accelerator/blob/development/rag_experiment_accelerator/init_Index/create_index.py
+
+Used for overall Fields and Semantic Settings inspiration - https://github.com/Azure/azure-search-vector-samples/blob/main/demo-python/code/azure-search-vector-python-huggingface-model-sample.ipynb
+
+Used for SearchField inspiration - https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/search/azure-search-documents/samples/sample_vector_search.py -->
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">):</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">SearchIndexClient</span><span class="p">(</span><span class="n">service_endpoint</span><span class="p">,</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-    
+
     <span class="c1"># 1. Define the fields</span>
     <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">SimpleField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sortable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filterable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">facetable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>  
-        <span class="n">SearchableField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">),</span>  
-        <span class="n">SearchableField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">),</span>  
-        <span class="n">SearchableField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="n">filterable</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>  
-        <span class="n">SearchField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;titleVector&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Collection</span><span class="p">(</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Single</span><span class="p">),</span>  
-                <span class="n">searchable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vector_search_dimensions</span><span class="o">=</span><span class="mi">384</span><span class="p">,</span> <span class="n">vector_search_profile_name</span><span class="o">=</span><span class="s2">&quot;my-vector-config&quot;</span><span class="p">),</span>  
-        <span class="n">SearchField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Collection</span><span class="p">(</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Single</span><span class="p">),</span>  
-                <span class="n">searchable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vector_search_dimensions</span><span class="o">=</span><span class="mi">384</span><span class="p">,</span> <span class="n">vector_search_profile_name</span><span class="o">=</span><span class="s2">&quot;my-vector-config&quot;</span><span class="p">),</span>  
+        <span class="n">SimpleField</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">,</span>
+            <span class="n">key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">sortable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">filterable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="c1"># facetable=True,</span>
+        <span class="p">),</span>
+        <span class="n">SearchableField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">),</span>
+        <span class="n">SearchableField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">),</span>
+        <span class="n">SearchableField</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">String</span><span class="p">,</span> <span class="n">filterable</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">),</span>
+        <span class="n">SearchField</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;titleVector&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Collection</span><span class="p">(</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Single</span><span class="p">),</span>
+            <span class="n">searchable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">vector_search_dimensions</span><span class="o">=</span><span class="mi">384</span><span class="p">,</span>
+            <span class="c1"># Assign a vector profile to the field to specify the algorithm</span>
+            <span class="c1"># to use when searching the vector field.</span>
+            <span class="n">vector_search_profile_name</span><span class="o">=</span><span class="s2">&quot;my-vector-config&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">SearchField</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Collection</span><span class="p">(</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Single</span><span class="p">),</span>
+            <span class="n">searchable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">vector_search_dimensions</span><span class="o">=</span><span class="mi">384</span><span class="p">,</span>
+            <span class="n">vector_search_profile_name</span><span class="o">=</span><span class="s2">&quot;my-vector-config&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
     <span class="p">]</span>
 
     <span class="c1"># 2. Define the semantic Settings</span>
@@ -640,40 +668,50 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
     <span class="c1"># https://learn.microsoft.com/en-us/azure/search/semantic-search-overview</span>
     <span class="c1"># https://learn.microsoft.com/en-us/azure/search/semantic-how-to-query-request?tabs=portal%2Cportal-query</span>
     <span class="c1"># https://learn.microsoft.com/en-us/azure/search/semantic-how-to-query-request?tabs=sdk%2Cportal-query</span>
-    <span class="n">semantic_config</span> <span class="o">=</span> <span class="n">SemanticConfiguration</span><span class="p">(</span>  
-        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-semantic-config&quot;</span><span class="p">,</span>  
-        <span class="n">prioritized_fields</span><span class="o">=</span><span class="n">SemanticPrioritizedFields</span><span class="p">(</span>  
-            <span class="n">title_field</span><span class="o">=</span><span class="n">SemanticField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">),</span>  
-            <span class="n">keywords_fields</span><span class="o">=</span><span class="p">[</span><span class="n">SemanticField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;category&quot;</span><span class="p">)],</span>  
-            <span class="n">content_fields</span><span class="o">=</span><span class="p">[</span><span class="n">SemanticField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="p">)]</span>  
-        <span class="p">)</span>  
-    <span class="p">)</span>  
-    <span class="n">semantic_search</span> <span class="o">=</span> <span class="n">SemanticSearch</span><span class="p">(</span><span class="n">configurations</span><span class="o">=</span><span class="p">[</span><span class="n">semantic_config</span><span class="p">])</span>  
+    <span class="n">semantic_config</span> <span class="o">=</span> <span class="n">SemanticConfiguration</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-semantic-config&quot;</span><span class="p">,</span>
+        <span class="n">prioritized_fields</span><span class="o">=</span><span class="n">SemanticPrioritizedFields</span><span class="p">(</span>
+            <span class="n">title_field</span><span class="o">=</span><span class="n">SemanticField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">),</span>
+            <span class="n">keywords_fields</span><span class="o">=</span><span class="p">[</span><span class="n">SemanticField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;category&quot;</span><span class="p">)],</span>
+            <span class="n">content_fields</span><span class="o">=</span><span class="p">[</span><span class="n">SemanticField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="p">)],</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">semantic_search</span> <span class="o">=</span> <span class="n">SemanticSearch</span><span class="p">(</span><span class="n">configurations</span><span class="o">=</span><span class="p">[</span><span class="n">semantic_config</span><span class="p">])</span>
 
     <span class="c1"># 3. Configure the vector search configuration</span>
     <span class="n">vector_search</span> <span class="o">=</span> <span class="n">VectorSearch</span><span class="p">(</span>
-            <span class="n">profiles</span><span class="o">=</span><span class="p">[</span><span class="n">VectorSearchProfile</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-vector-config&quot;</span><span class="p">,</span> <span class="n">algorithm_configuration_name</span><span class="o">=</span><span class="s2">&quot;my-algorithms-config&quot;</span><span class="p">)],</span>
-            <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span>
-                <span class="c1"># Contains configuration options specific to the hnsw approximate nearest neighbors  algorithm used during indexing and querying</span>
-                <span class="n">HnswAlgorithmConfiguration</span><span class="p">(</span>
-                    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-algorithms-config&quot;</span><span class="p">,</span>
-                    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;hnsw&quot;</span><span class="p">,</span>
-                    <span class="c1"># https://learn.microsoft.com/en-us/python/api/azure-search-documents/azure.search.documents.indexes.models.hnswparameters?view=azure-python-preview#variables</span>
-                    <span class="n">parameters</span><span class="o">=</span><span class="n">HnswParameters</span><span class="p">(</span>
-                        <span class="n">m</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-                        <span class="c1"># The size of the dynamic list containing the nearest neighbors, which is used during index time. </span>
-                        <span class="c1"># Increasing this parameter may improve index quality, at the expense of increased indexing time.</span>
-                        <span class="n">ef_construction</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> 
-                        <span class="c1"># The size of the dynamic list containing the nearest neighbors, which is used during search time. </span>
-                        <span class="c1"># Increasing this parameter may improve search results, at the expense of slower search.</span>
-                        <span class="n">ef_search</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-                        <span class="c1"># The similarity metric to use for vector comparisons. </span>
-                        <span class="c1"># Known values are: &quot;cosine&quot;, &quot;euclidean&quot;, and &quot;dotProduct&quot;</span>
-                        <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span>
-                    <span class="p">),</span>
-                <span class="p">)</span>
-            <span class="p">]</span>
-        <span class="p">)</span>
+        <span class="n">profiles</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">VectorSearchProfile</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-vector-config&quot;</span><span class="p">,</span>
+                <span class="n">algorithm_configuration_name</span><span class="o">=</span><span class="s2">&quot;my-algorithms-config&quot;</span><span class="p">,</span>
+                <span class="c1"># Configuring a vectorizer in a search index is currently in public preview and available through API and beta SDK.</span>
+                <span class="c1"># A vectorizer is a component of a search index that specifies a vectorization agent, such as a deployed embedding model on Azure OpenAI that converts text to vectors. You can define a vectorizer once, and then reference it in the vector profile assigned to a vector field.</span>
+                <span class="c1"># A vectorizer is used for queries. It allows the search service to vectorize a text query on your behalf.</span>
+                <span class="c1"># https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-configure-vectorizer</span>
+            <span class="p">)</span>
+        <span class="p">],</span>
+        <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span>
+            <span class="c1"># Contains configuration options specific to the hnsw approximate nearest neighbors  algorithm used during indexing and querying</span>
+            <span class="n">HnswAlgorithmConfiguration</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-algorithms-config&quot;</span><span class="p">,</span>
+                <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;hnsw&quot;</span><span class="p">,</span>
+                <span class="c1"># https://learn.microsoft.com/en-us/python/api/azure-search-documents/azure.search.documents.indexes.models.hnswparameters?view=azure-python-preview#variables</span>
+                <span class="n">parameters</span><span class="o">=</span><span class="n">HnswParameters</span><span class="p">(</span>
+                    <span class="n">m</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                    <span class="c1"># The size of the dynamic list containing the nearest neighbors, which is used during index time.</span>
+                    <span class="c1"># Increasing this parameter may improve index quality, at the expense of increased indexing time.</span>
+                    <span class="n">ef_construction</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
+                    <span class="c1"># The size of the dynamic list containing the nearest neighbors, which is used during search time.</span>
+                    <span class="c1"># Increasing this parameter may improve search results, at the expense of slower search.</span>
+                    <span class="n">ef_search</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                    <span class="c1"># The similarity metric to use for vector comparisons.</span>
+                    <span class="c1"># Known values are: &quot;cosine&quot;, &quot;euclidean&quot;, and &quot;dotProduct&quot;</span>
+                    <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">],</span>
+        
+    <span class="p">)</span>
 
     <span class="c1"># CORS is used for apps that issues requests from different domains.</span>
     <span class="c1"># cors_options = CorsOptions(allowed_origins=[&quot;*&quot;], max_age_in_seconds=60)</span>
@@ -682,18 +720,17 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
     <span class="c1"># https://learn.microsoft.com/en-us/azure/search/index-add-scoring-profiles</span>
     <span class="n">scoring_profiles</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ScoringProfile</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">index</span> <span class="o">=</span> <span class="n">SearchIndex</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span> 
-        <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> 
-        <span class="n">scoring_profiles</span><span class="o">=</span><span class="n">scoring_profiles</span><span class="p">,</span> 
+        <span class="n">name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span>
+        <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+        <span class="n">scoring_profiles</span><span class="o">=</span><span class="n">scoring_profiles</span><span class="p">,</span>
         <span class="c1"># cors_options=cors_options,</span>
         <span class="c1"># tokenizers=[], # TOOD: Add tokenizers,</span>
         <span class="n">semantic_search</span><span class="o">=</span><span class="n">semantic_search</span><span class="p">,</span>
-        <span class="n">vector_search</span><span class="o">=</span><span class="n">vector_search</span>
-        <span class="p">)</span> 
-        
+        <span class="n">vector_search</span><span class="o">=</span><span class="n">vector_search</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_or_update_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> created or updated&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> created or updated&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -705,45 +742,47 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my_index created or updated
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>my_index_2 created or updated
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="create-a-search-indexer">
-<h3>2. Create a Search Indexer<a class="headerlink" href="#create-a-search-indexer" title="Permalink to this heading">#</a></h3>
-<p>Create indexer example: <a class="github reference external" href="https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/search/azure-search-documents/samples/sample_indexers_operations.py">Azure/azure-sdk-for-python</a></p>
-<p>Connect to a Blob Storage: <a class="github reference external" href="https://github.com/Azure/azure-search-vector-samples/blob/main/demo-python/code/azure-search-integrated-vectorization-sample.ipynb">Azure/azure-search-vector-samples</a> &amp; skillset example</p>
+<section id="create-a-search-indexer-is-this-needed-isn-t-it-only-for-automating-data-import">
+<h3>2. Create a Search Indexer - Is this needed? Isn’t it only for automating data import<a class="headerlink" href="#create-a-search-indexer-is-this-needed-isn-t-it-only-for-automating-data-import" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/search-howto-create-indexers?tabs=portal">https://learn.microsoft.com/en-us/azure/search/search-howto-create-indexers?tabs=portal</a></p>
+<!-- Create indexer example: https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/search/azure-search-documents/samples/sample_indexers_operations.py
+
+Connect to a Blob Storage: https://github.com/Azure/azure-search-vector-samples/blob/main/demo-python/code/azure-search-integrated-vectorization-sample.ipynb & skillset example -->
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">azure.core.credentials</span> <span class="kn">import</span> <span class="n">AzureKeyCredential</span>
-<span class="kn">from</span> <span class="nn">azure.search.documents.indexes.models</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">SearchIndexerDataContainer</span><span class="p">,</span>
-    <span class="n">SearchIndexerDataSourceConnection</span><span class="p">,</span>
-    <span class="n">SearchIndex</span><span class="p">,</span>
-    <span class="n">SearchIndexer</span><span class="p">,</span>
-    <span class="n">SimpleField</span><span class="p">,</span>
-    <span class="n">SearchFieldDataType</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="kn">from</span> <span class="nn">azure.search.documents.indexes</span> <span class="kn">import</span> <span class="n">SearchIndexClient</span><span class="p">,</span> <span class="n">SearchIndexerClient</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from azure.core.credentials import AzureKeyCredential</span>
+<span class="c1"># from azure.search.documents.indexes.models import (</span>
+<span class="c1">#     SearchIndexerDataContainer,</span>
+<span class="c1">#     SearchIndexerDataSourceConnection,</span>
+<span class="c1">#     SearchIndex,</span>
+<span class="c1">#     SearchIndexer,</span>
+<span class="c1">#     SimpleField,</span>
+<span class="c1">#     SearchFieldDataType,</span>
+<span class="c1"># )</span>
+<span class="c1"># from azure.search.documents.indexes import SearchIndexClient, SearchIndexerClient</span>
 
-<span class="k">def</span> <span class="nf">create_indexer</span><span class="p">(</span><span class="n">indexer_name</span><span class="p">,</span> <span class="n">data_source_name</span><span class="p">,</span> <span class="n">storage_account_connection_string</span><span class="p">,</span> <span class="n">target_index_name</span><span class="p">):</span>
-    <span class="c1"># Create a datasource</span>
-    <span class="n">container</span> <span class="o">=</span> <span class="n">SearchIndexerDataContainer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;searchcontainer&quot;</span><span class="p">)</span>
-    <span class="n">data_source_connection</span> <span class="o">=</span> <span class="n">SearchIndexerDataSourceConnection</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="n">data_source_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;azureblob&quot;</span><span class="p">,</span> 
-        <span class="n">connection_string</span><span class="o">=</span><span class="n">storage_account_connection_string</span><span class="p">,</span> 
-        <span class="n">container</span><span class="o">=</span><span class="n">container</span>
-    <span class="p">)</span>
-    <span class="n">data_source</span> <span class="o">=</span> <span class="n">indexers_client</span><span class="o">.</span><span class="n">create_data_source_connection</span><span class="p">(</span><span class="n">data_source_connection</span><span class="p">)</span>
+<span class="c1"># def create_indexer(indexer_name, data_source_name, storage_account_connection_string, target_index_name):</span>
+<span class="c1">#     # Create a datasource</span>
+<span class="c1">#     container = SearchIndexerDataContainer(name=&quot;searchcontainer&quot;)</span>
+<span class="c1">#     data_source_connection = SearchIndexerDataSourceConnection(</span>
+<span class="c1">#         name=data_source_name, type=&quot;azureblob&quot;, </span>
+<span class="c1">#         connection_string=storage_account_connection_string, </span>
+<span class="c1">#         container=container</span>
+<span class="c1">#     )</span>
+<span class="c1">#     data_source = indexers_client.create_data_source_connection(data_source_connection)</span>
 
-    <span class="c1"># Create the indexer</span>
-    <span class="n">indexer</span> <span class="o">=</span> <span class="n">SearchIndexer</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="n">indexer_name</span><span class="p">,</span> <span class="n">data_source_name</span><span class="o">=</span><span class="n">data_source_name</span><span class="p">,</span> <span class="n">target_index_name</span><span class="o">=</span><span class="n">target_index_name</span>
-    <span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">indexers_client</span><span class="o">.</span><span class="n">create_indexer</span><span class="p">(</span><span class="n">indexer</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created a new Indexer </span><span class="si">{</span><span class="n">indexer_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1">#     # Create the indexer</span>
+<span class="c1">#     indexer = SearchIndexer(</span>
+<span class="c1">#         name=indexer_name, data_source_name=data_source_name, target_index_name=target_index_name</span>
+<span class="c1">#     )</span>
+<span class="c1">#     result = indexers_client.create_indexer(indexer)</span>
+<span class="c1">#     print(f&quot;Created a new Indexer {indexer_name}&quot;)</span>
 </pre></div>
 </div>
 </div>
@@ -766,16 +805,19 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="k">def</span> <span class="nf">get_query_embedding</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="n">aoai_endpoint</span><span class="p">,</span> <span class="n">api_key</span> <span class="o">=</span> <span class="n">aoi_api_key</span><span class="p">,</span> <span class="n">api_version</span> <span class="o">=</span>  <span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span> <span class="n">embedding_model_deployment</span><span class="o">=</span><span class="n">embedding_model_name</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_query_embedding</span><span class="p">(</span>
+    <span class="n">query</span><span class="p">,</span>
+    <span class="n">endpoint</span><span class="o">=</span><span class="n">aoai_endpoint</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="n">aoi_api_key</span><span class="p">,</span>
+    <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span>
+    <span class="n">embedding_model_deployment</span><span class="o">=</span><span class="n">embedding_model_name</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span>
-    <span class="p">}</span>
-    <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="n">query</span>
-    <span class="p">}</span>
-    <span class="n">embedding_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">request_url</span><span class="p">,</span> <span class="n">json</span> <span class="o">=</span> <span class="n">request_payload</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">}</span>
+    <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
+    <span class="n">embedding_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="n">request_url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">request_payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
     <span class="k">if</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
         <span class="n">data_values</span> <span class="o">=</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
         <span class="n">embeddings_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_value</span><span class="p">[</span><span class="s2">&quot;embedding&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">data_value</span> <span class="ow">in</span> <span class="n">data_values</span><span class="p">]</span>
@@ -791,14 +833,10 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
 
 <span class="n">query_vectors</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span>
-                <span class="n">query</span><span class="p">,</span>
-                <span class="n">aoai_endpoint</span><span class="p">,</span>
-                <span class="n">aoi_api_key</span><span class="p">,</span>
-                <span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span>
-                <span class="n">embedding_model_name</span>
-            <span class="p">)</span>
-            
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The embedded vector is: </span><span class="si">{</span><span class="n">query_vectors</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">query</span><span class="p">,</span> <span class="n">aoai_endpoint</span><span class="p">,</span> <span class="n">aoi_api_key</span><span class="p">,</span> <span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span> <span class="n">embedding_model_name</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The embedded vector is: </span><span class="si">{</span><span class="n">query_vectors</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -813,19 +851,19 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 <p>Read your data, generate embeddings using OpenAI model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/text-sample.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  
-    <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>  
-  
-<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>  
-    <span class="n">title</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>  
-    <span class="n">content</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>  
-    <span class="n">title_embeddings</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>  
-    <span class="n">content_embeddings</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>  
-    <span class="n">item</span><span class="p">[</span><span class="s1">&#39;titleVector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title_embeddings</span> 
-    <span class="n">item</span><span class="p">[</span><span class="s1">&#39;contentVector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_embeddings</span>
-  
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./output/docVectors-openai.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>  
-    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>  
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./data/text-sample.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
+    <span class="n">title_embeddings</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">content_embeddings</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">item</span><span class="p">[</span><span class="s2">&quot;titleVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title_embeddings</span>
+    <span class="n">item</span><span class="p">[</span><span class="s2">&quot;contentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_embeddings</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./output/docVectors-openai.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -837,12 +875,12 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 <p>We will use <a class="reference external" href="https://huggingface.co/intfloat/e5-small-v2"><code class="docutils literal notranslate"><span class="pre">infloat/e5-small-v2</span></code></a> from Hugging Face, which is of size 0.13 GB.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>  
-  
-<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s1">&#39;intfloat/e5-small-v2&#39;</span><span class="p">)</span>  
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)</span>
 <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
 
-<span class="n">embedded_query</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  
+<span class="n">embedded_query</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">embedded_query</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -862,23 +900,23 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 <p>Read your data, generate embeddings using HuggingFace model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>  
-  
-<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s1">&#39;intfloat/e5-small-v2&#39;</span><span class="p">)</span>  
-  
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/text-sample.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  
-    <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>  
-  
-<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>  
-    <span class="n">title</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>  
-    <span class="n">content</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>  
-    <span class="n">title_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  
-    <span class="n">content_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  
-    <span class="n">item</span><span class="p">[</span><span class="s1">&#39;titleVector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  
-    <span class="n">item</span><span class="p">[</span><span class="s1">&#39;contentVector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  
-  
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./output/docVectors-e5.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>  
-    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>  
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./data/text-sample.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
+    <span class="n">title_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">content_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">item</span><span class="p">[</span><span class="s2">&quot;titleVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">title_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">item</span><span class="p">[</span><span class="s2">&quot;contentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./output/docVectors-e5.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -887,72 +925,7 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 </section>
 <section id="upload-data">
 <h3>3. Upload data<a class="headerlink" href="#upload-data" title="Permalink to this heading">#</a></h3>
-<p><a class="github reference external" href="https://github.com/microsoft/rag-experiment-accelerator/blob/development/rag_experiment_accelerator/ingest_data/acs_ingest.py">microsoft/rag-experiment-accelerator</a></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import pandas as pd</span>
-<span class="c1"># from azure.core.credentials import AzureKeyCredential</span>
-<span class="c1"># from azure.search.documents import SearchClient</span>
-
-<span class="c1"># def upload_data(</span>
-<span class="c1">#     chunks: list,</span>
-<span class="c1">#     service_endpoint: str,</span>
-<span class="c1">#     index_name: str,</span>
-<span class="c1">#     search_key: str,</span>
-<span class="c1">#     embedding_model: EmbeddingModel,</span>
-<span class="c1">#     azure_oai_deployment_name: str,</span>
-<span class="c1"># ):</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1">#     Uploads data to an Azure AI Search index.</span>
-
-<span class="c1">#     Args:</span>
-<span class="c1">#         chunks (list): A list of data chunks to upload.</span>
-<span class="c1">#         service_endpoint (str): The endpoint URL for the Azure AI Search service.</span>
-<span class="c1">#         index_name (str): The name of the index to upload data to.</span>
-<span class="c1">#         search_key (str): The search key for the Azure AI Search service.</span>
-<span class="c1">#         embedding_model (EmbeddingModel): The embedding model to generate the embedding.</span>
-<span class="c1">#         azure_oai_deployment_name (str): The name of the Azure Opan AI deployment to use for generating titles and summaries.</span>
-
-<span class="c1">#     Returns:</span>
-<span class="c1">#         None</span>
-<span class="c1">#     &quot;&quot;&quot;</span>
-<span class="c1">#     credential = AzureKeyCredential(search_key)</span>
-<span class="c1">#     search_client = SearchClient(</span>
-<span class="c1">#         endpoint=service_endpoint, index_name=index_name, credential=credential</span>
-<span class="c1">#     )</span>
-<span class="c1">#     documents = []</span>
-<span class="c1">#     for i, chunk in enumerate(chunks):</span>
-<span class="c1">#         try:</span>
-<span class="c1">#             title = generate_title(str(chunk[&quot;content&quot;]), azure_oai_deployment_name)</span>
-<span class="c1">#             summary = generate_summary(str(chunk[&quot;content&quot;]), azure_oai_deployment_name)</span>
-<span class="c1">#         except Exception as e:</span>
-<span class="c1">#             logger.info(f&quot;Could not generate title or summary for chunk {i}&quot;)</span>
-<span class="c1">#             logger.info(e)</span>
-<span class="c1">#             continue</span>
-<span class="c1">#         input_data = {</span>
-<span class="c1">#             &quot;id&quot;: str(my_hash(chunk[&quot;content&quot;])),</span>
-<span class="c1">#             &quot;title&quot;: title,</span>
-<span class="c1">#             &quot;summary&quot;: summary,</span>
-<span class="c1">#             &quot;content&quot;: str(chunk[&quot;content&quot;]),</span>
-<span class="c1">#             &quot;filename&quot;: &quot;test&quot;,</span>
-<span class="c1">#             &quot;contentVector&quot;: chunk[&quot;content_vector&quot;],</span>
-<span class="c1">#             &quot;contentSummary&quot;: embedding_model.generate_embedding(</span>
-<span class="c1">#                 chunk=str(pre_process.preprocess(summary))</span>
-<span class="c1">#             ),</span>
-<span class="c1">#             &quot;contentTitle&quot;: embedding_model.generate_embedding(</span>
-<span class="c1">#                 chunk=str(pre_process.preprocess(title))</span>
-<span class="c1">#             ),</span>
-<span class="c1">#         }</span>
-
-<span class="c1">#         documents.append(input_data)</span>
-
-<span class="c1">#         search_client.upload_documents([input_data])</span>
-<span class="c1">#     logger.info(f&quot;Uploaded {len(documents)} documents&quot;)</span>
-<span class="c1">#     logger.info(&quot;all documents have been uploaded to the search index&quot;)</span>
-</pre></div>
-</div>
-</div>
-</div>
+<!-- https://github.com/microsoft/rag-experiment-accelerator/blob/development/rag_experiment_accelerator/ingest_data/acs_ingest.py -->
 <p>Add texts and metadata from the JSON data to the vector store using Hugging Face embedded vectors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -975,31 +948,54 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in c:\projects\workshop2024
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_results</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Title: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Score: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;@search.score&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Content: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Category: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Title: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Score: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;@search.score&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Content: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Category: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="n">search_client</span> <span class="o">=</span> <span class="n">SearchClient</span><span class="p">(</span><span class="n">service_endpoint</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">,</span> <span class="n">credential</span><span class="o">=</span><span class="n">credential</span><span class="p">)</span>  
-<span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  
+
+<span class="n">search_client</span> <span class="o">=</span> <span class="n">SearchClient</span><span class="p">(</span><span class="n">service_endpoint</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">,</span> <span class="n">credential</span><span class="o">=</span><span class="n">credential</span><span class="p">)</span>
+<span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
+<section id="search">
+<h3>4. Search<a class="headerlink" href="#search" title="Permalink to this heading">#</a></h3>
+<!-- https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search-outperforming-vector-search-with-hybrid/ba-p/3929167 -->
+<p>There are two layers of execution: retrieval and ranking.</p>
+<ul class="simple">
+<li><p>Retrieval - also called L1, has the goal to quickly find all the documents from the index that satisfy the search criteria (possibly across millions or billions of documents). These are scored to pick the top few (typically in order of 50) to return to the user or to feed the next layer. Azure AI Search supports three different models:</p>
+<ul>
+<li><p>Keyword: Uses traditional full-text search methods – content is broken into terms through language-specific text analysis, inverted indexes are created for fast retrieval, and the BM25 probabilistic model is used for scoring.</p></li>
+<li><p>Vector: Documents are converted from text to vector representations using an embedding model. Retrieval is performed by generating a query embedding and finding the documents whose vectors are closest to the query’s. We used Azure Open AI text-embedding-ada-002 (Ada-002) embeddings and cosine similarity for all our tests in this post.</p></li>
+<li><p>Hybrid: Performs both keyword and vector retrieval and applies a fusion step to select the best results from each technique. Azure AI Search currently uses Reciprocal Rank Fusion (RRF) to produce a single result set.</p></li>
+</ul>
+</li>
+<li><p>Ranking – also called L2, takes a subset of the top L1 results and computes higher quality relevance scores to reorder the result set. The L2 can improve the L1’s ranking because it applies more computational power to each result. The L2 ranker can only reorder what the L1 already found – if the L1 missed an ideal document, the L2 can’t fix that. L2 ranking is critical for RAG applications to make sure the best results are in the top positions.</p>
+<ul>
+<li><p>Semantic ranking is performed by Azure AI Search’s L2 ranker which utilizes multi-lingual, deep learning models adapted from Microsoft Bing. The Semantic ranker can rank the top 50 results from the L1.</p></li>
+</ul>
+</li>
+</ul>
+<p><a class="reference external" href="https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search-outperforming-vector-search-with-hybrid/ba-p/3929167">https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search-outperforming-vector-search-with-hybrid/ba-p/3929167</a></p>
+</section>
 <section id="perform-a-vector-similarity-search">
 <h3>Perform a vector similarity search<a class="headerlink" href="#perform-a-vector-similarity-search" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;tools for software development&quot;</span>  
-<span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span><span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span><span class="p">)</span>
-  
-<span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>  
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;tools for software development&quot;</span>
+<span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+    <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span>
+<span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
     <span class="n">search_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">vector_queries</span><span class="o">=</span> <span class="p">[</span><span class="n">vector_query</span><span class="p">],</span> 
-    <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">],</span>  
-<span class="p">)</span>  
-  
+    <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
+    <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
 <span class="n">print_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1011,12 +1007,12 @@ Content: Azure Front Door is a global, scalable, and secure entry point for fast
 Category: Networking
 
 Title: Azure Power BI Embedded
-Score: 0.7912203
+Score: 0.7912205
 Content: Azure Power BI Embedded is a cloud-based analytics service that enables you to embed interactive visualizations and reports into your applications. It provides features like data exploration, custom visuals, and real-time data refresh. Power BI Embedded supports various data sources, such as Azure SQL Database, Azure Blob Storage, and on-premises databases. You can use Power BI Embedded to create data-driven applications, improve decision-making, and enhance user experiences. It also integrates with other Azure services, such as Azure Synapse Analytics and Azure Machine Learning.
 Category: Analytics
 
 Title: Azure API for FHIR
-Score: 0.79053134
+Score: 0.7905315
 Content: Azure API for FHIR is a fully managed, standards-based API that enables you to store, manage, and exchange health data in the Fast Healthcare Interoperability Resources (FHIR) format. It provides features like data validation, versioning, and integration with Azure Active Directory. API for FHIR supports various data types, such as clinical, imaging, and administrative data. You can use Azure API for FHIR to build healthcare applications, ensure the security and compliance of your health data, and streamline your data management. It also integrates with other Azure services, such as Azure Machine Learning and Azure IoT Central.
 Category: Healthcare
 </pre></div>
@@ -1028,17 +1024,19 @@ Category: Healthcare
 <h3>Perform a pure vector search with a filter<a class="headerlink" href="#perform-a-pure-vector-search-with-a-filter" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;tools for software development&quot;</span>  
-<span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  
-<span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span><span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span><span class="p">)</span>
-  
-<span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>  
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;tools for software development&quot;</span>
+<span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+    <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span>
+<span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
     <span class="n">search_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">vector_queries</span><span class="o">=</span> <span class="p">[</span><span class="n">vector_query</span><span class="p">],</span> 
+    <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
     <span class="nb">filter</span><span class="o">=</span><span class="s2">&quot;category eq &#39;Developer Tools&#39;&quot;</span><span class="p">,</span>
     <span class="n">vector_filter_mode</span><span class="o">=</span><span class="n">VectorFilterMode</span><span class="o">.</span><span class="n">PRE_FILTER</span><span class="p">,</span>
-    <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">],</span>  
-<span class="p">)</span>  
+    <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">],</span>
+<span class="p">)</span>
 
 <span class="n">print_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </pre></div>
@@ -1063,11 +1061,180 @@ Category: Developer Tools
 </div>
 </div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>RAG is not the only solution for incorporating domain knowledge, as illustrated below:</p>
+</section>
+<section id="perform-a-hybrid-search">
+<h3>Perform a hybrid search<a class="headerlink" href="#perform-a-hybrid-search" title="Permalink to this heading">#</a></h3>
+<p>Hybrid Retrieval brings out the best of Keyword and Vector Search</p>
+<p>Keyword and vector retrieval tackle search from different perspectives, which yield complementary capabilities. Vector retrieval semantically matches queries to passages with similar meanings. This is powerful because embeddings are less sensitive to misspellings, synonyms, and phrasing differences and can even work in cross lingual scenarios. Keyword search is useful because it prioritizes matching specific, important words that might be diluted in an embedding.</p>
+<p>User search can take many forms. Hybrid retrieval consistently brings out the best from both retrieval methods across query types. With the most effective L1, the L2 ranking step can significantly improve the quality of results in the top positions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pure Vector Search</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;scalable storage solution&quot;</span>
+<span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+    <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span>
+<span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">search_text</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+    <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
+    <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">],</span>
+    <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">print_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
 </div>
-<p><img alt="domain-knowledge" src="_images/domain-knowledge2.png" /></p>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Title: Azure Storage
+Score: 0.03333333507180214
+Content: Azure Storage is a scalable, durable, and highly available cloud storage service that supports a variety of data types, including blobs, files, queues, and tables. It provides a massively scalable object store for unstructured data. Storage supports data redundancy and geo-replication, ensuring high durability and availability. It offers a variety of data access and management options, including REST APIs, SDKs, and Azure Portal. You can secure your data using encryption at rest and in transit.
+Category: Storage
+
+Title: Azure File Storage
+Score: 0.0320020467042923
+Content: Azure File Storage is a fully managed, scalable, and secure file sharing service that enables you to store and access your files over the Server Message Block (SMB) protocol. It provides features like snapshots, shared access signatures, and integration with Azure Backup. File Storage supports various platforms, such as Windows, Linux, and macOS. You can use Azure File Storage to build file sharing solutions, lift and shift your applications to the cloud, and simplify your data management. It also integrates with other Azure services, such as Azure Virtual Machines and Azure Kubernetes Service.
+Category: Storage
+
+Title: Azure Blob Storage
+Score: 0.03177805617451668
+Content: Azure Blob Storage is a scalable, durable, and high-performance object storage service for unstructured data. It provides features like data redundancy, geo-replication, and fine-grained access control. Blob Storage supports various data types, such as images, documents, and videos. You can use Blob Storage to store and manage your data, build data lakes, and develop big data analytics solutions. It also integrates with other Azure services, such as Azure CDN, Azure Functions, and Azure Machine Learning.
+Category: Storage
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="perform-a-semantic-hybrid-search">
+<h3>Perform a semantic hybrid search<a class="headerlink" href="#perform-a-semantic-hybrid-search" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;what is azure sarch?&quot;</span>
+
+<span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+    <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span>
+<span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">search_text</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+    <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
+    <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">],</span>
+    <span class="n">query_type</span><span class="o">=</span><span class="n">QueryType</span><span class="o">.</span><span class="n">SEMANTIC</span><span class="p">,</span>
+    <span class="n">semantic_configuration_name</span><span class="o">=</span><span class="s2">&quot;my-semantic-config&quot;</span><span class="p">,</span>
+    <span class="n">query_caption</span><span class="o">=</span><span class="n">QueryCaptionType</span><span class="o">.</span><span class="n">EXTRACTIVE</span><span class="p">,</span>
+    <span class="n">query_answer</span><span class="o">=</span><span class="n">QueryAnswerType</span><span class="o">.</span><span class="n">EXTRACTIVE</span><span class="p">,</span>
+    <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">semantic_answers</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_answers</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">answer</span> <span class="ow">in</span> <span class="n">semantic_answers</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">answer</span><span class="o">.</span><span class="n">highlights</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Semantic Answer: </span><span class="si">{</span><span class="n">answer</span><span class="o">.</span><span class="n">highlights</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Semantic Answer: </span><span class="si">{</span><span class="n">answer</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Semantic Answer Score: </span><span class="si">{</span><span class="n">answer</span><span class="o">.</span><span class="n">score</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Title: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reranker Score: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;@search.reranker_score&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Content: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Category: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">captions</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;@search.captions&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">captions</span><span class="p">:</span>
+        <span class="n">caption</span> <span class="o">=</span> <span class="n">captions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">caption</span><span class="o">.</span><span class="n">highlights</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Caption: </span><span class="si">{</span><span class="n">caption</span><span class="o">.</span><span class="n">highlights</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Caption: </span><span class="si">{</span><span class="n">caption</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">HttpResponseError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">19</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">search_text</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">19</span> <span class="n">semantic_answers</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_answers</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="k">for</span> <span class="n">answer</span> <span class="ow">in</span> <span class="n">semantic_answers</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="k">if</span> <span class="n">answer</span><span class="o">.</span><span class="n">highlights</span><span class="p">:</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\search\documents\_paging.py:93,</span> in <span class="ni">SearchItemPaged.get_answers</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">def</span> <span class="nf">get_answers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">QueryAnswerResult</span><span class="p">]]:</span>
+<span class="g g-Whitespace">     </span><span class="mi">88</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Return answers.</span>
+<span class="g g-Whitespace">     </span><span class="mi">89</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">90</span><span class="sd">     :return: answers</span>
+<span class="g g-Whitespace">     </span><span class="mi">91</span><span class="sd">     :rtype: list[~azure.search.documents.models.QueryAnswerResult] or None</span>
+<span class="g g-Whitespace">     </span><span class="mi">92</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">93</span>     <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="n">QueryAnswerResult</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_iterator_instance</span><span class="p">()</span><span class="o">.</span><span class="n">get_answers</span><span class="p">())</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\search\documents\_paging.py:102,</span> in <span class="ni">_ensure_response.&lt;locals&gt;.wrapper</span><span class="nt">(self, *args, **kw)</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_page</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">102</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">continuation_token</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">103</span>         <span class="bp">self</span><span class="o">.</span><span class="n">continuation_token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_response</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">104</span>     <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\search\documents\_paging.py:124,</span> in <span class="ni">SearchPageIterator._get_next_cb</span><span class="nt">(self, continuation_token)</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span> <span class="k">def</span> <span class="nf">_get_next_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">continuation_token</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span>     <span class="k">if</span> <span class="n">continuation_token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">124</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">search_post</span><span class="p">(</span><span class="n">search_request</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_initial_query</span><span class="o">.</span><span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>     <span class="n">_next_link</span><span class="p">,</span> <span class="n">next_page_request</span> <span class="o">=</span> <span class="n">unpack_continuation_token</span><span class="p">(</span><span class="n">continuation_token</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">documents</span><span class="o">.</span><span class="n">search_post</span><span class="p">(</span><span class="n">search_request</span><span class="o">=</span><span class="n">next_page_request</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\core\tracing\decorator.py:78,</span> in <span class="ni">distributed_trace.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper_use_tracer</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="n">span_impl_type</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">tracing_implementation</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="k">if</span> <span class="n">span_impl_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">78</span>     <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="c1"># Merge span is parameter is set, but only if no explicit parent are passed</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="k">if</span> <span class="n">merge_span</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">passed_in_parent</span><span class="p">:</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\azure\search\documents\_generated\operations\_documents_operations.py:756,</span> in <span class="ni">DocumentsOperations.search_post</span><span class="nt">(self, search_request, request_options, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">754</span>     <span class="n">map_error</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">,</span> <span class="n">error_map</span><span class="o">=</span><span class="n">error_map</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">755</span>     <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deserialize</span><span class="o">.</span><span class="n">failsafe_deserialize</span><span class="p">(</span><span class="n">_models</span><span class="o">.</span><span class="n">SearchError</span><span class="p">,</span> <span class="n">pipeline_response</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">756</span>     <span class="k">raise</span> <span class="n">HttpResponseError</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">error</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">758</span> <span class="n">deserialized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deserialize</span><span class="p">(</span><span class="s2">&quot;SearchDocumentsResult&quot;</span><span class="p">,</span> <span class="n">pipeline_response</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">760</span> <span class="k">if</span> <span class="bp">cls</span><span class="p">:</span>
+
+<span class="ne">HttpResponseError</span>: (FeatureNotSupportedInService) Semantic search is not enabled for this service.
+<span class="n">Parameter</span> <span class="n">name</span><span class="p">:</span> <span class="n">queryType</span>
+<span class="ne">Code</span>: FeatureNotSupportedInService
+<span class="ne">Message</span>: Semantic search is not enabled for this service.
+<span class="n">Parameter</span> <span class="n">name</span><span class="p">:</span> <span class="n">queryType</span>
+<span class="ne">Exception</span> <span class="n">Details</span><span class="p">:</span>	<span class="p">(</span><span class="n">SemanticQueriesNotAvailable</span><span class="p">)</span> <span class="n">Semantic</span> <span class="n">search</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">enabled</span> <span class="k">for</span> <span class="n">this</span> <span class="n">service</span><span class="o">.</span>
+	<span class="n">Code</span><span class="p">:</span> <span class="n">SemanticQueriesNotAvailable</span>
+	<span class="n">Message</span><span class="p">:</span> <span class="n">Semantic</span> <span class="n">search</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">enabled</span> <span class="k">for</span> <span class="n">this</span> <span class="n">service</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="integrated-data-chunking-and-embedding-in-azure-ai-search">
+<h2>Integrated data chunking and embedding in Azure AI Search<a class="headerlink" href="#integrated-data-chunking-and-embedding-in-azure-ai-search" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-integrated-vectorization">https://learn.microsoft.com/en-us/azure/search/vector-search-integrated-vectorization</a></p>
+<p><em>Integrated vectorization</em> adds data chunking and text-to-vector embedding to skills in indexer-based indexing.
+In this preview, chunking and vectorization are built into indexing through skills and indexers. You can set up a skillset that chunks data using the Text Split skill, and then call an embedding model using either the AzureOpenAIEmbedding skill or a custom skill. Any vectorizers used during indexing can also be called on queries to convert text to vectors.</p>
+<p><a class="reference external" href="https://devblogs.microsoft.com/semantic-kernel/announcing-semantic-kernel-integration-with-azure-cognitive-search/">https://devblogs.microsoft.com/semantic-kernel/announcing-semantic-kernel-integration-with-azure-cognitive-search/</a></p>
+<p>hybrid retrieval + semantic ranking as the most effective approach for improved relevance out-of-the-box
+<a class="reference external" href="https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search-outperforming-vector-search-with-hybrid/ba-p/3929167">https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search-outperforming-vector-search-with-hybrid/ba-p/3929167</a></p>
+<p>Code sample: <a class="github reference external" href="https://github.com/Azure/azure-search-vector-samples">Azure/azure-search-vector-samples</a></p>
+<p>Configure a vectorizer in a search index: <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-configure-vectorizer">https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-configure-vectorizer</a></p>
+<section id="chunking">
+<h3>Chunking<a class="headerlink" href="#chunking" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents">https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents</a></p>
+<p>Your document chunking strategy matters - <a class="reference external" href="https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search-outperforming-vector-search-with-hybrid/ba-p/3929167">https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search-outperforming-vector-search-with-hybrid/ba-p/3929167</a></p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>New to copilot and RAG concepts?</p>
@@ -1145,14 +1312,10 @@ Category: Developer Tools
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Retrieval Augmented Generation</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag-architecture">RAG Architecture</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#information-retrieval-system">Information retrieval system</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#azure-ai-search">Azure AI Search</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-search-in-azure-ai-search-overview">Vector search in Azure AI Search - Overview</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rag-architecture">RAG Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#information-retrieval-system">Information retrieval system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#azure-ai-search">Azure AI Search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-search-in-azure-ai-search-overview">Vector search in Azure AI Search - Overview</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop">Workshop</a><ul class="visible nav section-nav flex-column">
@@ -1161,7 +1324,7 @@ Category: Developer Tools
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-required-libraries-and-environment-variables">Import required libraries and environment variables</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-search-index">1. Create Search Index</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-search-indexer">2. Create a Search Indexer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-search-indexer-is-this-needed-isn-t-it-only-for-automating-data-import">2. Create a Search Indexer - Is this needed? Isn’t it only for automating data import</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-embeddings">3. Create Embeddings</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#which-embeddings-model-to-use">Which Embeddings Model to use?</a></li>
 </ul>
@@ -1175,8 +1338,15 @@ Category: Developer Tools
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-data">3. Upload data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#search">4. Search</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-vector-similarity-search">Perform a vector similarity search</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-pure-vector-search-with-a-filter">Perform a pure vector search with a filter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-hybrid-search">Perform a hybrid search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-semantic-hybrid-search">Perform a semantic hybrid search</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrated-data-chunking-and-embedding-in-azure-ai-search">Integrated data chunking and embedding in Azure AI Search</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking">Chunking</a></li>
 </ul>
 </li>
 </ul>

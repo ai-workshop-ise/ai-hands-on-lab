@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Welcome to your AI Hands-On Workshop &#8212; AI Workshop</title>
+    <title>Welcome &#8212; AI Workshop</title>
   
   
   
@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Retrieval Augmented Generation" href="rag-ml.html" />
+    <link rel="next" title="1. Retrieval Augmented Generation" href="1.rag-intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -167,15 +167,16 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    Welcome to your AI Hands-On Workshop
+                    Welcome
                 </a>
             </li>
         </ul>
         <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="rag-ml.html">Retrieval Augmented Generation</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="aisearch.html">Vector search in Azure AI Search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison of existing Azure Studios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2. Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
 </ul>
 
     </div>
@@ -361,7 +362,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Welcome to your AI Hands-On Workshop</h1>
+    <h1>Welcome</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -372,6 +373,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ready-let-s-start">Ready? Let’s start!</a></li>
 </ul>
             </nav>
         </div>
@@ -383,26 +386,42 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-your-ai-hands-on-workshop">
-<h1>Welcome to your AI Hands-On Workshop<a class="headerlink" href="#welcome-to-your-ai-hands-on-workshop" title="Permalink to this heading">#</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a> for more information.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="welcome">
+<h1>Welcome<a class="headerlink" href="#welcome" title="Permalink to this heading">#</a></h1>
+<p>In this workshop, you will go through the core aspects and considerations one should take when working on RAG based GenAI Solutions. RAG has become increasingly important and is currently at the core of most of our engagements.</p>
+<p>We hope that, by the end of the workshop, you will confidently approach such engagements:</p>
+<ul class="simple">
+<li><p><strong>Pre-production</strong>: how to experiment, evaluate and come up with the best solution for a given use case.</p></li>
+<li><p><strong>Post-production</strong>: after deploying the solution to production, how to monitor and ensure that <em>it works as expected</em>.</p></li>
+</ul>
+<p>During this workshop, you won’t encounter things that are not already documented elsewhere. However, we hope to:</p>
+<ul class="simple">
+<li><p>speed up the onboarding process for anyone in ISE</p></li>
+<li><p>capture key best practices that have already been established in the industry</p></li>
+<li><p>provide a framework that would guide you in your thought process so you can confidently join such engagements</p></li>
+<li><p>HAVE FUN!</p></li>
+</ul>
 <section id="prerequisites">
 <h2>Prerequisites:<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://aka.ms/oai/access">Request Access to Azure OpenAI Service</a></p></li>
 </ul>
-<p>Check out the content pages bundled with this sample book to see more.</p>
+</section>
+<section id="content">
+<h2>Content:<a class="headerlink" href="#content" title="Permalink to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="rag-ml.html">Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rag-ml.html#workshop">Workshop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="aisearch.html">Vector search in Azure AI Search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison of existing Azure Studios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2. Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
 </ul>
 </div>
+</section>
+<section id="ready-let-s-start">
+<h2>Ready? Let’s start!<a class="headerlink" href="#ready-let-s-start" title="Permalink to this heading">#</a></h2>
+<p><img alt="intro" src="_images/workshop.jpg" /></p>
 </section>
 </section>
 
@@ -437,11 +456,11 @@ It does not go in-depth into any particular topic - check out <a class="referenc
                   
 <div class="prev-next-area">
     <a class="right-next"
-       href="rag-ml.html"
+       href="1.rag-intro.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Retrieval Augmented Generation</p>
+        <p class="prev-next-title">1. Retrieval Augmented Generation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -462,6 +481,8 @@ It does not go in-depth into any particular topic - check out <a class="referenc
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ready-let-s-start">Ready? Let’s start!</a></li>
 </ul>
   </nav></div>
 

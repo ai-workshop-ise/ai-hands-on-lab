@@ -1,15 +1,26 @@
-# Welcome to your AI Hands-On Workshop
+# Welcome
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+In this workshop, you will go through the core aspects and considerations one should take when working on RAG based GenAI Solutions. RAG has become increasingly important and is currently at the core of most of our engagements.
+
+We hope that, by the end of the workshop, you will confidently approach such engagements:
+- **Pre-production**: how to experiment, evaluate and come up with the best solution for a given use case.
+- **Post-production**: after deploying the solution to production, how to monitor and ensure that *it works as expected*.
+
+During this workshop, you won't encounter things that are not already documented elsewhere. However, we hope to:
+- speed up the onboarding process for anyone in ISE
+- capture key best practices that have already been established in the industry
+- provide a framework that would guide you in your thought process so you can confidently join such engagements
+- HAVE FUN!
 
 ## Prerequisites:
 - [Request Access to Azure OpenAI Service](https://aka.ms/oai/access)
 
-
-Check out the content pages bundled with this sample book to see more.
-
+## Content:
 ```{tableofcontents}
 ```
+
+## Ready? Let's start!
+![intro](workshop.jpg)
+
+
+

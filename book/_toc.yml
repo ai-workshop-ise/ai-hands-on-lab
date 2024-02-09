@@ -2,11 +2,15 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro
+root: 0.intro
 chapters:
 # - file: markdown
 # - file: notebooks
 # - file: markdown-notebooks
-- file: rag-ml
-- file: aisearch
-- file: comparison
+- file: 1.rag-intro
+- file: 2.rag-implementation
+- file: 3.experiment
+- file: 3.1.experiment_chunking
+- file: 3.2.experiment_embedding
+# - file: aisearch
+# - file: comparison
