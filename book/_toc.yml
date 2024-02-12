@@ -8,7 +8,8 @@ chapters:
 # - file: notebooks
 # - file: markdown-notebooks
 - file: 1.rag-intro
-- file: 2.rag-implementation
+- file: 2.rag-implementation-2
+- file: 2.rag-implementation_integrated
 - file: 3.experiment
 - file: 3.1.experiment_chunking
 - file: 3.2.experiment_embedding

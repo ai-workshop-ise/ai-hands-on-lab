@@ -173,6 +173,10 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html">Workshop Setup</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3.1. Chunking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
@@ -389,7 +393,10 @@ document.write(`
 <p>The search solution is comprised of both <strong>ingestion</strong> and <strong>retrieval</strong>. One does not exist without the other.</p>
 <p>While the other experiments are focused on data retrieval, ingestion plays equal importance in the effectiveness of the search solution.</p>
 <p>Certain aspects of data ingestion need to be experimented as part of the experimentation phase:</p>
-<p>Pre and post-processing, such as: Optical Character Recognition, data conversation, use of Azure Form Recognizer to extract information from the documents, chunking, summarization, post-processing to make data more “human like”, video captioning, speech to text, tagging, etc. are all methods that need to be considered and experimented with as part of the ingestion pipeline experimentation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Other pre and post-processing techniques include: Optical Character Recognition, data conversation, use of Azure Form Recognizer to extract information from the documents, chunking, summarization, post-processing to make data more “human like”, video captioning, speech to text, tagging, etc. are all methods that need to be considered and experimented with as part of the ingestion pipeline experimentation.</p>
+</div>
 <p><a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">microsoft/rag-openai</a></p>
 <p>When processing data, splitting the source documents into chunks requires care and expertise to ensure the resulting chunks are small enough to be effective during fact retrieval but not too small so that enough context is provided during summarization.</p>
 <div class="admonition note">
@@ -406,6 +413,325 @@ document.write(`
 <p><a class="reference external" href="https://blog.llamaindex.ai/evaluating-the-ideal-chunk-size-for-a-rag-system-using-llamaindex-6207e5d3fec5">https://blog.llamaindex.ai/evaluating-the-ideal-chunk-size-for-a-rag-system-using-llamaindex-6207e5d3fec5</a></p>
 <p>Example code: <a class="github reference external" href="https://github.com/Azure/azure-search-vector-samples/blob/main/demo-python/code/data-chunking/textsplit-data-chunking-example.ipynb">Azure/azure-search-vector-samples</a></p>
 <p>Read <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/semantic-search-overview">Common Chunking Technique</a>, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents#content-overlap-considerations">Content overlap considerations</a>, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents#content-overlap-considerations">Simple example of how to create chunks with sentences</a></p>
+<p>CODE: <a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/customskills/utils/chunker/text_chunker.py">microsoft/rag-openai</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install langchain-community==0.0.18
+<span class="c1"># %pip install langchain-core==0.1.20</span>
+<span class="o">%</span><span class="k">pip</span> install unstructured==0.12.3
+<span class="o">%</span><span class="k">pip</span> install unstructured-client==0.17.0
+<span class="o">%</span><span class="k">pip</span> install langchain==0.1.5
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting langchain-community==0.0.18Note: you may need to restart the kernel to use updated packages.
+
+  Using cached langchain_community-0.0.18-py3-none-any.whl.metadata (7.9 kB)
+Requirement already satisfied: PyYAML&gt;=5.3 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain-community==0.0.18) (6.0.1)
+Requirement already satisfied: SQLAlchemy&lt;3,&gt;=1.4 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain-community==0.0.18) (2.0.25)
+Collecting aiohttp&lt;4.0.0,&gt;=3.8.3 (from langchain-community==0.0.18)
+  Downloading aiohttp-3.9.3-cp312-cp312-win_amd64.whl.metadata (7.6 kB)
+Collecting dataclasses-json&lt;0.7,&gt;=0.5.7 (from langchain-community==0.0.18)
+  Using cached dataclasses_json-0.6.4-py3-none-any.whl.metadata (25 kB)
+Collecting langchain-core&lt;0.2,&gt;=0.1.19 (from langchain-community==0.0.18)
+  Using cached langchain_core-0.1.22-py3-none-any.whl.metadata (6.0 kB)
+Collecting langsmith&lt;0.1,&gt;=0.0.83 (from langchain-community==0.0.18)
+  Downloading langsmith-0.0.90-py3-none-any.whl.metadata (9.9 kB)
+Requirement already satisfied: numpy&lt;2,&gt;=1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain-community==0.0.18) (1.26.3)
+Requirement already satisfied: requests&lt;3,&gt;=2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain-community==0.0.18) (2.31.0)
+Collecting tenacity&lt;9.0.0,&gt;=8.1.0 (from langchain-community==0.0.18)
+  Using cached tenacity-8.2.3-py3-none-any.whl.metadata (1.0 kB)
+Collecting aiosignal&gt;=1.1.2 (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain-community==0.0.18)
+  Using cached aiosignal-1.3.1-py3-none-any.whl (7.6 kB)
+Requirement already satisfied: attrs&gt;=17.3.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain-community==0.0.18) (23.2.0)
+Collecting frozenlist&gt;=1.1.1 (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain-community==0.0.18)
+  Downloading frozenlist-1.4.1-cp312-cp312-win_amd64.whl.metadata (12 kB)
+Collecting multidict&lt;7.0,&gt;=4.5 (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain-community==0.0.18)
+  Downloading multidict-6.0.5-cp312-cp312-win_amd64.whl.metadata (4.3 kB)
+Collecting yarl&lt;2.0,&gt;=1.0 (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain-community==0.0.18)
+  Downloading yarl-1.9.4-cp312-cp312-win_amd64.whl.metadata (32 kB)
+Collecting marshmallow&lt;4.0.0,&gt;=3.18.0 (from dataclasses-json&lt;0.7,&gt;=0.5.7-&gt;langchain-community==0.0.18)
+  Using cached marshmallow-3.20.2-py3-none-any.whl.metadata (7.5 kB)
+Collecting typing-inspect&lt;1,&gt;=0.4.0 (from dataclasses-json&lt;0.7,&gt;=0.5.7-&gt;langchain-community==0.0.18)
+  Using cached typing_inspect-0.9.0-py3-none-any.whl.metadata (1.5 kB)
+Collecting anyio&lt;5,&gt;=3 (from langchain-core&lt;0.2,&gt;=0.1.19-&gt;langchain-community==0.0.18)
+  Using cached anyio-4.2.0-py3-none-any.whl.metadata (4.6 kB)
+Collecting jsonpatch&lt;2.0,&gt;=1.33 (from langchain-core&lt;0.2,&gt;=0.1.19-&gt;langchain-community==0.0.18)
+  Using cached jsonpatch-1.33-py2.py3-none-any.whl.metadata (3.0 kB)
+Collecting langsmith&lt;0.1,&gt;=0.0.83 (from langchain-community==0.0.18)
+  Using cached langsmith-0.0.87-py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: packaging&lt;24.0,&gt;=23.2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain-core&lt;0.2,&gt;=0.1.19-&gt;langchain-community==0.0.18) (23.2)
+Collecting pydantic&lt;3,&gt;=1 (from langchain-core&lt;0.2,&gt;=0.1.19-&gt;langchain-community==0.0.18)
+  Downloading pydantic-2.6.1-py3-none-any.whl.metadata (83 kB)
+     ---------------------------------------- 0.0/83.5 kB ? eta -:--:--
+     ---------------------------------------- 83.5/83.5 kB 4.6 MB/s eta 0:00:00
+Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&lt;3,&gt;=2-&gt;langchain-community==0.0.18) (3.3.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&lt;3,&gt;=2-&gt;langchain-community==0.0.18) (3.6)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&lt;3,&gt;=2-&gt;langchain-community==0.0.18) (2.1.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&lt;3,&gt;=2-&gt;langchain-community==0.0.18) (2023.11.17)
+Requirement already satisfied: typing-extensions&gt;=4.6.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from SQLAlchemy&lt;3,&gt;=1.4-&gt;langchain-community==0.0.18) (4.9.0)
+Requirement already satisfied: greenlet!=0.4.17 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from SQLAlchemy&lt;3,&gt;=1.4-&gt;langchain-community==0.0.18) (3.0.3)
+Collecting sniffio&gt;=1.1 (from anyio&lt;5,&gt;=3-&gt;langchain-core&lt;0.2,&gt;=0.1.19-&gt;langchain-community==0.0.18)
+  Using cached sniffio-1.3.0-py3-none-any.whl (10 kB)
+Collecting jsonpointer&gt;=1.9 (from jsonpatch&lt;2.0,&gt;=1.33-&gt;langchain-core&lt;0.2,&gt;=0.1.19-&gt;langchain-community==0.0.18)
+  Using cached jsonpointer-2.4-py2.py3-none-any.whl.metadata (2.5 kB)
+Collecting annotated-types&gt;=0.4.0 (from pydantic&lt;3,&gt;=1-&gt;langchain-core&lt;0.2,&gt;=0.1.19-&gt;langchain-community==0.0.18)
+  Using cached annotated_types-0.6.0-py3-none-any.whl.metadata (12 kB)
+Collecting pydantic-core==2.16.2 (from pydantic&lt;3,&gt;=1-&gt;langchain-core&lt;0.2,&gt;=0.1.19-&gt;langchain-community==0.0.18)
+  Downloading pydantic_core-2.16.2-cp312-none-win_amd64.whl.metadata (6.6 kB)
+Collecting mypy-extensions&gt;=0.3.0 (from typing-inspect&lt;1,&gt;=0.4.0-&gt;dataclasses-json&lt;0.7,&gt;=0.5.7-&gt;langchain-community==0.0.18)
+  Using cached mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
+Using cached langchain_community-0.0.18-py3-none-any.whl (1.6 MB)
+Downloading aiohttp-3.9.3-cp312-cp312-win_amd64.whl (363 kB)
+   ---------------------------------------- 0.0/363.4 kB ? eta -:--:--
+   --------------------------------------- 363.4/363.4 kB 22.1 MB/s eta 0:00:00
+Using cached dataclasses_json-0.6.4-py3-none-any.whl (28 kB)
+Using cached langchain_core-0.1.22-py3-none-any.whl (239 kB)
+Using cached langsmith-0.0.87-py3-none-any.whl (55 kB)
+Using cached tenacity-8.2.3-py3-none-any.whl (24 kB)
+Using cached anyio-4.2.0-py3-none-any.whl (85 kB)
+Downloading frozenlist-1.4.1-cp312-cp312-win_amd64.whl (50 kB)
+   ---------------------------------------- 0.0/50.5 kB ? eta -:--:--
+   ---------------------------------------- 50.5/50.5 kB ? eta 0:00:00
+Using cached jsonpatch-1.33-py2.py3-none-any.whl (12 kB)
+Using cached marshmallow-3.20.2-py3-none-any.whl (49 kB)
+Downloading multidict-6.0.5-cp312-cp312-win_amd64.whl (27 kB)
+Downloading pydantic-2.6.1-py3-none-any.whl (394 kB)
+   ---------------------------------------- 0.0/394.8 kB ? eta -:--:--
+   --------------------------------------- 394.8/394.8 kB 25.6 MB/s eta 0:00:00
+Downloading pydantic_core-2.16.2-cp312-none-win_amd64.whl (1.9 MB)
+   ---------------------------------------- 0.0/1.9 MB ? eta -:--:--
+   --------------------------- ------------ 1.3/1.9 MB 27.4 MB/s eta 0:00:01
+   ---------------------------------------- 1.9/1.9 MB 29.7 MB/s eta 0:00:00
+Using cached typing_inspect-0.9.0-py3-none-any.whl (8.8 kB)
+Downloading yarl-1.9.4-cp312-cp312-win_amd64.whl (76 kB)
+   ---------------------------------------- 0.0/76.4 kB ? eta -:--:--
+   ---------------------------------------- 76.4/76.4 kB 4.1 MB/s eta 0:00:00
+Using cached annotated_types-0.6.0-py3-none-any.whl (12 kB)
+Using cached jsonpointer-2.4-py2.py3-none-any.whl (7.8 kB)
+Installing collected packages: tenacity, sniffio, pydantic-core, mypy-extensions, multidict, marshmallow, jsonpointer, frozenlist, annotated-types, yarl, typing-inspect, pydantic, jsonpatch, anyio, aiosignal, langsmith, dataclasses-json, aiohttp, langchain-core, langchain-community
+Successfully installed aiohttp-3.9.3 aiosignal-1.3.1 annotated-types-0.6.0 anyio-4.2.0 dataclasses-json-0.6.4 frozenlist-1.4.1 jsonpatch-1.33 jsonpointer-2.4 langchain-community-0.0.18 langchain-core-0.1.22 langsmith-0.0.87 marshmallow-3.20.2 multidict-6.0.5 mypy-extensions-1.0.0 pydantic-2.6.1 pydantic-core-2.16.2 sniffio-1.3.0 tenacity-8.2.3 typing-inspect-0.9.0 yarl-1.9.4
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR: Ignored the following yanked versions: 0.8.3, 0.10.19.dev18
+ERROR: Ignored the following versions that require a different python version: 0.12.0 Requires-Python &gt;=3.9.0,&lt;3.12; 0.12.2 Requires-Python &gt;=3.9.0,&lt;3.12; 0.12.3 Requires-Python &gt;=3.9.0,&lt;3.12; 0.12.4 Requires-Python &gt;=3.9.0,&lt;3.12
+ERROR: Could not find a version that satisfies the requirement unstructured==0.12.3 (from versions: 0.0.1.dev0, 0.2.0, 0.2.1, 0.2.2, 0.2.3, 0.2.4, 0.2.5, 0.2.6.dev1, 0.3.0, 0.3.1, 0.3.2, 0.3.3, 0.3.4, 0.3.5, 0.4.0, 0.4.1, 0.4.2, 0.4.3, 0.4.4, 0.4.6, 0.4.7, 0.4.8, 0.4.9, 0.4.10, 0.4.11, 0.4.12, 0.4.13, 0.4.14, 0.4.15, 0.4.16, 0.5.0, 0.5.1, 0.5.2, 0.5.3, 0.5.4, 0.5.6, 0.5.7, 0.5.8, 0.5.9, 0.5.10, 0.5.11, 0.5.12, 0.5.13, 0.6.0, 0.6.1, 0.6.2, 0.6.3, 0.6.4, 0.6.5, 0.6.6, 0.6.7, 0.6.8, 0.6.9, 0.6.10, 0.6.11, 0.7.0, 0.7.1, 0.7.2, 0.7.3, 0.7.4, 0.7.5, 0.7.6, 0.7.7, 0.7.8, 0.7.9, 0.7.10, 0.7.11, 0.7.12, 0.8.0, 0.8.1, 0.8.4, 0.8.5, 0.8.6, 0.8.7, 0.8.8, 0.9.0, 0.9.1, 0.9.2, 0.9.3, 0.10.0, 0.10.1, 0.10.2, 0.10.4, 0.10.5, 0.10.6, 0.10.7, 0.10.8, 0.10.9, 0.10.10, 0.10.11, 0.10.12, 0.10.13, 0.10.14, 0.10.15, 0.10.16, 0.10.18, 0.10.19, 0.10.20, 0.10.21, 0.10.22, 0.10.23, 0.10.24, 0.10.25, 0.10.26, 0.10.27, 0.10.28, 0.10.29, 0.10.30, 0.11.0, 0.11.1, 0.11.2, 0.11.4, 0.11.5, 0.11.6, 0.11.7, 0.11.8)
+ERROR: No matching distribution found for unstructured==0.12.3
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting unstructured-client==0.17.0
+  Using cached unstructured_client-0.17.0-py3-none-any.whl.metadata (4.9 kB)
+Requirement already satisfied: certifi&gt;=2023.7.22 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (2023.11.17)
+Requirement already satisfied: charset-normalizer&gt;=3.2.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (3.3.2)
+Collecting dataclasses-json-speakeasy&gt;=0.5.11 (from unstructured-client==0.17.0)
+  Using cached dataclasses_json_speakeasy-0.5.11-py3-none-any.whl.metadata (25 kB)
+Requirement already satisfied: idna&gt;=3.4 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (3.6)
+Collecting jsonpath-python&gt;=1.0.6 (from unstructured-client==0.17.0)
+  Using cached jsonpath_python-1.0.6-py3-none-any.whl (7.6 kB)
+Requirement already satisfied: marshmallow&gt;=3.19.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (3.20.2)
+Requirement already satisfied: mypy-extensions&gt;=1.0.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (1.0.0)
+Requirement already satisfied: packaging&gt;=23.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (23.2)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (2.8.2)
+Requirement already satisfied: requests&gt;=2.31.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (2.31.0)
+Requirement already satisfied: six&gt;=1.16.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (1.16.0)
+Requirement already satisfied: typing-inspect&gt;=0.9.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (0.9.0)
+Requirement already satisfied: typing-extensions&gt;=4.7.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (4.9.0)
+Requirement already satisfied: urllib3&gt;=1.26.18 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from unstructured-client==0.17.0) (2.1.0)
+Using cached unstructured_client-0.17.0-py3-none-any.whl (20 kB)
+Using cached dataclasses_json_speakeasy-0.5.11-py3-none-any.whl (28 kB)
+Installing collected packages: jsonpath-python, dataclasses-json-speakeasy, unstructured-client
+Successfully installed dataclasses-json-speakeasy-0.5.11 jsonpath-python-1.0.6 unstructured-client-0.17.0
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting langchain==0.1.5
+  Using cached langchain-0.1.5-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: PyYAML&gt;=5.3 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (6.0.1)
+Requirement already satisfied: SQLAlchemy&lt;3,&gt;=1.4 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (2.0.25)
+Requirement already satisfied: aiohttp&lt;4.0.0,&gt;=3.8.3 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (3.9.3)
+Requirement already satisfied: dataclasses-json&lt;0.7,&gt;=0.5.7 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (0.6.4)
+Requirement already satisfied: jsonpatch&lt;2.0,&gt;=1.33 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (1.33)
+Requirement already satisfied: langchain-community&lt;0.1,&gt;=0.0.17 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (0.0.18)
+Requirement already satisfied: langchain-core&lt;0.2,&gt;=0.1.16 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (0.1.22)
+Requirement already satisfied: langsmith&lt;0.1,&gt;=0.0.83 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (0.0.87)
+Requirement already satisfied: numpy&lt;2,&gt;=1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (1.26.3)
+Requirement already satisfied: pydantic&lt;3,&gt;=1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (2.6.1)
+Requirement already satisfied: requests&lt;3,&gt;=2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (2.31.0)
+Requirement already satisfied: tenacity&lt;9.0.0,&gt;=8.1.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain==0.1.5) (8.2.3)
+Requirement already satisfied: aiosignal&gt;=1.1.2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain==0.1.5) (1.3.1)
+Requirement already satisfied: attrs&gt;=17.3.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain==0.1.5) (23.2.0)
+Requirement already satisfied: frozenlist&gt;=1.1.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain==0.1.5) (1.4.1)
+Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain==0.1.5) (6.0.5)
+Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from aiohttp&lt;4.0.0,&gt;=3.8.3-&gt;langchain==0.1.5) (1.9.4)
+Requirement already satisfied: marshmallow&lt;4.0.0,&gt;=3.18.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from dataclasses-json&lt;0.7,&gt;=0.5.7-&gt;langchain==0.1.5) (3.20.2)
+Requirement already satisfied: typing-inspect&lt;1,&gt;=0.4.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from dataclasses-json&lt;0.7,&gt;=0.5.7-&gt;langchain==0.1.5) (0.9.0)
+Requirement already satisfied: jsonpointer&gt;=1.9 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from jsonpatch&lt;2.0,&gt;=1.33-&gt;langchain==0.1.5) (2.4)
+Requirement already satisfied: anyio&lt;5,&gt;=3 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain-core&lt;0.2,&gt;=0.1.16-&gt;langchain==0.1.5) (4.2.0)
+Requirement already satisfied: packaging&lt;24.0,&gt;=23.2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from langchain-core&lt;0.2,&gt;=0.1.16-&gt;langchain==0.1.5) (23.2)
+Requirement already satisfied: annotated-types&gt;=0.4.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from pydantic&lt;3,&gt;=1-&gt;langchain==0.1.5) (0.6.0)
+Requirement already satisfied: pydantic-core==2.16.2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from pydantic&lt;3,&gt;=1-&gt;langchain==0.1.5) (2.16.2)
+Requirement already satisfied: typing-extensions&gt;=4.6.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from pydantic&lt;3,&gt;=1-&gt;langchain==0.1.5) (4.9.0)
+Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&lt;3,&gt;=2-&gt;langchain==0.1.5) (3.3.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&lt;3,&gt;=2-&gt;langchain==0.1.5) (3.6)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&lt;3,&gt;=2-&gt;langchain==0.1.5) (2.1.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&lt;3,&gt;=2-&gt;langchain==0.1.5) (2023.11.17)
+Requirement already satisfied: greenlet!=0.4.17 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from SQLAlchemy&lt;3,&gt;=1.4-&gt;langchain==0.1.5) (3.0.3)
+Requirement already satisfied: sniffio&gt;=1.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from anyio&lt;5,&gt;=3-&gt;langchain-core&lt;0.2,&gt;=0.1.16-&gt;langchain==0.1.5) (1.3.0)
+Requirement already satisfied: mypy-extensions&gt;=0.3.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from typing-inspect&lt;1,&gt;=0.4.0-&gt;dataclasses-json&lt;0.7,&gt;=0.5.7-&gt;langchain==0.1.5) (1.0.0)
+Using cached langchain-0.1.5-py3-none-any.whl (806 kB)
+Installing collected packages: langchain
+Successfully installed langchain-0.1.5
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tqdm</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">UnstructuredMarkdownLoader</span><span class="p">,</span> <span class="n">UnstructuredFileLoader</span>
+<span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">MarkdownTextSplitter</span><span class="p">,</span> <span class="n">NLTKTextSplitter</span><span class="p">,</span> <span class="n">RecursiveCharacterTextSplitter</span>
+
+<span class="c1"># Code also https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/customskills/utils/chunker/text_chunker.py</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">tqdm</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">glob</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">UnstructuredMarkdownLoader</span><span class="p">,</span> <span class="n">UnstructuredFileLoader</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;tqdm&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install &quot;unstructured[md]&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_documents_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading documents...&quot;</span><span class="p">)</span>
+    <span class="n">markdown_documents</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
+        <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> 
+        <span class="n">document</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="n">markdown_documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">markdown_documents</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">markdown_documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span><span class="s2">&quot;../data/docs/**/*.md&quot;</span><span class="p">)</span>
+<span class="c1"># TODO: Move this to a Storage Account?</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading documents...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 777/777 [00:57&lt;00:00, 13.57it/s]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating chunks...&quot;</span><span class="p">)</span>
+    <span class="n">markdown_splitter</span> <span class="o">=</span> <span class="n">MarkdownTextSplitter</span><span class="o">.</span><span class="n">from_tiktoken_encoder</span><span class="p">(</span>
+        <span class="n">chunk_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">30</span>
+    <span class="p">)</span>
+    <span class="n">lengths</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">all_chunks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">chunk_id</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">documents</span><span class="p">):</span>
+        <span class="n">current_chunks_text_list</span> <span class="o">=</span> <span class="n">markdown_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span>
+            <span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span>
+        <span class="p">)</span>  <span class="c1"># output = [&quot;content chunk1&quot;, &quot;content chunk2&quot;, ...]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+            <span class="n">current_chunks_text_list</span>
+        <span class="p">):</span>  <span class="c1"># (0, &quot;content chunk1&quot;), (1, &quot;content chunk2&quot;), ...</span>
+            <span class="n">current_chunk_dict</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;chunk_id&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+                <span class="s2">&quot;chunk_text&quot;</span><span class="p">:</span> <span class="n">chunk</span><span class="p">,</span>
+                <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span>
+            <span class="p">}</span>
+            <span class="n">current_id_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;chunk</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">all_chunks</span><span class="p">[</span><span class="n">current_id_str</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_chunk_dict</span>
+
+        <span class="n">chunk_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">n_chunks</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_chunks_text_list</span><span class="p">)</span>
+        <span class="c1"># lengths = {[Number of chunks]: [number of documents with that number of chunks]}</span>
+        <span class="k">if</span> <span class="n">n_chunks</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lengths</span><span class="p">:</span>
+            <span class="n">lengths</span><span class="p">[</span><span class="n">n_chunks</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lengths</span><span class="p">[</span><span class="n">n_chunks</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">all_chunks</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks</span> <span class="o">=</span> <span class="n">create_chunks</span><span class="p">(</span><span class="n">markdown_documents</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating chunks...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 777/777 [00:02&lt;00:00, 277.03it/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1: 145, 2: 137, 4: 69, 5: 74, 7: 43, 12: 8, 16: 6, 32: 1, 18: 7, 3: 98, 8: 30, 6: 58, 20: 2, 9: 20, 13: 13, 15: 10, 10: 11, 17: 2, 11: 19, 14: 12, 43: 1, 25: 1, 26: 2, 22: 3, 30: 1, 19: 2, 38: 1, 29: 1}
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this experiment, we will use OpenAI ada for embedding the chunks</p>
+<p>Upload files to a storage account so we can create an Indexer
+<a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/upload_files.py">microsoft/rag-openai</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install python-dotenv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Note: you may need to restart the kernel to use updated packages.Requirement already satisfied: python-dotenv in c:\projects\workshop2024\.venv\lib\site-packages (1.0.0)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 23.3.2 -&gt; 24.0
+[notice] To update, run: python.exe -m pip install --upgrade pip
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 

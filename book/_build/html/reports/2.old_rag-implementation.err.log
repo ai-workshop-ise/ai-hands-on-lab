@@ -1,0 +1,83 @@
+Traceback (most recent call last):
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 685, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+search_index_name = "index_chunks_1"
+create_index(search_index_name)
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mHttpResponseError[0m                         Traceback (most recent call last)
+Cell [1;32mIn[5], line 2[0m
+[0;32m      1[0m search_index_name [38;5;241m=[39m [38;5;124m"[39m[38;5;124mindex_chunks_1[39m[38;5;124m"[39m
+[1;32m----> 2[0m [43mcreate_index[49m[43m([49m[43msearch_index_name[49m[43m)[49m
+
+Cell [1;32mIn[4], line 103[0m, in [0;36mcreate_index[1;34m(search_index_name)[0m
+[0;32m     92[0m scoring_profiles: List[ScoringProfile] [38;5;241m=[39m []
+[0;32m     93[0m index [38;5;241m=[39m SearchIndex(
+[0;32m     94[0m     name[38;5;241m=[39msearch_index_name,
+[0;32m     95[0m     fields[38;5;241m=[39mfields,
+[1;32m   (...)[0m
+[0;32m    100[0m     vector_search[38;5;241m=[39mvector_search,
+[0;32m    101[0m )
+[1;32m--> 103[0m result [38;5;241m=[39m [43mclient[49m[38;5;241;43m.[39;49m[43mcreate_or_update_index[49m[43m([49m[43mindex[49m[43m)[49m
+[0;32m    104[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00mresult[38;5;241m.[39mname[38;5;132;01m}[39;00m[38;5;124m created or updated[39m[38;5;124m"[39m)
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\core\tracing\decorator.py:78[0m, in [0;36mdistributed_trace.<locals>.decorator.<locals>.wrapper_use_tracer[1;34m(*args, **kwargs)[0m
+[0;32m     76[0m span_impl_type [38;5;241m=[39m settings[38;5;241m.[39mtracing_implementation()
+[0;32m     77[0m [38;5;28;01mif[39;00m span_impl_type [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[1;32m---> 78[0m     [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[0;32m     80[0m [38;5;66;03m# Merge span is parameter is set, but only if no explicit parent are passed[39;00m
+[0;32m     81[0m [38;5;28;01mif[39;00m merge_span [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m passed_in_parent:
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\indexes\_search_index_client.py:264[0m, in [0;36mSearchIndexClient.create_or_update_index[1;34m(self, index, allow_index_downtime, match_condition, **kwargs)[0m
+[0;32m    262[0m kwargs[38;5;241m.[39mupdate(access_condition)
+[0;32m    263[0m patched_index [38;5;241m=[39m index[38;5;241m.[39m_to_generated()  [38;5;66;03m# pylint:disable=protected-access[39;00m
+[1;32m--> 264[0m result [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_client[49m[38;5;241;43m.[39;49m[43mindexes[49m[38;5;241;43m.[39;49m[43mcreate_or_update[49m[43m([49m
+[0;32m    265[0m [43m    [49m[43mindex_name[49m[38;5;241;43m=[39;49m[43mindex[49m[38;5;241;43m.[39;49m[43mname[49m[43m,[49m
+[0;32m    266[0m [43m    [49m[43mindex[49m[38;5;241;43m=[39;49m[43mpatched_index[49m[43m,[49m
+[0;32m    267[0m [43m    [49m[43mallow_index_downtime[49m[38;5;241;43m=[39;49m[43mallow_index_downtime[49m[43m,[49m
+[0;32m    268[0m [43m    [49m[43mprefer[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mreturn=representation[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[0;32m    269[0m [43m    [49m[43merror_map[49m[38;5;241;43m=[39;49m[43merror_map[49m[43m,[49m
+[0;32m    270[0m [43m    [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m
+[0;32m    271[0m [43m[49m[43m)[49m
+[0;32m    272[0m [38;5;28;01mreturn[39;00m SearchIndex[38;5;241m.[39m_from_generated(result)
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\core\tracing\decorator.py:78[0m, in [0;36mdistributed_trace.<locals>.decorator.<locals>.wrapper_use_tracer[1;34m(*args, **kwargs)[0m
+[0;32m     76[0m span_impl_type [38;5;241m=[39m settings[38;5;241m.[39mtracing_implementation()
+[0;32m     77[0m [38;5;28;01mif[39;00m span_impl_type [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[1;32m---> 78[0m     [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[0;32m     80[0m [38;5;66;03m# Merge span is parameter is set, but only if no explicit parent are passed[39;00m
+[0;32m     81[0m [38;5;28;01mif[39;00m merge_span [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m passed_in_parent:
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\indexes\_generated\operations\_indexes_operations.py:715[0m, in [0;36mIndexesOperations.create_or_update[1;34m(self, index_name, prefer, index, allow_index_downtime, if_match, if_none_match, request_options, **kwargs)[0m
+[0;32m    713[0m     map_error(status_code[38;5;241m=[39mresponse[38;5;241m.[39mstatus_code, response[38;5;241m=[39mresponse, error_map[38;5;241m=[39merror_map)
+[0;32m    714[0m     error [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_deserialize[38;5;241m.[39mfailsafe_deserialize(_models[38;5;241m.[39mSearchError, pipeline_response)
+[1;32m--> 715[0m     [38;5;28;01mraise[39;00m HttpResponseError(response[38;5;241m=[39mresponse, model[38;5;241m=[39merror)
+[0;32m    717[0m [38;5;28;01mif[39;00m response[38;5;241m.[39mstatus_code [38;5;241m==[39m [38;5;241m200[39m:
+[0;32m    718[0m     deserialized [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_deserialize([38;5;124m"[39m[38;5;124mSearchIndex[39m[38;5;124m"[39m, pipeline_response)
+
+[1;31mHttpResponseError[0m: (OperationNotAllowed) Existing field(s) 'chunkId', 'source', 'chunkContent', 'chunkContentVector' cannot be deleted.
+Code: OperationNotAllowed
+Message: Existing field(s) 'chunkId', 'source', 'chunkContent', 'chunkContentVector' cannot be deleted.
+Exception Details:	(CannotDeleteExistingField) Existing field(s) 'chunkId', 'source', 'chunkContent', 'chunkContentVector' cannot be deleted.
+	Code: CannotDeleteExistingField
+	Message: Existing field(s) 'chunkId', 'source', 'chunkContent', 'chunkContentVector' cannot be deleted.
+
