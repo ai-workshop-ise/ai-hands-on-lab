@@ -1,0 +1,85 @@
+Traceback (most recent call last):
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 685, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import os
+%reload_ext dotenv
+%dotenv
+
+from azure.storage.blob import BlobServiceClient
+# from azure.identity import AzureCliCredential
+from azure.identity import DefaultAzureCredential
+
+from pathlib import Path
+
+STORAGE_ACCOUNT_URL = os.environ["STORAGE_ACCOUNT_URL"]
+# ROOT_FILE_DIR = "../data"
+# print(ROOT_FILE_DIR)
+FOLDER="docs"
+CONTAINER_NAME="docs"
+storage_account_name="adnegraustorageaccount"
+
+def _upload_file(upload_file_path, file, blob_client):
+    try:
+        with open(file=upload_file_path, mode="rb") as data:
+            blob_client.upload_blob(data)
+    except Exception as e:
+        print(f"Exception uploading file {upload_file_path}: {e}")
+        
+def _upload_ops_files(credential: DefaultAzureCredential, storage_account_name: str, folder: str):
+    try:
+        path = Path("../data/docs/code-with-dataops/capabilities/analytical-systems/advanced-analytics") #Path("../data/docs")/
+        account_url = 'https://adnegraustorageaccount.blob.core.windows.net'
+        blob_service_client = BlobServiceClient(account_url=account_url, credential=credential)
+        blob_container_client = blob_service_client.get_container_client(CONTAINER_NAME)
+        print(blob_container_client)
+        for file in path.rglob("**/*.md"):
+            print(file)
+            # construct blob name from file path
+            file_subpath = str(file).split(f"{folder}")[1]
+            print(file_subpath)
+            # [1]
+            file_name = file_subpath.replace("\\", "_")
+            print("File name: ", file_name)
+            blob_client = blob_container_client.get_blob_client(file_name)
+            
+            try:
+                _upload_file(str(file), file_name, blob_client)
+            except Exception as e:
+                print(f"Exception uploading file name {file_name}: {e}")
+                break
+    except Exception as e:
+            print(f"Exception uploading file name {file_name}: {e}")
+            
+credential = DefaultAzureCredential()
+_upload_ops_files(credential, storage_account_name, FOLDER)
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[7], line 5[0m
+[0;32m      2[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mreload_ext[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mdotenv[39m[38;5;124m'[39m)
+[0;32m      3[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mdotenv[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m'[39m)
+[1;32m----> 5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mazure[39;00m[38;5;21;01m.[39;00m[38;5;21;01mstorage[39;00m[38;5;21;01m.[39;00m[38;5;21;01mblob[39;00m [38;5;28;01mimport[39;00m BlobServiceClient
+[0;32m      6[0m [38;5;66;03m# from azure.identity import AzureCliCredential[39;00m
+[0;32m      7[0m [38;5;28;01mfrom[39;00m [38;5;21;01mazure[39;00m[38;5;21;01m.[39;00m[38;5;21;01midentity[39;00m [38;5;28;01mimport[39;00m DefaultAzureCredential
+
+[1;31mModuleNotFoundError[0m: No module named 'azure.storage'
+
