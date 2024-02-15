@@ -18,63 +18,134 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-search_index_name = ""
-create_index(search_index_name)
+search_documents("What does the develop phase include")
 ------------------
 
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mHttpResponseError[0m                         Traceback (most recent call last)
-Cell [1;32mIn[5], line 2[0m
-[0;32m      1[0m search_index_name [38;5;241m=[39m [38;5;124m"[39m[38;5;124m"[39m
-[1;32m----> 2[0m [43mcreate_index[49m[43m([49m[43msearch_index_name[49m[43m)[49m
+[1;31mSerializationError[0m                        Traceback (most recent call last)
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:825[0m, in [0;36mSerializer.serialize_data[1;34m(self, data, data_type, **kwargs)[0m
+[0;32m    824[0m     [38;5;28;01mif[39;00m iter_type [38;5;129;01min[39;00m [38;5;28mself[39m[38;5;241m.[39mserialize_type:
+[1;32m--> 825[0m         [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mserialize_type[49m[43m[[49m[43miter_type[49m[43m][49m[43m([49m[43mdata[49m[43m,[49m[43m [49m[43mdata_type[49m[43m[[49m[38;5;241;43m1[39;49m[43m:[49m[38;5;241;43m-[39;49m[38;5;241;43m1[39;49m[43m][49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[0;32m    827[0m [38;5;28;01mexcept[39;00m ([38;5;167;01mValueError[39;00m, [38;5;167;01mTypeError[39;00m) [38;5;28;01mas[39;00m err:
 
-Cell [1;32mIn[4], line 108[0m, in [0;36mcreate_index[1;34m(search_index_name)[0m
-[0;32m     97[0m scoring_profiles: List[ScoringProfile] [38;5;241m=[39m []
-[0;32m     98[0m index [38;5;241m=[39m SearchIndex(
-[0;32m     99[0m     name[38;5;241m=[39msearch_index_name,
-[0;32m    100[0m     fields[38;5;241m=[39mfields,
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:902[0m, in [0;36mSerializer.serialize_iter[1;34m(self, data, iter_type, div, **kwargs)[0m
+[0;32m    901[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(data, [38;5;28mstr[39m):
+[1;32m--> 902[0m     [38;5;28;01mraise[39;00m SerializationError([38;5;124m"[39m[38;5;124mRefuse str type as a valid iter type.[39m[38;5;124m"[39m)
+[0;32m    904[0m serialization_ctxt [38;5;241m=[39m kwargs[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mserialization_ctxt[39m[38;5;124m"[39m, {})
+
+[1;31mSerializationError[0m: Refuse str type as a valid iter type.
+
+The above exception was the direct cause of the following exception:
+
+[1;31mSerializationError[0m                        Traceback (most recent call last)
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:825[0m, in [0;36mSerializer.serialize_data[1;34m(self, data, data_type, **kwargs)[0m
+[0;32m    824[0m     [38;5;28;01mif[39;00m iter_type [38;5;129;01min[39;00m [38;5;28mself[39m[38;5;241m.[39mserialize_type:
+[1;32m--> 825[0m         [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mserialize_type[49m[43m[[49m[43miter_type[49m[43m][49m[43m([49m[43mdata[49m[43m,[49m[43m [49m[43mdata_type[49m[43m[[49m[38;5;241;43m1[39;49m[43m:[49m[38;5;241;43m-[39;49m[38;5;241;43m1[39;49m[43m][49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[0;32m    827[0m [38;5;28;01mexcept[39;00m ([38;5;167;01mValueError[39;00m, [38;5;167;01mTypeError[39;00m) [38;5;28;01mas[39;00m err:
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:910[0m, in [0;36mSerializer.serialize_iter[1;34m(self, data, iter_type, div, **kwargs)[0m
+[0;32m    909[0m [38;5;28;01mtry[39;00m:
+[1;32m--> 910[0m     serialized[38;5;241m.[39mappend([38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mserialize_data[49m[43m([49m[43md[49m[43m,[49m[43m [49m[43miter_type[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m)
+[0;32m    911[0m [38;5;28;01mexcept[39;00m [38;5;167;01mValueError[39;00m [38;5;28;01mas[39;00m err:
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:831[0m, in [0;36mSerializer.serialize_data[1;34m(self, data, data_type, **kwargs)[0m
+[0;32m    830[0m [38;5;28;01melse[39;00m:
+[1;32m--> 831[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_serialize[49m[43m([49m[43mdata[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:622[0m, in [0;36mSerializer._serialize[1;34m(self, target_obj, data_type, **kwargs)[0m
+[0;32m    621[0m kwargs[[38;5;124m"[39m[38;5;124mserialization_ctxt[39m[38;5;124m"[39m] [38;5;241m=[39m attr_desc
+[1;32m--> 622[0m new_attr [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mserialize_data[49m[43m([49m[43morig_attr[49m[43m,[49m[43m [49m[43mattr_desc[49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mtype[39;49m[38;5;124;43m"[39;49m[43m][49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[0;32m    624[0m [38;5;28;01mif[39;00m is_xml_model_serialization:
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:829[0m, in [0;36mSerializer.serialize_data[1;34m(self, data, data_type, **kwargs)[0m
+[0;32m    828[0m     msg [38;5;241m=[39m [38;5;124m"[39m[38;5;124mUnable to serialize value: [39m[38;5;132;01m{!r}[39;00m[38;5;124m as type: [39m[38;5;132;01m{!r}[39;00m[38;5;124m.[39m[38;5;124m"[39m
+[1;32m--> 829[0m     [38;5;28;01mraise[39;00m SerializationError(msg[38;5;241m.[39mformat(data, data_type)) [38;5;28;01mfrom[39;00m [38;5;21;01merr[39;00m
+[0;32m    830[0m [38;5;28;01melse[39;00m:
+
+[1;31mSerializationError[0m: Unable to serialize value: 'W' as type: '[float]'.
+
+The above exception was the direct cause of the following exception:
+
+[1;31mSerializationError[0m                        Traceback (most recent call last)
+Cell [1;32mIn[11], line 1[0m
+[1;32m----> 1[0m [43msearch_documents[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mWhat does the develop phase include[39;49m[38;5;124;43m"[39;49m[43m)[49m
+
+Cell [1;32mIn[10], line 18[0m, in [0;36msearch_documents[1;34m(query_embeddings)[0m
+[0;32m     15[0m [38;5;66;03m# print_results(results)[39;00m
+[0;32m     17[0m documents [38;5;241m=[39m []
+[1;32m---> 18[0m [43m[49m[38;5;28;43;01mfor[39;49;00m[43m [49m[43mdocument[49m[43m [49m[38;5;129;43;01min[39;49;00m[43m [49m[43mresults[49m[43m:[49m
+[0;32m     19[0m [43m    [49m[43mitem[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43m{[49m[43m}[49m
+[0;32m     20[0m [43m    [49m[43mitem[49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mchunkContent[39;49m[38;5;124;43m"[39;49m[43m][49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43mdocument[49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mchunkContent[39;49m[38;5;124;43m"[39;49m[43m][49m
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_paging.py:54[0m, in [0;36mSearchItemPaged.__next__[1;34m(self)[0m
+[0;32m     52[0m     first_iterator [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_first_iterator_instance()
+[0;32m     53[0m     [38;5;28mself[39m[38;5;241m.[39m_page_iterator [38;5;241m=[39m itertools[38;5;241m.[39mchain[38;5;241m.[39mfrom_iterable(first_iterator)
+[1;32m---> 54[0m [38;5;28;01mreturn[39;00m [38;5;28;43mnext[39;49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_page_iterator[49m[43m)[49m
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\core\paging.py:75[0m, in [0;36mPageIterator.__next__[1;34m(self)[0m
+[0;32m     73[0m     [38;5;28;01mraise[39;00m [38;5;167;01mStopIteration[39;00m([38;5;124m"[39m[38;5;124mEnd of paging[39m[38;5;124m"[39m)
+[0;32m     74[0m [38;5;28;01mtry[39;00m:
+[1;32m---> 75[0m     [38;5;28mself[39m[38;5;241m.[39m_response [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_get_next[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mcontinuation_token[49m[43m)[49m
+[0;32m     76[0m [38;5;28;01mexcept[39;00m AzureError [38;5;28;01mas[39;00m error:
+[0;32m     77[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m error[38;5;241m.[39mcontinuation_token:
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_paging.py:124[0m, in [0;36mSearchPageIterator._get_next_cb[1;34m(self, continuation_token)[0m
+[0;32m    122[0m [38;5;28;01mdef[39;00m [38;5;21m_get_next_cb[39m([38;5;28mself[39m, continuation_token):
+[0;32m    123[0m     [38;5;28;01mif[39;00m continuation_token [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[1;32m--> 124[0m         [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_client[49m[38;5;241;43m.[39;49m[43mdocuments[49m[38;5;241;43m.[39;49m[43msearch_post[49m[43m([49m[43msearch_request[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_initial_query[49m[38;5;241;43m.[39;49m[43mrequest[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_kwargs[49m[43m)[49m
+[0;32m    126[0m     _next_link, next_page_request [38;5;241m=[39m unpack_continuation_token(continuation_token)
+[0;32m    128[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_client[38;5;241m.[39mdocuments[38;5;241m.[39msearch_post(search_request[38;5;241m=[39mnext_page_request, [38;5;241m*[39m[38;5;241m*[39m[38;5;28mself[39m[38;5;241m.[39m_kwargs)
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\core\tracing\decorator.py:78[0m, in [0;36mdistributed_trace.<locals>.decorator.<locals>.wrapper_use_tracer[1;34m(*args, **kwargs)[0m
+[0;32m     76[0m span_impl_type [38;5;241m=[39m settings[38;5;241m.[39mtracing_implementation()
+[0;32m     77[0m [38;5;28;01mif[39;00m span_impl_type [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[1;32m---> 78[0m     [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[0;32m     80[0m [38;5;66;03m# Merge span is parameter is set, but only if no explicit parent are passed[39;00m
+[0;32m     81[0m [38;5;28;01mif[39;00m merge_span [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m passed_in_parent:
+
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\operations\_documents_operations.py:728[0m, in [0;36mDocumentsOperations.search_post[1;34m(self, search_request, request_options, **kwargs)[0m
+[0;32m    726[0m     _content [38;5;241m=[39m search_request
+[0;32m    727[0m [38;5;28;01melse[39;00m:
+[1;32m--> 728[0m     _json [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_serialize[49m[38;5;241;43m.[39;49m[43mbody[49m[43m([49m[43msearch_request[49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mSearchRequest[39;49m[38;5;124;43m"[39;49m[43m)[49m
+[0;32m    730[0m _request [38;5;241m=[39m build_search_post_request(
+[0;32m    731[0m     x_ms_client_request_id[38;5;241m=[39m_x_ms_client_request_id,
+[0;32m    732[0m     api_version[38;5;241m=[39mapi_version,
 [1;32m   (...)[0m
-[0;32m    105[0m     vector_search[38;5;241m=[39mvector_search,
-[0;32m    106[0m )
-[1;32m--> 108[0m result [38;5;241m=[39m [43mclient[49m[38;5;241;43m.[39;49m[43mcreate_or_update_index[49m[43m([49m[43mindex[49m[43m)[49m
-[0;32m    109[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00mresult[38;5;241m.[39mname[38;5;132;01m}[39;00m[38;5;124m created or updated[39m[38;5;124m"[39m)
+[0;32m    737[0m     params[38;5;241m=[39m_params,
+[0;32m    738[0m )
+[0;32m    739[0m _request [38;5;241m=[39m _convert_request(_request)
 
-File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\core\tracing\decorator.py:78[0m, in [0;36mdistributed_trace.<locals>.decorator.<locals>.wrapper_use_tracer[1;34m(*args, **kwargs)[0m
-[0;32m     76[0m span_impl_type [38;5;241m=[39m settings[38;5;241m.[39mtracing_implementation()
-[0;32m     77[0m [38;5;28;01mif[39;00m span_impl_type [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
-[1;32m---> 78[0m     [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
-[0;32m     80[0m [38;5;66;03m# Merge span is parameter is set, but only if no explicit parent are passed[39;00m
-[0;32m     81[0m [38;5;28;01mif[39;00m merge_span [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m passed_in_parent:
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:715[0m, in [0;36mSerializer.body[1;34m(self, data, data_type, **kwargs)[0m
+[0;32m    712[0m     [38;5;28;01mexcept[39;00m DeserializationError [38;5;28;01mas[39;00m err:
+[0;32m    713[0m         [38;5;28;01mraise[39;00m SerializationError([38;5;124m"[39m[38;5;124mUnable to build a model: [39m[38;5;124m"[39m [38;5;241m+[39m [38;5;28mstr[39m(err)) [38;5;28;01mfrom[39;00m [38;5;21;01merr[39;00m
+[1;32m--> 715[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_serialize[49m[43m([49m[43mdata[49m[43m,[49m[43m [49m[43mdata_type[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
 
-File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\indexes\_search_index_client.py:264[0m, in [0;36mSearchIndexClient.create_or_update_index[1;34m(self, index, allow_index_downtime, match_condition, **kwargs)[0m
-[0;32m    262[0m kwargs[38;5;241m.[39mupdate(access_condition)
-[0;32m    263[0m patched_index [38;5;241m=[39m index[38;5;241m.[39m_to_generated()  [38;5;66;03m# pylint:disable=protected-access[39;00m
-[1;32m--> 264[0m result [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_client[49m[38;5;241;43m.[39;49m[43mindexes[49m[38;5;241;43m.[39;49m[43mcreate_or_update[49m[43m([49m
-[0;32m    265[0m [43m    [49m[43mindex_name[49m[38;5;241;43m=[39;49m[43mindex[49m[38;5;241;43m.[39;49m[43mname[49m[43m,[49m
-[0;32m    266[0m [43m    [49m[43mindex[49m[38;5;241;43m=[39;49m[43mpatched_index[49m[43m,[49m
-[0;32m    267[0m [43m    [49m[43mallow_index_downtime[49m[38;5;241;43m=[39;49m[43mallow_index_downtime[49m[43m,[49m
-[0;32m    268[0m [43m    [49m[43mprefer[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mreturn=representation[39;49m[38;5;124;43m"[39;49m[43m,[49m
-[0;32m    269[0m [43m    [49m[43merror_map[49m[38;5;241;43m=[39;49m[43merror_map[49m[43m,[49m
-[0;32m    270[0m [43m    [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m
-[0;32m    271[0m [43m[49m[43m)[49m
-[0;32m    272[0m [38;5;28;01mreturn[39;00m SearchIndex[38;5;241m.[39m_from_generated(result)
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:585[0m, in [0;36mSerializer._serialize[1;34m(self, target_obj, data_type, **kwargs)[0m
+[0;32m    582[0m class_name [38;5;241m=[39m target_obj[38;5;241m.[39m[38;5;18m__class__[39m[38;5;241m.[39m[38;5;18m__name__[39m
+[0;32m    584[0m [38;5;28;01mif[39;00m data_type:
+[1;32m--> 585[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mserialize_data[49m[43m([49m[43mtarget_obj[49m[43m,[49m[43m [49m[43mdata_type[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[0;32m    587[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mhasattr[39m(target_obj, [38;5;124m"[39m[38;5;124m_attribute_map[39m[38;5;124m"[39m):
+[0;32m    588[0m     data_type [38;5;241m=[39m [38;5;28mtype[39m(target_obj)[38;5;241m.[39m[38;5;18m__name__[39m
 
-File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\core\tracing\decorator.py:78[0m, in [0;36mdistributed_trace.<locals>.decorator.<locals>.wrapper_use_tracer[1;34m(*args, **kwargs)[0m
-[0;32m     76[0m span_impl_type [38;5;241m=[39m settings[38;5;241m.[39mtracing_implementation()
-[0;32m     77[0m [38;5;28;01mif[39;00m span_impl_type [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
-[1;32m---> 78[0m     [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
-[0;32m     80[0m [38;5;66;03m# Merge span is parameter is set, but only if no explicit parent are passed[39;00m
-[0;32m     81[0m [38;5;28;01mif[39;00m merge_span [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m passed_in_parent:
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:831[0m, in [0;36mSerializer.serialize_data[1;34m(self, data, data_type, **kwargs)[0m
+[0;32m    829[0m     [38;5;28;01mraise[39;00m SerializationError(msg[38;5;241m.[39mformat(data, data_type)) [38;5;28;01mfrom[39;00m [38;5;21;01merr[39;00m
+[0;32m    830[0m [38;5;28;01melse[39;00m:
+[1;32m--> 831[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_serialize[49m[43m([49m[43mdata[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
 
-File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\indexes\_generated\operations\_indexes_operations.py:715[0m, in [0;36mIndexesOperations.create_or_update[1;34m(self, index_name, prefer, index, allow_index_downtime, if_match, if_none_match, request_options, **kwargs)[0m
-[0;32m    713[0m     map_error(status_code[38;5;241m=[39mresponse[38;5;241m.[39mstatus_code, response[38;5;241m=[39mresponse, error_map[38;5;241m=[39merror_map)
-[0;32m    714[0m     error [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_deserialize[38;5;241m.[39mfailsafe_deserialize(_models[38;5;241m.[39mSearchError, pipeline_response)
-[1;32m--> 715[0m     [38;5;28;01mraise[39;00m HttpResponseError(response[38;5;241m=[39mresponse, model[38;5;241m=[39merror)
-[0;32m    717[0m [38;5;28;01mif[39;00m response[38;5;241m.[39mstatus_code [38;5;241m==[39m [38;5;241m200[39m:
-[0;32m    718[0m     deserialized [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_deserialize([38;5;124m"[39m[38;5;124mSearchIndex[39m[38;5;124m"[39m, pipeline_response)
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:622[0m, in [0;36mSerializer._serialize[1;34m(self, target_obj, data_type, **kwargs)[0m
+[0;32m    619[0m     keys [38;5;241m=[39m keys [38;5;28;01mif[39;00m [38;5;28misinstance[39m(keys, [38;5;28mlist[39m) [38;5;28;01melse[39;00m [keys]
+[0;32m    621[0m kwargs[[38;5;124m"[39m[38;5;124mserialization_ctxt[39m[38;5;124m"[39m] [38;5;241m=[39m attr_desc
+[1;32m--> 622[0m new_attr [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mserialize_data[49m[43m([49m[43morig_attr[49m[43m,[49m[43m [49m[43mattr_desc[49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mtype[39;49m[38;5;124;43m"[39;49m[43m][49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[0;32m    624[0m [38;5;28;01mif[39;00m is_xml_model_serialization:
+[0;32m    625[0m     xml_desc [38;5;241m=[39m attr_desc[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mxml[39m[38;5;124m"[39m, {})
 
-[1;31mHttpResponseError[0m: () Index name must be non-empty.
-Code: 
-Message: Index name must be non-empty.
+File [1;32m~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\_generated\_serialization.py:829[0m, in [0;36mSerializer.serialize_data[1;34m(self, data, data_type, **kwargs)[0m
+[0;32m    827[0m [38;5;28;01mexcept[39;00m ([38;5;167;01mValueError[39;00m, [38;5;167;01mTypeError[39;00m) [38;5;28;01mas[39;00m err:
+[0;32m    828[0m     msg [38;5;241m=[39m [38;5;124m"[39m[38;5;124mUnable to serialize value: [39m[38;5;132;01m{!r}[39;00m[38;5;124m as type: [39m[38;5;132;01m{!r}[39;00m[38;5;124m.[39m[38;5;124m"[39m
+[1;32m--> 829[0m     [38;5;28;01mraise[39;00m SerializationError(msg[38;5;241m.[39mformat(data, data_type)) [38;5;28;01mfrom[39;00m [38;5;21;01merr[39;00m
+[0;32m    830[0m [38;5;28;01melse[39;00m:
+[0;32m    831[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_serialize(data, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+
+[1;31mSerializationError[0m: Unable to serialize value: [<azure.search.documents._generated.models._models_py3.VectorizedQuery object at 0x000002557921FE00>] as type: '[VectorQuery]'.
 

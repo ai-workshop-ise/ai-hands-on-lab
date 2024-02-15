@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Search &#8212; AI Workshop</title>
+    <title>3.3 Search &#8212; AI Workshop</title>
   
   
   
@@ -65,6 +65,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '3.3.experiment_search';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Post-production" href="10.evaluation-production.html" />
+    <link rel="prev" title="3.2. Embeddings" href="3.2.experiment_embedding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -170,16 +170,21 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">Workshop Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html">Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2.1 Pre-requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">2.2 Baseline RAG Setup</a></li>
+
 
 
 
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking - Ingestion</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3.3 Search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -353,7 +358,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -364,11 +371,25 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Search</h1>
+    <h1>3.3 Search</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-search">The Role of Search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-the-retrieval-component">Evaluating the Retrieval Component</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-hybrid-search">Perform a hybrid search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Perform a hybrid search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-semantic-hybrid-search-required-semantic-ranker-enabled">Perform a semantic hybrid search - Required Semantic Ranker enabled</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -379,8 +400,159 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="search">
-<h1>Search<a class="headerlink" href="#search" title="Permalink to this heading">#</a></h1>
+<h1>3.3 Search<a class="headerlink" href="#search" title="Permalink to this heading">#</a></h1>
 <p>Search is at the core of the RAG pattern. Precise, efficient, and consistent search is critical when implementing a solution based on RAG.</p>
+<p>There are four types of search</p>
+<section id="the-role-of-search">
+<h2><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#the-role-of-search">The Role of Search</a><a class="headerlink" href="#the-role-of-search" title="Permalink to this heading">#</a></h2>
+<p>The main purpose of the search tool is to bring the first cut of relevant documents for further analysis by the large language model - it is there to filter the noise and reduce the result set for the model to summarize.</p>
+<p>Search is at the heart of a RAG solution - it is the mechanism that ensures that the context that is sent to the prompt contains relevant information for it to answer the question.</p>
+</section>
+<section id="evaluating-the-retrieval-component">
+<h2><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-retrieval-component">Evaluating the Retrieval Component</a><a class="headerlink" href="#evaluating-the-retrieval-component" title="Permalink to this heading">#</a></h2>
+<p>Regarding the Retrieval component, the dataset is composed of question and citation instead of question and answer.</p>
+<ul class="simple">
+<li><p>question: the user question</p></li>
+<li><p>citation: the piece(s) of text that contains the relevant content to answer the user question</p></li>
+<li><p>answer: the final answer in a human readable/friendly format
+E
+valuating the Retrieval component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s).</p></li>
+</ul>
+<p>Retrieval information is a well-known problem and the classic metrics are: Precision, Recall, F1 Score, Mean Average Precision (MAP), Mean Normalized Discounted Cumulative Gain (Mean NDCG) and Mean Reciprocal Rank (MRR). More details can be found at Evaluating Information Retrieval Models: A Comprehensive Guide to Performance Metrics.</p>
+<p><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluation-metrics">Evaluation Metrics</a>
+Linnk: <a class="reference external" href="https://medium.com/&#64;prateekgaurav/evaluating-information-retrieval-models-a-comprehensive-guide-to-performance-metrics-78aadacb73b4#:~:text=Evaluating%20Information%20Retrieval%20Models%3A%20A%20Comprehensive%20Guide%20to,...%206%206.%20Mean%20Reciprocal%20Rank%20%28MRR%29%20">https://medium.com/&#64;prateekgaurav/evaluating-information-retrieval-models-a-comprehensive-guide-to-performance-metrics-78aadacb73b4#:~:text=Evaluating Information Retrieval Models%3A A Comprehensive Guide to,… 6 6. Mean Reciprocal Rank (MRR) </a></p>
+<section id="perform-a-hybrid-search">
+<h3>Perform a hybrid search<a class="headerlink" href="#perform-a-hybrid-search" title="Permalink to this heading">#</a></h3>
+<p>Hybrid Retrieval brings out the best of Keyword and Vector Search</p>
+<p>Keyword and vector retrieval tackle search from different perspectives, which yield complementary capabilities. Vector retrieval semantically matches queries to passages with similar meanings. This is powerful because embeddings are less sensitive to misspellings, synonyms, and phrasing differences and can even work in cross lingual scenarios. Keyword search is useful because it prioritizes matching specific, important words that might be diluted in an embedding.</p>
+<p>User search can take many forms. Hybrid retrieval consistently brings out the best from both retrieval methods across query types. With the most effective L1, the L2 ranking step can significantly improve the quality of results in the top positions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %run 2.rag-implementation-2.ipynb</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pure Vector Search</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;scalable storage solution&quot;</span>
+<span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+    <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span>
+<span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">search_text</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+    <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
+    <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">],</span>
+    <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">print_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Pure Vector Search</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;scalable storage solution&quot;</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">search_text</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;model&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>Perform a hybrid search<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>Hybrid Retrieval brings out the best of Keyword and Vector Search</p>
+<p>Keyword and vector retrieval tackle search from different perspectives, which yield complementary capabilities. Vector retrieval semantically matches queries to passages with similar meanings. This is powerful because embeddings are less sensitive to misspellings, synonyms, and phrasing differences and can even work in cross lingual scenarios. Keyword search is useful because it prioritizes matching specific, important words that might be diluted in an embedding.</p>
+<p>User search can take many forms. Hybrid retrieval consistently brings out the best from both retrieval methods across query types. With the most effective L1, the L2 ranking step can significantly improve the quality of results in the top positions.</p>
+</section>
+<section id="perform-a-semantic-hybrid-search-required-semantic-ranker-enabled">
+<h3>Perform a semantic hybrid search - Required Semantic Ranker enabled<a class="headerlink" href="#perform-a-semantic-hybrid-search-required-semantic-ranker-enabled" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
+
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;what is azure sarch?&quot;</span>
+
+<span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+    <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span>
+<span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">search_text</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+    <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
+    <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">],</span>
+    <span class="n">query_type</span><span class="o">=</span><span class="n">QueryType</span><span class="o">.</span><span class="n">SEMANTIC</span><span class="p">,</span>
+    <span class="n">semantic_configuration_name</span><span class="o">=</span><span class="s2">&quot;my-semantic-config&quot;</span><span class="p">,</span>
+    <span class="n">query_caption</span><span class="o">=</span><span class="n">QueryCaptionType</span><span class="o">.</span><span class="n">EXTRACTIVE</span><span class="p">,</span>
+    <span class="n">query_answer</span><span class="o">=</span><span class="n">QueryAnswerType</span><span class="o">.</span><span class="n">EXTRACTIVE</span><span class="p">,</span>
+    <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">semantic_answers</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_answers</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">answer</span> <span class="ow">in</span> <span class="n">semantic_answers</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">answer</span><span class="o">.</span><span class="n">highlights</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Semantic Answer: </span><span class="si">{</span><span class="n">answer</span><span class="o">.</span><span class="n">highlights</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Semantic Answer: </span><span class="si">{</span><span class="n">answer</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Semantic Answer Score: </span><span class="si">{</span><span class="n">answer</span><span class="o">.</span><span class="n">score</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Title: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reranker Score: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;@search.reranker_score&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Content: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Category: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">captions</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;@search.captions&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">captions</span><span class="p">:</span>
+        <span class="n">caption</span> <span class="o">=</span> <span class="n">captions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">caption</span><span class="o">.</span><span class="n">highlights</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Caption: </span><span class="si">{</span><span class="n">caption</span><span class="o">.</span><span class="n">highlights</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Caption: </span><span class="si">{</span><span class="n">caption</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;what is azure sarch?&quot;</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;contentVector&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">search_text</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;model&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -413,6 +585,24 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="3.2.experiment_embedding.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">3.2. Embeddings</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="10.evaluation-production.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Post-production</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -420,7 +610,26 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-search">The Role of Search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-the-retrieval-component">Evaluating the Retrieval Component</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-hybrid-search">Perform a hybrid search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Perform a hybrid search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-semantic-hybrid-search-required-semantic-ranker-enabled">Perform a semantic hybrid search - Required Semantic Ranker enabled</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
