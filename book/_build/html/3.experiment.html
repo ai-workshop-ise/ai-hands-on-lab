@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '3.experiment';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="3.1. Embeddings Experiment" href="3.1.experiment_embedding.html" />
+    <link rel="next" title="3.2. Search Experiment" href="3.2.experiment_search.html" />
     <link rel="prev" title="RAG - Implementation" href="2.rag-implementation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -172,8 +172,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Introduction</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. RAG - Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Pre-requisites</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
@@ -186,14 +187,12 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
 
 
-
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Production</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
@@ -431,19 +430,23 @@ As you build out your experimentation process for search, reference the [Things 
 <p>When creating/running search experiments, there are multiple factors that shape the outcome of each experiment. These are small changes that add up over time and change the functionality and effectiveness of your search experience. These tweaks should help you determine which combination of document shaping and indexing techniques will provide the most relevant set of documents returned for the set of queries that you care about.</p>
 <p>Creating an effective solution is a delicate balance of several factors, such as:</p>
 <ul class="simple">
-<li><p>Which <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md">search mechanism</a> to use - whether it is vector search, semantic search, a combination, or other</p></li>
+<li><p>Data ingestion: Optical Character Recognition (OCR), data conversation, use of Azure Form Recognizer to extract information from the documents, summarization, chunking, summarization, speech to text, tagging, etc. are all methods that can be considered and experimented with as part of the ingestion experimentation. See <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">learnings form engagements</a></p></li>
+<li><p>Which <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md">search mechanism</a> to use - whether it is vector search, semantic search, or other.</p></li>
 <li><p>Which model to use - <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models">GPT4, GPT3 (Ada, Curie, Da Vinci), GPT Turbo</a> etc.</p></li>
 <li><p>The prompt - the instruction given to the model in order to produce the desired result. Writing an effective prompt is referred to as “<a class="reference external" href="https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/prompt-engineering">Prompt Engineering</a>”. It is an empirical and iterative process.</p></li>
-<li><p>Pre and pos-processing: Optical Character Recognition, data conversation, use of Azure Form Recognizer to extract information from the documents, chunking, summarization, post-processing to make data more “human like”, video captioning, speech to text, tagging, etc. are all methods that need to be considered and experimented with as part of the ingestion pipeline experimentation. See <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">learnings form engagements</a></p></li>
 </ul>
+<!-- - Pre and pos-processing: Optical Character Recognition, data conversation, use of Azure Form Recognizer to extract information from the documents, chunking, summarization, post-processing to make data more "human like", video captioning, speech to text, tagging, etc. are all methods that need to be considered and experimented with as part of the ingestion pipeline experimentation.  -->
 <!-- - A series of arguments, [passed to the OpenAI APIs](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference) also impact the result. These are arguments such as "temperature", "logit_bias", "presence_penalty" etc. -->
-<p>At this point, choosing the final mechanism to ingest data is a decision that can wait until the experimentation is completed: using native indexers, building durable functions, using Azure Machine Learning pipelines are all viable options, but out of the scope of experimentation. These decisions, however, can, and should, wait until the tool itself is chosen, and the pre and post-processing operations including tagging and other document enrichment are well defined.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At this point, choosing the final mechanism to ingest data for example is a decision that can wait until the experimentation is completed: using native indexers, building durable functions, using Azure Machine Learning pipelines are all viable options, but out of the scope of experimentation. These decisions, however, can, and should, wait until the experimentation is done, and the pre and post-processing operations including tagging and other document enrichment are well defined.</p>
 <p>Ideally, during the experimentation phase, there should be a simple method to load data, with all the pre-and postprocessing. For instance: Python code on a Jupyter notebook, or a Postman call. Only after the best search design is known, a commitment can be made to deliver the ingestion solution.</p>
+</div>
 </section>
 <section id="evaluation">
 <h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h2>
 <hr class="docutils" />
-<p>One of the most important aspects of developing a system for production is regular evaluation and iterative experimentation. This process allows you to measure performance, troubleshoot issues, and fine-tune to improve accuracy and efficiency.</p>
+<p>One of the most important aspects of developing a system for production is regular evaluation and iterative experimentation. This process allows you to measure performance, troubleshoot issues, and fine-tune to improve it.</p>
 <section id="evaluation-strategy">
 <h3><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md">Evaluation Strategy</a><a class="headerlink" href="#evaluation-strategy" title="Permalink to this heading">#</a></h3>
 <p>An OpenAI solution (or system) may involve different components that will work together to make up the core functionalities of the chatbot. For example, we could have:</p>
@@ -488,10 +491,9 @@ As you build out your experimentation process for search, reference the [Things 
 <li><p>citation: the piece(s) of text that contains the relevant content to answer the user question</p></li>
 <li><p>answer: the final answer in a human readable/friendly format</p></li>
 </ul>
-<p>For the **Retrieval Component//, the dataset is composed of question and citation. Evaluating the Retrieval Component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s).</p>
+<p>For the <strong>Retrieval Component</strong>, the dataset is composed of question and citation. Evaluating the Retrieval Component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s).</p>
 <p>For the <strong>Generative Component</strong>, the dataset is composted of question, citation and answer. Evaluating the Generative Component means to evaluate if for a given query (user question) and a given set of retrieved documented, the engine is returning good answer. TODO: “GOOD answer? refer here to metrics</p>
 </div>
- <!-- Each pair will also include the citation, referring to the document where the answer was extracted from.  -->
 </section>
 <section id="metrics">
 <h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this heading">#</a></h2>
@@ -521,10 +523,6 @@ As you build out your experimentation process for search, reference the [Things 
 </li>
 </ul>
 </div>
-<!--
-```{note}
-From [previous engagements](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-our-engagements-1), it is recommended to not set a metric target until the baseline is well known. There are many AI projects out there targeting 99% accuracy, when the current methods produce 10~12% accuracy, and when even humans are not better than that. So, before setting a target, take time to understand what humans can do, what the current process produces. When accepting a target, focus on small improvements. We would never have automated Speech to Text if we had started with ambitious and unrealistic targets.
-``` -->
 </section>
 </section>
 
@@ -568,11 +566,11 @@ From [previous engagements](https://github.com/microsoft/rag-openai/blob/main/to
       </div>
     </a>
     <a class="right-next"
-       href="3.1.experiment_embedding.html"
+       href="3.2.experiment_search.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">3.1. Embeddings Experiment</p>
+        <p class="prev-next-title">3.2. Search Experiment</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
