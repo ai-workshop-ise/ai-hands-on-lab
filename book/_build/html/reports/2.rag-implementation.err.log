@@ -18,68 +18,16 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import os
-import json
-from azure.core.credentials import AzureKeyCredential
-from azure.search.documents import SearchClient
-from azure.search.documents.models import (
-    VectorizedQuery,
-    QueryType,
-    QueryCaptionType,
-    QueryAnswerType,
-)
-from azure.search.documents.indexes.models import (
-    SearchIndex,
-    ScoringProfile,
-    SearchFieldDataType,
-    SimpleField,
-    SearchableField,
-    SearchField,
-    SemanticConfiguration,
-    SemanticField,
-    VectorSearchProfile,
-    HnswAlgorithmConfiguration,
-    VectorSearch,
-    HnswParameters,
-    SemanticPrioritizedFields,
-    SemanticSearch,
-)
-from azure.search.documents.indexes import SearchIndexClient
-
-subscription_id = os.environ["subscription_id"]
-resource_group_name = os.environ["resource_group_name"]
-workspace_name = os.environ["workspace_name"]
-service_endpoint = os.environ[
-    "service_endpoint"
-]  # the endpoint of your Azure Cognitive Search service
-key = os.environ["search_key"]
-
-# aoai_connection_name = os.environ['aoai_connection_name']
-aoi_deployment_name = os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"]
-azure_openai_key = os.environ["azure_openai_key"]
-azure_aoai_endpoint = os.environ["azure_aoai_endpoint"]
-embedding_model_name = os.environ["azure_openai_embedding_deployment"]
-
-search_index_name = "index_chunks_2"
-search_index_key = os.getenv("AZURE_SEARCH_ADMIN_KEY")
-credential = AzureKeyCredential(key)
-storage_account_connection_string = os.getenv("storage_account_connection_string")
-azure_openai_embedding_deployment = os.getenv("azure_openai_embedding_deployment")
+search_index_name="index_chunks_2"
+create_index(search_index_name, service_endpoint, search_index_key)
 ------------------
 
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mKeyError[0m                                  Traceback (most recent call last)
-Cell [1;32mIn[3], line 32[0m
-[0;32m     30[0m resource_group_name [38;5;241m=[39m os[38;5;241m.[39menviron[[38;5;124m"[39m[38;5;124mresource_group_name[39m[38;5;124m"[39m]
-[0;32m     31[0m workspace_name [38;5;241m=[39m os[38;5;241m.[39menviron[[38;5;124m"[39m[38;5;124mworkspace_name[39m[38;5;124m"[39m]
-[1;32m---> 32[0m service_endpoint [38;5;241m=[39m [43mos[49m[38;5;241;43m.[39;49m[43menviron[49m[43m[[49m
-[0;32m     33[0m [43m    [49m[38;5;124;43m"[39;49m[38;5;124;43mservice_endpoint[39;49m[38;5;124;43m"[39;49m
-[0;32m     34[0m [43m][49m  [38;5;66;03m# the endpoint of your Azure Cognitive Search service[39;00m
-[0;32m     35[0m key [38;5;241m=[39m os[38;5;241m.[39menviron[[38;5;124m"[39m[38;5;124msearch_key[39m[38;5;124m"[39m]
-[0;32m     37[0m [38;5;66;03m# aoai_connection_name = os.environ['aoai_connection_name'][39;00m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[5], line 2[0m
+[0;32m      1[0m search_index_name[38;5;241m=[39m[38;5;124m"[39m[38;5;124mindex_chunks_2[39m[38;5;124m"[39m
+[1;32m----> 2[0m create_index(search_index_name, [43mservice_endpoint[49m, search_index_key)
 
-File [1;32m<frozen os>:685[0m, in [0;36m__getitem__[1;34m(self, key)[0m
-
-[1;31mKeyError[0m: 'service_endpoint'
+[1;31mNameError[0m: name 'service_endpoint' is not defined
 
