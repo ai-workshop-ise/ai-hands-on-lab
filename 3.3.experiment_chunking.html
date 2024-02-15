@@ -170,21 +170,30 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. RAG - Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="context.html">2.1 Context</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2.2 RAG - Implementation</a></li>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Pre-requisites</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Implementation</a></li>
 
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3.3. Chunking Experiment</a></li>
 
 
-
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -389,7 +398,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunks">Create chunks</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-chunking">Semantic chunking</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#built-in-skillset-splitskill">Built-in skillset: SplitSkill</a></li>
 </ul>
 
@@ -405,16 +413,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="chunking-experiment">
 <h1>3.3. Chunking Experiment<a class="headerlink" href="#chunking-experiment" title="Permalink to this heading">#</a></h1>
-<p>The search solution is comprised of both <strong>ingestion</strong> and <strong>retrieval</strong>. One does not exist without the other.</p>
-<p>While the other experiments are focused on data retrieval, ingestion plays equal importance in the effectiveness of the search solution.</p>
-<p>Certain aspects of data ingestion need to be experimented as part of the experimentation phase:</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#ingestion-and-retrieval">Learnings from other engagements</a>
-Other pre and post-processing techniques include: Optical Character Recognition, data conversation, use of Azure Form Recognizer to extract information from the documents, chunking, summarization, post-processing to make data more “human like”, video captioning, speech to text, tagging, etc. are all methods that need to be considered and experimented with as part of the ingestion pipeline experimentation.</p>
-<p>On another hand, choosing the final mechanism to ingest data is a decision that can wait until experimentation is completed: for instance, if the data repository will be Azure Cognitive Search, the dev team has options such as: using native indexers, building durable functions, using Azure Machine Learning pipelines, or even using Azure Data Factory. All of them are viable options.</p>
-<p>These decisions, however, can, and should, wait until the tool itself is chosen, and the pre and post-processing operations including tagging and other document enrichment are well defined</p>
-</div>
+<p>The search solution is comprised of both <strong>ingestion</strong> and <strong>retrieval</strong>. One does not exist without the other. While the other experiments are focused on data retrieval, ingestion plays equal importance in the effectiveness of the search solution.</p>
+<!-- Certain aspects of data ingestion need to be experimented as part of the experimentation phase: -->
 <p><a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">microsoft/rag-openai</a></p>
 <p>When processing data, splitting the source documents into chunks requires care and expertise to ensure the resulting chunks are small enough to be effective during fact retrieval but not too small so that enough context is provided during summarization.</p>
 <div class="admonition note">
@@ -484,13 +484,19 @@ Other pre and post-processing techniques include: Optical Character Recognition,
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="k">def</span> <span class="nf">create_chunks_and_save_to_file</span><span class="p">(</span><span class="n">path_to_output</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+
+
+<span class="k">def</span> <span class="nf">create_chunks_and_save_to_file</span><span class="p">(</span>
+    <span class="n">path_to_output</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">30</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output</span><span class="p">):</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chunks already created at: </span><span class="si">{</span><span class="n">path_to_output</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
             <span class="k">return</span>
-        
-        <span class="n">documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span><span class="s2">&quot;..\data\docs\**\*.md&quot;</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="p">)</span>
+
+        <span class="n">documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span>
+            <span class="s2">&quot;..\data\docs\**\*.md&quot;</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span>
+        <span class="p">)</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating chunks...&quot;</span><span class="p">)</span>
         <span class="n">markdown_splitter</span> <span class="o">=</span> <span class="n">MarkdownTextSplitter</span><span class="o">.</span><span class="n">from_tiktoken_encoder</span><span class="p">(</span>
@@ -533,10 +539,10 @@ Other pre and post-processing techniques include: Optical Character Recognition,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:8: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-&lt;&gt;:8: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_31048\3463060496.py:8: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-  documents = load_documents_from_folder(&quot;..\data\docs\**\*.md&quot;, totalNumberOfDocuments)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:13: SyntaxWarning: invalid escape sequence &#39;\d&#39;
+&lt;&gt;:13: SyntaxWarning: invalid escape sequence &#39;\d&#39;
+C:\Users\adnegrau\AppData\Local\Temp\ipykernel_37476\4249308573.py:13: SyntaxWarning: invalid escape sequence &#39;\d&#39;
+  &quot;..\data\docs\**\*.md&quot;, totalNumberOfDocuments
 </pre></div>
 </div>
 </div>
@@ -552,7 +558,9 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_31048\3463060496.py:8: SyntaxWarn
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totalNumberOfDocuments</span> <span class="o">=</span> <span class="mi">200</span>
 <span class="n">path_to_chunks_output</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">chunks</span> <span class="o">=</span> <span class="n">create_chunks_and_save_to_file</span><span class="p">(</span><span class="n">path_to_chunks_output</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">chunks</span> <span class="o">=</span> <span class="n">create_chunks_and_save_to_file</span><span class="p">(</span>
+    <span class="n">path_to_chunks_output</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">30</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -582,7 +590,7 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_31048\3463060496.py:8: SyntaxWarn
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_31048\1517721980.py:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
+C:\Users\adnegrau\AppData\Local\Temp\ipykernel_37476\1517721980.py:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
   documents = load_documents_from_folder(&quot;..\data\docs\code-with-engineering\**\*.md&quot;, totalNumberOfDocuments)
 </pre></div>
 </div>
@@ -595,7 +603,7 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_31048\1517721980.py:19: SyntaxWar
 <span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># 2. Generate embeddings for the new chunks</span>
 <span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">generated_embeddings_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-embedded-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">.json&quot;</span>
 
-<span class="nn">File ~\AppData\Local\Temp\ipykernel_31048\391458413.py:2,</span> in <span class="ni">create_index</span><span class="nt">(search_index_name)</span>
+<span class="nn">File ~\AppData\Local\Temp\ipykernel_37476\391458413.py:2,</span> in <span class="ni">create_index</span><span class="nt">(search_index_name)</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">):</span>
 <span class="ne">----&gt; </span><span class="mi">2</span>     <span class="n">client</span> <span class="o">=</span> <span class="n">SearchIndexClient</span><span class="p">(</span><span class="n">service_endpoint</span><span class="p">,</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="c1"># 1. Define the fields</span>
@@ -611,10 +619,43 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_31048\1517721980.py:19: SyntaxWar
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Semantic chunking</span>
+<span class="c1"># # https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept-retrieval-augumented-generation?view=doc-intel-4.0.0</span>
+
+<span class="c1"># # Using SDK targeting 2023-10-31-preview, make sure your resource is in one of these regions: East US, West US2, West Europe</span>
+<span class="c1"># # pip install azure-ai-documentintelligence==1.0.0b1</span>
+<span class="c1"># # pip install langchain langchain-community azure-ai-documentintelligence</span>
+
+<span class="c1"># from azure.ai.documentintelligence import DocumentIntelligenceClient</span>
+
+<span class="c1"># endpoint = &quot;https://&lt;my-custom-subdomain&gt;.cognitiveservices.azure.com/&quot;</span>
+<span class="c1"># key = &quot;&lt;api_key&gt;&quot;</span>
+
+<span class="c1"># from langchain_community.document_loaders import AzureAIDocumentIntelligenceLoader</span>
+<span class="c1"># from langchain.text_splitter import MarkdownHeaderTextSplitter</span>
+
+<span class="c1"># # Initiate Azure AI Document Intelligence to load the document. You can either specify file_path or url_path to load the document.</span>
+<span class="c1"># loader = AzureAIDocumentIntelligenceLoader(file_path=&quot;&lt;path to your file&gt;&quot;, api_key = key, api_endpoint = endpoint, api_model=&quot;prebuilt-layout&quot;)</span>
+<span class="c1"># docs = loader.load()</span>
+
+<span class="c1"># # Split the document into chunks base on markdown headers.</span>
+<span class="c1"># headers_to_split_on = [</span>
+<span class="c1">#     (&quot;#&quot;, &quot;Header 1&quot;),</span>
+<span class="c1">#     (&quot;##&quot;, &quot;Header 2&quot;),</span>
+<span class="c1">#     (&quot;###&quot;, &quot;Header 3&quot;),</span>
+<span class="c1"># ]</span>
+<span class="c1"># text_splitter = MarkdownHeaderTextSplitter(headers_to_split_on=headers_to_split_on)</span>
+
+<span class="c1"># docs_string = docs[0].page_content</span>
+<span class="c1"># splits = text_splitter.split_text(docs_string)</span>
+<span class="c1"># splits</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="semantic-chunking">
-<h1>Semantic chunking<a class="headerlink" href="#semantic-chunking" title="Permalink to this heading">#</a></h1>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="built-in-skillset-splitskill">
 <h1>Built-in skillset: SplitSkill<a class="headerlink" href="#built-in-skillset-splitskill" title="Permalink to this heading">#</a></h1>
@@ -694,7 +735,6 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_31048\1517721980.py:19: SyntaxWar
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunks">Create chunks</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-chunking">Semantic chunking</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#built-in-skillset-splitskill">Built-in skillset: SplitSkill</a></li>
 </ul>
 

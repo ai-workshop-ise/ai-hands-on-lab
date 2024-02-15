@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="3.3. Chunking Experiment" href="3.3.experiment_chunking.html" />
-    <link rel="prev" title="3.1. Embeddings Experiment" href="3.1.experiment_embedding.html" />
+    <link rel="prev" title="Experiments" href="3.experiment.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -170,21 +170,30 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. RAG - Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="context.html">2.1 Context</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2.2 RAG - Implementation</a></li>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Pre-requisites</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Implementation</a></li>
 
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3.2. Search Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
 
 
-
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -382,7 +391,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-search">The Role of Search</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-the-retrieval-component">Evaluating the Retrieval Component</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-keyword-search">Perform a keyword search</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-vector-search">Perform a vector search</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-hybrid-search">Perform a hybrid search</a></li>
@@ -409,17 +417,16 @@ document.write(`
 <h2><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#the-role-of-search">The Role of Search</a><a class="headerlink" href="#the-role-of-search" title="Permalink to this heading">#</a></h2>
 <p>The main purpose of the search tool is to bring the first cut of relevant documents for further analysis by the large language model - it is there to filter the noise and reduce the result set for the model to summarize.</p>
 <p>Search is at the heart of a RAG solution - it is the mechanism that ensures that the context that is sent to the prompt contains relevant information for it to answer the question.</p>
-</section>
-<section id="evaluating-the-retrieval-component">
-<h2><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-retrieval-component">Evaluating the Retrieval Component</a><a class="headerlink" href="#evaluating-the-retrieval-component" title="Permalink to this heading">#</a></h2>
-<p>Regarding the Retrieval component, the dataset is composed of question and citation instead of question and answer.</p>
-<ul class="simple">
-<li><p>question: the user question</p></li>
-<li><p>citation: the piece(s) of text that contains the relevant content to answer the user question</p></li>
-<li><p>answer: the final answer in a human readable/friendly format
-Evaluating the Retrieval component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s).</p></li>
-</ul>
+<!-- ### [Evaluating the Retrieval Component](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-retrieval-component)
+
+Regarding the Retrieval component, the dataset is composed of question and citation instead of question and answer.
+
+- question: the user question
+- citation: the piece(s) of text that contains the relevant content to answer the user question
+- answer: the final answer in a human readable/friendly format
+  Evaluating the Retrieval component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s). -->
 <p>📝<strong>Hypothesis</strong></p>
+<p>The hypothesis for this experiment is an exploratory one: “Can introducing a new type of search improve the system’s performance?”</p>
 <p>🎯 <strong>Measure of Success</strong></p>
 <p>Retrieval information is a well-known problem and the classic metrics are: Precision, Recall, F1 Score, Mean Average Precision (MAP), Mean Normalized Discounted Cumulative Gain (Mean NDCG) and Mean Reciprocal Rank (MRR). More details can be found at Evaluating Information Retrieval Models: A Comprehensive Guide to Performance Metrics.</p>
 <p><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluation-metrics">Evaluation Metrics</a>
@@ -427,7 +434,7 @@ Linnk: <a class="reference external" href="https://medium.com/&#64;prateekgaurav
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
-<span class="o">%</span><span class="n">run</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">context</span><span class="o">.</span><span class="n">ipynb</span>
+<span class="o">%</span><span class="n">run</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">pre</span><span class="o">-</span><span class="n">requisites</span><span class="o">.</span><span class="n">ipynb</span>
 <span class="o">%</span><span class="n">run</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">helpers</span><span class="o">/</span><span class="n">search</span><span class="o">.</span><span class="n">ipynb</span>
 </pre></div>
 </div>
@@ -461,7 +468,7 @@ Linnk: <a class="reference external" href="https://medium.com/&#64;prateekgaurav
 <span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
     <span class="n">search_text</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
     <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;chunkId&quot;</span><span class="p">,</span> <span class="s2">&quot;chunkContent&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">],</span>
-    <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">top</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
@@ -519,71 +526,7 @@ If this introduces a breaking change, please describe the impact and migration p
 Testing
 
 
-chunkId: chunk7_4
-source: ..\data\docs\code-with-dataops\capabilities\analytical-systems\common-capabilities\data-pipeline-operability\index.md
-Score: 11.86177
-chunkContent: How do I empower project teams to build Data Products?
-
-Provide a Data Exploratory Environment
-
-Aside from the usual data zones, individual workspaces for data users and engineers should be setup using a section within the larger logical data lake. Furthermore, appropriate access to tools and environments for experimentation should be provided to them.
-
-More information:
-
-MLOps: Experimentation
-
-Facilitate data discovery and governance through a data catalog
-
-In order for users to start building data products, they need a way to discover and explore existing datasets available to them along with relevant business metadata, lineage and governance controls. Having a data catalog is imperative to have your data products easily discoverable and properly governed.
-
-More information:
-
-DataOps: Data Catalog
-
-Operationalizing the Data Platform
-
-How do I efficiently operate my data platform?
-
-Automate deployments and Testing
-
-To automate deployments and testing, all artifacts required to build the analytical system should be added to a source control system such as git. These artifacts include infrastructure-as-code, database objects (schema definitions, functions, stored procedures, etc.), application data, pipeline definitions, data validation and transformation logic. There should be a safe and repeatable process to deploy changes with automated tests through dev, test and production stages. This process is mainly to ensure correctness and to identify bugs early.
-
-More information:
-
-DataOps: Code-First Development
-
-
-chunkId: chunk162_3
-source: ..\data\docs\code-with-engineering\developer-experience\going-further.md
-Score: 11.143963
-chunkContent: To use the docker-compose.yml file instead of Dockerfile, we need to adjust devcontainer.json with:
-
-{% raw %}
-
-json
-{
-    &quot;name&quot;: &quot;My Application&quot;,
-    &quot;dockerComposeFile&quot;: [&quot;docker-compose.yml&quot;],
-    &quot;service&quot;: &quot;my-workspace&quot;
-    ...
-}
-
-{% endraw %}
-
-This approach can be applied for many other tools by preparing what would be required. The idea is to simplify developers&#39; lives and new developers joining the project.
-
-Custom tools
-
-While working on a project, any developer might end up writing a script to automate a task. This script can be in bash, python or whatever scripting language they are comfortable with.
-
-Let&#39;s say you want to ensure that all markdown files written are validated against specific rules you have set up. As we have seen above, you can include the tool markdownlint in your Dev Container . Having the tool installed does not mean developer will know how to use it!
-
-Consider the following solution structure:
-
-{% raw %}
-
-
-&lt;iterator object azure.core.paging.ItemPaged at 0x20a17e4e180&gt;
+&lt;iterator object azure.core.paging.ItemPaged at 0x1de1101d0a0&gt;
 </pre></div>
 </div>
 </div>
@@ -593,8 +536,7 @@ Consider the following solution structure:
 <h2>Perform a vector search<a class="headerlink" href="#perform-a-vector-search" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pure Vector Search</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;tools for software development&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;tools for software development&quot;</span>
 
 <span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 <span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
@@ -648,7 +590,7 @@ Technical Agility*
     <span class="n">search_text</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
     <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
     <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;chunkId&quot;</span><span class="p">,</span> <span class="s2">&quot;chunkContent&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">],</span>
-    <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">top</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
@@ -676,36 +618,6 @@ Cosmos DB serves multiple purposes for the AVOps platform. Not only does it stor
 Key requirement with lineage tracking was to be able to reach to specific measurement/Rosbag file from processed data (or a Datastream). Decision of keeping lineage in Cosmos DB with Mongo graph query made it easy and simple to kick-start traceability support. Although, Purview could be the first choice for tracking the data lineage, it could have made the solution little more expensive, bulkier and involved some headache of writing custom APIs on top of cosmos for lineage (to integrate with it).
 
 Compute
-chunkId: chunk9_7
-source: ..\data\docs\code-with-dataops\capabilities\analytical-systems\common-capabilities\storage\index.md
-Score: 0.029462365433573723
-chunkContent: Data sets possess distinct lifecycle, with early stages characterized by frequent access to certain data. However, as the data ages, the need for access decreases dramatically. Some data remains unused in the cloud, with infrequent access once stored, while others may expire days or months after creation. Some data sets are actively read and modified throughout their lifecycle. Data can be transitioned to different access tiers or expired using Azure Storage Lifecycle Management&#39;s rule-based policies.
-
-Azure storage offers different access tiers namely hot, cool and archive. By default when data is created, it&#39;s stored under hot tier. The data then can be moved or deleted based on Storage Lifecycle Management rules, including an option to move it to cool or archive tiers.
-
-An important consideration when using storage tiers is the rehydration process from the archive tier. Reading data from archive tier requires data rehydration first. The rehydration process may be time-consuming and expensive. For more information, see overview of blob rehydration from the archive tier.
-
-A sample implementation can be found in MDW repo: Storage (Single). These Terraform based IaC templates demonstrate Azure storage accounts/containers creation and data lifecycle rule configuration at scale.
-
-See Lifecycle management overview for more information.
-
-Storage on Microsoft Fabric
-chunkId: chunk154_1
-source: ..\data\docs\code-with-engineering\design\sustainability\sustainable-action-disclaimers.md
-Score: 0.025402450934052467
-chunkContent: Running an edge device negates many of the benefits of hyperscale compute facilities, so considering the local energy grid mix and the typical timing of the workloads is important to determine if this is beneficial overall.  The larger volume of data that needs to be transmitted, the more this solution becomes appealing. For example, sending large amounts of audio and video content for processing.
-
-ACTION: Consider physically shipping data to the provider
-
-Shipping physical items has its own carbon impact, depending on the mode of transportation, which needs to be understood before making this decision.  The larger the volume of data that needs to be transmitted the more this options may be beneficial.
-
-ACTION: Consider the energy efficiency of languages
-
-When selecting a programming language, the most energy efficient programming language may not always be the best choice for development speed, maintenance, integration with dependent systems, and other project factors. But when deciding between languages that all meet the project needs, energy efficiency can be a helpful consideration.
-
-ACTION: Use caching policies
-
-A cache provides temporary storage of resources that have been requested by an application. Caching can improve application performance by reducing the time required to get a requested resource. Caching can also improve sustainability by decreasing the amount of network traffic.
 </pre></div>
 </div>
 </div>
@@ -781,7 +693,7 @@ A cache provides temporary storage of resources that have been requested by an a
     <span class="n">semantic_configuration_name</span><span class="o">=</span><span class="s2">&quot;my-semantic-config&quot;</span><span class="p">,</span>
     <span class="n">query_caption</span><span class="o">=</span><span class="n">QueryCaptionType</span><span class="o">.</span><span class="n">EXTRACTIVE</span><span class="p">,</span>
     <span class="n">query_answer</span><span class="o">=</span><span class="n">QueryAnswerType</span><span class="o">.</span><span class="n">EXTRACTIVE</span><span class="p">,</span>
-    <span class="n">top</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">top</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">semantic_answers</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">get_answers</span><span class="p">()</span>
@@ -835,46 +747,6 @@ Microsoft&#39;s AVOps reference architecture
 AVOps Solution Kit: AVOps solution kit is a Dataops platform which helps customers to kick-start quickly on high scale data ingestion requirements.
 Reranker Score: 2.985140800476074
 Caption: &lt;em&gt;Azure Batch&lt;/em&gt; is the heart of compute in this solution.&lt;em&gt; Azure Batch&lt;/em&gt; natively supports massively parallel processing, which fine-tunes the performance and turn-around time of data pipelines. For a sample Rosbag extraction process, multiple topics (lidar, radar, camera1, camera2 etc.) need to be extracted.
-
-chunkId: chunk152_12
-source: ..\data\docs\code-with-devsecops\Enterprise-Solutions\governance\secure-software-supply-chain-for-containerized-workloads.md
-Score: 0.021601775661110878
-chunkContent: This implementation delivers a notation-based secure software supply chain in Azure built on Azure Kubernetes Service (AKS) and Azure Container Registry (ACR).
-
-Either Azure Pipelines or GitHub Actions can be used in the build phase to create the software release and security artifacts. Microsoft&#39;s sbom-tool is used to generate an SBOM from the source code, dependencies, and the container image packages. A vulnerability report is generated using Aquasec&#39;s Trivy tool (only supports Linux workloads). Notation is used to sign the container image and security artifacts with a signing cert stored in Azure Key Vault. The ORAS tool is used to bundle the signatures, security artifacts, and container image (software release), and then to publish the release bundle to Azure Container Registry.
-
-Policy enforcement is enabled in the deploy phase by using Open Policy Agent&#39;s Gatekeeper and the Ratify verification tool. Ratify acts as an external data provider for Gatekeeper and facilitates exposing the appropriate information from the release bundle to the policy engine. Ratify verifies component signatures using a root CA certificate stored in its configuration.
-
-The following policies are enforced:
-
-All images must be signed to ensure workload integrity
-
-All images must have an attached and signed SBOM and vulnerability scan result
-
-All images may only be retrieved from allowed list of container registries
-Reranker Score: 1.5704656839370728
-Caption: This implementation delivers a notation-based secure software supply chain in Azure built on&lt;em&gt; Azure Kubernetes Service&lt;/em&gt; (AKS) and&lt;em&gt; Azure Container Registry&lt;/em&gt; (ACR). Either Azure Pipelines or GitHub Actions can be used in the build phase to create the software release and security artifacts.
-
-chunkId: chunk150_3
-source: ..\data\docs\code-with-devsecops\Enterprise-Solutions\Cloud-Native-Application-Bundle-(CNAB)-for-Azure-Trusted-Research-Environment-(TRE)\index.md
-Score: 0.012048192322254181
-chunkContent: Duffle - Originally while the CNAB specification was developed, Duffle (duffle.sh) was used as a reference implementation to assist other people when developing their own implementations. Now that the CNAB v1 spec has been stable for years, it is no longer needed and has been archived.
-
-Porter is now the only open-source implementation of CNAB and is constantly being improved and maintained.
-
-Porter is Microsoft recommended tool for customers to use. It is a part of the CNCF (cloud native computing foundation) and is maintained by multiple companies in addition to individual community members.
-
-Case Studies
-
-EY teams uses Porter to combine different Azure components infrastructure into a single application bundle. This reduces the complexity of dependency management and allows EY teams to reduce the operational overhead of managing its hundreds of applications.
-
-Azure Trusted Research Environment (Azure TRE) - An OSS solution developed and maintained by CSE, which uses Porter to bundle deployment of Azure Resources and third-party solutions on Azure. We will see an example later on from this project.
-
-Building a bundle
-
-A Porter bundle is defined by a Porter manifest file named porter.yaml. The manifest defines metadata about the bundle, such as its name or what parameters it accepts. In addition, it also defines actions that the bundle can execute, like install, upgrade and uninstall along with custom actions.
-Reranker Score: 1.2104779481887817
-Caption: Azure Trusted Research Environment (Azure TRE) - An OSS solution developed and maintained by CSE, which uses Porter to bundle deployment of Azure Resources and third-party solutions on Azure. We will see an example later on from this project. Building a bundle  A Porter bundle is defined by a Porter manifest file named porter.yaml.
 </pre></div>
 </div>
 </div>
@@ -917,12 +789,12 @@ Caption: Azure Trusted Research Environment (Azure TRE) - An OSS solution develo
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="3.1.experiment_embedding.html"
+       href="3.experiment.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">3.1. Embeddings Experiment</p>
+        <p class="prev-next-title">Experiments</p>
       </div>
     </a>
     <a class="right-next"
@@ -951,7 +823,6 @@ Caption: Azure Trusted Research Environment (Azure TRE) - An OSS solution develo
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-search">The Role of Search</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-the-retrieval-component">Evaluating the Retrieval Component</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-keyword-search">Perform a keyword search</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-vector-search">Perform a vector search</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-a-hybrid-search">Perform a hybrid search</a></li>

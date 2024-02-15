@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Experiments" href="3.experiment.html" />
-    <link rel="prev" title="Context" href="pre-requisites.html" />
+    <link rel="prev" title="Pre-requisites" href="pre-requisites.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -172,8 +172,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Introduction</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. RAG - Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Pre-requisites</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="current nav bd-sidenav">
@@ -186,14 +187,12 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
 
 
-
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Production</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
@@ -450,33 +449,26 @@ document.write(`
 </section>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
-<p>First, we install the necessary dependencies.
-<a class="github reference external" href="https://github.com/openai/openai-cookbook/blob/main/examples/azure/chat_with_your_own_data.ipynb">openai/openai-cookbook</a></p>
+<!-- First, we install the necessary dependencies.
+https://github.com/openai/openai-cookbook/blob/main/examples/azure/chat_with_your_own_data.ipynb -->
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">dotenv</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">azure</span><span class="o">-</span><span class="n">search</span><span class="o">-</span><span class="n">documents</span><span class="o">==</span><span class="mf">11.4.0</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">openai</span><span class="o">==</span><span class="mf">0.28.1</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">langchain</span><span class="o">-</span><span class="n">community</span><span class="o">==</span><span class="mf">0.0.18</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">unstructured</span><span class="o">==</span><span class="mf">0.12.3</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">unstructured</span><span class="o">-</span><span class="n">client</span><span class="o">==</span><span class="mf">0.17.0</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">langchain</span><span class="o">==</span><span class="mf">0.1.5</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;unstructured[md]&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %%capture --no-display</span>
+<span class="c1"># %pip install python-dotenv</span>
+<span class="c1"># %pip install azure-search-documents==11.4.0</span>
+<span class="c1"># %pip install openai==0.28.1</span>
+<span class="c1"># %pip install langchain-community==0.0.18</span>
+<span class="c1"># %pip install unstructured==0.12.3</span>
+<span class="c1"># %pip install unstructured-client==0.17.0</span>
+<span class="c1"># %pip install langchain==0.1.5</span>
+<span class="c1"># %pip install &quot;unstructured[md]&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>In this workshop, we’ll use <code class="docutils literal notranslate"><span class="pre">dotenv</span></code>. To connect with Azure OpenAI and the Search index, the following variables should be added to a .env file in KEY=VALUE format:
-…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import os</span>
-<span class="c1"># import dotenv</span>
-
-<span class="c1"># %reload_ext dotenv</span>
-<span class="c1"># %dotenv</span>
-<span class="o">%</span><span class="k">run</span> -i ./context.ipynb
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
 </pre></div>
 </div>
 </div>
@@ -489,9 +481,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">azure.core.credentials</span> <span class="kn">import</span> <span class="n">AzureKeyCredential</span>
 <span class="kn">from</span> <span class="nn">azure.search.documents</span> <span class="kn">import</span> <span class="n">SearchClient</span>
-<span class="kn">from</span> <span class="nn">azure.search.documents.models</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">VectorizedQuery</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">azure.search.documents.models</span> <span class="kn">import</span> <span class="n">VectorizedQuery</span>
 <span class="kn">from</span> <span class="nn">azure.search.documents.indexes.models</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">SearchIndex</span><span class="p">,</span>
     <span class="n">ScoringProfile</span><span class="p">,</span>
@@ -511,22 +501,12 @@ document.write(`
 <span class="kn">from</span> <span class="nn">azure.search.documents.indexes</span> <span class="kn">import</span> <span class="n">SearchIndexClient</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 
-<span class="c1"># service_endpoint = os.environ[</span>
-<span class="c1">#     &quot;AZURE_SEARCH_SERVICE_ENDPOINT&quot;</span>
-<span class="c1"># ]  # the endpoint of your Azure Cognitive Search service</span>
-<span class="c1"># key = os.environ[&quot;AZURE_SEARCH_ADMIN_KEY&quot;]</span>
+<span class="kn">import</span> <span class="nn">openai</span>
 
-<span class="c1"># # aoai_connection_name = os.environ[&#39;aoai_connection_name&#39;]</span>
-<span class="c1"># aoi_deployment_name = os.environ[&quot;AZURE_OPENAI_DEPLOYMENT_NAME&quot;]</span>
-<span class="c1"># azure_openai_key = os.environ[&quot;azure_openai_key&quot;]</span>
-<span class="c1"># azure_aoai_endpoint = os.environ[&quot;AZURE_OPENAI_ENDPOINT&quot;]</span>
-<span class="c1"># embedding_model_name = os.environ[&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;]</span>
-
-<span class="c1"># search_index_name = &quot;index_chunks_2&quot;</span>
-<span class="c1"># search_index_key = os.getenv(&quot;AZURE_SEARCH_ADMIN_KEY&quot;)</span>
-<span class="c1"># credential = AzureKeyCredential(key)</span>
-<span class="c1"># storage_account_connection_string = os.getenv(&quot;storage_account_connection_string&quot;)</span>
-<span class="c1"># azure_openai_embedding_deployment = os.getenv(&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;)</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_OPENAI_KEY&quot;</span><span class="p">)</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_OPENAI_ENDPOINT&quot;</span><span class="p">)</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_type</span> <span class="o">=</span> <span class="s2">&quot;azure&quot;</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;2023-07-01-preview&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -651,26 +631,20 @@ Used for SearchField inspiration - https://github.com/Azure/azure-sdk-for-python
     <span class="p">)</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_or_update_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> created or updated&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Index: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> created or updated&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search_index_name</span><span class="o">=</span><span class="s2">&quot;index_chunks_2&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search_index_name</span> <span class="o">=</span> <span class="s2">&quot;index_chunks_2&quot;</span>
 <span class="n">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">,</span> <span class="n">service_endpoint</span><span class="p">,</span> <span class="n">search_index_key</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">search_index_name</span><span class="o">=</span><span class="s2">&quot;index_chunks_2&quot;</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">,</span> <span class="n">service_endpoint</span><span class="p">,</span> <span class="n">search_index_key</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;service_endpoint&#39; is not defined
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: index_chunks_2 created or updated
 </pre></div>
 </div>
 </div>
@@ -940,7 +914,8 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
 </details>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_prompt</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">documentation</span><span class="p">,</span> <span class="n">conversation</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
+<span class="k">def</span> <span class="nf">create_prompt</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">documentation</span><span class="p">,</span> <span class="n">conversation</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
     <span class="n">system_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">  Instructions:</span>
 
@@ -1036,19 +1011,10 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
 <p>Setup Chat Completion endpoint</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openai</span>
-
-<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_OPENAI_API_KEY&quot;</span><span class="p">)</span>
-<span class="n">openai</span><span class="o">.</span><span class="n">api_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
-    <span class="s2">&quot;AZURE_OPENAI_ENDPOINT&quot;</span>
-<span class="p">)</span>  <span class="c1"># your endpoint should look like the following https://YOUR_RESOURCE_NAME.openai.azure.com/</span>
-<span class="n">openai</span><span class="o">.</span><span class="n">api_type</span> <span class="o">=</span> <span class="s2">&quot;azure&quot;</span>
-<span class="n">openai</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;2023-07-01-preview&quot;</span>  <span class="c1"># this might change in the future</span>
-
-
-<span class="k">def</span> <span class="nf">call_llm</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">call_llm</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">engine</span><span class="o">=</span><span class="n">azure_openai_chat_deployment</span><span class="p">,</span> <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>  <span class="c1"># engine = &quot;deployment_name&quot;.</span>
+        <span class="n">engine</span><span class="o">=</span><span class="n">azure_openai_chat_deployment</span><span class="p">,</span>  <span class="c1"># The deployment name of the chat completion model</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
@@ -1101,7 +1067,7 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>User question: What does the develop phase include?
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response: The develop phase includes supporting the security and integrity of all code, binaries, and configuration that is expected to be included in the software release, using a development environment that encompasses all the tools the developer uses to write, build and test code, a code repository to store the code that&#39;s written, and additional components retrieved from a component registry. Repeatable and deterministic builds are important to ensure that the contents that make up a software release are well-known and any attempts to tamper with the artifacts can be detected. The development ecosystem used within the develop phase must ensure a record of all the dependencies is captured, and version pinning of components from the component registry is encouraged to ensure that builds remain deterministic [[..\\data\\docs\\code-with-devsecops\\Enterprise-Solutions\\governance\\secure-software-supply-chain-for-containerized-workloads.md+chunk152_4]].
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response: The develop phase includes supporting developers to ensure the security and integrity of all code, binaries, and configuration that is expected to be included in the software release. This is done through the use of a development environment which encompasses all the tools that the developer uses to write, build and test code, and a code repository to store the code that&#39;s written. The development ecosystem used within the develop phase must ensure a record of all the dependencies is captured. Repeatable and deterministic builds are an important aspect of a secure software supply chain and are encouraged. [..\\data\\docs\\code-with-devsecops\\Enterprise-Solutions\\governance\\secure-software-supply-chain-for-containerized-workloads.md+chunk152_4]
 </pre></div>
 </div>
 </div>
@@ -1111,7 +1077,6 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
 <ul class="simple">
 <li><p>Is this <em>good enough</em>?</p></li>
 <li><p>What does <em>good enough</em> even mean?</p></li>
-<li><p>Will the customer like it? Will they find it useful?</p></li>
 <li><p>How can I prove that this works <em>as expected</em>?</p></li>
 <li><p>What does <em>works as expected</em> even mean?!</p></li>
 </ul>
@@ -1154,7 +1119,7 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Context</p>
+        <p class="prev-next-title">Pre-requisites</p>
       </div>
     </a>
     <a class="right-next"
