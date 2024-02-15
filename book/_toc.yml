@@ -3,18 +3,30 @@
 
 format: jb-book
 root: 0.intro
-chapters:
-# - file: markdown
-# - file: notebooks
-# - file: markdown-notebooks
-- file: 1.rag-intro
-- file: context
-- file: 2.rag-implementation-2
-# - file: 2.rag-implementation_integrated
-- file: 3.experiment
-- file: 3.1.experiment_embedding
-- file: 3.2.experiment_search
-- file: 3.3.experiment_chunking
-- file: 10.evaluation-production.ipynb
-# - file: aisearch
-# - file: comparison
+parts:
+- caption: 1. Introduction
+  chapters:
+  - file: 1.rag-intro
+  - file: context
+  - file: pre-requisites
+- caption: 2. Implementation
+  chapters:
+    - file: 2.rag-implementation
+- caption: 3. Experimentation
+  chapters:
+  - file: 3.experiment
+  - file: 3.1.experiment_embedding
+  - file: 3.2.experiment_search
+  - file: 3.3.experiment_chunking
+- caption: Production
+  chapters:
+  - file: 10.evaluation-production
+# chapters:
+# - file: 1.rag-intro
+# - file: context
+# - file: 2.rag-implementation
+# - file: 3.experiment
+# - file: 3.1.experiment_embedding
+# - file: 3.2.experiment_search
+# - file: 3.3.experiment_chunking
+# - file: 10.evaluation-production
