@@ -1,9 +1,13 @@
 jupyter-book
 matplotlib
 numpy
-openai
+openai==0.28.1
 azure-identity
 ghp-import
-azure-search-documents==11.4.0b8
+azure-search-documents==11.4.0
 azure-ai-ml
-semantic-kernel=0.4.7.dev0
+python-dotenv
+langchain-community==0.0.18
+unstructured==0.12.3
+unstructured-client==0.17.0
+langchain==0.1.5

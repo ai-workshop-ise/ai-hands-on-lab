@@ -18,7 +18,7 @@ parts:
   - file: 3.1.experiment_embedding
   - file: 3.2.experiment_search
   - file: 3.3.experiment_chunking
-- caption: Production
+- caption: 4. Production
   chapters:
   - file: 10.evaluation-production
 # chapters:
