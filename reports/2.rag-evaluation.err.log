@@ -33,11 +33,11 @@ resource_group_name = os.environ["resource_group_name"]
 workspace_name = os.environ["workspace_name"]
 
 aoi_deployment_name = os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"]
-aoi_api_key = os.environ["aoi_api_key"]
-aoai_endpoint = os.environ["aoai_endpoint"]
+azure_openai_key = os.environ["azure_openai_key"]
+azure_aoai_endpoint = os.environ["azure_aoai_endpoint"]
 
-os.environ.setdefault("OPENAI_API_KEY", aoi_api_key)
-os.environ.setdefault("OPENAI_API_BASE", aoai_endpoint)
+os.environ.setdefault("OPENAI_API_KEY", azure_openai_key)
+os.environ.setdefault("OPENAI_API_BASE", azure_aoai_endpoint)
 os.environ.setdefault("OPENAI_API_VERSION", "2023-05-15")
 os.environ.setdefault("OPENAI_API_TYPE", "azure")
 os.environ.setdefault("OPENAI_DEPLOYMENT_NAME",aoi_deployment_name)

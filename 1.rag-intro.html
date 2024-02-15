@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>1. Retrieval Augmented Generation &#8212; AI Workshop</title>
+    <title>1. RAG - Introduction &#8212; AI Workshop</title>
   
   
   
@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '1.rag-intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="2.1 Pre-requisites" href="prerequisites.html" />
+    <link rel="next" title="2.1 Context" href="context.html" />
     <link rel="prev" title="Welcome" href="0.intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -171,23 +171,20 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2.1 Pre-requisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">2.2 Baseline RAG Setup</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. RAG - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">2.1 Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2.2 RAG - Implementation</a></li>
 
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html">Workshop Setup</a></li>
 
 
 
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
 
 
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_search.html">Search</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -374,7 +371,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>1. Retrieval Augmented Generation</h1>
+    <h1>1. RAG - Introduction</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -396,8 +393,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="retrieval-augmented-generation">
-<h1>1. Retrieval Augmented Generation<a class="headerlink" href="#retrieval-augmented-generation" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="rag-introduction">
+<h1>1. RAG - Introduction<a class="headerlink" href="#rag-introduction" title="Permalink to this heading">#</a></h1>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>If you are new to copilot and RAG concepts, consider going through these resources after the workshop:</p>
@@ -436,9 +433,9 @@ document.write(`
 <p><strong>Vector search in Azure AI Search - Overview</strong></p>
 <p>Vector search is an approach in information retrieval that stores numeric representations of content for search scenarios.
 <img alt="vector_search" src="_images/vector-search-architecture-diagram.png" /></p>
-<p>The generally available functionality of vector support requires that you call other libraries or models for data chunking and vectorization. However, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-integrated-vectorization">integrated vectorization (preview)</a> embeds these steps.</p>
-<p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/use-your-data?tabs=ai-search#search-options">Search options</a>: keyword search, semantic search, vector search, hybrid search.</p>
-<p>*_ The technology behind Azure AI Search_</p>
+<!-- The generally available functionality of vector support requires that you call other libraries or models for data chunking and vectorization. However, [integrated vectorization (preview)](https://learn.microsoft.com/en-us/azure/search/vector-search-integrated-vectorization) embeds these steps. -->
+<!--
+\*_ The technology behind Azure AI Search_ -->
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p class="rubric">Approaches for RAG with Azure AI Search</p>
@@ -493,11 +490,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="prerequisites.html"
+       href="context.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">2.1 Pre-requisites</p>
+        <p class="prev-next-title">2.1 Context</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

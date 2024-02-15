@@ -171,15 +171,20 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">Baseline RAG Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html">Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. RAG - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">2.1 Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">2.2 RAG - Implementation</a></li>
+
 
 
 
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -402,15 +407,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting mlflow==2.10.1
-  Using cached mlflow-2.10.1-py3-none-any.whl.metadata (13 kB)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: mlflow==2.10.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (2.10.1)
 Requirement already satisfied: click&lt;9,&gt;=7.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (8.1.7)
 Requirement already satisfied: cloudpickle&lt;4 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (3.0.0)
-Collecting databricks-cli&lt;1,&gt;=0.8.7 (from mlflow==2.10.1)
-  Using cached databricks_cli-0.18.0-py2.py3-none-any.whl.metadata (4.0 kB)
+Requirement already satisfied: databricks-cli&lt;1,&gt;=0.8.7 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (0.18.0)
 Requirement already satisfied: entrypoints&lt;1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (0.4)
-Collecting gitpython&lt;4,&gt;=2.1.0 (from mlflow==2.10.1)
-  Using cached GitPython-3.1.41-py3-none-any.whl.metadata (14 kB)
+Requirement already satisfied: gitpython&lt;4,&gt;=2.1.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (3.1.41)
 Requirement already satisfied: pyyaml&lt;7,&gt;=5.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (6.0.1)
 Requirement already satisfied: protobuf&lt;5,&gt;=3.12.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (4.25.2)
 Requirement already satisfied: pytz&lt;2024 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (2023.4)
@@ -418,12 +420,9 @@ Requirement already satisfied: requests&lt;3,&gt;=2.17.3 in c:\users\adnegrau\ap
 Requirement already satisfied: packaging&lt;24 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (23.2)
 Requirement already satisfied: importlib-metadata!=4.7.0,&lt;8,&gt;=3.7.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (7.0.1)
 Requirement already satisfied: sqlparse&lt;1,&gt;=0.4.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (0.4.4)
-Collecting alembic!=1.10.0,&lt;2 (from mlflow==2.10.1)
-  Using cached alembic-1.13.1-py3-none-any.whl.metadata (7.4 kB)
-Collecting docker&lt;8,&gt;=4.0.0 (from mlflow==2.10.1)
-  Using cached docker-7.0.0-py3-none-any.whl.metadata (3.5 kB)
-Collecting Flask&lt;4 (from mlflow==2.10.1)
-  Using cached flask-3.0.2-py3-none-any.whl.metadata (3.6 kB)
+Requirement already satisfied: alembic!=1.10.0,&lt;2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (1.13.1)
+Requirement already satisfied: docker&lt;8,&gt;=4.0.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (7.0.0)
+Requirement already satisfied: Flask&lt;4 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (3.0.2)
 Requirement already satisfied: numpy&lt;2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (1.26.3)
 Requirement already satisfied: scipy&lt;2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (1.12.0)
 Requirement already satisfied: pandas&lt;3 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow==2.10.1) (2.2.0)
@@ -447,8 +446,7 @@ Requirement already satisfied: pywin32&gt;=304 in c:\users\adnegrau\appdata\loca
 Requirement already satisfied: Werkzeug&gt;=3.0.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from Flask&lt;4-&gt;mlflow==2.10.1) (3.0.1)
 Requirement already satisfied: itsdangerous&gt;=2.1.2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from Flask&lt;4-&gt;mlflow==2.10.1) (2.1.2)
 Requirement already satisfied: blinker&gt;=1.6.2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from Flask&lt;4-&gt;mlflow==2.10.1) (1.7.0)
-Collecting gitdb&lt;5,&gt;=4.0.1 (from gitpython&lt;4,&gt;=2.1.0-&gt;mlflow==2.10.1)
-  Using cached gitdb-4.0.11-py3-none-any.whl.metadata (1.2 kB)
+Requirement already satisfied: gitdb&lt;5,&gt;=4.0.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from gitpython&lt;4,&gt;=2.1.0-&gt;mlflow==2.10.1) (4.0.11)
 Requirement already satisfied: zipp&gt;=0.5 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from importlib-metadata!=4.7.0,&lt;8,&gt;=3.7.0-&gt;mlflow==2.10.1) (3.17.0)
 Requirement already satisfied: MarkupSafe&gt;=2.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from Jinja2&lt;4,&gt;=3.0-&gt;mlflow==2.10.1) (2.1.4)
 Requirement already satisfied: contourpy&gt;=1.0.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from matplotlib&lt;4-&gt;mlflow==2.10.1) (1.2.0)
@@ -466,50 +464,30 @@ Requirement already satisfied: joblib&gt;=1.2.0 in c:\users\adnegrau\appdata\loc
 Requirement already satisfied: threadpoolctl&gt;=2.0.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from scikit-learn&lt;2-&gt;mlflow==2.10.1) (3.2.0)
 Requirement already satisfied: greenlet!=0.4.17 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from sqlalchemy&lt;3,&gt;=1.4.0-&gt;mlflow==2.10.1) (3.0.3)
 Requirement already satisfied: smmap&lt;6,&gt;=3.0.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from gitdb&lt;5,&gt;=4.0.1-&gt;gitpython&lt;4,&gt;=2.1.0-&gt;mlflow==2.10.1) (5.0.1)
-Using cached mlflow-2.10.1-py3-none-any.whl (19.5 MB)
-Using cached alembic-1.13.1-py3-none-any.whl (233 kB)
-Using cached databricks_cli-0.18.0-py2.py3-none-any.whl (150 kB)
-Using cached docker-7.0.0-py3-none-any.whl (147 kB)
-Using cached flask-3.0.2-py3-none-any.whl (101 kB)
-Using cached GitPython-3.1.41-py3-none-any.whl (196 kB)
-Using cached gitdb-4.0.11-py3-none-any.whl (62 kB)
-Installing collected packages: gitdb, gitpython, Flask, docker, databricks-cli, alembic, mlflow
-Successfully installed Flask-3.0.2 alembic-1.13.1 databricks-cli-0.18.0 docker-7.0.0 gitdb-4.0.11 gitpython-3.1.41 mlflow-2.10.1
 Note: you may need to restart the kernel to use updated packages.
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting azureml-mlflow==1.55.0
-  Using cached azureml_mlflow-1.55.0-py3-none-any.whl.metadata (2.6 kB)
-Collecting jsonpickle (from azureml-mlflow==1.55.0)
-  Using cached jsonpickle-3.0.2-py3-none-any.whl.metadata (7.5 kB)
-Collecting mlflow-skinny (from azureml-mlflow==1.55.0)
-  Using cached mlflow_skinny-2.10.2-py3-none-any.whl.metadata (14 kB)
-Collecting azure-identity (from azureml-mlflow==1.55.0)
-  Using cached azure_identity-1.15.0-py3-none-any.whl.metadata (75 kB)
-Collecting msrest&gt;=0.6.18 (from azureml-mlflow==1.55.0)
-  Using cached msrest-0.7.1-py3-none-any.whl (85 kB)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: azureml-mlflow==1.55.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (1.55.0)Note: you may need to restart the kernel to use updated packages.
+
+Requirement already satisfied: jsonpickle in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (3.0.2)
+Requirement already satisfied: mlflow-skinny in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (2.10.2)
+Requirement already satisfied: azure-identity in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (1.15.0)
+Requirement already satisfied: msrest&gt;=0.6.18 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (0.7.1)
 Requirement already satisfied: azure-core!=1.22.0,&lt;2.0.0,&gt;=1.8.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (1.30.0)
-Collecting azure-mgmt-core&lt;2.0.0,&gt;=1.2.0 (from azureml-mlflow==1.55.0)
-  Using cached azure_mgmt_core-1.4.0-py3-none-any.whl (27 kB)
-Collecting azure-storage-blob&lt;=12.19.0,&gt;=12.5.0 (from azureml-mlflow==1.55.0)
-  Using cached azure_storage_blob-12.19.0-py3-none-any.whl.metadata (26 kB)
+Requirement already satisfied: azure-mgmt-core&lt;2.0.0,&gt;=1.2.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (1.4.0)
+Requirement already satisfied: azure-storage-blob&lt;=12.19.0,&gt;=12.5.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (12.19.0)
 Requirement already satisfied: azure-common&lt;2.0.0,&gt;=1.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (1.1.28)
-Collecting cryptography (from azureml-mlflow==1.55.0)
-  Downloading cryptography-42.0.2-cp39-abi3-win_amd64.whl.metadata (5.4 kB)
+Requirement already satisfied: cryptography in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (42.0.2)
 Requirement already satisfied: python-dateutil&lt;3.0.0,&gt;=2.7.3 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azureml-mlflow==1.55.0) (2.8.2)
 Requirement already satisfied: requests&gt;=2.21.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-core!=1.22.0,&lt;2.0.0,&gt;=1.8.0-&gt;azureml-mlflow==1.55.0) (2.31.0)
 Requirement already satisfied: six&gt;=1.11.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-core!=1.22.0,&lt;2.0.0,&gt;=1.8.0-&gt;azureml-mlflow==1.55.0) (1.16.0)
 Requirement already satisfied: typing-extensions&gt;=4.6.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-core!=1.22.0,&lt;2.0.0,&gt;=1.8.0-&gt;azureml-mlflow==1.55.0) (4.9.0)
 Requirement already satisfied: isodate&gt;=0.6.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-storage-blob&lt;=12.19.0,&gt;=12.5.0-&gt;azureml-mlflow==1.55.0) (0.6.1)
-Collecting cffi&gt;=1.12 (from cryptography-&gt;azureml-mlflow==1.55.0)
-  Using cached cffi-1.16.0-cp312-cp312-win_amd64.whl.metadata (1.5 kB)
+Requirement already satisfied: cffi&gt;=1.12 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from cryptography-&gt;azureml-mlflow==1.55.0) (1.16.0)
 Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from msrest&gt;=0.6.18-&gt;azureml-mlflow==1.55.0) (2023.11.17)
-Collecting requests-oauthlib&gt;=0.5.0 (from msrest&gt;=0.6.18-&gt;azureml-mlflow==1.55.0)
-  Using cached requests_oauthlib-1.3.1-py2.py3-none-any.whl (23 kB)
-Collecting msal&lt;2.0.0,&gt;=1.24.0 (from azure-identity-&gt;azureml-mlflow==1.55.0)
-  Using cached msal-1.26.0-py2.py3-none-any.whl.metadata (11 kB)
-Collecting msal-extensions&lt;2.0.0,&gt;=0.3.0 (from azure-identity-&gt;azureml-mlflow==1.55.0)
-  Using cached msal_extensions-1.1.0-py3-none-any.whl.metadata (7.7 kB)
+Requirement already satisfied: requests-oauthlib&gt;=0.5.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from msrest&gt;=0.6.18-&gt;azureml-mlflow==1.55.0) (1.3.1)
+Requirement already satisfied: msal&lt;2.0.0,&gt;=1.24.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-identity-&gt;azureml-mlflow==1.55.0) (1.26.0)
+Requirement already satisfied: msal-extensions&lt;2.0.0,&gt;=0.3.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-identity-&gt;azureml-mlflow==1.55.0) (1.1.0)
 Requirement already satisfied: click&lt;9,&gt;=7.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow-skinny-&gt;azureml-mlflow==1.55.0) (8.1.7)
 Requirement already satisfied: cloudpickle&lt;4 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow-skinny-&gt;azureml-mlflow==1.55.0) (3.0.0)
 Requirement already satisfied: entrypoints&lt;1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow-skinny-&gt;azureml-mlflow==1.55.0) (0.4)
@@ -520,41 +498,18 @@ Requirement already satisfied: pytz&lt;2024 in c:\users\adnegrau\appdata\local\p
 Requirement already satisfied: packaging&lt;24 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow-skinny-&gt;azureml-mlflow==1.55.0) (23.2)
 Requirement already satisfied: importlib-metadata!=4.7.0,&lt;8,&gt;=3.7.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow-skinny-&gt;azureml-mlflow==1.55.0) (7.0.1)
 Requirement already satisfied: sqlparse&lt;1,&gt;=0.4.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from mlflow-skinny-&gt;azureml-mlflow==1.55.0) (0.4.4)
-Collecting pycparser (from cffi&gt;=1.12-&gt;cryptography-&gt;azureml-mlflow==1.55.0)
-  Using cached pycparser-2.21-py2.py3-none-any.whl (118 kB)
+Requirement already satisfied: pycparser in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from cffi&gt;=1.12-&gt;cryptography-&gt;azureml-mlflow==1.55.0) (2.21)
 Requirement already satisfied: colorama in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from click&lt;9,&gt;=7.0-&gt;mlflow-skinny-&gt;azureml-mlflow==1.55.0) (0.4.6)
 Requirement already satisfied: gitdb&lt;5,&gt;=4.0.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from gitpython&lt;4,&gt;=2.1.0-&gt;mlflow-skinny-&gt;azureml-mlflow==1.55.0) (4.0.11)
 Requirement already satisfied: zipp&gt;=0.5 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from importlib-metadata!=4.7.0,&lt;8,&gt;=3.7.0-&gt;mlflow-skinny-&gt;azureml-mlflow==1.55.0) (3.17.0)
 Requirement already satisfied: PyJWT&lt;3,&gt;=1.0.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from PyJWT[crypto]&lt;3,&gt;=1.0.0-&gt;msal&lt;2.0.0,&gt;=1.24.0-&gt;azure-identity-&gt;azureml-mlflow==1.55.0) (2.8.0)
-Collecting portalocker&lt;3,&gt;=1.6 (from msal-extensions&lt;2.0.0,&gt;=0.3.0-&gt;azure-identity-&gt;azureml-mlflow==1.55.0)
-  Using cached portalocker-2.8.2-py3-none-any.whl.metadata (8.5 kB)
+Requirement already satisfied: portalocker&lt;3,&gt;=1.6 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from msal-extensions&lt;2.0.0,&gt;=0.3.0-&gt;azure-identity-&gt;azureml-mlflow==1.55.0) (2.8.2)
 Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&gt;=2.21.0-&gt;azure-core!=1.22.0,&lt;2.0.0,&gt;=1.8.0-&gt;azureml-mlflow==1.55.0) (3.3.2)
 Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&gt;=2.21.0-&gt;azure-core!=1.22.0,&lt;2.0.0,&gt;=1.8.0-&gt;azureml-mlflow==1.55.0) (3.6)
 Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&gt;=2.21.0-&gt;azure-core!=1.22.0,&lt;2.0.0,&gt;=1.8.0-&gt;azureml-mlflow==1.55.0) (2.1.0)
 Requirement already satisfied: oauthlib&gt;=3.0.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests-oauthlib&gt;=0.5.0-&gt;msrest&gt;=0.6.18-&gt;azureml-mlflow==1.55.0) (3.2.2)
 Requirement already satisfied: smmap&lt;6,&gt;=3.0.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from gitdb&lt;5,&gt;=4.0.1-&gt;gitpython&lt;4,&gt;=2.1.0-&gt;mlflow-skinny-&gt;azureml-mlflow==1.55.0) (5.0.1)
 Requirement already satisfied: pywin32&gt;=226 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from portalocker&lt;3,&gt;=1.6-&gt;msal-extensions&lt;2.0.0,&gt;=0.3.0-&gt;azure-identity-&gt;azureml-mlflow==1.55.0) (306)
-Using cached azureml_mlflow-1.55.0-py3-none-any.whl (1.0 MB)
-Using cached azure_storage_blob-12.19.0-py3-none-any.whl (394 kB)
-Downloading cryptography-42.0.2-cp39-abi3-win_amd64.whl (2.9 MB)
-   ---------------------------------------- 0.0/2.9 MB ? eta -:--:--
-   ---------------------------------------- 0.0/2.9 MB ? eta -:--:--
-    --------------------------------------- 0.1/2.9 MB 812.7 kB/s eta 0:00:04
-   ------- -------------------------------- 0.6/2.9 MB 4.5 MB/s eta 0:00:01
-   ------------ --------------------------- 0.9/2.9 MB 5.8 MB/s eta 0:00:01
-   --------------------- ------------------ 1.5/2.9 MB 7.5 MB/s eta 0:00:01
-   ---------------------------------- ----- 2.5/2.9 MB 10.0 MB/s eta 0:00:01
-   ---------------------------------------- 2.9/2.9 MB 10.2 MB/s eta 0:00:00
-Using cached azure_identity-1.15.0-py3-none-any.whl (164 kB)
-Using cached jsonpickle-3.0.2-py3-none-any.whl (40 kB)
-Using cached mlflow_skinny-2.10.2-py3-none-any.whl (4.8 MB)
-Using cached cffi-1.16.0-cp312-cp312-win_amd64.whl (181 kB)
-Using cached msal-1.26.0-py2.py3-none-any.whl (99 kB)
-Using cached msal_extensions-1.1.0-py3-none-any.whl (19 kB)
-Using cached portalocker-2.8.2-py3-none-any.whl (17 kB)
-Installing collected packages: pycparser, portalocker, jsonpickle, requests-oauthlib, cffi, msrest, mlflow-skinny, cryptography, azure-mgmt-core, azure-storage-blob, msal, msal-extensions, azure-identity, azureml-mlflow
-Successfully installed azure-identity-1.15.0 azure-mgmt-core-1.4.0 azure-storage-blob-12.19.0 azureml-mlflow-1.55.0 cffi-1.16.0 cryptography-42.0.2 jsonpickle-3.0.2 mlflow-skinny-2.10.2 msal-1.26.0 msal-extensions-1.1.0 msrest-0.7.1 portalocker-2.8.2 pycparser-2.21 requests-oauthlib-1.3.1
-Note: you may need to restart the kernel to use updated packages.
 </pre></div>
 </div>
 </div>
@@ -576,11 +531,11 @@ Note: you may need to restart the kernel to use updated packages.
 <span class="n">workspace_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;workspace_name&quot;</span><span class="p">]</span>
 
 <span class="n">aoi_deployment_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_DEPLOYMENT_NAME&quot;</span><span class="p">]</span>
-<span class="n">aoi_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;aoi_api_key&quot;</span><span class="p">]</span>
-<span class="n">aoai_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;aoai_endpoint&quot;</span><span class="p">]</span>
+<span class="n">azure_openai_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;azure_openai_key&quot;</span><span class="p">]</span>
+<span class="n">azure_aoai_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;azure_aoai_endpoint&quot;</span><span class="p">]</span>
 
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="n">aoi_api_key</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_BASE&quot;</span><span class="p">,</span> <span class="n">aoai_endpoint</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="n">azure_openai_key</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_BASE&quot;</span><span class="p">,</span> <span class="n">azure_aoai_endpoint</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_VERSION&quot;</span><span class="p">,</span> <span class="s2">&quot;2023-05-15&quot;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_TYPE&quot;</span><span class="p">,</span> <span class="s2">&quot;azure&quot;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_DEPLOYMENT_NAME&quot;</span><span class="p">,</span><span class="n">aoi_deployment_name</span><span class="p">)</span>

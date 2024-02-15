@@ -18,16 +18,31 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-search_index_name="index_chunks_2"
-create_index(search_index_name, service_endpoint, search_index_key)
+import pandas as pd
+import json
+import tqdm
+import glob
+import os
+
+%reload_ext dotenv
+%dotenv
+
+aoi_deployment_name = os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"]
+aoi_api_key = os.environ["aoi_api_key"]
+azure_aoai_endpoint = os.environ["azure_aoai_endpoint"]
 ------------------
 
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mNameError[0m                                 Traceback (most recent call last)
-Cell [1;32mIn[5], line 2[0m
-[0;32m      1[0m search_index_name[38;5;241m=[39m[38;5;124m"[39m[38;5;124mindex_chunks_2[39m[38;5;124m"[39m
-[1;32m----> 2[0m create_index(search_index_name, [43mservice_endpoint[49m, search_index_key)
+[1;31mKeyError[0m                                  Traceback (most recent call last)
+Cell [1;32mIn[1], line 10[0m
+[0;32m      7[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mreload_ext[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mdotenv[39m[38;5;124m'[39m)
+[0;32m      8[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mdotenv[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m'[39m)
+[1;32m---> 10[0m aoi_deployment_name [38;5;241m=[39m [43mos[49m[38;5;241;43m.[39;49m[43menviron[49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mAZURE_OPENAI_DEPLOYMENT_NAME[39;49m[38;5;124;43m"[39;49m[43m][49m
+[0;32m     11[0m aoi_api_key [38;5;241m=[39m os[38;5;241m.[39menviron[[38;5;124m"[39m[38;5;124maoi_api_key[39m[38;5;124m"[39m]
+[0;32m     12[0m azure_aoai_endpoint [38;5;241m=[39m os[38;5;241m.[39menviron[[38;5;124m"[39m[38;5;124mazure_aoai_endpoint[39m[38;5;124m"[39m]
 
-[1;31mNameError[0m: name 'service_endpoint' is not defined
+File [1;32m<frozen os>:685[0m, in [0;36m__getitem__[1;34m(self, key)[0m
+
+[1;31mKeyError[0m: 'AZURE_OPENAI_DEPLOYMENT_NAME'
 

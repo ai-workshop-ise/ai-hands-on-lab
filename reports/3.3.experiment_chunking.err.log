@@ -1,0 +1,62 @@
+Traceback (most recent call last):
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 685, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+%run -i ./helpers/search.ipynb
+
+# 1. Create the new index
+new_index_name = "solution-ops-chunking-300-30"
+create_index(new_index_name)
+
+# 2. Generate embeddings for the new chunks
+generated_embeddings_path = f"./output/chunks-solution-ops-embedded-{totalNumberOfDocuments}.json"
+generate_embeddings_for_chunks_and_save_to_file(path_to_chunks_file=path_to_chunks_output, path_to_output=generated_embeddings_path)
+
+# 3. Upload the embeddings to the new index
+upload_data(file_path=generated_embeddings_path, search_index_name=new_index_name)
+------------------
+
+----- stderr -----
+<>:19: SyntaxWarning: invalid escape sequence '\d'
+C:\Users\adnegrau\AppData\Local\Temp\ipykernel_31048\1517721980.py:19: SyntaxWarning: invalid escape sequence '\d'
+  documents = load_documents_from_folder("..\data\docs\code-with-engineering\**\*.md", totalNumberOfDocuments)
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[6], line 5[0m
+[0;32m      3[0m [38;5;66;03m# 1. Create the new index[39;00m
+[0;32m      4[0m new_index_name [38;5;241m=[39m [38;5;124m"[39m[38;5;124msolution-ops-chunking-300-30[39m[38;5;124m"[39m
+[1;32m----> 5[0m [43mcreate_index[49m[43m([49m[43mnew_index_name[49m[43m)[49m
+[0;32m      7[0m [38;5;66;03m# 2. Generate embeddings for the new chunks[39;00m
+[0;32m      8[0m generated_embeddings_path [38;5;241m=[39m [38;5;124mf[39m[38;5;124m"[39m[38;5;124m./output/chunks-solution-ops-embedded-[39m[38;5;132;01m{[39;00mtotalNumberOfDocuments[38;5;132;01m}[39;00m[38;5;124m.json[39m[38;5;124m"[39m
+
+File [1;32m~\AppData\Local\Temp\ipykernel_31048\391458413.py:2[0m, in [0;36mcreate_index[1;34m(search_index_name)[0m
+[0;32m      1[0m [38;5;28;01mdef[39;00m [38;5;21mcreate_index[39m(search_index_name):
+[1;32m----> 2[0m     client [38;5;241m=[39m SearchIndexClient(service_endpoint, AzureKeyCredential([43mkey[49m))
+[0;32m      4[0m     [38;5;66;03m# 1. Define the fields[39;00m
+[0;32m      5[0m     fields [38;5;241m=[39m [
+[0;32m      6[0m         SimpleField(
+[0;32m      7[0m             name[38;5;241m=[39m[38;5;124m"[39m[38;5;124mchunkId[39m[38;5;124m"[39m,
+[1;32m   (...)[0m
+[0;32m     26[0m         ),
+[0;32m     27[0m     ]
+
+[1;31mNameError[0m: name 'key' is not defined
+
