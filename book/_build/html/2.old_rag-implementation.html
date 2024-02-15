@@ -171,15 +171,20 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">Workshop Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html">Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. RAG - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">2.1 Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">2.2 RAG - Implementation</a></li>
+
 
 
 
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -441,22 +446,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting python-dotenv
-  Downloading python_dotenv-1.0.1-py3-none-any.whl.metadata (23 kB)
-Downloading python_dotenv-1.0.1-py3-none-any.whl (19 kB)
-Installing collected packages: python-dotenv
-Successfully installed python-dotenv-1.0.1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: python-dotenv in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (1.0.1)
 Note: you may need to restart the kernel to use updated packages.
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting azure-search-documents==11.4.0
-  Using cached azure_search_documents-11.4.0-py3-none-any.whl.metadata (22 kB)
-Collecting azure-core&lt;2.0.0,&gt;=1.28.0 (from azure-search-documents==11.4.0)
-  Downloading azure_core-1.30.0-py3-none-any.whl.metadata (37 kB)
-Collecting azure-common~=1.1 (from azure-search-documents==11.4.0)
-  Using cached azure_common-1.1.28-py2.py3-none-any.whl (14 kB)
-Collecting isodate&gt;=0.6.0 (from azure-search-documents==11.4.0)
-  Using cached isodate-0.6.1-py2.py3-none-any.whl (41 kB)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: azure-search-documents==11.4.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (11.4.0)
+Requirement already satisfied: azure-core&lt;2.0.0,&gt;=1.28.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-search-documents==11.4.0) (1.30.0)
+Requirement already satisfied: azure-common~=1.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-search-documents==11.4.0) (1.1.28)
+Requirement already satisfied: isodate&gt;=0.6.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-search-documents==11.4.0) (0.6.1)
 Requirement already satisfied: requests&gt;=2.21.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (2.31.0)
 Requirement already satisfied: six&gt;=1.11.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (1.16.0)
 Requirement already satisfied: typing-extensions&gt;=4.6.0 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (4.9.0)
@@ -464,13 +461,6 @@ Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in c:\users\adnegr
 Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&gt;=2.21.0-&gt;azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (3.6)
 Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&gt;=2.21.0-&gt;azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (2.1.0)
 Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\adnegrau\appdata\local\programs\python\python312\lib\site-packages (from requests&gt;=2.21.0-&gt;azure-core&lt;2.0.0,&gt;=1.28.0-&gt;azure-search-documents==11.4.0) (2023.11.17)
-Using cached azure_search_documents-11.4.0-py3-none-any.whl (283 kB)
-Downloading azure_core-1.30.0-py3-none-any.whl (193 kB)
-   ---------------------------------------- 0.0/193.4 kB ? eta -:--:--
-   -------------------------------------- - 184.3/193.4 kB 3.7 MB/s eta 0:00:01
-   ---------------------------------------- 193.4/193.4 kB 3.9 MB/s eta 0:00:00
-Installing collected packages: azure-common, isodate, azure-core, azure-search-documents
-Successfully installed azure-common-1.1.28 azure-core-1.30.0 azure-search-documents-11.4.0 isodate-0.6.1
 Note: you may need to restart the kernel to use updated packages.
 </pre></div>
 </div>
@@ -529,20 +519,20 @@ Note: you may need to restart the kernel to use updated packages.
 <span class="n">resource_group_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;resource_group_name&quot;</span><span class="p">]</span>
 <span class="n">workspace_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;workspace_name&quot;</span><span class="p">]</span>
 <span class="n">service_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span>
-    <span class="s2">&quot;service_endpoint&quot;</span>
+    <span class="s2">&quot;AZURE_SEARCH_SERVICE_ENDPOINT&quot;</span>
 <span class="p">]</span>  <span class="c1"># the endpoint of your Azure Cognitive Search service</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;search_key&quot;</span><span class="p">]</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_SEARCH_ADMIN_KEY&quot;</span><span class="p">]</span>
 
 <span class="c1"># aoai_connection_name = os.environ[&#39;aoai_connection_name&#39;]</span>
-<span class="n">aoi_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;aoi_api_key&quot;</span><span class="p">]</span>
-<span class="n">aoai_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;aoai_endpoint&quot;</span><span class="p">]</span>
-<span class="n">embedding_model_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;embeddingModelName&quot;</span><span class="p">]</span>
+<span class="n">azure_openai_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;azure_openai_key&quot;</span><span class="p">]</span>
+<span class="n">azure_aoai_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_ENDPOINT&quot;</span><span class="p">]</span>
+<span class="n">embedding_model_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;</span><span class="p">]</span>
 
 <span class="n">search_index_name</span> <span class="o">=</span> <span class="s2">&quot;index_chunking&quot;</span>
 <span class="n">search_index_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_SEARCH_ADMIN_KEY&quot;</span><span class="p">)</span>
 <span class="n">credential</span> <span class="o">=</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 <span class="n">storage_account_connection_string</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;storage_account_connection_string&quot;</span><span class="p">)</span>
-<span class="n">embeddingModelName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;embeddingModelName&quot;</span><span class="p">)</span>
+<span class="n">azure_openai_embedding_deployment</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -752,8 +742,8 @@ There are several embedding options:
 
 <span class="c1"># def get_query_embedding(</span>
 <span class="c1">#     query,</span>
-<span class="c1">#     endpoint=aoai_endpoint,</span>
-<span class="c1">#     api_key=aoi_api_key,</span>
+<span class="c1">#     endpoint=azure_aoai_endpoint,</span>
+<span class="c1">#     api_key=azure_openai_key,</span>
 <span class="c1">#     api_version=&quot;2023-07-01-preview&quot;,</span>
 <span class="c1">#     embedding_model_deployment=embedding_model_name,</span>
 <span class="c1"># ):</span>
@@ -778,7 +768,7 @@ There are several embedding options:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># query = &quot;Hello&quot;</span>
 
 <span class="c1"># query_vectors = get_query_embedding(</span>
-<span class="c1">#     query, aoai_endpoint, aoi_api_key, &quot;2023-07-01-preview&quot;, embedding_model_name</span>
+<span class="c1">#     query, azure_aoai_endpoint, azure_openai_key, &quot;2023-07-01-preview&quot;, embedding_model_name</span>
 <span class="c1"># )</span>
 
 <span class="c1"># print(f&quot;The embedded vector is: {query_vectors}&quot;)</span>

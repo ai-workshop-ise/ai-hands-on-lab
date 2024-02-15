@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>2.2 Baseline RAG Setup &#8212; AI Workshop</title>
+    <title>2.2 RAG - Implementation &#8212; AI Workshop</title>
   
   
   
@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="3. Experiments" href="3.experiment.html" />
-    <link rel="prev" title="2.1 Pre-requisites" href="prerequisites.html" />
+    <link rel="prev" title="2.1 Context" href="context.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -171,20 +171,20 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2.1 Pre-requisites</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2.2 Baseline RAG Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. RAG - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">2.1 Context</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2.2 RAG - Implementation</a></li>
 
 
 
 
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking - Ingestion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_search.html">3.3 Search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -371,7 +371,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>2.2 Baseline RAG Setup</h1>
+    <h1>2.2 RAG - Implementation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -381,7 +381,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2.2 Baseline RAG Setup</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2.2 RAG - Implementation</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">Goal</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
@@ -414,8 +414,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="baseline-rag-setup">
-<h1>2.2 Baseline RAG Setup<a class="headerlink" href="#baseline-rag-setup" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="rag-implementation">
+<h1>2.2 RAG - Implementation<a class="headerlink" href="#rag-implementation" title="Permalink to this heading">#</a></h1>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>In this part, we will build the building blocks of a RAG solution.</p>
@@ -461,11 +461,12 @@ document.write(`
 …</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">dotenv</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import os</span>
+<span class="c1"># import dotenv</span>
 
-<span class="o">%</span><span class="k">reload_ext</span> dotenv
-<span class="o">%</span><span class="k">dotenv</span>
+<span class="c1"># %reload_ext dotenv</span>
+<span class="c1"># %dotenv</span>
+<span class="o">%</span><span class="k">run</span> -i ./context.ipynb
 </pre></div>
 </div>
 </div>
@@ -500,22 +501,22 @@ document.write(`
 <span class="kn">from</span> <span class="nn">azure.search.documents.indexes</span> <span class="kn">import</span> <span class="n">SearchIndexClient</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 
-<span class="n">service_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span>
-    <span class="s2">&quot;service_endpoint&quot;</span>
-<span class="p">]</span>  <span class="c1"># the endpoint of your Azure Cognitive Search service</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;search_key&quot;</span><span class="p">]</span>
+<span class="c1"># service_endpoint = os.environ[</span>
+<span class="c1">#     &quot;AZURE_SEARCH_SERVICE_ENDPOINT&quot;</span>
+<span class="c1"># ]  # the endpoint of your Azure Cognitive Search service</span>
+<span class="c1"># key = os.environ[&quot;AZURE_SEARCH_ADMIN_KEY&quot;]</span>
 
-<span class="c1"># aoai_connection_name = os.environ[&#39;aoai_connection_name&#39;]</span>
-<span class="n">aoi_deployment_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_DEPLOYMENT_NAME&quot;</span><span class="p">]</span>
-<span class="n">aoi_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;aoi_api_key&quot;</span><span class="p">]</span>
-<span class="n">aoai_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;aoai_endpoint&quot;</span><span class="p">]</span>
-<span class="n">embedding_model_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;embeddingModelName&quot;</span><span class="p">]</span>
+<span class="c1"># # aoai_connection_name = os.environ[&#39;aoai_connection_name&#39;]</span>
+<span class="c1"># aoi_deployment_name = os.environ[&quot;AZURE_OPENAI_DEPLOYMENT_NAME&quot;]</span>
+<span class="c1"># azure_openai_key = os.environ[&quot;azure_openai_key&quot;]</span>
+<span class="c1"># azure_aoai_endpoint = os.environ[&quot;AZURE_OPENAI_ENDPOINT&quot;]</span>
+<span class="c1"># embedding_model_name = os.environ[&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;]</span>
 
-<span class="n">search_index_name</span> <span class="o">=</span> <span class="s2">&quot;index_chunks_2&quot;</span>
-<span class="n">search_index_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_SEARCH_ADMIN_KEY&quot;</span><span class="p">)</span>
-<span class="n">credential</span> <span class="o">=</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="n">storage_account_connection_string</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;storage_account_connection_string&quot;</span><span class="p">)</span>
-<span class="n">embeddingModelName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;embeddingModelName&quot;</span><span class="p">)</span>
+<span class="c1"># search_index_name = &quot;index_chunks_2&quot;</span>
+<span class="c1"># search_index_key = os.getenv(&quot;AZURE_SEARCH_ADMIN_KEY&quot;)</span>
+<span class="c1"># credential = AzureKeyCredential(key)</span>
+<span class="c1"># storage_account_connection_string = os.getenv(&quot;storage_account_connection_string&quot;)</span>
+<span class="c1"># azure_openai_embedding_deployment = os.getenv(&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;)</span>
 </pre></div>
 </div>
 </div>
@@ -575,7 +576,7 @@ Used for SearchField inspiration - https://github.com/Azure/azure-sdk-for-python
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> index
-<span class="k">def</span> <span class="nf">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">,</span> <span class="n">service_endpoint</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">SearchIndexClient</span><span class="p">(</span><span class="n">service_endpoint</span><span class="p">,</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
 
     <span class="c1"># 1. Define the fields</span>
@@ -647,7 +648,8 @@ Used for SearchField inspiration - https://github.com/Azure/azure-sdk-for-python
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search_index_name</span><span class="o">=</span><span class="s2">&quot;index_chunks_2&quot;</span>
+<span class="n">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">,</span> <span class="n">service_endpoint</span><span class="p">,</span> <span class="n">search_index_key</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -698,7 +700,8 @@ Used for SearchField inspiration - https://github.com/Azure/azure-sdk-for-python
 <p>The outcome of this “vanilla” chunking strategy can be found in <code class="docutils literal notranslate"><span class="pre">output/chunks-solution-ops-200-300-0.json</span></code>. You can take a look at the content of the file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./helpers/search.ipynb
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
+<span class="o">%</span><span class="n">run</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">helpers</span><span class="o">/</span><span class="n">search</span><span class="o">.</span><span class="n">ipynb</span> 
 
 <span class="n">totalNumberOfDocuments</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">300</span>
@@ -706,16 +709,6 @@ Used for SearchField inspiration - https://github.com/Azure/azure-sdk-for-python
 <span class="n">path_to_chunks_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/code-with-engineering/chunks-solution-ops-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
 <span class="n">path_to_output</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/code-with-engineering/chunks-solution-ops-embedded-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
 <span class="n">generate_embeddings_for_chunks_and_save_to_file</span><span class="p">(</span><span class="n">path_to_chunks_file</span> <span class="o">=</span> <span class="n">path_to_chunks_file</span><span class="p">,</span> <span class="n">path_to_output</span><span class="o">=</span><span class="n">path_to_output</span><span class="p">)</span> <span class="c1"># Took 3m 31s for 200 documents and over 10 min for 1000 documents</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data at: ./output/code-with-engineering/chunks-solution-ops-1000-300-0.json 
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_5588\1517721980.py:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-  documents = load_documents_from_folder(&quot;..\data\docs\code-with-engineering\**\*.md&quot;, totalNumberOfDocuments)
 </pre></div>
 </div>
 </div>
@@ -732,7 +725,9 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_5588\1517721980.py:19: SyntaxWarn
             <span class="n">documents</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
         <span class="n">search_client</span> <span class="o">=</span> <span class="n">SearchClient</span><span class="p">(</span>
-            <span class="n">endpoint</span><span class="o">=</span><span class="n">service_endpoint</span><span class="p">,</span> <span class="n">index_name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span> <span class="n">credential</span><span class="o">=</span><span class="n">credential</span>
+            <span class="n">endpoint</span><span class="o">=</span><span class="n">service_endpoint</span><span class="p">,</span>
+            <span class="n">index_name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span>
+            <span class="n">credential</span><span class="o">=</span><span class="n">credential</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">search_client</span><span class="o">.</span><span class="n">upload_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Uploaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span><span class="si">}</span><span class="s2"> documents to Index: </span><span class="si">{</span><span class="n">search_index_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1024,7 +1019,7 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:72: SyntaxWarning: invalid escape sequence &#39;\*&#39;
 &lt;&gt;:72: SyntaxWarning: invalid escape sequence &#39;\*&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_5588\880098635.py:72: SyntaxWarning: invalid escape sequence &#39;\*&#39;
+C:\Users\adnegrau\AppData\Local\Temp\ipykernel_33668\880098635.py:72: SyntaxWarning: invalid escape sequence &#39;\*&#39;
   &quot;&quot;&quot;
 </pre></div>
 </div>
@@ -1045,7 +1040,7 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_5588\880098635.py:72: SyntaxWarni
 
 <span class="k">def</span> <span class="nf">call_llm</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">engine</span><span class="o">=</span><span class="n">aoi_deployment_name</span><span class="p">,</span> <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>  <span class="c1"># engine = &quot;deployment_name&quot;.</span>
+        <span class="n">engine</span><span class="o">=</span><span class="n">azure_openai_chat_deployment</span><span class="p">,</span> <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>  <span class="c1"># engine = &quot;deployment_name&quot;.</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
@@ -1098,7 +1093,8 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_5588\880098635.py:72: SyntaxWarni
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>User question: What does the develop phase include?
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response: The develop phase includes supporting developers to ensure the security and integrity of all code, binaries, and configuration that will be included in the software release. The development environment uses a code repository to store the code that&#39;s written, and additional components are retrieved from a component registry. Repeatable and deterministic builds are encouraged, which ensure the contents of a software release are well-known, and any attempts to tamper with the artifacts can be detected. A record of all dependencies is captured using component inventory, including application package managers, OS package managers, and container manifests. Version pinning of components from the component registry is encouraged to ensure that builds remain deterministic [..\\data\\docs\\code-with-devsecops\\Enterprise-Solutions\\governance\\secure-software-supply-chain-for-containerized-workloads.md+chunk152_4].
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error: No API key provided. You can set your API key in code using &#39;openai.api_key = &lt;API-KEY&gt;&#39;, or you can set the environment variable OPENAI_API_KEY=&lt;API-KEY&gt;). If your API key is stored in a file, you can point the openai module at it with &#39;openai.api_key_path = &lt;PATH&gt;&#39;. You can generate API keys in the OpenAI web interface. See https://platform.openai.com/account/api-keys for details.
+Response: None
 </pre></div>
 </div>
 </div>
@@ -1146,12 +1142,12 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_5588\880098635.py:72: SyntaxWarni
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="prerequisites.html"
+       href="context.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">2.1 Pre-requisites</p>
+        <p class="prev-next-title">2.1 Context</p>
       </div>
     </a>
     <a class="right-next"
@@ -1179,7 +1175,7 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_5588\880098635.py:72: SyntaxWarni
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2.2 Baseline RAG Setup</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2.2 RAG - Implementation</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">Goal</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">

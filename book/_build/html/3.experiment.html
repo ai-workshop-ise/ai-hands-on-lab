@@ -65,8 +65,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '3.experiment';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="3.1. Chunking - Ingestion" href="3.1.experiment_chunking.html" />
-    <link rel="prev" title="2.2 Baseline RAG Setup" href="2.rag-implementation-2.html" />
+    <link rel="next" title="3.1. Embeddings Experiment" href="3.1.experiment_embedding.html" />
+    <link rel="prev" title="2.2 RAG - Implementation" href="2.rag-implementation-2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -171,21 +171,20 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2.1 Pre-requisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">2.2 Baseline RAG Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. RAG - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2.1 Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">2.2 RAG - Implementation</a></li>
 
 
 
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking - Ingestion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_search.html">3.3 Search - Retrieval</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -472,8 +471,17 @@ As you build out your experimentation process for search, reference the [Things 
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In our workshop, we generated pairs of question and answers using an LLM. Each pair will also include the citation, referring to the document where the answer was extracted from. You can find the generated questions in <a class="reference download internal" download="" href="_downloads/859834248ef8337971993b477ea84429/solution-ops-200-qa.json"><span class="xref download myst">solution-ops-200-qa-generated-answer</span></a>. You can find in <a class="reference internal" href="generate-qa.html"><span class="doc std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
+<p>In our workshop, we followed the third option and we generated the data using an LLM (GPT3). You can find the generated data in <a class="reference download internal" download="" href="_downloads/859834248ef8337971993b477ea84429/solution-ops-200-qa.json"><span class="xref download myst">solution-ops-200-qa-generated-answer</span></a>. You can find in <a class="reference internal" href="generate-qa.html"><span class="doc std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
+<p>The evaluation data is composed of:</p>
+<ul class="simple">
+<li><p>question: the user question</p></li>
+<li><p>citation: the piece(s) of text that contains the relevant content to answer the user question</p></li>
+<li><p>answer: the final answer in a human readable/friendly format</p></li>
+</ul>
+<p>For the **Retrieval Component//, the dataset is composed of question and citation. Evaluating the Retrieval Component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s).</p>
+<p>For the <strong>Generative Component</strong>, the dataset is composted of question, citation and answer. Evaluating the Generative Component means to evaluate if for a given query (user question) and a given set of retrieved documented, the engine is returning good answer. TODO: “GOOD answer? refer here to metrics</p>
 </div>
+ <!-- Each pair will also include the citation, referring to the document where the answer was extracted from.  -->
 </section>
 <section id="metrics">
 <h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this heading">#</a></h2>
@@ -546,15 +554,15 @@ From [previous engagements](https://github.com/microsoft/rag-openai/blob/main/to
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">2.2 Baseline RAG Setup</p>
+        <p class="prev-next-title">2.2 RAG - Implementation</p>
       </div>
     </a>
     <a class="right-next"
-       href="3.1.experiment_chunking.html"
+       href="3.1.experiment_embedding.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">3.1. Chunking - Ingestion</p>
+        <p class="prev-next-title">3.1. Embeddings Experiment</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
