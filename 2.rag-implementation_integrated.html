@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="3. Experiments" href="3.experiment.html" />
-    <link rel="prev" title="Workshop Setup" href="2.rag-implementation.html" />
+    <link rel="prev" title="2.2 Baseline RAG Setup" href="2.rag-implementation-2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -172,14 +172,23 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2.1 Pre-requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">2.2 Baseline RAG Setup</a></li>
+
+
+
+
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Workshop Setup</a></li>
 
 
 
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking - Ingestion</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_search.html">Search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -764,16 +773,19 @@ To create the storage account + container + to grant Contributor permission</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;reload_ext&#39;</span><span class="p">,</span> <span class="s1">&#39;dotenv&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;dotenv&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">azure.storage.blob</span> <span class="kn">import</span> <span class="n">BlobServiceClient</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># from azure.identity import AzureCliCredential</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;azure.storage&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;azure.storage.blob._container_client.ContainerClient object at 0x0000023B2F1BCB00&gt;
+..\data\docs\code-with-dataops\capabilities\analytical-systems\advanced-analytics\index.md
+\code-with-dataops\capabilities\analytical-systems\advanced-analytics\index.md
+File name:  _code-with-dataops_capabilities_analytical-systems_advanced-analytics_index.md
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exception uploading file ..\data\docs\code-with-dataops\capabilities\analytical-systems\advanced-analytics\index.md: The specified blob already exists.
+RequestId:e392809e-b01e-001c-1979-5e72a3000000
+Time:2024-02-13T12:39:16.3178871Z
+ErrorCode:BlobAlreadyExists
+Content: &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;Error&gt;&lt;Code&gt;BlobAlreadyExists&lt;/Code&gt;&lt;Message&gt;The specified blob already exists.
+RequestId:e392809e-b01e-001c-1979-5e72a3000000
+Time:2024-02-13T12:39:16.3178871Z&lt;/Message&gt;&lt;/Error&gt;
 </pre></div>
 </div>
 </div>
@@ -820,7 +832,61 @@ To create the storage account + container + to grant Contributor permission</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Created a new Indexer myindexer
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">HttpResponseError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">36</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">indexer_client</span><span class="o">.</span><span class="n">create_indexer</span><span class="p">(</span><span class="n">indexer</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span>     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created a new Indexer </span><span class="si">{</span><span class="n">indexer_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">36</span> <span class="n">create_indexer</span><span class="p">(</span><span class="n">indexer_name</span><span class="o">=</span><span class="s2">&quot;myindexer&quot;</span><span class="p">,</span> <span class="n">data_source_name</span><span class="o">=</span><span class="s2">&quot;docs&quot;</span><span class="p">,</span> <span class="n">storage_account_connection_string</span><span class="o">=</span><span class="n">storage_account_connection_string</span><span class="p">,</span> <span class="n">target_index_name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">)</span>
+
+<span class="nn">Cell In[8], line 33,</span> in <span class="ni">create_indexer</span><span class="nt">(indexer_name, data_source_name, storage_account_connection_string, target_index_name)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="c1"># ONLY ONE TIME YOU HAVE TO CREATE THE CONNECTION</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="c1"># data_source_connection = SearchIndexerDataSourceConnection(</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="c1">#     name=data_source_name, type=&quot;azureblob&quot;, </span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> 
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="c1"># Create the indexer</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="n">indexer</span> <span class="o">=</span> <span class="n">SearchIndexer</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="n">name</span><span class="o">=</span><span class="n">indexer_name</span><span class="p">,</span> <span class="n">data_source_name</span><span class="o">=</span><span class="n">data_source_name</span><span class="p">,</span> <span class="n">target_index_name</span><span class="o">=</span><span class="n">target_index_name</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span> <span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">33</span> <span class="n">result</span> <span class="o">=</span> <span class="n">indexer_client</span><span class="o">.</span><span class="n">create_indexer</span><span class="p">(</span><span class="n">indexer</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created a new Indexer </span><span class="si">{</span><span class="n">indexer_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\core\tracing\decorator.py:78,</span> in <span class="ni">distributed_trace.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper_use_tracer</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="n">span_impl_type</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">tracing_implementation</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="k">if</span> <span class="n">span_impl_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">78</span>     <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="c1"># Merge span is parameter is set, but only if no explicit parent are passed</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="k">if</span> <span class="n">merge_span</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">passed_in_parent</span><span class="p">:</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\indexes\_search_indexer_client.py:100,</span> in <span class="ni">SearchIndexerClient.create_indexer</span><span class="nt">(self, indexer, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">83</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Creates a new SearchIndexer.</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span><span class="sd"> :param indexer: The definition of the indexer to create.</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span><span class="sd">         :caption: Create a SearchIndexer</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;headers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_client_headers</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;headers&quot;</span><span class="p">))</span>
+<span class="ne">--&gt; </span><span class="mi">100</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">indexers</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">indexer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span> <span class="k">return</span> <span class="n">result</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\core\tracing\decorator.py:78,</span> in <span class="ni">distributed_trace.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper_use_tracer</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="n">span_impl_type</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">tracing_implementation</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="k">if</span> <span class="n">span_impl_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">78</span>     <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="c1"># Merge span is parameter is set, but only if no explicit parent are passed</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="k">if</span> <span class="n">merge_span</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">passed_in_parent</span><span class="p">:</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\azure\search\documents\indexes\_generated\operations\_indexers_operations.py:955,</span> in <span class="ni">IndexersOperations.create</span><span class="nt">(self, indexer, request_options, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">953</span>     <span class="n">map_error</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">,</span> <span class="n">error_map</span><span class="o">=</span><span class="n">error_map</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">954</span>     <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deserialize</span><span class="o">.</span><span class="n">failsafe_deserialize</span><span class="p">(</span><span class="n">_models</span><span class="o">.</span><span class="n">SearchError</span><span class="p">,</span> <span class="n">pipeline_response</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">955</span>     <span class="k">raise</span> <span class="n">HttpResponseError</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">error</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">957</span> <span class="n">deserialized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deserialize</span><span class="p">(</span><span class="s2">&quot;SearchIndexer&quot;</span><span class="p">,</span> <span class="n">pipeline_response</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">959</span> <span class="k">if</span> <span class="bp">cls</span><span class="p">:</span>
+
+<span class="ne">HttpResponseError</span>: () Cannot create indexer &#39;myindexer&#39; because an indexer with that name already exists
+<span class="ne">Code</span>: 
+<span class="ne">Message</span>: Cannot create indexer &#39;myindexer&#39; because an indexer with that name already exists
 </pre></div>
 </div>
 </div>
@@ -1339,12 +1405,12 @@ Caption: Azure Databricks is an Apache Spark-based analytics platform optimized 
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="2.rag-implementation.html"
+       href="2.rag-implementation-2.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Workshop Setup</p>
+        <p class="prev-next-title">2.2 Baseline RAG Setup</p>
       </div>
     </a>
     <a class="right-next"

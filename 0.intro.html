@@ -173,14 +173,19 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">Baseline RAG Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html">Workshop Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2.1 Pre-requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">2.2 Baseline RAG Setup</a></li>
+
 
 
 
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking - Ingestion</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_search.html">3.3 Search</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
 
@@ -378,8 +383,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">Goal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ready-let-s-start">Ready? Let’s start!</a></li>
 </ul>
             </nav>
@@ -394,10 +397,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="welcome">
 <h1>Welcome<a class="headerlink" href="#welcome" title="Permalink to this heading">#</a></h1>
-<p>RAG Applications, based on large language models, are a new breed of application. The architecture has become increasingly important and is currently at the core of most of our engagements. In this workshop, you will go through the core aspects and considerations one should take when working on RAG based GenAI Solutions.</p>
+<p>Retrieval Augmented Generation (RAG) Applications, based on Large Language Models (LLMs), are a new breed of application. The architecture has become increasingly important and is currently at the core of many engagements.</p>
+<!-- In this workshop, you will go through the core aspects and considerations one should take when working on RAG based GenAI Solutions. -->
 <section id="goal">
 <h2>Goal<a class="headerlink" href="#goal" title="Permalink to this heading">#</a></h2>
-<p>By the end of the workshop, you will have a clear(er) understanding of:</p>
+<p>During this workshop, we will leverage each other’s knowledge and will look at:</p>
 <ul class="simple">
 <li><p><strong>Pre-production</strong>: how to experiment, evaluate and come up with the best RAG-based solution for a given use case.</p></li>
 <li><p><strong>Post-production</strong>: after deploying the solution to production, how to monitor and ensure that <em>it works as expected</em>. Oh wait, what does that even mean?</p></li>
@@ -405,33 +409,13 @@ document.write(`
 <p>Through this workshop, we aim to:</p>
 <ul class="simple">
 <li><p>speed up the onboarding process on this topic</p></li>
-<li><p>capture key best practices that have already been established in the industry</p></li>
 <li><p>provide a framework that would guide you in your thought process when building such applications</p></li>
-<li><p>last, but not least, to HAVE FUN!</p></li>
+<li><p>last, but not least, HAVE FUN!</p></li>
 </ul>
-</section>
-<section id="prerequisites">
-<h2>Prerequisites:<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://aka.ms/oai/access">Request Access to Azure OpenAI Service</a></p></li>
-</ul>
-</section>
-<section id="content">
-<h2>Content:<a class="headerlink" href="#content" title="Permalink to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">1. Retrieval Augmented Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation-2.html">Baseline RAG Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html">Workshop Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html#integrated-vectorization">Integrated vectorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html#create-indexer-so-that-i-can-use-default-skillset-for-integreted-vectorization-preview">CREATE INDEXER so that I can use default skillset for integreted vectorization (preview)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation_integrated.html#add-skillsets">ADD SKILLSETS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">3. Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_chunking.html">3.1. Chunking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_embedding.html">3.2. Embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
-</ul>
-</div>
+<!-- - capture key best practices that have already been established in the industry -->
+<!-- ## Content:
+```{tableofcontents}
+``` -->
 </section>
 <section id="ready-let-s-start">
 <h2>Ready? Let’s start!<a class="headerlink" href="#ready-let-s-start" title="Permalink to this heading">#</a></h2>
@@ -445,6 +429,8 @@ document.write(`
 </ul>
 </div>
 </section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -503,8 +489,6 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">Goal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ready-let-s-start">Ready? Let’s start!</a></li>
 </ul>
   </nav></div>
