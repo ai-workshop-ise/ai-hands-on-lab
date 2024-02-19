@@ -394,13 +394,15 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-to-know-the-data">👀 Get to know the data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-embeddings-model-to-use">Which Embeddings Model to use?</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-text-embedding-ada-002-from-openai">1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embed-the-chunks-and-save-to-a-file">1.2. Embed the chunks and save to a file</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-e5-small-v2-from-hugging-face">2. Use e5-small-v2 from Hugging Face</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embed-an-input-query-using-the-e5-small-v2-model">2.1. Embed an input query using the <code class="docutils literal notranslate"><span class="pre">e5-small-v2</span> <span class="pre">model</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1. Embed the chunks and save to a file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-e5-small-v2-from-hugging-face">👩‍💻 2. Use e5-small-v2 from Hugging Face</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">Evaluation Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-the-percentage-of-correctly-retrieved-documents">Calculate the percentage of correctly retrieved documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-using-the-open-source-model">👩‍💻 Evaluation using the open source model</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
 </ul>
             </nav>
@@ -439,50 +441,31 @@ az aks get-credentials \
 <section id="get-to-know-the-data">
 <h2>👀 Get to know the data<a class="headerlink" href="#get-to-know-the-data" title="Permalink to this heading">#</a></h2>
 <p>Before we try out different embedding models, let’s first try to understand the data. In what follows, you will see the data being clustered and keywords extracted from each cluster. To accomplish this, we performed Dimensionality Reduction, using <a class="reference external" href="https://towardsdatascience.com/what-why-and-how-of-t-sne-1f78d13e224d">t-SNE</a>. If you want to see the code we’ve been using to accomplish this, go to <a class="reference internal" href="helpers/t-SNE.html"><span class="doc std std-doc">t-SNE.ipynb</span></a>.</p>
-<p>Note: in this experiment, we work with the 200 documents from the Solution Ops Playbook, which were previously chunked in size of 300. The dataset can be found at <a class="reference download internal" download="" href="_downloads/e9ffa9f8c73dc15acdc48ded749b2da4/chunks-solution-ops-200-300-0.json"><span class="xref download myst">chunks-solution-ops-200-300-0.json</span></a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./helpers/t-SNE.ipynb
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Determine the optimal number of clusters
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The optimum cluster number is 5 
-</pre></div>
-</div>
-<img alt="_images/82963a51d2cf441cf53ff45e18f5bb9f320db724cac44916f108d2627d201639.png" src="_images/82963a51d2cf441cf53ff45e18f5bb9f320db724cac44916f108d2627d201639.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generate words per cluster...
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 1&#39;s Keywords:
-</pre></div>
-</div>
-<img alt="_images/a94c6ca9668e574a20c0477bb1e2878ce25b462f85d1fffa8f89795fcd9e1262.png" src="_images/a94c6ca9668e574a20c0477bb1e2878ce25b462f85d1fffa8f89795fcd9e1262.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 2&#39;s Keywords:
-</pre></div>
-</div>
-<img alt="_images/5c17b0f0123a99f0a24e04a75b9f79cc4c057a6889254c3568f403f9a975334a.png" src="_images/5c17b0f0123a99f0a24e04a75b9f79cc4c057a6889254c3568f403f9a975334a.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 3&#39;s Keywords:
-</pre></div>
-</div>
-<img alt="_images/4429e66c09a1c6f2d2002c857a101b5f5acafccd9d59f0149676d6ffe3160300.png" src="_images/4429e66c09a1c6f2d2002c857a101b5f5acafccd9d59f0149676d6ffe3160300.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 4&#39;s Keywords:
-</pre></div>
-</div>
-<img alt="_images/0376e69d7114c3e699ce2bd24c122abc6824ea27a981aeeb23c81d7abec6bf4b.png" src="_images/0376e69d7114c3e699ce2bd24c122abc6824ea27a981aeeb23c81d7abec6bf4b.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 5&#39;s Keywords:
-</pre></div>
-</div>
-<img alt="_images/5b380457c873f1f283612ebfa0089df26509d807fe88ed50a619753a5840d9fe.png" src="_images/5b380457c873f1f283612ebfa0089df26509d807fe88ed50a619753a5840d9fe.png" />
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1300x900 with 0 Axes&gt;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %run -i ./helpers/t-SNE.ipynb</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>As we have seen from the cluster from above, the data <code class="docutils literal notranslate"><span class="pre">can</span></code> be clustered, and the clusters seem to be different from one another. One is centered on data (sql, databricks) vs backlog related (stories, sprint, team) vs engineering fundamentals (security, testing, code). However, if we think about these clusters on a broader sense, they are part of one big cluster, which is IT.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this experiment, the data that we would like to embed consists of the first 200 documents from the Solution Ops Playbook, which were previously chunked in size of 300. The dataset can be found at <a class="reference download internal" download="" href="_downloads/e9ffa9f8c73dc15acdc48ded749b2da4/chunks-solution-ops-200-300-0.json"><span class="xref download myst">chunks-solution-ops-200-300-0.json</span></a>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
+
+<span class="n">totalNumberOfDocuments</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">chunking_size</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">chunking_overlap</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">path_to_chunked_documents</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="n">path_to_evaulation_dataset</span> <span class="o">=</span> <span class="s2">&quot;./output/qa/evaluation/solution-ops-200-qa.json&quot;</span> 
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="which-embeddings-model-to-use">
 <h2>Which Embeddings Model to use?<a class="headerlink" href="#which-embeddings-model-to-use" title="Permalink to this heading">#</a></h2>
@@ -495,36 +478,31 @@ az aks get-credentials \
 <section id="use-text-embedding-ada-002-from-openai">
 <h3>1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI<a class="headerlink" href="#use-text-embedding-ada-002-from-openai" title="Permalink to this heading">#</a></h3>
 <p>This model has a maximum token limit of <a class="reference external" href="https://platform.openai.com/docs/guides/embeddings/embedding-models">8191</a>. Usage is priced per input token, it is available either as Pay-As-You-Go or as Provisioned Throughput Units (PTUs) model. More price related info can be found <a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/">here</a>.</p>
-<p>1.1 Embed an input query</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import os</span>
-<span class="c1"># import dotenv</span>
-
-<span class="c1"># %reload_ext dotenv</span>
-<span class="c1"># %dotenv</span>
-
-<span class="c1"># azure_aoai_endpoint = os.environ[&quot;azure_aoai_endpoint&quot;]</span>
-<span class="c1"># azure_openai_key = os.environ[&quot;azure_openai_key&quot;]</span>
-<span class="c1"># azure_openai_embedding_deployment = os.environ[&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;]</span>
-
-<span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
-</pre></div>
-</div>
-</div>
-</div>
+<p><strong>1.1 Create a function which is responsible to embed an input query using <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code></strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
 
 
-<span class="k">def</span> <span class="nf">get_query_embedding</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">oai_query_embedding</span><span class="p">(</span>
     <span class="n">query</span><span class="p">,</span>
     <span class="n">endpoint</span><span class="o">=</span><span class="n">azure_aoai_endpoint</span><span class="p">,</span>
     <span class="n">api_key</span><span class="o">=</span><span class="n">azure_openai_key</span><span class="p">,</span>
     <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span>
     <span class="n">embedding_model_deployment</span><span class="o">=</span><span class="n">azure_openai_embedding_deployment</span><span class="p">,</span>
 <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Query the OpenAI Embedding model to get the embeddings for the given query.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">    query (str): The query for which to get the embeddings.</span>
+<span class="sd">    endpoint (str): The endpoint for the OpenAI service.</span>
+<span class="sd">    api_key (str): The API key for the OpenAI service.</span>
+<span class="sd">    api_version (str): The API version for the OpenAI service.</span>
+<span class="sd">    embedding_model_deployment (str): The deployment for the OpenAI embedding model.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    list: The embeddings for the given query.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">}</span>
     <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
@@ -534,7 +512,7 @@ az aks get-credentials \
     <span class="k">if</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
         <span class="n">data_values</span> <span class="o">=</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
         <span class="n">embeddings_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_value</span><span class="p">[</span><span class="s2">&quot;embedding&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">data_value</span> <span class="ow">in</span> <span class="n">data_values</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">embeddings_vectors</span>
+        <span class="k">return</span> <span class="n">embeddings_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;failed to get embedding: </span><span class="si">{</span><span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -545,16 +523,10 @@ az aks get-credentials \
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
 
-<span class="n">query_vectors</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span>
-    <span class="n">query</span><span class="p">,</span>
-    <span class="n">azure_aoai_endpoint</span><span class="p">,</span>
-    <span class="n">azure_openai_key</span><span class="p">,</span>
-    <span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span>
-    <span class="n">azure_openai_embedding_deployment</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="n">query_vectors</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The embedded vector is: </span><span class="si">{</span><span class="n">query_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The length of the embedding is: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">query_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The embedded vector is: </span><span class="si">{</span><span class="n">query_vectors</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The length of the embedding is: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">query_vectors</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -565,15 +537,19 @@ The length of the embedding is: 1536
 </div>
 </div>
 </div>
-</section>
-<section id="embed-the-chunks-and-save-to-a-file">
-<h3>1.2. Embed the chunks and save to a file<a class="headerlink" href="#embed-the-chunks-and-save-to-a-file" title="Permalink to this heading">#</a></h3>
+<p><strong>1.2. Create a function which is responsible to embed the chunks from an input file and save the result to another file</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 
 
 <span class="k">def</span> <span class="nf">generate_embeddings_for_chunks</span><span class="p">(</span><span class="n">path_to_input_file</span><span class="p">,</span> <span class="n">path_to_output_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate embeddings for chunked data</span>
+<span class="sd">    Args:</span>
+<span class="sd">    path_to_input_file: str: path to the input file</span>
+<span class="sd">    path_to_output_file: str: path to the output file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> &quot;</span>
@@ -584,7 +560,7 @@ The length of the embedding is: 1536
             <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
                 <span class="n">content</span> <span class="o">=</span> <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
-                <span class="n">content_emebddings</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span><span class="n">content</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">content_emebddings</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
                 <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_emebddings</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -595,28 +571,30 @@ The length of the embedding is: 1536
 </div>
 </div>
 </div>
+<p><strong>1.3 Create a file with the embeddings</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totalNumberOfDocuments</span> <span class="o">=</span> <span class="mi">200</span>
-<span class="n">path_to_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">generate_embeddings_for_chunks</span><span class="p">(</span><span class="n">path_to_file</span><span class="p">,</span> <span class="n">path_to_output_file</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">openai_prefix</span> <span class="o">=</span> <span class="s2">&quot;chunks-solution-ops-embedded-openai&quot;</span>
+<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="n">generate_embeddings_for_chunks</span><span class="p">(</span>
+    <span class="n">path_to_input_file</span><span class="o">=</span><span class="n">path_to_chunked_documents</span><span class="p">,</span>
+    <span class="n">path_to_output_file</span><span class="o">=</span><span class="n">path_to_output_file</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data ./output/chunks-solution-ops-200.json at: ./output/chunks-solution-ops-200.json 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data ./output/chunks-solution-ops-200-300-0.json at: ./output/chunks-solution-ops-200-300-0.json 
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="use-e5-small-v2-from-hugging-face">
-<h3>2. Use e5-small-v2 from Hugging Face<a class="headerlink" href="#use-e5-small-v2-from-hugging-face" title="Permalink to this heading">#</a></h3>
-<p>We will use <a class="reference external" href="https://huggingface.co/intfloat/e5-small-v2"><code class="docutils literal notranslate"><span class="pre">infloat/e5-small-v2</span></code></a> from Hugging Face. This model is open source, size 0.13 GB. The model is limited to working with English texts and can handle texts with a maximum of 512 tokens. Being open sourced, it means there is no price associated with it.</p>
-</section>
-<section id="embed-an-input-query-using-the-e5-small-v2-model">
-<h3>2.1. Embed an input query using the <code class="docutils literal notranslate"><span class="pre">e5-small-v2</span> <span class="pre">model</span></code><a class="headerlink" href="#embed-an-input-query-using-the-e5-small-v2-model" title="Permalink to this heading">#</a></h3>
+<h3>👩‍💻 2. Use e5-small-v2 from Hugging Face<a class="headerlink" href="#use-e5-small-v2-from-hugging-face" title="Permalink to this heading">#</a></h3>
+<p>We will use <a class="reference external" href="https://huggingface.co/intfloat/e5-small-v2"><code class="docutils literal notranslate"><span class="pre">infloat/e5-small-v2</span></code></a> from Hugging Face. This model is open source, size 0.13 GB. The model is limited to working with English texts and can handle texts with a maximum of 512 tokens. Being open sourced, it means there is no price associated with it.
+<a class="reference external" href="https://huggingface.co/intfloat/e5-small-v2#e5-small-v2">The embedding size is 384</a>.</p>
+<p><strong>2.1. Create a function which is responsible to embed an input query using <code class="docutils literal notranslate"><span class="pre">e5-small-v2</span> <span class="pre">model</span></code></strong></p>
 <p>Look at the <a class="reference external" href="https://huggingface.co/intfloat/e5-small-v2">&lt;/&gt; Use in sentence-transformers</a> section from Hugging Face.</p>
 <details markdown="1">
 <summary> 🔍 Solution:</summary>
@@ -630,10 +608,10 @@ The length of the embedding is: 1536
 </pre></div>
 </div>
 </details>
-</section>
-<section id="id1">
-<h3>2.1. Embed the chunks and save to a file<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
-<p>Create a function, similar to <code class="docutils literal notranslate"><span class="pre">generate_embeddings_for_chunks</span></code>, to embed the data and to save it to a file.</p>
+<p><strong>2.1. Create a function which is responsible to embed the chunks from an input file and save the result to another file</strong></p>
+<p>Create a function, similar to <code class="docutils literal notranslate"><span class="pre">generate_embeddings_for_chunks</span></code>, which is responsible to embed the chunked data and to save it to a file.</p>
+<p>Input file: <a class="reference download internal" download="" href="_downloads/e9ffa9f8c73dc15acdc48ded749b2da4/chunks-solution-ops-200-300-0.json"><span class="xref download myst">./output/chunks-solution-ops-200-300-0.json</span></a>.</p>
+<p>The output file with the embeddings should be saved at <code class="docutils literal notranslate"><span class="pre">./output/generated/chunks-solution-ops-embedded-intfloat_e5_small_v2-200-300-10.json</span></code></p>
 <details markdown="1">
 <summary> 🔍 Solution:</summary>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">sentence_transformers</span>
@@ -644,7 +622,6 @@ The length of the embedding is: 1536
 
 
 <span class="k">def</span> <span class="nf">embed_chunk</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-    <span class="c1"># print(type(embedded_input))</span>
     <span class="n">embedded_input</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
         <span class="n">chunk</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>  <span class="c1"># Note that the type is a ndarray.</span>
@@ -675,13 +652,15 @@ The length of the embedding is: 1536
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate embeddings for chunks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-
-<span class="n">totalNumberOfDocuments</span> <span class="o">=</span> <span class="mi">200</span>
-<span class="n">path_to_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-small-model-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="p">)</span>
-<span class="n">generate_embeddings_with_intfloat_e5_small_v2</span><span class="p">(</span><span class="n">path_to_file</span><span class="p">,</span> <span class="n">path_to_output_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</details>
+<p><strong>2.3. Create a file with the embeddings</strong></p>
+<details markdown="1">
+<summary> 🔍 Solution:</summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">e5_small_prefix</span> <span class="o">=</span> <span class="s2">&quot;chunks-solution-ops-embedded-intfloat_e5_small_v2&quot;</span>
+<span class="n">path_to_output_file</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">e5_small_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="n">generate_embeddings_with_intfloat_e5_small_v2</span><span class="p">(</span><span class="n">path_to_input_file</span><span class="o">=</span><span class="n">path_to_chunked_documents</span><span class="p">,</span> <span class="n">path_to_output_file</span><span class="o">=</span><span class="n">path_to_output_file</span><span class="p">)</span>
 </pre></div>
 </div>
 </details>
@@ -689,6 +668,141 @@ The length of the embedding is: 1536
 </section>
 <section id="evaluation">
 <h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h2>
+<p>In this workshop, to separate our experiments, we will take the <strong>Full Reindex</strong> strategy and we will create a new index per embedding model.
+Therefore, for each embedding model, what we will need to do is:</p>
+<ol class="arabic simple">
+<li><p>Create a new index. Note: make sure to give a relevant name.</p></li>
+<li><p>Populate the index with the embeddings that you have generated at the previous steps.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="doc std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>. By running the next cell, all the functions from search.ipynb will become available.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
+<span class="o">%</span><span class="n">run</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">helpers</span><span class="o">/</span><span class="n">search</span><span class="o">.</span><span class="n">ipynb</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sample code for creating a new index and uploading the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
+
+<span class="c1"># 1. Create a new index</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="n">openai_prefix</span> <span class="c1">#TODO: Replace the prefix with a relevant name given your embedding model</span>
+<span class="n">new_index_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">vector_size</span> <span class="o">=</span> <span class="mi">1536</span> <span class="c1">#TODO: Replace with the vector size of your embedding model</span>
+<span class="n">create_index</span><span class="p">(</span><span class="n">new_index_name</span><span class="p">)</span>
+
+<span class="c1"># 2. Upload the embeddings to the new index</span>
+<span class="n">file_embeddings</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span> <span class="c1"># TODO: Replace the file_embeddings to point to the right file path</span>
+<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">file_embeddings</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="evaluation-dataset">
+<h3>Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
+<p>Note: The evaluation dataset can be found at <a class="reference download internal" download="" href="_downloads/6f00dc06a7c24dedb0b02b4d88946edc/solution-ops-200-qa.json"><span class="xref download myst">solution-ops-200-qa.json</span></a>. The format is:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;user_prompt&quot;: &quot;&quot;, # The question
+&quot;output_prompt&quot;: &quot;&quot;, # The answer
+&quot;context&quot;: &quot;&quot;, # The relevant piece of information from a document
+&quot;chunk_id&quot;: &quot;&quot;, # The ID of the chunk
+&quot;source&quot;: &quot;&quot; # The path to the document, i.e. &quot;..\\data\\docs\\code-with-dataops\\index.md&quot;
+</pre></div>
+</div>
+</section>
+<section id="calculate-the-percentage-of-correctly-retrieved-documents">
+<h3>Calculate the percentage of correctly retrieved documents<a class="headerlink" href="#calculate-the-percentage-of-correctly-retrieved-documents" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Retrieval_evaluation</span></code> function is going through the evaluation dataset and, for each <code class="docutils literal notranslate"><span class="pre">user_prompt</span></code>, it embeds it using the <code class="docutils literal notranslate"><span class="pre">embedding_function</span></code> passed as parameter and then it does a vector search in the Index with name <code class="docutils literal notranslate"><span class="pre">search_index_name</span></code>. If the retrieved documents includes the <code class="docutils literal notranslate"><span class="pre">source</span></code> from the evaluation dataset, then it is considered a success.</p>
+<p>Note: This can also be adapted to ensure that the <code class="docutils literal notranslate"><span class="pre">first</span></code> retrieved document is the expected one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">retrieval_evaluation</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">,</span> <span class="n">embedding_function</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Evaluate the retrieval performance of the search index using the evaluation data set.</span>
+<span class="sd">    Args:</span>
+<span class="sd">    evaluation_data_path (str): The path to the evaluation data set.</span>
+<span class="sd">    embedding_function (function): The function to use for embedding the user prompts.</span>
+<span class="sd">    search_index_name (str): The name of the search index to use for retrieval.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    float: The percentage of correctly retrieved documents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The path to the evaluation data set </span><span class="si">{</span><span class="n">evaluation_data_path</span><span class="si">}</span><span class="s2"> does not exist. Please check the path and try again.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">nr_correctly_retrieved_documents</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">nr_qa</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">evaluation_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">evaluation_data</span><span class="p">:</span>
+            <span class="n">user_prompt</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;user_prompt&quot;</span><span class="p">]</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+
+            <span class="n">search_response</span> <span class="o">=</span> <span class="n">search_documents</span><span class="p">(</span>
+                <span class="n">search_index_name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span>
+                <span class="nb">input</span><span class="o">=</span><span class="n">user_prompt</span><span class="p">,</span>
+                <span class="n">embedding_function</span><span class="o">=</span><span class="n">embedding_function</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">search_response</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+                <span class="n">nr_correctly_retrieved_documents</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">nr_qa</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">nr_correctly_retrieved_documents</span> <span class="o">/</span> <span class="n">nr_qa</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+    <span class="k">return</span> <span class="n">percentage</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prefix</span> <span class="o">=</span> <span class="n">openai_prefix</span>  <span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
+<span class="n">index_name</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+
+<span class="n">percentage</span> <span class="o">=</span> <span class="n">retrieval_evaluation</span><span class="p">(</span>
+    <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
+    <span class="n">embedding_function</span><span class="o">=</span><span class="n">oai_query_embedding</span><span class="p">,</span>
+    <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="w"> </span><span class="n">percentage</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2"> using OpenAI embedding model.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50.0% of the documents were correctly retrieved from Index chunks-solution-ops-embedded-openai-200-300-0 using OpenAI embedding model.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluation-using-the-open-source-model">
+<h3>👩‍💻 Evaluation using the open source model<a class="headerlink" href="#evaluation-using-the-open-source-model" title="Permalink to this heading">#</a></h3>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">retrieval_evaluation</span></code> function, calculate how many documents are correctly retrieved using the infloat/e5-small-v2 open source model.</p>
+<details markdown="1">
+<summary> 🔍 Solution:</summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">e5_small_prefix</span> <span class="o">=</span> <span class="s2">&quot;chunks-solution-ops-embedded-intfloat_e5_small_v2&quot;</span> <span class="c1">#TODO: Replace the prefix with a relevant name given your embedding model</span>
+<span class="n">index_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">e5_small_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">percentage</span> <span class="o">=</span> <span class="n">retrieval_evaluation</span><span class="p">(</span>
+    <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
+    <span class="n">embedding_function</span><span class="o">=</span><span class="n">embed_chunk</span><span class="p">,</span>
+    <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="w"> </span><span class="n">percentage</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2"> using infloat/e5-small-v2 open source embedding model.&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</details>
+</section>
 </section>
 <section id="conclusions">
 <h2>💡 Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">#</a></h2>
@@ -762,13 +876,15 @@ The length of the embedding is: 1536
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-to-know-the-data">👀 Get to know the data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-embeddings-model-to-use">Which Embeddings Model to use?</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-text-embedding-ada-002-from-openai">1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embed-the-chunks-and-save-to-a-file">1.2. Embed the chunks and save to a file</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-e5-small-v2-from-hugging-face">2. Use e5-small-v2 from Hugging Face</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embed-an-input-query-using-the-e5-small-v2-model">2.1. Embed an input query using the <code class="docutils literal notranslate"><span class="pre">e5-small-v2</span> <span class="pre">model</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1. Embed the chunks and save to a file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-e5-small-v2-from-hugging-face">👩‍💻 2. Use e5-small-v2 from Hugging Face</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">Evaluation Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-the-percentage-of-correctly-retrieved-documents">Calculate the percentage of correctly retrieved documents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-using-the-open-source-model">👩‍💻 Evaluation using the open source model</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
 </ul>
   </nav></div>

@@ -394,7 +394,10 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Create Index Function</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunking-function">Create Chunking Function</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-embeddings-function">Create Embeddings Function</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-data-to-the-index">Upload data to the Index</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-data-to-the-index-function">Upload data to the Index Function</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#search-documents-function">Search documents Function</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -451,26 +454,6 @@ document.write(`
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">azure.search.documents.indexes</span> <span class="kn">import</span> <span class="n">SearchIndexClient</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
-
-<span class="c1"># subscription_id = os.environ[&quot;subscription_id&quot;]</span>
-<span class="c1"># resource_group_name = os.environ[&quot;resource_group_name&quot;]</span>
-<span class="c1"># workspace_name = os.environ[&quot;workspace_name&quot;]</span>
-<span class="c1"># service_endpoint = os.environ[</span>
-<span class="c1">#     &quot;service_endpoint&quot;</span>
-<span class="c1"># ]  # the endpoint of your Azure Cognitive Search service</span>
-<span class="c1"># key = os.environ[&quot;search_key&quot;]</span>
-
-<span class="c1"># # aoai_connection_name = os.environ[&#39;aoai_connection_name&#39;]</span>
-<span class="c1"># aoi_deployment_name = os.environ[&quot;AZURE_OPENAI_DEPLOYMENT_NAME&quot;]</span>
-<span class="c1"># azure_openai_key = os.environ[&quot;AZURE_OPENAI_KEY&quot;]</span>
-<span class="c1"># azure_aoai_endpoint = os.environ[&quot;AZURE_OPENAI_ENDPOINT&quot;]</span>
-<span class="c1"># embedding_model_name = os.environ[&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;]</span>
-
-<span class="c1"># search_index_name = &quot;index_chunks_2&quot;</span>
-<span class="c1"># search_index_key = os.getenv(&quot;AZURE_SEARCH_ADMIN_KEY&quot;)</span>
-<span class="c1"># credential = AzureKeyCredential(key)</span>
-<span class="c1"># storage_account_connection_string = os.getenv(&quot;storage_account_connection_string&quot;)</span>
-<span class="c1"># azure_openai_embedding_deployment = os.getenv(&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;)</span>
 </pre></div>
 </div>
 </div>
@@ -479,7 +462,7 @@ document.write(`
 <h1>Create Index Function<a class="headerlink" href="#create-index-function" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">,</span> <span class="n">vector_search_dimensions</span><span class="o">=</span><span class="mi">1536</span><span class="p">):</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">SearchIndexClient</span><span class="p">(</span><span class="n">service_endpoint</span><span class="p">,</span> <span class="n">credential</span><span class="p">)</span>
 
     <span class="c1"># 1. Define the fields</span>
@@ -502,7 +485,7 @@ document.write(`
             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">,</span>
             <span class="nb">type</span><span class="o">=</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Collection</span><span class="p">(</span><span class="n">SearchFieldDataType</span><span class="o">.</span><span class="n">Single</span><span class="p">),</span>
             <span class="n">searchable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">vector_search_dimensions</span><span class="o">=</span><span class="mi">1536</span><span class="p">,</span>  <span class="c1"># the dimension of the embedded vector</span>
+            <span class="n">vector_search_dimensions</span><span class="o">=</span><span class="n">vector_search_dimensions</span><span class="p">,</span>  <span class="c1"># the dimension of the embedded vector</span>
             <span class="n">vector_search_profile_name</span><span class="o">=</span><span class="s2">&quot;my-vector-config&quot;</span><span class="p">,</span>
         <span class="p">),</span>
     <span class="p">]</span>
@@ -626,7 +609,7 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
 &lt;&gt;:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_23156\1517721980.py:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
+C:\Users\adnegrau\AppData\Local\Temp\ipykernel_42128\1517721980.py:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
   documents = load_documents_from_folder(&quot;..\data\docs\code-with-engineering\**\*.md&quot;, totalNumberOfDocuments)
 </pre></div>
 </div>
@@ -689,8 +672,8 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_23156\1517721980.py:19: SyntaxWar
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="upload-data-to-the-index">
-<h1>Upload data to the Index<a class="headerlink" href="#upload-data-to-the-index" title="Permalink to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="upload-data-to-the-index-function">
+<h1>Upload data to the Index Function<a class="headerlink" href="#upload-data-to-the-index-function" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">):</span>
@@ -699,7 +682,9 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_23156\1517721980.py:19: SyntaxWar
             <span class="n">documents</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
         <span class="n">search_client</span> <span class="o">=</span> <span class="n">SearchClient</span><span class="p">(</span>
-            <span class="n">endpoint</span><span class="o">=</span><span class="n">service_endpoint</span><span class="p">,</span> <span class="n">index_name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span> <span class="n">credential</span><span class="o">=</span><span class="n">credential</span>
+            <span class="n">endpoint</span><span class="o">=</span><span class="n">service_endpoint</span><span class="p">,</span>
+            <span class="n">index_name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span>
+            <span class="n">credential</span><span class="o">=</span><span class="n">credential</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">search_client</span><span class="o">.</span><span class="n">upload_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Uploaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span><span class="si">}</span><span class="s2"> documents to Index: </span><span class="si">{</span><span class="n">search_index_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -709,6 +694,40 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_23156\1517721980.py:19: SyntaxWar
 </div>
 </div>
 </div>
+<section id="search-documents-function">
+<h2>Search documents Function<a class="headerlink" href="#search-documents-function" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">search_documents</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">embedding_function</span><span class="p">):</span>
+    <span class="n">search_client</span> <span class="o">=</span> <span class="n">SearchClient</span><span class="p">(</span>
+        <span class="n">service_endpoint</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">,</span> <span class="n">credential</span><span class="o">=</span><span class="n">credential</span>
+    <span class="p">)</span>
+    <span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">embedding_function</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+    <span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
+        <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="p">,</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;chunkContentVector&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+        <span class="n">search_text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">vector_queries</span><span class="o">=</span><span class="p">[</span><span class="n">vector_query</span><span class="p">],</span>
+        <span class="n">select</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">,</span> <span class="s2">&quot;chunkId&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="c1"># print_results(results)</span>
+
+    <span class="n">documents</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">item</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
+        <span class="n">item</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+        <span class="n">item</span><span class="p">[</span><span class="s2">&quot;chunkId&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s2">&quot;chunkId&quot;</span><span class="p">]</span>
+        <span class="n">documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">documents</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -760,7 +779,10 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_23156\1517721980.py:19: SyntaxWar
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Create Index Function</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunking-function">Create Chunking Function</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-embeddings-function">Create Embeddings Function</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-data-to-the-index">Upload data to the Index</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-data-to-the-index-function">Upload data to the Index Function</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#search-documents-function">Search documents Function</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>
