@@ -187,6 +187,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3.3. Chunking Experiment</a></li>
 
@@ -395,10 +396,13 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#chunk-the-data">Chunk the Data</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunks">Create chunks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-fixed-sized-chunks">1. Create fixed-sized chunks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-semantic-chunking">2. Use Semantic Chunking</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#built-in-skillset-splitskill">Built-in skillset: SplitSkill</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-built-in-skillset-splitskill">Use the built-in skillset: SplitSkill</a></li>
 </ul>
 
             </nav>
@@ -415,13 +419,16 @@ document.write(`
 <h1>3.3. Chunking Experiment<a class="headerlink" href="#chunking-experiment" title="Permalink to this heading">#</a></h1>
 <p>The search solution is comprised of both <strong>ingestion</strong> and <strong>retrieval</strong>. One does not exist without the other. While the other experiments are focused on data retrieval, ingestion plays equal importance in the effectiveness of the search solution.</p>
 <!-- Certain aspects of data ingestion need to be experimented as part of the experimentation phase: -->
-<p><a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">microsoft/rag-openai</a></p>
 <p>When processing data, splitting the source documents into chunks requires care and expertise to ensure the resulting chunks are small enough to be effective during fact retrieval but not too small so that enough context is provided during summarization.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Our goal here is not to identify which chunking strategy is the “best” in general but rather to demonstrate how various choices of chunking may have a non-trivial impact on the ultimate outcome from the retrieval-augmented-generation solution.</p>
 </div>
-<p><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">Learnings fromm other engagements</a></p>
+<p>📝<strong>Hypothesis</strong></p>
+<p>The hypothesis for this experiment is an exploratory one: “Can introducing a new chunking strategy improve system’s performance?”</p>
+<p>🎯 <strong>Measure of Success</strong></p>
+<p>The metrics used for document retrieval evaluation.</p>
+<!-- [Learnings fromm other engagements](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1) -->
 <!-- https://vectara.com/blog/grounded-generation-done-right-chunking/#:~:text=In%20the%20context%20of%20Grounded%20Generation%2C%20chunking%20is,find%20natural%20segments%20like%20complete%20sentences%20or%20paragraphs. -->
 <section id="why-chunking-size-matters">
 <h2>Why Chunking Size Matters<a class="headerlink" href="#why-chunking-size-matters" title="Permalink to this heading">#</a></h2>
@@ -429,22 +436,27 @@ document.write(`
 <p><strong>Relevance and Granularity</strong>: A small chunk size, like 128, yields more granular chunks. This granularity, however, presents a risk: vital information might not be among the top retrieved chunks, especially if the similarity <em>top_k</em> setting is as restrictive as 2. Conversely, a chunk size of 512 is likely to encompass all necessary information within the top chunks, ensuring that answers to queries are readily available. To navigate this, we employ the <em>Faithfulness and Relevancy</em> metrics. These measure the absence of ‘hallucinations’ and the ‘relevancy’ of responses based on the query and the retrieved contexts respectively.</p>
 <p><strong>Response Generation Time</strong>: As the chunk_size increases, so does the volume of information directed into the LLM to generate an answer. While this can ensure a more comprehensive context, it might also slow down the system. Ensuring that the added depth doesn’t compromise the system’s responsiveness is crucial.</p>
 <p>In essence, determining the optimal chunk_size is about striking a balance: capturing all essential information without sacrificing speed. It’s vital to undergo thorough testing with various sizes to find a configuration that suits the specific use case and dataset.</p>
-<p><a class="reference external" href="https://blog.llamaindex.ai/evaluating-the-ideal-chunk-size-for-a-rag-system-using-llamaindex-6207e5d3fec5">https://blog.llamaindex.ai/evaluating-the-ideal-chunk-size-for-a-rag-system-using-llamaindex-6207e5d3fec5</a></p>
-<p>Example code: <a class="github reference external" href="https://github.com/Azure/azure-search-vector-samples/blob/main/demo-python/code/data-chunking/textsplit-data-chunking-example.ipynb">Azure/azure-search-vector-samples</a></p>
-<p>Read <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/semantic-search-overview">Common Chunking Technique</a>, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents#content-overlap-considerations">Content overlap considerations</a>, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents#content-overlap-considerations">Simple example of how to create chunks with sentences</a></p>
-<p>CODE: <a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/customskills/utils/chunker/text_chunker.py">microsoft/rag-openai</a></p>
+<p><a class="reference external" href="https://towardsdatascience.com/how-to-chunk-text-data-a-comparative-analysis-3858c4a0997a">https://towardsdatascience.com/how-to-chunk-text-data-a-comparative-analysis-3858c4a0997a</a></p>
+<!-- https://blog.llamaindex.ai/evaluating-the-ideal-chunk-size-for-a-rag-system-using-llamaindex-6207e5d3fec5
+
+Example code: https://github.com/Azure/azure-search-vector-samples/blob/main/demo-python/code/data-chunking/textsplit-data-chunking-example.ipynb
+
+Read [Common Chunking Technique](https://learn.microsoft.com/en-us/azure/search/semantic-search-overview), [Content overlap considerations](https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents#content-overlap-considerations), [Simple example of how to create chunks with sentences](https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents#content-overlap-considerations)
+
+CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/customskills/utils/chunker/text_chunker.py -->
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="chunk-the-data">
 <h1>Chunk the Data<a class="headerlink" href="#chunk-the-data" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">langchain</span><span class="o">-</span><span class="n">community</span><span class="o">==</span><span class="mf">0.0.18</span>
-<span class="c1"># %pip install langchain-core==0.1.20</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">unstructured</span><span class="o">==</span><span class="mf">0.12.3</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">unstructured</span><span class="o">-</span><span class="n">client</span><span class="o">==</span><span class="mf">0.17.0</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">langchain</span><span class="o">==</span><span class="mf">0.1.5</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %%capture --no-display</span>
+<span class="c1"># %pip install langchain-community==0.0.18</span>
+<span class="c1"># # %pip install langchain-core==0.1.20</span>
+<span class="c1"># %pip install unstructured==0.12.3</span>
+<span class="c1"># %pip install unstructured-client==0.17.0</span>
+<span class="c1"># %pip install langchain==0.1.5</span>
+<span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
 </pre></div>
 </div>
 </div>
@@ -462,8 +474,8 @@ document.write(`
 </div>
 </div>
 </div>
-<section id="create-chunks">
-<h2>Create chunks<a class="headerlink" href="#create-chunks" title="Permalink to this heading">#</a></h2>
+<section id="create-fixed-sized-chunks">
+<h2>1. Create fixed-sized chunks<a class="headerlink" href="#create-fixed-sized-chunks" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_documents_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
@@ -541,7 +553,7 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:13: SyntaxWarning: invalid escape sequence &#39;\d&#39;
 &lt;&gt;:13: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_37476\4249308573.py:13: SyntaxWarning: invalid escape sequence &#39;\d&#39;
+C:\Users\adnegrau\AppData\Local\Temp\ipykernel_48764\4249308573.py:13: SyntaxWarning: invalid escape sequence &#39;\d&#39;
   &quot;..\data\docs\**\*.md&quot;, totalNumberOfDocuments
 </pre></div>
 </div>
@@ -590,35 +602,21 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_37476\4249308573.py:13: SyntaxWar
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_37476\1517721980.py:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
+C:\Users\adnegrau\AppData\Local\Temp\ipykernel_48764\1517721980.py:19: SyntaxWarning: invalid escape sequence &#39;\d&#39;
   documents = load_documents_from_folder(&quot;..\data\docs\code-with-engineering\**\*.md&quot;, totalNumberOfDocuments)
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># 1. Create the new index</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">new_index_name</span> <span class="o">=</span> <span class="s2">&quot;solution-ops-chunking-300-30&quot;</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">create_index</span><span class="p">(</span><span class="n">new_index_name</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># 2. Generate embeddings for the new chunks</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">generated_embeddings_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-embedded-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">.json&quot;</span>
-
-<span class="nn">File ~\AppData\Local\Temp\ipykernel_37476\391458413.py:2,</span> in <span class="ni">create_index</span><span class="nt">(search_index_name)</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">create_index</span><span class="p">(</span><span class="n">search_index_name</span><span class="p">):</span>
-<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="n">client</span> <span class="o">=</span> <span class="n">SearchIndexClient</span><span class="p">(</span><span class="n">service_endpoint</span><span class="p">,</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="c1"># 1. Define the fields</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>         <span class="n">SimpleField</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;chunkId&quot;</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span>         <span class="p">),</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="p">]</span>
-
-<span class="ne">NameError</span>: name &#39;key&#39; is not defined
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;solution-ops-chunking-300-30&#39; created or updated
+Embeddings were already created for chunked data at: ./output/chunks-solution-ops-200.json 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 991 documents to Index: solution-ops-chunking-300-30
 </pre></div>
 </div>
 </div>
 </div>
+<section id="use-semantic-chunking">
+<h3>2. Use <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept-retrieval-augumented-generation?view=doc-intel-4.0.0#semantic-chunking">Semantic Chunking</a><a class="headerlink" href="#use-semantic-chunking" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Semantic chunking</span>
@@ -657,8 +655,9 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_37476\1517721980.py:19: SyntaxWar
 </div>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="built-in-skillset-splitskill">
-<h1>Built-in skillset: SplitSkill<a class="headerlink" href="#built-in-skillset-splitskill" title="Permalink to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="use-the-built-in-skillset-splitskill">
+<h1>Use the built-in skillset: <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-textsplit">SplitSkill</a><a class="headerlink" href="#use-the-built-in-skillset-splitskill" title="Permalink to this heading">#</a></h1>
 <p>Upload files to a storage account so we can create an Indexer
 <a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/upload_files.py">microsoft/rag-openai</a></p>
 </section>
@@ -732,10 +731,13 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_37476\1517721980.py:19: SyntaxWar
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#chunk-the-data">Chunk the Data</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunks">Create chunks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-fixed-sized-chunks">1. Create fixed-sized chunks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-semantic-chunking">2. Use Semantic Chunking</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#built-in-skillset-splitskill">Built-in skillset: SplitSkill</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-built-in-skillset-splitskill">Use the built-in skillset: SplitSkill</a></li>
 </ul>
 
   </nav></div>
