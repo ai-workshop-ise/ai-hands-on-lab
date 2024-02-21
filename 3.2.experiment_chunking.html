@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>3.3. Chunking Experiment &#8212; AI Workshop</title>
+    <title>3.2. Chunking Experiment &#8212; AI Workshop</title>
   
   
   
@@ -62,11 +62,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '3.3.experiment_chunking';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3.2.experiment_chunking';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Post-production" href="10.evaluation-production.html" />
-    <link rel="prev" title="3.2. Search Experiment" href="3.2.experiment_search.html" />
+    <link rel="prev" title="3.1. Embeddings Experiment" href="3.1.experiment_embedding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -188,9 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3.3. Chunking Experiment</a></li>
-
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3.2. Chunking Experiment</a></li>
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
@@ -267,7 +265,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F3.3.experiment_chunking.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F3.2.experiment_chunking.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -297,7 +295,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/3.3.experiment_chunking.ipynb" target="_blank"
+      <li><a href="_sources/3.2.experiment_chunking.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -381,7 +379,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>3.3. Chunking Experiment</h1>
+    <h1>3.2. Chunking Experiment</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -391,8 +389,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">3.3. Chunking Experiment</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-strategy">Chunking Strategy</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">3.2. Chunking Experiment</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-overview">Experiment Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-sized-chunks">1. Fixed-sized chunks</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-semantic-chunking">2. Use Semantic Chunking</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker">👩‍💻 Create a function to chunk data from Solution-Ops using Semantic Chunker</a></li>
@@ -426,26 +425,32 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="chunking-experiment">
-<h1>3.3. Chunking Experiment<a class="headerlink" href="#chunking-experiment" title="Permalink to this heading">#</a></h1>
+<h1>3.2. Chunking Experiment<a class="headerlink" href="#chunking-experiment" title="Permalink to this heading">#</a></h1>
 <p>The search solution is comprised of both <strong>ingestion</strong> and <strong>retrieval</strong>. One does not exist without the other. While other experiments are focused on data retrieval, ingestion plays equal importance in the effectiveness of the search solution. During this experiment, we will look at various chunking strategies.</p>
-<!-- Certain aspects of data ingestion need to be experimented as part of the experimentation phase: -->
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="chunking-strategy">
-<h1>Chunking Strategy<a class="headerlink" href="#chunking-strategy" title="Permalink to this heading">#</a></h1>
-<p>Code also <a class="github reference external" href="https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/customskills/utils/chunker/text_chunker.py">microsoft/rag-openai</a></p>
-<p>There are multiple methods of ingestion, depending on the type of data. For example, unstructured data such as documents or web pages can be split into chunks and embedded into vectors, while structured data such as tables or databases can be summarized or converted into natural language. In our case, since we are working with unstructured text data, we will look into different chunking strategies.</p>
+<section id="experiment-overview">
+<h2>Experiment Overview<a class="headerlink" href="#experiment-overview" title="Permalink to this heading">#</a></h2>
+<p>There are multiple methods of ingestion, depending on the type of data. For example, unstructured data such as documents or web pages can be split into chunks and embedded into vectors, while structured data such as tables or databases can be summarized or converted into natural language. In our case, since we are working with unstructured text data, we will look into two chunking strategies: fixed-size chunking and semantic chunking.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Our goal here is not to identify which chunking strategy is the “best” in general but rather to demonstrate how the choice of chunking may have a non-trivial impact on the ultimate outcome from the RAG solution.</p>
 </div>
+<!-- Certain aspects of data ingestion need to be experimented as part of the experimentation phase: -->
+<!-- # Chunking Strategy
+
+Code also https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/customskills/utils/chunker/text_chunker.py
+
+There are multiple methods of ingestion, depending on the type of data. For example, unstructured data such as documents or web pages can be split into chunks and embedded into vectors, while structured data such as tables or databases can be summarized or converted into natural language. In our case, since we are working with unstructured text data, we will look into different chunking strategies.
+ -->
 <p>📝<strong>Hypothesis</strong></p>
-<p>The hypothesis for this experiment is an exploratory one: “Can introducing a new chunking strategy improve system’s performance?”</p>
-<p>🎯 <strong>Measure of Success</strong></p>
-<p>We will use a custom metric, where we will calculate the percentage of cases where the expected document is part of the retrieved documents.</p>
+<p>Exploratory hypothesis: “Can introducing a new chunking strategy improve system’s performance?”</p>
+<p>🎯 <strong>Evaluation Metrics</strong></p>
+<p>For this experiment we will look at Accuracy and Cosine Similarity to compare the performance.</p>
+<p>📊 <strong>Data</strong></p>
+<p>In this experiment, the data that we would like to embed consists of the first 200 documents from the Solution Ops Playbook, which were previously chunked in size of 300. The dataset can be found at <a class="reference download internal" download="" href="_downloads/e9ffa9f8c73dc15acdc48ded749b2da4/chunks-solution-ops-200-300-0.json"><span class="xref download myst">chunks-solution-ops-200-300-0.json</span></a>.</p>
 <!-- The metrics used for document retrieval evaluation. -->
 <!-- [Learnings fromm other engagements](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1) -->
 <!-- https://vectara.com/blog/grounded-generation-done-right-chunking/#:~:text=In%20the%20context%20of%20Grounded%20Generation%2C%20chunking%20is,find%20natural%20segments%20like%20complete%20sentences%20or%20paragraphs. -->
-<p><a class="reference external" href="https://towardsdatascience.com/how-to-chunk-text-data-a-comparative-analysis-3858c4a0997a">https://towardsdatascience.com/how-to-chunk-text-data-a-comparative-analysis-3858c4a0997a</a></p>
+<!-- https://towardsdatascience.com/how-to-chunk-text-data-a-comparative-analysis-3858c4a0997a -->
 <!-- https://blog.llamaindex.ai/evaluating-the-ideal-chunk-size-for-a-rag-system-using-llamaindex-6207e5d3fec5
 
 Example code: https://github.com/Azure/azure-search-vector-samples/blob/main/demo-python/code/data-chunking/textsplit-data-chunking-example.ipynb
@@ -453,6 +458,10 @@ Example code: https://github.com/Azure/azure-search-vector-samples/blob/main/dem
 Read [Common Chunking Technique](https://learn.microsoft.com/en-us/azure/search/semantic-search-overview), [Content overlap considerations](https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents#content-overlap-considerations), [Simple example of how to create chunks with sentences](https://learn.microsoft.com/en-us/azure/search/vector-search-how-to-chunk-documents#content-overlap-considerations)
 
 CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/customskills/utils/chunker/text_chunker.py -->
+</section>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+<p>Import necessary libraries</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
@@ -460,10 +469,11 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </div>
 </div>
+</section>
 <section id="fixed-sized-chunks">
 <h2>1. Fixed-sized chunks<a class="headerlink" href="#fixed-sized-chunks" title="Permalink to this heading">#</a></h2>
 <p>This is one of the most basic form of splitting up text. It is the process of simply dividing the text into N-character sized chunks regardless of their content or form. This method isn’t recommended for any applications - but it’s a great starting point for us to understand the basics.</p>
-<p><strong>Why Chunking Size Matters</strong></p>
+<p><strong><a class="reference external" href="https://blog.llamaindex.ai/evaluating-the-ideal-chunk-size-for-a-rag-system-using-llamaindex-6207e5d3fec5">Why Chunking Size Matters</a></strong></p>
 <p>When processing data, splitting the source documents into chunks requires care and expertise to ensure the resulting chunks are small enough to be effective during fact retrieval but not too small so that enough context is provided during summarization. The models used to generate embedding vectors have maximum limits on the text fragments provided as input. For example, the maximum length of input text for the Azure OpenAI embedding models is <strong>8,191</strong> tokens. Given that each token is around 4 characters of text for common OpenAI models, this maximum limit is equivalent to around 6000 words of text. If you’re using these models to generate embeddings, it’s critical that the input text stays under the limit. Partitioning your content into chunks ensures that your data can be processed by the Large Language Models (LLM) used for indexing and queries.</p>
 <p><strong>Relevance and Granularity</strong>: A small chunk size, like 128, yields more granular chunks. This granularity, however, presents a risk: vital information might not be among the top retrieved chunks, especially if the similarity <em>top_k</em> setting is as restrictive as 2. Conversely, a chunk size of 512 is likely to encompass all necessary information within the top chunks, ensuring that answers to queries are readily available. To navigate this, we employ the <em>Faithfulness and Relevancy</em> metrics. These measure the absence of ‘hallucinations’ and the ‘relevancy’ of responses based on the query and the retrieved contexts respectively.</p>
 <p><strong>Response Generation Time</strong>: As the chunk_size increases, so does the volume of information directed into the LLM to generate an answer. While this can ensure a more comprehensive context, it might also slow down the system. Ensuring that the added depth doesn’t compromise the system’s responsiveness is crucial.</p>
@@ -653,31 +663,17 @@ Chunks already created at: ./output/generated/fixed-size-chunks-solution-ops-200
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from matplotlib import pyplot as plt</span>
 
-<span class="c1"># lengths = {[Number of chunks]: [number of documents with that number of chunks]}</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">chunks</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># number of chunks per document</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">chunks</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>  <span class="c1"># number of documents with that number of chunks</span>
+<span class="c1"># # lengths = {[Number of chunks]: [number of documents with that number of chunks]}</span>
+<span class="c1"># x = chunks.keys()  # number of chunks per document</span>
+<span class="c1"># y = chunks.values()  # number of documents with that number of chunks</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Chunk Numbers&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Number of Documents&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of Chunk Numbers&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># lengths = {[Number of chunks]: [number of documents with that number of chunks]}</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">x</span> <span class="o">=</span> <span class="n">chunks</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>  <span class="c1"># number of chunks per document</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">y</span> <span class="o">=</span> <span class="n">chunks</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>  <span class="c1"># number of documents with that number of chunks</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-<span class="ne">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;keys&#39;
+<span class="c1"># plt.bar(x, y)</span>
+<span class="c1"># plt.xlabel(&quot;Chunk Numbers&quot;)</span>
+<span class="c1"># plt.ylabel(&quot;Number of Documents&quot;)</span>
+<span class="c1"># plt.title(&quot;Distribution of Chunk Numbers&quot;)</span>
+<span class="c1"># plt.show()</span>
 </pre></div>
 </div>
 </div>
@@ -697,6 +693,15 @@ Chunks already created at: ./output/generated/fixed-size-chunks-solution-ops-200
 
 <span class="c1"># 3. Upload the embeddings to the new index</span>
 <span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">generated_embeddings_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">fixed_chunking_index_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;solution-ops-fixed-chunking-300-30&#39; created or updated
+Embeddings were already created for chunked data at: ./output/generated/fixed-size-chunks-solution-ops-200-300-30.json 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 991 documents to Index: solution-ops-fixed-chunking-300-30
 </pre></div>
 </div>
 </div>
@@ -807,17 +812,7 @@ Though pull-based model for data ingestion is the most fault tolerant model, its
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>./output/generated/semantic-chunks-solution-ops-200.json
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">path_to_semantic_chunks_output</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">semantic_chunks_output_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="nb">print</span><span class="p">(</span><span class="n">path_to_semantic_chunks_output</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">chunks</span> <span class="o">=</span> <span class="n">create_semantic_chunks_and_save_to_file</span><span class="p">(</span>
-<span class="ne">----&gt; </span><span class="mi">7</span>     <span class="n">documents</span><span class="p">,</span> <span class="n">path_to_semantic_chunks_output</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;documents&#39; is not defined
+Chunks already created at: ./output/generated/semantic-chunks-solution-ops-200.json 
 </pre></div>
 </div>
 </div>
@@ -841,1432 +836,10 @@ Though pull-based model for data ingestion is the most fault tolerant model, its
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;solution-ops-semantic-chunking-200&#39; created or updated
-0
-chunk0_0
-1
-chunk1_0
-2
-chunk2_1
-3
-chunk3_0
-4
-chunk4_1
-5
-chunk5_2
-6
-chunk6_0
-7
-chunk7_1
-8
-chunk8_0
-9
-chunk9_1
-10
-chunk10_0
-11
-chunk11_1
-12
-chunk12_0
-13
-chunk13_1
-14
-chunk14_2
-15
-chunk15_3
-16
-chunk16_0
-17
-chunk17_1
-18
-chunk18_2
-19
-chunk19_3
-20
-chunk20_0
-21
-chunk21_1
-22
-chunk22_2
-23
-chunk23_3
-24
-chunk24_0
-25
-chunk25_1
-26
-chunk26_2
-27
-chunk27_3
-28
-chunk28_4
-29
-chunk29_5
-30
-chunk30_6
-31
-chunk31_0
-32
-chunk32_1
-33
-chunk33_2
-34
-chunk34_0
-35
-chunk35_1
-36
-chunk36_2
-37
-chunk37_3
-38
-chunk38_0
-39
-chunk39_1
-40
-chunk40_0
-41
-chunk41_1
-42
-chunk42_2
-43
-chunk43_3
-44
-chunk44_4
-45
-chunk45_5
-46
-chunk46_6
-47
-chunk47_7
-48
-chunk48_8
-49
-chunk49_9
-50
-chunk50_0
-51
-chunk51_1
-52
-chunk52_2
-53
-chunk53_3
-54
-chunk54_4
-55
-chunk55_0
-56
-chunk56_1
-57
-chunk57_2
-58
-chunk58_3
-59
-chunk59_0
-60
-chunk60_1
-61
-chunk61_2
-62
-chunk62_0
-63
-chunk63_1
-64
-chunk64_2
-65
-chunk65_3
-66
-chunk66_4
-67
-chunk67_0
-68
-chunk68_1
-69
-chunk69_0
-70
-chunk70_1
-71
-chunk71_2
-72
-chunk72_3
-73
-chunk73_0
-74
-chunk74_1
-75
-chunk75_0
-76
-chunk76_1
-77
-chunk77_0
-78
-chunk78_1
-79
-chunk79_2
-80
-chunk80_0
-81
-chunk81_1
-82
-chunk82_2
-83
-chunk83_3
-84
-chunk84_0
-85
-chunk85_1
-86
-chunk86_2
-87
-chunk87_3
-88
-chunk88_0
-89
-chunk89_1
-90
-chunk90_2
-91
-chunk91_3
-92
-chunk92_0
-93
-chunk93_1
-94
-chunk94_0
-95
-chunk95_1
-96
-chunk96_0
-97
-chunk97_1
-98
-chunk98_2
-99
-chunk99_0
-100
-chunk100_1
-101
-chunk101_2
-102
-chunk102_3
-103
-chunk103_0
-104
-chunk104_1
-105
-chunk105_2
-106
-chunk106_0
-107
-chunk107_1
-108
-chunk108_2
-109
-chunk109_3
-110
-chunk110_0
-111
-chunk111_1
-112
-chunk112_2
-113
-chunk113_3
-114
-chunk114_0
-115
-chunk115_1
-116
-chunk116_0
-117
-chunk117_1
-118
-chunk118_2
-119
-chunk119_0
-120
-chunk120_1
-121
-chunk121_2
-122
-chunk122_0
-123
-chunk123_1
-124
-chunk124_0
-125
-chunk125_1
-126
-chunk126_0
-127
-chunk127_1
-128
-chunk128_2
-129
-chunk129_3
-130
-chunk130_4
-131
-chunk131_5
-132
-chunk132_6
-133
-chunk133_0
-134
-chunk134_1
-135
-chunk135_0
-136
-chunk136_1
-137
-chunk137_0
-138
-chunk138_1
-139
-chunk139_2
-140
-chunk140_3
-141
-chunk141_0
-142
-chunk142_1
-143
-chunk143_2
-144
-chunk144_0
-145
-chunk145_1
-146
-chunk146_2
-147
-chunk147_3
-148
-chunk148_4
-149
-chunk149_5
-150
-chunk150_0
-151
-chunk151_1
-152
-chunk152_2
-153
-chunk153_3
-154
-chunk154_0
-155
-chunk155_1
-156
-chunk156_0
-157
-chunk157_1
-158
-chunk158_2
-159
-chunk159_0
-160
-chunk160_1
-161
-chunk161_2
-162
-chunk162_3
-163
-chunk163_4
-164
-chunk164_5
-165
-chunk165_6
-166
-chunk166_0
-167
-chunk167_1
-168
-chunk168_2
-169
-chunk169_3
-170
-chunk170_0
-171
-chunk171_1
-172
-chunk172_0
-173
-chunk173_1
-174
-chunk174_0
-175
-chunk175_1
-176
-chunk176_2
-177
-chunk177_3
-178
-chunk178_0
-179
-chunk179_1
-180
-chunk180_2
-181
-chunk181_3
-182
-chunk182_4
-183
-chunk183_0
-184
-chunk184_1
-185
-chunk185_0
-186
-chunk186_1
-187
-chunk187_0
-188
-chunk188_1
-189
-chunk189_0
-190
-chunk190_1
-191
-chunk191_0
-192
-chunk192_1
-193
-chunk193_0
-194
-chunk194_1
-195
-chunk195_0
-196
-chunk196_1
-197
-chunk197_0
-198
-chunk198_1
-199
-chunk199_0
-200
-chunk200_1
-201
-chunk201_2
-202
-chunk202_3
-203
-chunk203_0
-204
-chunk204_1
-205
-chunk205_2
-206
-chunk206_3
-207
-chunk207_0
-208
-chunk208_1
-209
-chunk209_2
-210
-chunk210_0
-211
-chunk211_1
-212
-chunk212_2
-213
-chunk213_3
-214
-chunk214_4
-215
-chunk215_5
-216
-chunk216_0
-217
-chunk217_1
-218
-chunk218_2
-219
-chunk219_3
-220
-chunk220_0
-221
-chunk221_1
-222
-chunk222_2
-223
-chunk223_3
-224
-chunk224_4
-225
-chunk225_0
-226
-chunk226_1
-227
-chunk227_0
-228
-chunk228_1
-229
-chunk229_2
-230
-chunk230_3
-231
-chunk231_0
-232
-chunk232_1
-233
-chunk233_2
-234
-chunk234_3
-235
-chunk235_4
-236
-chunk236_0
-237
-chunk237_1
-238
-chunk238_2
-239
-chunk239_0
-240
-chunk240_1
-241
-chunk241_2
-242
-chunk242_3
-243
-chunk243_4
-244
-chunk244_0
-245
-chunk245_1
-246
-chunk246_2
-247
-chunk247_3
-248
-chunk248_4
-249
-chunk249_5
-250
-chunk250_0
-251
-chunk251_1
-252
-chunk252_2
-253
-chunk253_3
-254
-chunk254_4
-255
-chunk255_0
-256
-chunk256_1
-257
-chunk257_2
-258
-chunk258_3
-259
-chunk259_4
-260
-chunk260_0
-261
-chunk261_1
-262
-chunk262_2
-263
-chunk263_3
-264
-chunk264_4
-265
-chunk265_0
-266
-chunk266_1
-267
-chunk267_2
-268
-chunk268_3
-269
-chunk269_4
-270
-chunk270_5
-271
-chunk271_0
-272
-chunk272_1
-273
-chunk273_2
-274
-chunk274_0
-275
-chunk275_1
-276
-chunk276_2
-277
-chunk277_0
-278
-chunk278_1
-279
-chunk279_2
-280
-chunk280_0
-281
-chunk281_1
-282
-chunk282_2
-283
-chunk283_3
-284
-chunk284_4
-285
-chunk285_5
-286
-chunk286_6
-287
-chunk287_7
-288
-chunk288_0
-289
-chunk289_1
-290
-chunk290_0
-291
-chunk291_1
-292
-chunk292_2
-293
-chunk293_0
-294
-chunk294_1
-295
-chunk295_0
-296
-chunk296_1
-297
-chunk297_0
-298
-chunk298_1
-299
-chunk299_0
-300
-chunk300_1
-301
-chunk301_2
-302
-chunk302_3
-303
-chunk303_4
-304
-chunk304_0
-305
-chunk305_1
-306
-chunk306_0
-307
-chunk307_1
-308
-chunk308_2
-309
-chunk309_0
-310
-chunk310_1
-311
-chunk311_2
-312
-chunk312_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 11 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-313
-chunk313_1
-314
-chunk314_2
-315
-chunk315_3
-316
-chunk316_4
-317
-chunk317_5
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 10 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-318
-chunk318_6
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 10 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-319
-chunk319_7
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 10 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-320
-chunk320_8
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 10 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-321
-chunk321_9
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 10 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-322
-chunk322_10
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 9 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-323
-chunk323_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 9 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-324
-chunk324_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 9 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-325
-chunk325_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 10 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-326
-chunk326_3
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 9 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-327
-chunk327_4
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 9 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-328
-chunk328_5
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 9 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-329
-chunk329_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 9 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-330
-chunk330_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 9 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-331
-chunk331_2
-332
-chunk332_3
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 9 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-333
-chunk333_4
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 8 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-334
-chunk334_5
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 8 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-335
-chunk335_0
-336
-chunk336_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 8 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-337
-chunk337_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 8 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-338
-chunk338_3
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 8 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-339
-chunk339_4
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 8 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-340
-chunk340_5
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 7 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-341
-chunk341_6
-342
-chunk342_7
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 7 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-343
-chunk343_8
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 8 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-344
-chunk344_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 7 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-345
-chunk345_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 7 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-346
-chunk346_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 7 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-347
-chunk347_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 7 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-348
-chunk348_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 7 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-349
-chunk349_3
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 7 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-350
-chunk350_4
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 6 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-351
-chunk351_5
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 6 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-352
-chunk352_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 6 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-353
-chunk353_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 6 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-354
-chunk354_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 6 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-355
-chunk355_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 6 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-356
-chunk356_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-357
-chunk357_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-358
-chunk358_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 6 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-359
-chunk359_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-360
-chunk360_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-361
-chunk361_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-362
-chunk362_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-363
-chunk363_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-364
-chunk364_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-365
-chunk365_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-366
-chunk366_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-367
-chunk367_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-368
-chunk368_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-369
-chunk369_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 5 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-370
-chunk370_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-371
-chunk371_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-372
-chunk372_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-373
-chunk373_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-374
-chunk374_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-375
-chunk375_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-376
-chunk376_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 3 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-377
-chunk377_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-378
-chunk378_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 4 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-379
-chunk379_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 3 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-380
-chunk380_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 3 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-381
-chunk381_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 3 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-382
-chunk382_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 3 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-383
-chunk383_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 3 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-384
-chunk384_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 3 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-385
-chunk385_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 3 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-386
-chunk386_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 2 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-387
-chunk387_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 3 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-388
-chunk388_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 2 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-389
-chunk389_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 2 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-390
-chunk390_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 2 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-391
-chunk391_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 2 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-392
-chunk392_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 2 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-393
-chunk393_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 2 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-394
-chunk394_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 2 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-395
-chunk395_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 2 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-396
-chunk396_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-397
-chunk397_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-398
-chunk398_3
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-399
-chunk399_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-400
-chunk400_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-401
-chunk401_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-402
-chunk402_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-403
-chunk403_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-404
-chunk404_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-405
-chunk405_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-406
-chunk406_1
-407
-chunk407_0
-408
-chunk408_1
-409
-chunk409_2
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-410
-chunk410_0
-411
-chunk411_1
-412
-chunk412_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-413
-chunk413_1
-414
-chunk414_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-415
-chunk415_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-416
-chunk416_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-417
-chunk417_1
-418
-chunk418_0
-419
-chunk419_1
-420
-chunk420_0
-421
-chunk421_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-422
-chunk422_2
-423
-chunk423_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-424
-chunk424_1
-425
-chunk425_2
-426
-chunk426_3
-427
-chunk427_0
-428
-chunk428_1
-429
-chunk429_0
-430
-chunk430_1
-431
-chunk431_2
-432
-chunk432_0
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-433
-chunk433_1
-Failed to get embedding:  {&#39;error&#39;: {&#39;code&#39;: &#39;429&#39;, &#39;message&#39;: &#39;Requests to the Embeddings_Create Operation under Azure OpenAI API version 2023-07-01-preview have exceeded call rate limit of your current OpenAI S0 pricing tier. Please retry after 1 second. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit.&#39;}}
-434
-chunk434_2
-435
-chunk435_3
-436
-chunk436_4
-437
-chunk437_5
-438
-chunk438_0
-439
-chunk439_1
-440
-chunk440_2
-441
-chunk441_0
-442
-chunk442_1
-443
-chunk443_2
-444
-chunk444_0
-445
-chunk445_1
-446
-chunk446_0
-447
-chunk447_1
-448
-chunk448_2
-449
-chunk449_0
-450
-chunk450_1
-451
-chunk451_0
-452
-chunk452_1
-453
-chunk453_0
-454
-chunk454_1
-455
-chunk455_2
-456
-chunk456_0
-457
-chunk457_1
-458
-chunk458_0
-459
-chunk459_1
-460
-chunk460_0
-461
-chunk461_1
-462
-chunk462_0
-463
-chunk463_1
-464
-chunk464_0
-465
-chunk465_1
-466
-chunk466_0
-467
-chunk467_1
-468
-chunk468_2
-469
-chunk469_0
-470
-chunk470_1
-471
-chunk471_2
-472
-chunk472_0
-473
-chunk473_1
-474
-chunk474_2
-475
-chunk475_3
-476
-chunk476_4
-477
-chunk477_5
-478
-chunk478_0
-479
-chunk479_1
-480
-chunk480_0
-481
-chunk481_1
-482
-chunk482_0
-483
-chunk483_1
-484
-chunk484_2
-485
-chunk485_3
-486
-chunk486_0
-487
-chunk487_1
-488
-chunk488_2
-489
-chunk489_3
-490
-chunk490_4
-491
-chunk491_0
-492
-chunk492_1
-493
-chunk493_2
-494
-chunk494_3
-495
-chunk495_4
-496
-chunk496_0
-497
-chunk497_1
-498
-chunk498_0
-499
-chunk499_1
-500
-chunk500_2
-501
-chunk501_3
-502
-chunk502_4
-503
-chunk503_5
-504
-chunk504_0
-505
-chunk505_1
-506
-chunk506_2
-507
-chunk507_3
-508
-chunk508_4
-509
-chunk509_5
-510
-chunk510_6
-511
-chunk511_7
-512
-chunk512_8
-513
-chunk513_0
-514
-chunk514_1
-515
-chunk515_2
-516
-chunk516_3
-517
-chunk517_4
-518
-chunk518_5
-519
-chunk519_6
-520
-chunk520_7
-521
-chunk521_0
-522
-chunk522_1
-523
-chunk523_2
-524
-chunk524_3
-525
-chunk525_4
-526
-chunk526_0
-527
-chunk527_1
-528
-chunk528_2
-529
-chunk529_3
-530
-chunk530_0
-531
-chunk531_1
-532
-chunk532_2
-533
-chunk533_0
-534
-chunk534_1
-535
-chunk535_0
-536
-chunk536_1
-537
-chunk537_0
-538
-chunk538_1
-539
-chunk539_2
-540
-chunk540_3
-541
-chunk541_0
-542
-chunk542_1
-543
-chunk543_0
-544
-chunk544_0
-545
-chunk545_1
-546
-chunk546_0
-547
-chunk547_1
-548
-chunk548_0
-549
-chunk549_0
-550
-chunk550_1
-551
-chunk551_0
-552
-chunk552_1
-553
-chunk553_2
-554
-chunk554_0
-555
-chunk555_1
-556
-chunk556_2
-557
-chunk557_0
-558
-chunk558_0
-559
-chunk559_1
-560
-chunk560_2
-561
-chunk561_3
-562
-chunk562_0
-563
-chunk563_1
-564
-chunk564_2
-565
-chunk565_0
-566
-chunk566_1
-567
-chunk567_2
-568
-chunk568_0
-569
-chunk569_1
-570
-chunk570_2
-571
-chunk571_3
-572
-chunk572_0
-573
-chunk573_1
-574
-chunk574_2
-575
-chunk575_0
-576
-chunk576_0
-577
-chunk577_1
-578
-chunk578_2
-579
-chunk579_0
-580
-chunk580_1
-581
-chunk581_0
-582
-chunk582_1
-583
-chunk583_2
-584
-chunk584_0
-585
-chunk585_0
-586
-chunk586_1
-587
-chunk587_2
-588
-chunk588_3
-589
-chunk589_0
-590
-chunk590_1
-591
-chunk591_2
-592
-chunk592_0
-593
-chunk593_0
-594
-chunk594_1
-595
-chunk595_0
-596
-chunk596_1
-597
-chunk597_0
-598
-chunk598_1
-599
-chunk599_0
-600
-chunk600_1
-601
-chunk601_0
-602
-chunk602_1
-603
-chunk603_2
-604
-chunk604_3
-605
-chunk605_4
-606
-chunk606_5
-607
-chunk607_6
-608
-chunk608_0
-609
-chunk609_1
-610
-chunk610_2
-611
-chunk611_0
-612
-chunk612_1
-613
-chunk613_2
-614
-chunk614_3
-615
-chunk615_0
-616
-chunk616_1
-617
-chunk617_2
-618
-chunk618_3
-619
-chunk619_4
-620
-chunk620_5
-621
-chunk621_0
-622
-chunk622_0
-623
-chunk623_1
-624
-chunk624_0
-625
-chunk625_1
-626
-chunk626_0
-627
-chunk627_1
-628
-chunk628_2
-629
-chunk629_3
-630
-chunk630_4
-631
-chunk631_5
-632
-chunk632_0
-633
-chunk633_0
-634
-chunk634_1
-635
-chunk635_2
-636
-chunk636_3
-637
-chunk637_4
-638
-chunk638_5
-639
-chunk639_0
-640
-chunk640_1
-641
-chunk641_2
-642
-chunk642_3
-643
-chunk643_0
-644
-chunk644_1
-645
-chunk645_0
-646
-chunk646_1
-647
-chunk647_2
-648
-chunk648_3
-649
-chunk649_4
-650
-chunk650_5
-651
-chunk651_0
-652
-chunk652_1
-653
-chunk653_2
-654
-chunk654_3
-655
-chunk655_4
-656
-chunk656_5
-657
-chunk657_6
-658
-chunk658_0
-659
-chunk659_1
-660
-chunk660_2
-661
-chunk661_0
-662
-chunk662_1
-Created 663 chunks
-Example of one chunk: {&#39;chunkId&#39;: &#39;chunk1_0&#39;, &#39;chunkContent&#39;: &quot;rings:\n  - public\n\nData Playbook\n\nThe Data Playbook provides enterprise software engineers with solutions, capabilities, and code developed to solve real-world problems. Everything in the playbook is developed with, and validated by, some of Microsoft&#39;s largest and most influential customers and partners. {% if extra.ring == &#39;internal&#39; %}\nYou are invited to share your enterprise-grade production solutions as well. Refer to Contributing to the Solutions Playbook. {% endif %}\n\nData Solutions\n\nModern Data Warehouse solution\n{% if extra.ring == &#39;internal&#39; %}\n\nData Mesh solution\n\nAnalytics and ML for enterprise business applications solution\n\nEnterprise Data Sharing solution\n{% endif %}\n\n{% if extra.ring == &#39;internal&#39; %}\n\n{% else %}\n\n{% endif %}\n\nAbout the Data Playbook\n\nThese Playbook solutions employ good engineering practices to accelerate real-world application development. Common themes include:\n\nImproving application design and developer productivity by sharing code and knowledge developed by experts for Microsoft customers.&quot;, &#39;source&#39;: &#39;..\\data\\docs\\code-with-dataops\\index.md&#39;, &#39;chunkContentVector&#39;: [-0.021581268, -0.007612223, -0.008533817, -0.029099155, -0.018257724, 0.0042451387, -0.011842848, -0.021465162, -0.032132436, -0.038489256, 0.012154884, 0.014527808, -0.0111244405, 0.012031521, 0.0077791256, 0.025964284, -0.0022096492, 0.0057762912, 0.006367708, -0.010761607, -0.0102609, -0.009361075, 0.010340722, -0.023801804, -0.008490277, -0.017372413, 0.022176314, -0.022408526, -0.008417711, -0.010181076, 0.040346958, -0.013867453, -0.014992233, 0.0049054935, 0.013352231, 0.0009315721, -0.0006013946, 0.023090651, 0.024266228, 0.02326481, 0.02255366, 0.005467884, 0.0012853337, -0.018475424, -0.009433641, 0.019709054, 0.001939339, 6.78043e-05, 0.0034904473, 0.0077283294, -0.00015216281, 0.0025670389, -0.017851353, -0.011291343, 0.008352401, 0.025804637, -0.00034310334, 0.011385679, 0.010674528, -0.009542491, 0.022103747, 0.009506208, 0.0013588072, -0.029461987, -0.009230455, -0.0041000056, -0.013765859, 0.018489936, 0.000723397, 0.020550825, 0.038344122, 0.017604627, 0.015137366, 2.1217189e-05, -0.000852656, -0.019665513, -0.0019193832, -0.0046333694, -0.005493282, -0.00071160495, 0.009259482, -0.0075614266, -0.004023811, 0.017749758, 0.024440387, 0.041508023, -0.012837009, 0.041827314, 0.0023184987, -0.00612461, 0.011392936, -0.012866035, 0.0248903, 0.0010494926, -0.009121605, 0.023932422, 0.0001241567, 0.01237984, -0.015558251, -0.03268394, 0.020434719, 0.015398606, -0.029360395, -0.022510119, -0.032132436, -0.0075831963, 0.015166393, -0.036457397, 0.046442542, 0.019012416, -0.042611033, 0.029360395, 0.025166053, -0.02995544, 0.011828335, 0.017299848, -0.009295765, -0.019665513, -0.029810308, 0.01480356, 0.04400431, 0.008483021, 0.018925335, 0.0019792505, 0.007118771, 0.0010558421, -0.011109927, -0.032451726, 0.021276489, -0.011944441, 0.025107998, 0.009970633, 0.008388684, 0.018040026, -0.015717898, -0.01489064, -0.011022847, 0.020579852, -0.021973127, -0.0324227, 0.009448155, 0.019680027, -0.014723737, 0.004901865, 0.014789047, -0.00063767785, 0.003835138, 0.014767277, -0.0018477238, -0.018228699, 0.021697376, 0.003824253, 0.0067269118, 0.0036682351, 0.015921084, 0.017517546, 0.004005669, 0.015093826, 0.00499983, -0.015761437, 0.010819661, 0.014658428, 0.0004889166, 0.009411871, -0.0024037643, 0.018475424, 0.015093826, 0.022800386, 0.006581779, -5.2610692e-05, -0.024512954, 0.0010712625, -0.034425534, 0.012154884, 0.0011129882, 0.01116798, 0.007263904, 0.010855944, -0.023279324, -0.025935257, 0.016008163, -0.02374375, 0.0200864, 0.050012812, -0.023642156, -0.01991224, 0.013620727, -0.00742355, 0.0072385054, 3.5517885e-05, 0.015558251, 0.015892057, -0.002207835, -0.0076630195, -0.60514635, -0.01123329, 0.020754011, -0.051609274, -0.0029679688, 0.0048800954, 0.0006494699, -0.0012490504, -0.009542491, 0.03105845, -0.005631158, -0.02709632, -0.016588695, -0.018997902, 0.0063894778, -0.018344805, 0.007398152, -0.018156132, -0.012205681, 0.007924259, -0.024861272, 0.00037802596, 0.009143376, -0.0138239125, -0.015746925, 0.0017134758, 0.008229038, -0.014135948, 0.01880923, -0.003016951, -0.010152049, 0.0055767335, 0.034338456, 0.0024364193, 0.057472646, 0.0066870004, -0.031726062, 0.0015692499, 0.024179148, 0.025224106, -0.045920063, 0.0019338964, 0.0040854923, 0.011545326, -0.015688872, 0.01387471, 0.017372413, -0.0051413346, -0.011480016, 0.008642667, -0.0030840752, -0.014462498, -0.0074816034, -0.0069881515, 0.025920743, -0.0059831054, 0.03779262, -0.008098418, -0.0021243836, -0.011879131, -0.0022005783, 0.0058597424, -0.039592266, -0.026631895, -0.013403027, 0.001939339, -0.0046261125, -0.00040841318, -0.009709394, -0.022945518, 0.036544476, 0.016312944, 0.02938942, -0.025514372, 0.024396848, 0.031406768, 0.008649924, 0.013323205, -0.025543397, 0.036196157, 0.009186915, -0.015834004, -0.02203118, -0.013765859, 0.025485344, 0.011704972, -0.014041612, -0.018489936, 0.041304834, 0.005221158, 0.019418787, 0.0074162935, -0.0051993877, -0.010551165, 0.029505527, 0.015746925, -0.0032110664, -0.021682862, 0.013112761, -0.01116798, -0.015384092, 0.0020899144, 0.016937014, -0.003543058, 0.02581915, 0.014048869, -0.031871196, 0.013998073, 0.026864108, -0.030535972, 0.017851353, -0.008374171, -0.029099155, 0.008606384, -0.009128862, -0.035760757, 0.039708372, -0.016545156, 0.005384432, -0.016777368, 0.015253472, 0.0074816034, 0.0071223993, -0.0127789555, 0.03802483, 0.036631554, 0.024396848, -0.03361279, 0.0013216168, -0.018518964, -0.00885311, -0.01634197, 0.043133512, -0.009020013, 0.036021996, 0.020783037, 0.0049272636, -0.011059131, -0.008134701, -0.019172061, -0.028489597, 0.0055622202, 0.008076648, -0.029839333, -0.017517546, -0.025615964, -0.04995476, 0.004506378, 0.001300754, 0.0046914225, 0.016922502, 0.018910823, -0.0200864, 0.020362152, 0.031638984, -0.004136289, -0.0064874426, -0.034599695, -0.021131357, -0.017169228, -9.405295e-05, 0.037879698, -0.027836498, 0.003071376, 0.0138094, -0.010333465, -0.027981631, 0.00049844093, 0.019578435, -0.01876569, 0.011813821, 0.0022912864, 0.0011519927, -0.018968876, -0.018780204, 0.021958614, -0.012191167, -0.00560576, 0.010551165, 0.0023928795, -0.013910993, 0.00038573614, -0.019505868, -0.006247973, 0.026327116, -0.00448098, 0.01876569, 0.006197177, -0.009419128, -0.0074961167, -0.01766268, 0.018823743, -0.013003912, 0.015935598, -0.0057436363, 0.020376666, -0.014404445, 0.004078236, -0.019128522, 0.011218777, 0.0145568345, 0.008134701, 0.02383083, -0.00995612, 0.002409207, -0.028533136, 0.021116843, -0.005025228, 0.016095243, 0.003940359, 0.026631895, -0.02246658, -0.017604627, 0.020913657, 0.016588695, 0.035876863, 0.007568683, 0.0068684164, -0.03326447, -0.0012046035, 0.0069083283, -0.03895368, 0.03642837, -0.0013415726, -0.02383083, 0.0025525256, 0.028431544, 0.044962186, 0.0033471286, -0.03436748, 0.016269403, 0.030245706, 0.022495607, -0.005224786, 0.0010703554, -0.0021243836, 0.021973127, -0.0112986, 0.023990477, -0.01811259, 0.030013492, 0.009266739, 0.02502092, -0.038431205, 0.026617382, -0.015804978, 0.0047023073, 0.015093826, -0.017677194, 0.0072276206, -0.01264108, 0.017082147, -0.014462498, -0.017865865, 0.03634129, 0.008170985, -0.00078417145, 0.006055672, 0.014244799, 0.0029316854, 5.3942967e-05, 0.00748886, -0.01385294, 0.016806396, 0.018910823, -0.03404819, -0.028300924, -0.059011053, -0.02705278, 0.0092231985, 0.017778786, -0.023105165, -0.0005147684, -0.030448891, 0.0064656725, 0.015079313, 0.0026450478, 0.015282499, -9.461988e-05, 0.0073255855, 0.00032881682, -0.002040932, 0.010565679, 0.014455241, -0.013134532, -0.014774534, -0.01476002, 0.015282499, -0.021218436, 0.023163218, 0.009861783, 0.015035773, -0.010986564, 0.024745166, 0.014535065, 0.020275073, 0.017372413, 0.00738001, -0.0017815069, -0.0292588, 0.010086739, 0.018751176, -0.019433301, -8.107036e-05, 0.046442542, -0.0122274505, 0.0043648733, -0.015921084, -0.0007061625, -0.046703782, -0.016254889, -0.018214185, -0.024106583, 0.0006848461, -0.00042133906, -0.014767277, -0.022103747, -0.013867453, -0.008258064, 0.019012416, -0.0037661998, -0.026138443, -0.005896026, 0.025761098, 0.059359375, 0.026806055, -0.011030104, -0.0034378367, -0.033496685, -0.0021606667, -0.04426555, -0.020855604, 0.019099496, -0.00037258348, 0.009941607, 0.024440387, -0.0017370599, -0.0009905323, -0.0015402234, 0.0025071716, 0.014752763, -0.003973014, -0.0070244344, 0.0024981007, 0.025804637, -0.0006735076, -0.0073836385, 0.029273314, 0.035702705, -0.020550825, 0.018823743, 0.013105505, -0.031987302, -0.03430943, -0.014346392, 0.022901978, 0.011712229, 0.012503203, -0.03651545, 0.030564997, 0.0033362436, 0.01846091, 0.01246692, 0.020173479, -0.010427802, 0.0021407108, 0.001939339, -0.03622518, 0.0021661092, -0.017836839, -0.016762855, 0.0021443393, 0.006650717, -0.014237542, -0.0033471286, 0.014636657, -0.0063386816, -0.014564091, -0.0020227905, -0.00489098, 0.012169397, -0.00896196, -0.00019400193, -0.04699405, -0.0090417825, -0.0016336527, 0.007017178, -0.0040310677, -0.008091162, -0.0031312432, -0.019897727, -0.013315948, -0.038750496, 0.012800726, -0.0056601847, -0.024875786, -0.024658088, 0.009723907, 0.016777368, 0.0011955326, 0.02105879, 0.0022350473, -0.00022450252, 0.0028119509, 0.0020536312, -0.01811259, -0.010768864, -0.028431544, -0.041769262, -0.0018232326, -0.036776688, -0.011313113, -0.016777368, 0.018257724, -0.032771017, -0.018315777, 0.012916832, 0.0030260219, 0.025514372, 0.016675776, 0.013054708, 0.02145065, 0.025964284, -0.009890811, -0.01103736, -0.030535972, -0.015601791, 0.023105165, 0.00336527, -0.0019520381, -0.006157265, 0.015297012, 0.018170645, 0.0011728556, -0.0031421282, -0.0035285447, -0.008207268, 0.000516129, 0.008649924, 0.00017064459, 0.02039118, 0.0068901866, -0.011284087, -0.006197177, 0.015282499, -0.045078292, 0.0030913318, -0.0077283294, -0.0072602755, 0.0021769942, 0.01235807, -0.026893135, -0.025703045, 0.017198253, 0.00692647, -0.0106962975, -0.010406032, -0.037066955, 0.006033902, 0.009506208, 0.014919667, -0.0032273938, -0.0015728783, -0.0038169965, 0.013664267, 0.017198253, 0.023946935, 0.0021479675, 0.012742672, -0.03062305, -0.040927492, -0.010210102, -0.021929588, 0.037386246, 0.01731436, -0.008983729, -0.012866035, 0.0041653155, 0.00036351266, -0.0023293837, 0.0034614208, -0.0037081467, 0.033380575, 0.016327456, 0.035238277, -0.00210987, 0.025746584, 0.01253223, 0.010340722, -0.022640739, -0.004745847, -0.018533478, 0.0020663303, -0.0045027495, -0.023192244, 0.005558592, 0.005213901, -0.0025470832, 0.011334883, 0.00066670444, -0.020362152, -0.028649243, -0.012437893, -0.02832995, -0.020637905, 0.030681103, 0.0009923466, -0.0011637848, -0.029113669, -0.008816826, 0.0072711604, 0.0034469075, 0.0029788536, 0.007967799, 0.018156132, -0.026327116, 0.027604286, 0.0035593854, 0.0056928396, -0.0013869267, 0.0047059357, -0.04841635, -0.01253223, 0.043685015, 0.01123329, 0.0067777084, -0.015485685, -0.011269573, -0.0030096944, 0.021160383, -0.027067294, -0.015964624, -0.0024073927, -0.021392595, 0.009636828, -0.019346222, -0.037299167, 0.0043140766, -0.0016218607, -0.013446568, 0.005493282, 0.0094699245, -0.0097166505, -0.0078008957, 0.00863541, -0.01837383, 0.046152275, 0.019143036, 0.017024094, 0.036776688, -0.016196836, -0.026240036, -0.0042741653, -0.0028083224, -0.020695958, 0.01956392, 0.033990137, -0.017938431, -0.023932422, -0.028141279, -0.027110834, 0.0056093885, -0.01833029, 0.024150122, -0.010072227, -0.0052574407, -0.03506412, -0.015398606, -0.00885311, 0.026094904, -0.02744464, -0.0054642553, 0.0030260219, -0.022626227, 0.022277907, -0.0019502239, 0.0032763763, 0.037879698, -0.013120018, -0.0148471, -0.0009878111, -0.015761437, -0.02012994, 0.00547514, 0.0068357615, 0.0037770849, -0.017546574, 0.0045426614, 0.03776359, 0.027386587, 0.003229208, -0.004763989, 0.005845229, 0.030448891, 0.0016336527, -0.008599127, 0.013686037, -0.004096377, -0.0059032827, -0.023279324, -0.021334542, -0.005565848, -0.011327626, -0.017125687, 0.0046369974, -0.0056565567, -0.012691876, -0.011596122, 0.005558592, -0.005787176, 0.010289926, 0.018069051, 0.009709394, -0.033235446, -0.02300357, -0.011828335, -0.020913657, 0.024483928, 0.007064346, 0.031987302, -0.01885277, -0.00053653837, -0.020405691, -0.007321957, -0.01973808, -0.0053408924, -0.032712966, 0.018925335, 0.0039875275, 0.0060375305, 0.0075178863, 0.018199671, -0.031958275, 0.0038968197, 0.011654176, 0.0006884744, -0.010986564, 0.0015329667, -0.0017352458, -0.009317535, 0.010739838, 0.008475764, -0.034599695, 0.031348716, -0.0022495606, -0.0129023185, -0.019055955, 0.016182324, -0.009375588, -0.029316856, 0.011059131, 0.005950451, -0.011088157, -0.012452407, 0.014643914, 0.025369238, -0.0077210725, -0.008526561, -0.010768864, -0.0058887694, -0.004967175, 0.040695276, 0.03721209, 0.011683202, 0.03770554, 0.0025198706, 0.03149385, 0.021392595, -0.042669084, -0.002701287, -0.037560407, -0.0042560236, -0.010761607, -0.007858949, 0.009527978, 0.022843925, 0.014099666, -0.040434036, 0.0055694766, -0.031668007, 0.0123508135, -0.04220466, -0.008265321, 0.02097171, 0.0033035886, 0.0066942573, 0.020899143, 0.036138102, -0.0034995181, 0.011813821, -0.010972051, 0.022350473, 0.0067922217, -0.021116843, 0.013192585, -0.018083565, -0.022132775, 0.00015828562, -0.004096377, -0.0050216, 0.012764443, 0.013598957, 0.027168887, -0.020884631, -0.023685696, 0.0068430183, 0.011247803, -9.427972e-05, 0.021871535, -0.015166393, -0.006984523, 0.008127444, 0.01502126, -0.008337888, -0.02136357, 0.018707637, 0.0060375305, 0.0060701855, -0.007209479, 0.009665854, -0.012067804, 0.003027836, 0.011262316, -0.02097171, 0.02880889, 0.017285334, 0.015093826, -0.025674017, 0.0071695675, -0.01372232, -0.02471614, -0.02802517, 0.023250297, -0.023163218, -0.0049599186, -0.01660321, 0.0115525825, -0.002713986, 0.019767107, -0.014919667, -0.009281252, -0.029171722, -0.013896479, -0.016022677, -0.0044047846, -0.021116843, -0.032277565, -0.011726742, 0.0048619537, -0.00437213, 0.027676852, 0.014048869, -0.006023017, -0.022495607, -0.015456659, -0.022364987, 0.0225972, 0.009557004, 0.0011420149, 0.017154714, 0.18995, 0.020768525, -0.013983559, 0.015601791, -0.005097795, -0.010986564, 0.01480356, 0.01863507, -0.0094699245, 0.004876467, 0.020913657, 0.018693123, -0.008686206, -0.0035684563, -0.0004251942, -0.0018032768, -0.03181314, -0.012270991, -0.021827994, 0.0035902262, -0.012822496, -0.01833029, -0.006846647, -0.0228149, -0.016240377, 0.0063060266, 0.0045426614, -0.006995408, 0.0069808946, 0.024658088, -0.015529225, 0.0020554452, -0.0028790748, 0.017386926, 0.003510403, -0.0035231023, 0.0041762004, -0.019404275, 0.02938942, 0.011022847, 0.028997563, -0.027865525, -0.005845229, 0.00085356314, -0.0018631442, 0.010231873, -0.01101559, 0.0019556663, 0.019215602, 0.014535065, -0.0044011567, -0.008265321, 0.032480754, 0.022248881, -0.0036192527, 0.012147628, -0.0033344293, 0.032277565, -0.006705142, 0.015209933, -0.011450989, 0.029026588, -0.017604627, 0.011334883, -0.041711207, 0.0324227, -0.0025053574, 0.0040310677, 0.013961789, 0.011450989, -0.013381258, -0.02608039, -0.0017080334, -0.00026305346, -0.04722626, -0.014549578, 0.019796133, 0.00042995636, 0.029839333, 0.030768184, -0.029244289, -0.004604343, -0.014411701, -0.024440387, -0.018069051, -0.021261977, 0.028954022, -0.026617382, -0.011726742, -0.018838257, -0.013983559, 0.02616747, -0.003274562, -0.0048873518, -0.018838257, -0.028315438, 0.0012481433, 0.007187709, -7.993651e-05, -0.0397374, -0.0296942, 0.07442418, 0.025964284, -0.0047603603, -0.024150122, -0.0020536312, -0.0002886785, 0.037821647, 0.01902693, 0.0050216, -0.013272407, -0.034135267, 0.0011864618, -0.019114008, 0.017546574, -0.00078054314, 0.021000737, -0.009295765, -0.015355065, -0.0057654064, 0.0045354045, -0.023859857, 0.011247803, 0.016806396, -0.01095028, 0.012786212, 0.01264108, 0.0006009411, -0.00686116, -0.029418448, 0.011763025, -0.016762855, 0.008940189, -0.045658823, -0.0017860422, 0.019636488, 0.03378695, -0.005177618, 0.007648506, 0.010689042, -0.019099496, -0.00013073304, 0.0058162026, 0.031697035, -0.013751347, -0.0114292195, 0.0056529283, -0.00499983, -0.02255366, -0.026370656, -0.014252055, 0.010870458, -0.01103736, -0.0038532796, -0.004865582, -0.038576335, -0.017909406, 0.010565679, 0.005467884, 0.013178071, -0.07564329, 0.009571518, 0.025441805, -0.0013388514, -0.013272407, -0.015456659, -0.18716344, 0.016791882, -0.0059903623, -0.03462872, 0.020826578, -0.0033761552, -0.0016381881, 0.033467658, 0.0002977493, 0.012757186, -0.0012581212, 0.02378729, -0.023874369, -0.0033144737, -0.009477181, 0.012982142, 0.010928511, 0.032800045, 0.025093487, 0.019505868, 0.011400193, 0.0034577923, -0.006647089, -0.0048401835, -0.0011846477, -0.025485344, -0.003610182, 0.014005329, 0.015238959, -0.0177933, 0.0042560236, -0.020042859, 0.03335155, 0.0073038153, 0.02092817, -0.031726062, 0.011450989, 0.008236295, -0.030506944, 0.00757594, 0.012851522, 0.00865718, 0.014593118, 0.028170304, 0.0042886785, 0.0032110664, 0.011530813, 0.0111244405, -0.006697885, -0.011567095, 0.0269657, -0.035615623, 0.002757526, 0.014273825, 0.0072675324, 0.0072929305, -0.018228699, 0.024237202, -0.00024400477, -0.0132651515, 0.0106962975, -0.028533136, -0.0018758433, -0.016501615, -0.0130256815, 0.0100432, -0.026675435, 0.037386246, -0.000907988, 0.019230114, 0.013686037, -0.014404445, -0.0077210725, -0.010347979, 0.009796474, 0.022872953, -0.022771358, 0.010239129, 0.017125687, 0.0018994274, -0.016182324, 0.04162413, -0.0013334089, 0.012670106, 0.0018114406, 0.0018849141, -0.008062135, 0.022626227, 0.011523556, 0.007187709, 0.018489936, -0.036021996, -0.0006104655, -0.017430466, 0.013286921, 0.026370656, 0.0075614266, 0.0027067293, 0.007612223, -0.02110233, 0.008091162, -0.00554045, -0.011777539, 0.025325699, 0.021552242, 0.012713646, 0.016835421, -0.014651171, 0.048009977, 0.007289302, -0.023961449, 0.013867453, 0.028068712, 0.020695958, 0.011922671, 0.054773174, -0.0057000965, 0.004295935, -0.002164295, -0.0071550542, 0.03668961, 0.0070244344, 0.00057826407, 0.021827994, -0.018925335, -0.0018921708, -0.109836616, -0.011966211, -0.008715233, -0.008845853, 0.006335053, 0.0063822214, -0.013003912, 0.028605703, -0.010369749, 0.0034215092, -0.024324281, -0.0065563805, -0.03634129, 0.01240161, 0.00026826918, -0.015050286, -0.037241112, -0.022481093, -0.011581609, 0.010805148, 0.02893951, -0.023163218, 0.009919837, 0.00273757, -0.02326481, -0.0054569985, -0.038924657, -0.01013028, 0.024774194, -0.0042632804, 0.0005986734, -0.025572425, -0.009455412, -0.013773116, -0.012851522, -0.0071115145, -0.016791882, -0.015877545, 0.014513294, -0.012735416, 0.0058016893, 0.010943024, 0.0013724134, 0.010805148, -0.0002680424, 0.015746925, -0.03753138, 0.023598617, 0.013003912, -0.008381427, -0.016704801, -0.0016663076, 0.005384432, -0.01367878, 0.00273757, 0.01378763, -0.0060846987, 0.01121152, 0.0035231023, 0.0031348716, -0.0016508872, -0.031697035, -0.03462872, 0.038924657, 5.0909915e-05, 0.019360734, -0.02092817, -0.015267986, 0.012960372, -0.024092069, -0.027299507, 0.01101559, -0.006567266, 0.0147382505, -0.01947684, -0.016327456, -0.0045825727, -0.027546233, 0.0010440501, -0.014019842, 0.006607177, -0.006229832, 0.018228699, -0.011059131, 0.005304609, 0.036834743, -0.010500369, 0.019810647, 0.03369987, -0.03912784, -0.008940189, -0.00489098, 0.044120416, -0.011654176, -0.020013833, 0.007967799, -0.013838426, -0.04211758, 0.016051704, 0.016458075, -0.019941267, -0.0061935484, -0.07790736, 0.0033253585, 0.015311525, 0.029113669, -0.015079313, -0.03666058, -0.015093826, -0.008301605, 0.015572765, 0.012612053, -0.030158626, 0.022016667, -0.023642156, 0.010652758, -0.021436136, -0.021436136, 0.0063169114, -0.018736662, 0.017343387, 0.0018540734, -0.012829753, -0.011697715, 0.007858949, 0.0019103123, 0.0028282783, 0.0076557626, 0.010601962, 0.027154373, -0.021958614, -0.01655967, 0.018010998, -0.022016667, 0.010224616, 0.04484608, -0.0040165544, -0.024512954, 0.019389762, -0.011138953, 0.027763933, 0.008033109, -0.0019320823, -0.04441068, 0.021145869, -0.027778445, 0.005213901, 0.010079483, -0.013424797, -0.012786212, 0.005827088, 0.01242338, 0.03599297, 0.009063552, -0.027546233, -0.027038267, 0.0044882363, 0.0063894778, 0.014252055, -0.0020554452, 0.00486921, 0.0030223934, 0.04127581, 0.0046478827, -0.007590453, 0.0005147684, 0.0045934576, 0.006378593, -0.009963376, 0.015064799, -0.008969216, -0.013490107, -0.0023021714, 0.02471614, 0.0130256815, 0.026588356, -0.016632235, -0.007895232, 0.010587448, 0.0018667725, -0.00984727, 0.017778786, 0.020376666, -0.0043866434, -0.023671184, 0.028620217, 0.012046034, -0.0027738535, 0.0010567493, -0.015587279, -0.00336527, -0.0025398266, -0.010855944, 0.01766268, -0.019854186, -0.0036265093, 0.0010186519, -0.004843812, 0.013961789, 0.007191337, 0.044120416, 0.04168218, 0.024788707, 0.014389931, -0.0007388174, -0.034425534, -0.014252055, 0.0036047394, -0.004618856, -0.008577357, 0.007917002, -0.004655139, 0.014164975, -0.022887465, 0.001580135, 0.0036827484, -0.017735247, -0.010050456, -0.0051848744, -0.017894892, -0.017778786, 0.014281082, 0.0061681503, 0.0011256874, 0.007735586, -0.0023692953, 0.0105076255, -0.001502126, -0.011806565, 0.0023692953, 0.00015953285, -0.012800726, -0.014600374, 0.0012535858, 0.00088621804, -0.015166393, -0.018649584, 0.014339135, -0.00083360734, 0.017590113, 0.011349396, 0.0913757, 0.029287828, -0.018939849, 0.016022677, 0.00073927094, -0.011900902, -0.01374409, -0.0012399796, -0.03863439, -0.045281477, 0.009397358, 0.01378763, -0.0057690344, 0.012916832, -0.022350473, 0.029839333, -0.008018595, 0.025920743, -0.019433301, 0.010768864, -0.003566642, 0.016690288, 0.0071369126, -0.020942684, -0.009266739, 0.009919837, 0.04441068, 0.0036011112, 0.014027099, -0.022350473, 0.004553546, -0.012075061, -0.026240036, -0.03294518, 0.014056126, -0.0042415103, -0.008954703, -0.0022677022, 0.013105505, -0.009622314, -0.011835592, -0.008229038, -0.023105165, -0.031958275, 0.0027538976, 0.019636488, -0.006447531, -0.01264108, -0.02832995]}
-Saved embeddings to: ./output/generated/semantic-chunks-solution-ops-embedded-200.json
-Uploaded 663 documents to Index: solution-ops-semantic-chunking-200
+Embeddings were already created for chunked data at: ./output/generated/semantic-chunks-solution-ops-200.json 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 663 documents to Index: solution-ops-semantic-chunking-200
 </pre></div>
 </div>
 </div>
@@ -2526,12 +1099,12 @@ You can reuse available functions from [./helpers/search.ipynb](./helpers/search
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="3.2.experiment_search.html"
+       href="3.1.experiment_embedding.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">3.2. Search Experiment</p>
+        <p class="prev-next-title">3.1. Embeddings Experiment</p>
       </div>
     </a>
     <a class="right-next"
@@ -2559,8 +1132,9 @@ You can reuse available functions from [./helpers/search.ipynb](./helpers/search
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">3.3. Chunking Experiment</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-strategy">Chunking Strategy</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">3.2. Chunking Experiment</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-overview">Experiment Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-sized-chunks">1. Fixed-sized chunks</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-semantic-chunking">2. Use Semantic Chunking</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker">👩‍💻 Create a function to chunk data from Solution-Ops using Semantic Chunker</a></li>

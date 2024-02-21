@@ -188,8 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
 
 
 </ul>
@@ -412,11 +411,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="experiments">
 <h1><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingExperimentation.md">Experiments</a><a class="headerlink" href="#experiments" title="Permalink to this heading">#</a></h1>
 <p>It sounds like a simplistic statement, but “the best Search solution is the one that returns the best results”.</p>
-<p>The only way to get the best and most relevant results is via experimentation. As a result, the experimentation phase is crucial and effort should be invested to create experiments that can:</p>
-<ul class="simple">
-<li><p>be tracked and evaluated against a consistent set of metrics</p></li>
-<li><p>be repeatable, and works in a very methodical way to track and record results</p></li>
-</ul>
+<p>The only way to get the best and most relevant results is via experimentation. As a result, the experimentation phase is crucial and effort should be invested to create experiments that can be <em>tracked</em>, <em>evaluated</em> against a consistent set of metrics and can be <em>repeatable</em>.</p>
 <p>We will follow the <a class="reference external" href="https://github.com/cse-labs/ai-garden/blob/main/docs/templates/using-the-templates.md#using-the-experiment-template">experiment template</a> from ai-garden</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -449,14 +444,14 @@ As you build out your experimentation process for search, reference the [Things 
 <p>One of the most important aspects of developing a system for production is regular evaluation and iterative experimentation. This process allows you to measure performance, troubleshoot issues, and fine-tune to improve it.</p>
 <section id="evaluation-strategy">
 <h3><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md">Evaluation Strategy</a><a class="headerlink" href="#evaluation-strategy" title="Permalink to this heading">#</a></h3>
-<p>An OpenAI solution (or system) may involve different components that will work together to make up the core functionalities of the chatbot. For example, we could have:</p>
+<p>A RAG solution may involve different components that will work together to make up the core functionalities. For example, we could have:</p>
 <ul class="simple">
 <li><p>An agent that takes care of the conversation part of the solution.</p></li>
 <li><p>An agent that detects intent within a conversation.</p></li>
 <li><p>An agent that extracts vehicle information from a conversation.</p></li>
-<li><p>In addition, the system may need to be integrated with live services apart from OpenAI. For example, a agent that needs to make calls to a hosted API (service) to help verify that the customer has fully specified the vehicle’s manufacture, model, trim or variant to be able to progress the conversation.</p></li>
+<li><p>In addition, the system may need to be integrated with live services. For example, aN agent that needs to make calls to a hosted API to help verify that the customer has fully specified the vehicle’s manufacture, model to be able to progress the conversation.</p></li>
 </ul>
-<p>In evaluating the system, we need to account for evaluating all components of the system individually and not only the ones that are using OpenAI.</p>
+<p>In evaluating the system, we need to account for evaluating all components of the system individually and not only the ones that are using LLMs.</p>
 <!-- A RAG solution is a system that combines retrieval and generation to produce natural language outputs based on relevant information from a large corpus of documents.  -->
 <!-- To evaluate the performance of a RAG solution, you need to consider both the quality of the retrieved documents and the quality of the generated outputs. These components (retrieval & generative part) must be evaluated individually before evaluating the end-to-end solution. -->
 <div class="admonition note">
@@ -484,7 +479,7 @@ As you build out your experimentation process for search, reference the [Things 
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In our workshop, we followed the third option and we generated the data using an LLM (GPT3). You can find the generated data in <span class="xref myst">solution-ops-200-qa-generated-answer</span>. You can find in <a class="reference internal" href="generate-qa.html"><span class="doc std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
+<p>In our workshop, we followed the third option and we generated the data using an LLM (GPT4). You can find the generated data in <span class="xref myst">solution-ops-200-qa-generated-answer</span>. You can find in <a class="reference internal" href="generate-qa.html"><span class="doc std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
 <p>The evaluation data is composed of:</p>
 <ul class="simple">
 <li><p>question: the user question</p></li>
@@ -497,8 +492,9 @@ As you build out your experimentation process for search, reference the [Things 
 </section>
 <section id="metrics">
 <h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this heading">#</a></h2>
-<p>Quality measurement guides the entire development process of the Search solution. The team must know what performance metric they are chasing.</p>
-<p>This is easier said than done. We are developing systems where the results are fuzzy by nature. What documents do you expect to be retrieved when you ask a question?</p>
+<!-- Quality measurement guides the entire development process of the Search solution. The team must know what performance metric they are chasing.
+
+This is easier said than done. We are developing systems where the results are fuzzy by nature. What documents do you expect to be retrieved when you ask a question? -->
 <p>There are different types of metrics and ways to evaluate a system.</p>
 <ul class="simple">
 <li><p>There is an end-to-end business evaluation, where we want to measure whether the deployed system has met certain business metrics (e.g.: sales increase)</p></li>
@@ -509,16 +505,18 @@ As you build out your experimentation process for search, reference the [Things 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In our workshop, we will focus on the technical evaluation for both components:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-retrieval-component">Retrieval Component</a></p>
+<ul>
+<li><p>For the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-retrieval-component">Retrieval Component</a></p>
 <ul>
 <li><p>There are various metrics that can be used, you can read more <a class="reference external" href="https://medium.com/&#64;prateekgaurav/evaluating-information-retrieval-models-a-comprehensive-guide-to-performance-metrics-78aadacb73b4#:~:text=Evaluating%20Information%20Retrieval%20Models%3A%20A%20Comprehensive%20Guide%20to,...%206%206.%20Mean%20Reciprocal%20Rank%20%28MRR%29%20">here</a></p></li>
-<li><p>In our workshop, the evaluation metric for the retrieval part is defined by verifying whether the source document, present in our evaluation dataset, is part of the retrieved documents. TODO: Or the first retrieved document?!</p></li>
+<li><p>We will use accuracy and mean and median <a class="reference external" href="https://en.wikipedia.org/wiki/Cosine_similarity">cosine similarity</a>.</p>
+<!-- defined by verifying whether the source document, present in our evaluation dataset, is part of the retrieved documents. TODO: Or the first retrieved document?! -->
+</li>
 </ul>
 </li>
-<li><p><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-generative-component">Evaluating the Generative Component</a></p>
-<ul>
-<li><p>In our workshop, we chose <code class="docutils literal notranslate"><span class="pre">cosine</span> <span class="pre">similarity</span></code> and <a class="reference external" href="https://arxiv.org/pdf/2311.09476.pdf">evaluation using another LLM</a></p></li>
+<li><p>For the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-generative-component">Generative Component</a></p>
+<ul class="simple">
+<li><p>We will look at human-centric metrics (<a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-model-monitoring-generative-ai-evaluation-metrics?view=azureml-api-2">Groundedness, Relevance, Coherence, Similarity, Fluency</a>) using <a class="reference external" href="https://arxiv.org/pdf/2311.09476.pdf">another LLM as judge approach</a>.</p></li>
 </ul>
 </li>
 </ul>
