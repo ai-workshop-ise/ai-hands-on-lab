@@ -188,8 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
 
 
 </ul>
@@ -721,7 +720,8 @@ Used for SearchField inspiration - https://github.com/Azure/azure-sdk-for-python
             <span class="n">credential</span><span class="o">=</span><span class="n">credential</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">search_client</span><span class="o">.</span><span class="n">upload_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Uploaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span><span class="si">}</span><span class="s2"> documents to Index: </span><span class="si">{</span><span class="n">search_index_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Uploaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span><span class="si">}</span><span class="s2"> documents to Index: </span><span class="si">{</span><span class="n">search_index_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error uploading documents: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -769,7 +769,7 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
     <span class="p">)</span>
 
     <span class="n">vector_query</span> <span class="o">=</span> <span class="n">VectorizedQuery</span><span class="p">(</span>
-        <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;chunkContentVector&quot;</span>
+        <span class="n">vector</span><span class="o">=</span><span class="n">query_embeddings</span><span class="p">,</span> <span class="n">k_nearest_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;chunkContentVector&quot;</span>
     <span class="p">)</span>
 
     <span class="n">results</span> <span class="o">=</span> <span class="n">search_client</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
@@ -795,7 +795,7 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What does the develop phase include&quot;</span>
-<span class="n">embedded_query</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">embedded_query</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 <span class="n">search_documents</span><span class="p">(</span><span class="n">embedded_query</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1010,14 +1010,22 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
 </div>
 </div>
 <p>Setup Chat Completion endpoint</p>
+<p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/migration?tabs=python-new%2Cdalle-fix#chat-completions">https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/migration?tabs=python-new%2Cdalle-fix#chat-completions</a>
+<a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/reference?WT.mc_id=AZ-MVP-5004796#completions">https://learn.microsoft.com/en-us/azure/ai-services/openai/reference?WT.mc_id=AZ-MVP-5004796#completions</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">call_llm</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]):</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">engine</span><span class="o">=</span><span class="n">azure_openai_chat_deployment</span><span class="p">,</span>  <span class="c1"># The deployment name of the chat completion model</span>
-        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">AzureOpenAI</span>
+
+
+<span class="k">def</span> <span class="nf">call_llm</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]):</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAI</span><span class="p">(</span>
+        <span class="n">api_key</span><span class="o">=</span><span class="n">azure_openai_key</span><span class="p">,</span>
+        <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span>
+        <span class="n">azure_endpoint</span><span class="o">=</span><span class="n">azure_aoai_endpoint</span>
     <span class="p">)</span>
 
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">azure_openai_chat_deployment</span><span class="p">,</span> <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
 </pre></div>
 </div>
@@ -1031,7 +1039,7 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">custom_rag_solution</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># 1. Embed the query using the same embedding model as your data in the Index</span>
-        <span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">get_query_embedding</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
         <span class="c1"># Extract INTENT?!</span>
 
@@ -1068,7 +1076,7 @@ https://techcommunity.microsoft.com/t5/ai-azure-ai-services-blog/azure-ai-search
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>User question: What does the develop phase include?
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response: The develop phase includes supporting developers to ensure the security and integrity of all code, binaries, and configuration that is expected to be included in the software release. The development environment uses a code repository to store the code and tools such as VS Code, Devcontainers, and/or GitHub Codespaces. Libraries, frameworks, container base images, are retrieved from a component registry. The develop phase also covers repeatable and deterministic builds to ensure that the contents that make up a software release are well known and any attempts to tamper with the artifacts can be detected. [source1+chunk152_4]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response: The develop phase includes supporting developers to ensure the security and integrity of all code, binaries, and configuration that is expected to be included in the software release. It encompasses all the tools that developers use to write, build and test code, such as VS Code, Devcontainers and/or GitHub Codespaces. A code repository is used to store the code that&#39;s written, and additional components, such as libraries, frameworks, and container base images, are retrieved from a component registry. Repeatable and deterministic builds are important to ensure the contents of a software release are well known and tamper attempts can be detected. The development ecosystem used within the develop phase must ensure a record of all the dependencies is captured by using application package managers (npm, NuGet, go.mod), OS package managers (winget, apt get), and container manifests (dockerfile), and version pinning of components from the component registry is encouraged to ensure that builds remain deterministic. [..\\data\\docs\\code-with-devsecops\\Enterprise-Solutions\\governance\\secure-software-supply-chain-for-containerized-workloads.md+chunk152_4]
 </pre></div>
 </div>
 </div>
