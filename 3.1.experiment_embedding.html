@@ -189,7 +189,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
-
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
@@ -397,8 +396,8 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">Evaluation metrics</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model">👩‍💻 Evaluate the system using <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> model</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model">👩‍💻 Evaluate the system using <code class="docutils literal notranslate"><span class="pre">infloat/e5-small-v2</span></code> model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model">👩‍💻 Evaluate the system using <em>text-embedding-ada-002</em> model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model">👩‍💻 Evaluate the system using <em>infloat/e5-small-v2</em> model</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
@@ -419,13 +418,12 @@ document.write(`
 <p>Embeddings are the backbone of our system. Our goal is to understand how different embeddings or ways of using embeddings impact relevancy of the returned results for a given query.</p>
 <section id="experiment-overview">
 <h2>Experiment Overview<a class="headerlink" href="#experiment-overview" title="Permalink to this heading">#</a></h2>
-<p>Which Embeddings Model to use?!</p>
-<p>Glad you asked! There are several embedding options:</p>
+<p>Which Embeddings Model to use?! Glad you asked! There are several embedding options:</p>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://openai.com/blog/new-embedding-models-and-api-updates?ref=haihai.ai">OpenAI models</a>, such as: <a class="reference external" href="https://platform.openai.com/docs/guides/embeddings/what-are-embeddings"><code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code></a>, <code class="docutils literal notranslate"><span class="pre">text-embedding-3-small</span></code>, <code class="docutils literal notranslate"><span class="pre">text-embedding-3-large</span></code></p></li>
 <li><p>Open source models, which you can find at <a class="reference external" href="https://huggingface.co/models">HuggingFace</a>. The <a class="reference external" href="https://huggingface.co/spaces/mteb/leaderboard">MTEB Leaderboard</a> ranks the performance of embeddings models on a few axis, though not all models can be run locally.</p></li>
 </ol>
-<p>In this experiment, we will compare <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> (from OpenAI) and <code class="docutils literal notranslate"><span class="pre">infloat/e5-small-v2</span></code> (open-source).</p>
+<p>In this experiment, we will compare <em>text-embedding-ada-002</em> (from OpenAI) and <em>infloat/e5-small-v2</em> (open-source).</p>
 <p>📝 <strong>Hypothesis</strong></p>
 <p>Exploratory hypothesis: “Can introducing a new word embedding method improve the system’s performance?”</p>
 <p>🎯 <strong>Evaluation Metrics</strong></p>
@@ -443,7 +441,8 @@ Embeddings are used for transforming the input query from plain text into a vect
 
 Before we try out different embedding models, let's first try to understand the data. In what follows, you will see the data being clustered and keywords extracted from each cluster. To accomplish this, we performed Dimensionality Reduction, using [t-SNE](https://towardsdatascience.com/what-why-and-how-of-t-sne-1f78d13e224d). If you want to see the code we've been using to accomplish this, go to [t-SNE.ipynb](./helpers/t-SNE.ipynb). -->
 <!-- # %run -i ./helpers/t-SNE.ipynb -->
-<!-- As we have seen from the cluster from above, the data `can` be clustered, and the clusters seem to be different from one another. One is centered on data (sql, databricks) vs backlog related (stories, sprint, team) vs engineering fundamentals (security, testing, code). However, if we think about these clusters on a broader sense, they are part of one big cluster, which is IT. --></section>
+<!-- As we have seen from the cluster from above, the data `can` be clustered, and the clusters seem to be different from one another. One is centered on data (sql, databricks) vs backlog related (stories, sprint, team) vs engineering fundamentals (security, testing, code). However, if we think about these clusters on a broader sense, they are part of one big cluster, which is IT. -->
+</section>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
 <p>Import necessary libraries</p>
@@ -859,7 +858,7 @@ Note: This can also be adapted to ensure that the `first` retrieved document is 
 </div>
 </section>
 <section id="evaluate-the-system-using-text-embedding-ada-002-model">
-<h3>👩‍💻 Evaluate the system using <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> model<a class="headerlink" href="#evaluate-the-system-using-text-embedding-ada-002-model" title="Permalink to this heading">#</a></h3>
+<h3>👩‍💻 Evaluate the system using <em>text-embedding-ada-002</em> model<a class="headerlink" href="#evaluate-the-system-using-text-embedding-ada-002-model" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
@@ -892,7 +891,7 @@ Median cosine similarity score: 0.8149765818260504
 </div>
 </section>
 <section id="evaluate-the-system-using-infloat-e5-small-v2-model">
-<h3>👩‍💻 Evaluate the system using <code class="docutils literal notranslate"><span class="pre">infloat/e5-small-v2</span></code> model<a class="headerlink" href="#evaluate-the-system-using-infloat-e5-small-v2-model" title="Permalink to this heading">#</a></h3>
+<h3>👩‍💻 Evaluate the system using <em>infloat/e5-small-v2</em> model<a class="headerlink" href="#evaluate-the-system-using-infloat-e5-small-v2-model" title="Permalink to this heading">#</a></h3>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">retrieval_evaluation</span></code> function, calculate how many documents are correctly retrieved using the infloat/e5-small-v2 open source model.</p>
 <details markdown="1">
 <summary> 🔍 Solution:</summary>
@@ -1012,8 +1011,8 @@ Median score: 0.9305137467120537
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">Evaluation metrics</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model">👩‍💻 Evaluate the system using <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> model</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model">👩‍💻 Evaluate the system using <code class="docutils literal notranslate"><span class="pre">infloat/e5-small-v2</span></code> model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model">👩‍💻 Evaluate the system using <em>text-embedding-ada-002</em> model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model">👩‍💻 Evaluate the system using <em>infloat/e5-small-v2</em> model</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
