@@ -189,7 +189,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3.2. Chunking Experiment</a></li>
-
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
@@ -389,31 +388,25 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">3.2. Chunking Experiment</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-overview">Experiment Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-sized-chunks">1. Fixed-sized chunks</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-semantic-chunking">2. Use Semantic Chunking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-sized-chunking-strategy">1. Fixed-sized chunking strategy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-fixed-size-chunking-strategy">👩‍💻 Create a function to chunk data from Solution-Ops using Fixed-Size Chunking Strategy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-chunking">2. Semantic Chunking</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker">👩‍💻 Create a function to chunk data from Solution-Ops using Semantic Chunker</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-built-in-skillset-splitskill">Use the built-in skillset: SplitSkill</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">Evaluation Dataset</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metric">Evaluation Metric</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-fixed-size-chunking-strategy">Evaluate the fixed-size chunking strategy</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy">Evaluate the semantic chunking strategy</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">Evaluation Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-fixed-size-chunking-strategy">👩‍💻 1. Evaluate the fixed-size chunking strategy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy">👩‍💻 2. Evaluate the semantic chunking strategy</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -446,7 +439,7 @@ There are multiple methods of ingestion, depending on the type of data. For exam
 <p>🎯 <strong>Evaluation Metrics</strong></p>
 <p>For this experiment we will look at Accuracy and Cosine Similarity to compare the performance.</p>
 <p>📊 <strong>Data</strong></p>
-<p>In this experiment, the data that we would like to embed consists of the first 200 documents from the Solution Ops Playbook, which were previously chunked in size of 300. The dataset can be found at <a class="reference download internal" download="" href="_downloads/e9ffa9f8c73dc15acdc48ded749b2da4/chunks-solution-ops-200-300-0.json"><span class="xref download myst">chunks-solution-ops-200-300-0.json</span></a>.</p>
+<p>In this experiment, the data that we would like to chunk consists of the first 200 documents from the Solution Ops Playbook.</p>
 <!-- The metrics used for document retrieval evaluation. -->
 <!-- [Learnings fromm other engagements](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1) -->
 <!-- https://vectara.com/blog/grounded-generation-done-right-chunking/#:~:text=In%20the%20context%20of%20Grounded%20Generation%2C%20chunking%20is,find%20natural%20segments%20like%20complete%20sentences%20or%20paragraphs. -->
@@ -469,9 +462,52 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </div>
 </div>
+<p>Let’s load our documents from Solution Ops Playbook</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import tqdm</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">UnstructuredFileLoader</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">load_documents_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading documents...&quot;</span><span class="p">)</span>
+    <span class="n">markdown_documents</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># tqdm.tqdm</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">document</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="n">markdown_documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">totalNumberOfDocuments</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished loading documents&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">markdown_documents</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totalNumberOfDocuments</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span>
+    <span class="s2">&quot;..\data\docs\**\*.md&quot;</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading documents...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished loading documents
+</pre></div>
+</div>
+</div>
+</div>
 </section>
-<section id="fixed-sized-chunks">
-<h2>1. Fixed-sized chunks<a class="headerlink" href="#fixed-sized-chunks" title="Permalink to this heading">#</a></h2>
+<section id="fixed-sized-chunking-strategy">
+<h2>1. Fixed-sized chunking strategy<a class="headerlink" href="#fixed-sized-chunking-strategy" title="Permalink to this heading">#</a></h2>
 <p>This is one of the most basic form of splitting up text. It is the process of simply dividing the text into N-character sized chunks regardless of their content or form. This method isn’t recommended for any applications - but it’s a great starting point for us to understand the basics.</p>
 <p><strong><a class="reference external" href="https://blog.llamaindex.ai/evaluating-the-ideal-chunk-size-for-a-rag-system-using-llamaindex-6207e5d3fec5">Why Chunking Size Matters</a></strong></p>
 <p>When processing data, splitting the source documents into chunks requires care and expertise to ensure the resulting chunks are small enough to be effective during fact retrieval but not too small so that enough context is provided during summarization. The models used to generate embedding vectors have maximum limits on the text fragments provided as input. For example, the maximum length of input text for the Azure OpenAI embedding models is <strong>8,191</strong> tokens. Given that each token is around 4 characters of text for common OpenAI models, this maximum limit is equivalent to around 6000 words of text. If you’re using these models to generate embeddings, it’s critical that the input text stays under the limit. Partitioning your content into chunks ensures that your data can be processed by the Large Language Models (LLM) used for indexing and queries.</p>
@@ -534,49 +570,8 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </div>
 </div>
-<p>Let’s load our documents from Solution Ops Playbook</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import tqdm</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">UnstructuredFileLoader</span>
-<span class="kn">import</span> <span class="nn">os</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_documents_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading documents...&quot;</span><span class="p">)</span>
-    <span class="n">markdown_documents</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="c1"># tqdm.tqdm</span>
-    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-        <span class="n">document</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-        <span class="n">markdown_documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">totalNumberOfDocuments</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">markdown_documents</span>
-        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totalNumberOfDocuments</span> <span class="o">=</span> <span class="mi">200</span>
-<span class="n">documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span>
-    <span class="s2">&quot;..\data\docs\**\*.md&quot;</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading documents...
-</pre></div>
-</div>
-</div>
-</div>
+<section id="create-a-function-to-chunk-data-from-solution-ops-using-fixed-size-chunking-strategy">
+<h3>👩‍💻 Create a function to chunk data from Solution-Ops using Fixed-Size Chunking Strategy<a class="headerlink" href="#create-a-function-to-chunk-data-from-solution-ops-using-fixed-size-chunking-strategy" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
@@ -661,53 +656,29 @@ Chunks already created at: ./output/generated/fixed-size-chunks-solution-ops-200
 </div>
 </div>
 </div>
+<!-- In this workshop, to separate our experiments, we will take the _Full Reindex_ strategy by creating a new index -->
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from matplotlib import pyplot as plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %run -i ./helpers/search.ipynb</span>
 
-<span class="c1"># # lengths = {[Number of chunks]: [number of documents with that number of chunks]}</span>
-<span class="c1"># x = chunks.keys()  # number of chunks per document</span>
-<span class="c1"># y = chunks.values()  # number of documents with that number of chunks</span>
+<span class="c1"># # 1. Create the new index</span>
+<span class="c1"># fixed_chunking_index_name = &quot;solution-ops-fixed-chunking-300-30&quot;</span>
+<span class="c1"># create_index(fixed_chunking_index_name)</span>
 
-<span class="c1"># plt.bar(x, y)</span>
-<span class="c1"># plt.xlabel(&quot;Chunk Numbers&quot;)</span>
-<span class="c1"># plt.ylabel(&quot;Number of Documents&quot;)</span>
-<span class="c1"># plt.title(&quot;Distribution of Chunk Numbers&quot;)</span>
-<span class="c1"># plt.show()</span>
+<span class="c1"># # 2. Generate embeddings for the new chunks</span>
+<span class="c1"># generated_embeddings_path = f&quot;./output/generated/{fixed_chunks_output_prefix}-embedded-{totalNumberOfDocuments}-{chunk_size}-{chunk_overlap}.json&quot;</span>
+<span class="c1"># generate_embeddings_for_chunks_and_save_to_file(path_to_chunks_file=path_to_chunks_output, path_to_output=generated_embeddings_path)</span>
+
+<span class="c1"># # 3. Upload the embeddings to the new index</span>
+<span class="c1"># upload_data(file_path=generated_embeddings_path, search_index_name=fixed_chunking_index_name)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>In this workshop, to separate our experiments, we will take the <em>Full Reindex</em> strategy by creating a new index</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./helpers/search.ipynb
-
-<span class="c1"># 1. Create the new index</span>
-<span class="n">fixed_chunking_index_name</span> <span class="o">=</span> <span class="s2">&quot;solution-ops-fixed-chunking-300-30&quot;</span>
-<span class="n">create_index</span><span class="p">(</span><span class="n">fixed_chunking_index_name</span><span class="p">)</span>
-
-<span class="c1"># 2. Generate embeddings for the new chunks</span>
-<span class="n">generated_embeddings_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">fixed_chunks_output_prefix</span><span class="si">}</span><span class="s2">-embedded-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">generate_embeddings_for_chunks_and_save_to_file</span><span class="p">(</span><span class="n">path_to_chunks_file</span><span class="o">=</span><span class="n">path_to_chunks_output</span><span class="p">,</span> <span class="n">path_to_output</span><span class="o">=</span><span class="n">generated_embeddings_path</span><span class="p">)</span>
-
-<span class="c1"># 3. Upload the embeddings to the new index</span>
-<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">generated_embeddings_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">fixed_chunking_index_name</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;solution-ops-fixed-chunking-300-30&#39; created or updated
-Embeddings were already created for chunked data at: ./output/generated/fixed-size-chunks-solution-ops-200-300-30.json 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 991 documents to Index: solution-ops-fixed-chunking-300-30
-</pre></div>
-</div>
-</div>
-</div>
-<section id="use-semantic-chunking">
-<h3>2. Use <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">Semantic Chunking</a><a class="headerlink" href="#use-semantic-chunking" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="semantic-chunking">
+<h2>2. <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">Semantic Chunking</a><a class="headerlink" href="#semantic-chunking" title="Permalink to this heading">#</a></h2>
 <p>Azure: <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept-retrieval-augumented-generation?view=doc-intel-4.0.0#semantic-chunking">https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept-retrieval-augumented-generation?view=doc-intel-4.0.0#semantic-chunking</a>)</p>
 <p>In the previous approach, we chose a constant value for chunk size, in a random way. We did not leverage the actual content of the document, the structure, etc. In this section, we will look at <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">Semantic Chunking</a> from LangChain. This approach splits the text based on semantic similarity.</p>
 <p>For insights on what it is doing, you can have a look at <a class="reference external" href="https://github.com/FullStackRetrieval-com/RetrievalTutorials/blob/main/5_Levels_Of_Text_Splitting.ipynb">Level 4. Semantic Splitting</a>.</p>
@@ -752,7 +723,6 @@ Though pull-based model for data ingestion is the most fault tolerant model, its
 </div>
 </div>
 </div>
-</section>
 <section id="create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker">
 <h3>👩‍💻 Create a function to chunk data from Solution-Ops using Semantic Chunker<a class="headerlink" href="#create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
@@ -817,6 +787,58 @@ Chunks already created at: ./output/generated/semantic-chunks-solution-ops-200.j
 </div>
 </div>
 </div>
+<!-- # Use the built-in skillset: [SplitSkill](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-textsplit) -->
+</section>
+</section>
+<section id="evaluation">
+<h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h2>
+<p>In this workshop, to separate our experiments, we will take the <strong>Full Reindex</strong> strategy and we will create a new index per chunking strategy.</p>
+<p>Therefore, for each chunking strategy we will:</p>
+<ol class="arabic simple">
+<li><p>Create a new index. Note: make sure to give a relevant name.</p></li>
+<li><p>Embed the chunks that you have previously created.</p></li>
+<li><p>Populate the index with chunks.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="doc std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>. By running the next cell, all the functions from search.ipynb will become available.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
+<span class="o">%</span><span class="n">run</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">helpers</span><span class="o">/</span><span class="n">search</span><span class="o">.</span><span class="n">ipynb</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sample code for creating a new index and uploading the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./helpers/search.ipynb
+
+<span class="c1"># 1. Create the new index</span>
+<span class="n">fixed_chunking_index_name</span> <span class="o">=</span> <span class="s2">&quot;solution-ops-fixed-chunking-300-30&quot;</span>
+<span class="n">create_index</span><span class="p">(</span><span class="n">fixed_chunking_index_name</span><span class="p">)</span>
+
+<span class="c1"># 2. Generate embeddings for the new chunks</span>
+<span class="n">generated_embeddings_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">fixed_chunks_output_prefix</span><span class="si">}</span><span class="s2">-embedded-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="n">generate_embeddings_for_chunks_and_save_to_file</span><span class="p">(</span><span class="n">path_to_chunks_file</span><span class="o">=</span><span class="n">path_to_chunks_output</span><span class="p">,</span> <span class="n">path_to_output</span><span class="o">=</span><span class="n">generated_embeddings_path</span><span class="p">)</span>
+
+<span class="c1"># 3. Upload the embeddings to the new index</span>
+<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">generated_embeddings_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">fixed_chunking_index_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;solution-ops-fixed-chunking-300-30&#39; created or updated
+Embeddings were already created for chunked data at: ./output/generated/fixed-size-chunks-solution-ops-200-300-30.json 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 991 documents to Index: solution-ops-fixed-chunking-300-30
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./helpers/search.ipynb
@@ -844,102 +866,6 @@ Embeddings were already created for chunked data at: ./output/generated/semantic
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Data Mesh</span><span class="se">\n\n</span><span class="s2">Introduction</span><span class="se">\n\n</span><span class="s2">Data Mesh is an architectural pattern that aims to provide a self-service, decentralized model for data management and access within an organization. The concept of a Data Mesh encompasses data, technology, processes, and organization. An excellent overview can be found in Zhamak Dehghani</span><span class="se">\u2019</span><span class="s2">s 2019 paper How to Move Beyond a Monolithic Data Lake to  Distributed Data Mesh, where she coined the term. Data Mesh is a democratized approach to managing data where various domains operationalize their own data. Typically, a domain can be thought of as a business unit that has overall accountability for an area within an organization. For example, financial services may have domains like customers, transactions, applications, fraud, etc. Data Mesh challenges the idea of conventional centralization of data and data management:</span><span class="se">\n\n</span><span class="s2">Rather than looking at data as one repository, Data Mesh considers the decomposition of a data estate into independent data products. As per Data Mesh concepts, data products are the primary areas for managing data. The approach presents a challenge in enforcing a minimum set of centralized governance policies and rules. The shift from centralized to federated ownership is backed by a modern and self-service data platform. The platform is typically designed using cloud-native technologies. Case for Data Mesh: Mesh vs. Monolith</span><span class="se">\n\n</span><span class="s2">Similar to DevOps, adopting a Data Mesh approach requires more than just technology; it necessitates a different organizational structure and culture. The reasons are outlined in Key Principles section. When a Data Mesh approach may be appropriate:</span><span class="se">\n\n</span><span class="s2">An organization has many autonomous teams that need to access and use data but with no central authority or process for managing data access and governance. An organization undergoing rapid growth or change with a need to adapt to new business needs and requirements quickly and flexibly. An organization looking to move to a more data-driven decision-making model with a need to establish clear ownership and accountability for data quality and usage. The scale of the organization is such that it has a growing need for self-service data onboarding and distribution. It allows decoupling from central IT management in turn speeding-up time to insights. When a Data Mesh approach may not be appropriate:</span><span class="se">\n\n</span><span class="s2">There are only a few teams/users who need access to data and there is already a robust, centralized process in place for access and governance. Data volumes are small. No requirement for self-service onboarding and data distribution. There are unresolved barriers for data sharing within the organization. For example - highly regulated domains might find it simpler to implement a tightly controlled, centralized model. Accompanying Repository</span><span class="se">\n\n</span><span class="s2">Many of the practical aspects of implementing a Data Mesh have been applied in a recent Microsoft engagement, captured in a Microsoft internal repo. The repo is intended for illustrative purposes only and can be found in Code Hub. This repository contains Infrastructure as Code (IaC) components to create the Mesh Context and configurable Data Products. It also includes an example data product that consumes publicly available data concerning upcoming rocket launches. For space enthusiasts, the Code Hub Wiki contains detailed information on many publicly available datasets. It also contains APIs for space, in particular for launches and satellite tracking. Key Principles</span><span class="se">\n\n</span><span class="s2">Data as a Product</span><span class="se">\n\n</span><span class="s2">Each domain operates its data end to end, creating Data Products. Accountability lies with the data owner within the domain. Data pipelines (as seen in traditional ETL/ELT patterns) in this respect become a first-class concern of the domains themselves. From a technical perspective, a data product is a software component that&#39;s built to deliver a specific data-related capability to its users. This capability can include things like providing access to a specific dataset, performing a certain data transformation, or delivering real-time analytics. The focus on the needs of users is the key characteristic of a data product. Also, a data product is designed to be independently deployable and operable. In other words, a data product is a purpose-built software component to deliver data-related functionality to users in an easy-to-use and understandable way. Federated Data Governance</span><span class="se">\n\n</span><span class="s2">An enterprise data governance body must be established to ensure trust between data owners and share data products. This governance body will implement: data quality, central visibility of data ownership, data access management, and data privacy policies. Domain-oriented Data Ownership</span><span class="se">\n\n</span><span class="s2">The enterprise should ideally define and model each data-domain product within the mesh by applying the principles of domain-driven design (see appendix). Self-serve Data Platform</span><span class="se">\n\n</span><span class="s2">A self-serve data platform is required for a Data Mesh to allow users to focus on their individual data use cases and abstract the technical complexity. Data Mesh Roles</span><span class="se">\n\n</span><span class="s2">The main roles involved with a Data Mesh framework are explained in the sections below. Data product owners</span><span class="se">\n\n</span><span class="s2">Data product owners are the teams or individuals who are responsible for the data products within the mesh. They manage the data, ensure its quality and accuracy, and make sure it&#39;s being used effectively. Data platform owners</span><span class="se">\n\n</span><span class="s2">Data platform owners are the teams or individuals who are responsible for the overall infrastructure and management of the Data Mesh. They oversee the data governance and make sure that the data products are integrated and interoperable. Data consumers</span><span class="se">\n\n</span><span class="s2">Data consumers are the teams or individuals who use the data products within the mesh. They may be analysts, engineers, or other stakeholders who use the data to make decisions or build applications. In most organizations, these roles will interact with other core IT teams where there is an enterprise function. Below sections lists some of the teams and their roles. IT/DevOps teams</span><span class="se">\n\n</span><span class="s2">IT/DevOps teams are responsible for the infrastructure and automation of the Data Mesh. They may be responsible for deploying new data products, ensuring best practices are in place, and handling any technical issues that arise. Security teams</span><span class="se">\n\n</span><span class="s2">Security teams are responsible for ensuring the security and compliance of the Data Mesh. They may be responsible for managing identities, access control, and data encryption. Data Mesh Architectures</span><span class="se">\n\n</span><span class="s2">In this section we will look at the Data Mesh approach from several perspectives:</span><span class="se">\n\n</span><span class="s2">System Context: Where a Data Mesh may sit in relation to other systems within an enterprise. Mesh Context: This context will outline typical components and resources that are shared across the mesh, and where </span><span class="se">\&quot;</span><span class="s2">data products</span><span class="se">\&quot;</span><span class="s2"> fit. Data Product Context: Defining a Data Product, its core components and how various users can interact with them. Infrastructure Abstraction Context: Defining the abstractions that allow teams to use templates to build data products, saving time and reducing the need for extensive cloud expertise. System Context</span><span class="se">\n\n</span><span class="s2">Like a standard modern data warehouse, a Data Mesh is intended to play a fundamental role in the information architecture of an enterprise. Ingesting data from operational systems into data products, performing the relevant transformations and analysis, and then supporting decision intelligence across the organization. When implemented correctly, Data Mesh should enable teams to easily and independently onboard data, facilitate the analytical enrichment through creation of new data products. A Data Mesh should also make it easier for data consumers to discover, trust and consume the data product. A Data Mesh should be easily governed and administered through centralized policy and governance controls. Mesh Context</span><span class="se">\n\n</span><span class="s2">A Data Mesh architecture is intended to provide the following capabilities:</span><span class="se">\n\n</span><span class="s2">Discovery tools to quickly see available data and understand its content. Data Lineage to understand the history and dependencies of data.&quot;</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8008
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># totalNumberOfDocuments = 200</span>
-<span class="c1"># semantic_chunks_output_prefix = &quot;semantic-chunks-solution-ops&quot;</span>
-<span class="c1"># path_to_semantic_chunks_output = f&quot;./output/generated/{semantic_chunks_output_prefix}-{totalNumberOfDocuments}.json&quot;</span>
-<span class="c1"># generated_embeddings_path = f&quot;./output/generated/{semantic_chunks_output_prefix}-embedded-{totalNumberOfDocuments}.json&quot;</span>
-
-<span class="c1"># !python ./helpers/api_request_parallel_processor.py \</span>
-<span class="c1">#   --requests_filepath {path_to_semantic_chunks_output} \</span>
-<span class="c1">#   --save_filepath {generated_embeddings_path} \</span>
-<span class="c1">#   --request_url https://openai-adina.openai.azure.com/v1/embeddings \</span>
-<span class="c1">#   --max_requests_per_minute 1500 \</span>
-<span class="c1">#   --max_tokens_per_minute 6250000 \</span>
-<span class="c1">#   --token_encoding_name cl100k_base \</span>
-<span class="c1">#   --max_attempts 5 \</span>
-<span class="c1">#   --logging_level 20</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %pip install azure-ai-documentintelligence==1.0.0b1</span>
-<span class="c1"># Quickstart: https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/quickstarts/try-document-intelligence-studio?view=doc-intel-4.0.0#prerequisites-for-new-users</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Semantic chunking</span>
-<span class="c1"># # https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept-retrieval-augumented-generation?view=doc-intel-4.0.0</span>
-
-<span class="c1"># # Using SDK targeting 2023-10-31-preview, make sure your resource is in one of these regions: East US, West US2, West Europe</span>
-
-<span class="c1"># # pip install langchain langchain-community azure-ai-documentintelligence</span>
-<span class="c1"># %run -i ./pre-requisites.ipynb</span>
-<span class="c1"># from azure.ai.documentintelligence import DocumentIntelligenceClient</span>
-
-<span class="c1"># endpoint = document_intelligence_endpoint</span>
-<span class="c1"># key = document_intelligence_key</span>
-
-<span class="c1"># from langchain_community.document_loaders import AzureAIDocumentIntelligenceLoader</span>
-<span class="c1"># from langchain.text_splitter import MarkdownHeaderTextSplitter</span>
-
-<span class="c1"># # Initiate Azure AI Document Intelligence to load the document. You can either specify file_path or url_path to load the document.</span>
-<span class="c1"># loader = AzureAIDocumentIntelligenceLoader(file_path=&quot;../data/docs/code-with-dataops/capabilities/analytical-systems/data-ingestion/batch-stream-ingestion/index.md&quot;, api_key = key, api_endpoint = endpoint, api_model=&quot;prebuilt-layout&quot;)</span>
-<span class="c1"># docs = loader.load()</span>
-
-<span class="c1"># # Split the document into chunks base on markdown headers.</span>
-<span class="c1"># headers_to_split_on = [</span>
-<span class="c1">#     (&quot;#&quot;, &quot;Header 1&quot;),</span>
-<span class="c1">#     (&quot;##&quot;, &quot;Header 2&quot;),</span>
-<span class="c1">#     (&quot;###&quot;, &quot;Header 3&quot;),</span>
-<span class="c1"># ]</span>
-<span class="c1"># text_splitter = MarkdownHeaderTextSplitter(headers_to_split_on=headers_to_split_on)</span>
-
-<span class="c1"># docs_string = docs[0].page_content</span>
-<span class="c1"># splits = text_splitter.split_text(docs_string)</span>
-<span class="c1"># splits</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker</a></p>
-</section>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="use-the-built-in-skillset-splitskill">
-<h1>Use the built-in skillset: <a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-textsplit">SplitSkill</a><a class="headerlink" href="#use-the-built-in-skillset-splitskill" title="Permalink to this heading">#</a></h1>
-<!-- Upload files to a storage account so we can create an Indexer
-https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/upload_files.py -->
-<section id="evaluation">
-<h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h2>
-<p>In this workshop, to separate our experiments, we will take the <strong>Full Reindex</strong> strategy and we will create a new index per chunking strategy.</p>
-<!-- Therefore, for each embedding model, what we will need to do is:
-
-1. Create a new index. Note: make sure to give a relevant name.
-2. Populate the index with the embeddings that you have generated at the previous steps.
-
-```{note}
-You can reuse available functions from [./helpers/search.ipynb](./helpers/search.ipynb), such as: *create_index* and *upload_data*. By running the next cell, all the functions from search.ipynb will become available.
-``` -->
 <section id="evaluation-dataset">
 <h3>Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
 <p>Note: The evaluation dataset can be found at <a class="reference download internal" download="" href="_downloads/6f00dc06a7c24dedb0b02b4d88946edc/solution-ops-200-qa.json"><span class="xref download myst">solution-ops-200-qa.json</span></a>. The format is:</p>
@@ -960,31 +886,47 @@ You can reuse available functions from [./helpers/search.ipynb](./helpers/search
 </div>
 </div>
 </section>
-<section id="evaluation-metric">
-<h3>Evaluation Metric<a class="headerlink" href="#evaluation-metric" title="Permalink to this heading">#</a></h3>
-<p>We will use a custom evaluation metric, where we calculate the percentage of correctly retrieved documents</p>
-<p><code class="docutils literal notranslate"><span class="pre">Retrieval_evaluation</span></code> function goes through our evaluation dataset and verifies for each question if the retrieved documents include the expected document.</p>
+<section id="evaluation-metrics">
+<h3>Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this heading">#</a></h3>
+<!-- `Retrieval_evaluation` function goes through our evaluation dataset and verifies for each question if the retrieved documents include the expected document. -->
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./helpers/search.ipynb
+
+<span class="kn">from</span> <span class="nn">statistics</span> <span class="kn">import</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">norm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s define the evaluation metrics:</p>
+<ul class="simple">
+<li><p>Cosine similarity: will calculate the similarity between the first retrieved chunk and the expected chunk. We will look at the average and mean cosine similarity across our evaluation dataset.</p></li>
+<li><p>Accuracy: we will calculate how many times the system returned the expected document, and by document we mean the actual path to the markdown file.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_cosine_similarity</span><span class="p">(</span><span class="n">expected_document_vector</span><span class="p">,</span> <span class="n">retrieved_document_vector</span><span class="p">):</span>
+    <span class="n">cosine_sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">expected_document_vector</span><span class="p">,</span> <span class="n">retrieved_document_vector</span><span class="p">)</span> <span class="o">/</span> \
+        <span class="p">(</span><span class="n">norm</span><span class="p">(</span><span class="n">expected_document_vector</span><span class="p">)</span><span class="o">*</span><span class="n">norm</span><span class="p">(</span><span class="n">retrieved_document_vector</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">cosine_sim</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-
-<span class="k">def</span> <span class="nf">retrieval_evaluation</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">,</span> <span class="n">embedding_function</span><span class="o">=</span><span class="n">oai_query_embedding</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_metrics</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">,</span> <span class="n">embedding_function</span><span class="o">=</span><span class="n">oai_query_embedding</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Evaluate the retrieval performance of the search index using the evaluation data set.</span>
 <span class="sd">    Args:</span>
 <span class="sd">    evaluation_data_path (str): The path to the evaluation data set.</span>
-<span class="sd">    embedding_function (function): The function to use for embedding the user prompts.</span>
+<span class="sd">    embedding_function (function): The function to use for embedding the question.</span>
 <span class="sd">    search_index_name (str): The name of the search index to use for retrieval.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    float: The percentage of correctly retrieved documents.</span>
+<span class="sd">    list: The cosine similarities between the expected documents and the top retrieved documents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span>
@@ -993,74 +935,102 @@ You can reuse available functions from [./helpers/search.ipynb](./helpers/search
         <span class="k">return</span>
     <span class="n">nr_correctly_retrieved_documents</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">nr_qa</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">evaluation_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">evaluation_data</span><span class="p">:</span>
             <span class="n">user_prompt</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;user_prompt&quot;</span><span class="p">]</span>
-            <span class="n">expected_source_document</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+            <span class="n">expected_document</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+            <span class="n">expected_document_vector</span> <span class="o">=</span> <span class="n">embedding_function</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">])</span>
 
-            <span class="c1"># Search in the index and get the retrieved documents</span>
+            <span class="c1"># 1. Search in the index</span>
             <span class="n">search_response</span> <span class="o">=</span> <span class="n">search_documents</span><span class="p">(</span>
                 <span class="n">search_index_name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span>
                 <span class="nb">input</span><span class="o">=</span><span class="n">user_prompt</span><span class="p">,</span>
                 <span class="n">embedding_function</span><span class="o">=</span><span class="n">embedding_function</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">search_response</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">expected_source_document</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
-                <span class="n">nr_correctly_retrieved_documents</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">nr_qa</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="n">percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">nr_correctly_retrieved_documents</span> <span class="o">/</span> <span class="n">nr_qa</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
 
-    <span class="k">return</span> <span class="n">percentage</span>
+            <span class="n">retrieved_documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+                                   <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">search_response</span><span class="p">]</span>
+            <span class="n">top_retrieved_document</span> <span class="o">=</span> <span class="n">search_response</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span>
+
+            <span class="c1"># 2. Calculate cosine similarity between the expected document and the top retrieved document</span>
+            <span class="n">cosine_similarity</span> <span class="o">=</span> <span class="n">calculate_cosine_similarity</span><span class="p">(</span>
+                <span class="n">expected_document_vector</span><span class="p">,</span> <span class="n">top_retrieved_document</span><span class="p">)</span>
+            <span class="n">cosine_similarities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cosine_similarity</span><span class="p">)</span>
+
+            <span class="c1"># 3. If the expected document is part of the retrieved documents,</span>
+            <span class="c1"># we will consider it correctly retrieved</span>
+            <span class="k">if</span> <span class="n">expected_document</span> <span class="ow">in</span> <span class="n">retrieved_documents</span><span class="p">:</span>
+                <span class="n">nr_correctly_retrieved_documents</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">nr_qa</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="p">(</span><span class="n">nr_correctly_retrieved_documents</span> <span class="o">/</span> <span class="n">nr_qa</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cosine_similarities</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
 <section id="evaluate-the-fixed-size-chunking-strategy">
-<h4>Evaluate the fixed-size chunking strategy<a class="headerlink" href="#evaluate-the-fixed-size-chunking-strategy" title="Permalink to this heading">#</a></h4>
+<h3>👩‍💻 1. Evaluate the fixed-size chunking strategy<a class="headerlink" href="#evaluate-the-fixed-size-chunking-strategy" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace this with the name of the index you want to evaluate</span>
 <span class="n">index_name</span> <span class="o">=</span> <span class="n">fixed_chunking_index_name</span>
 
-<span class="n">percentage</span> <span class="o">=</span> <span class="n">retrieval_evaluation</span><span class="p">(</span>
+<span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
     <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
     <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="w"> </span><span class="n">percentage</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2"> using OpenAI embedding model.&quot;</span><span class="p">)</span>
+
+<span class="n">avg_score</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Avg score:</span><span class="si">{</span><span class="n">avg_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">median_score</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median score: </span><span class="si">{</span><span class="n">median_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>33.33333333333333% of the documents were correctly retrieved from Index solution-ops-fixed-chunking-300-30 using OpenAI embedding model.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 33.33333333333333% of the documents were correctly retrieved from Index solution-ops-fixed-chunking-300-30.
+Avg score:0.8343853292433316
+Median score: 0.8167772607332786
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="evaluate-the-semantic-chunking-strategy">
-<h4>Evaluate the semantic chunking strategy<a class="headerlink" href="#evaluate-the-semantic-chunking-strategy" title="Permalink to this heading">#</a></h4>
+<h3>👩‍💻 2. Evaluate the semantic chunking strategy<a class="headerlink" href="#evaluate-the-semantic-chunking-strategy" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace this with the name of the index you want to evaluate</span>
 <span class="n">index_name</span> <span class="o">=</span> <span class="n">semantic_chunking_index_name</span>
 
-<span class="n">percentage</span> <span class="o">=</span> <span class="n">retrieval_evaluation</span><span class="p">(</span>
+<span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
     <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
     <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="w"> </span><span class="n">percentage</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2"> using OpenAI embedding model.&quot;</span><span class="p">)</span>
+
+<span class="n">avg_score</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Avg score:</span><span class="si">{</span><span class="n">avg_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">median_score</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median score: </span><span class="si">{</span><span class="n">median_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>66.66666666666666% of the documents were correctly retrieved from Index solution-ops-semantic-chunking-200 using OpenAI embedding model.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 66.66666666666666% of the documents were correctly retrieved from Index solution-ops-semantic-chunking-200.
+Avg score:0.8404864049201174
+Median score: 0.8171080900560082
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 </section>
 </section>
 <section id="conclusions">
@@ -1132,31 +1102,25 @@ You can reuse available functions from [./helpers/search.ipynb](./helpers/search
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">3.2. Chunking Experiment</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-overview">Experiment Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-sized-chunks">1. Fixed-sized chunks</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-semantic-chunking">2. Use Semantic Chunking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-sized-chunking-strategy">1. Fixed-sized chunking strategy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-fixed-size-chunking-strategy">👩‍💻 Create a function to chunk data from Solution-Ops using Fixed-Size Chunking Strategy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-chunking">2. Semantic Chunking</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker">👩‍💻 Create a function to chunk data from Solution-Ops using Semantic Chunker</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-built-in-skillset-splitskill">Use the built-in skillset: SplitSkill</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">Evaluation Dataset</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metric">Evaluation Metric</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-fixed-size-chunking-strategy">Evaluate the fixed-size chunking strategy</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy">Evaluate the semantic chunking strategy</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">Evaluation Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-fixed-size-chunking-strategy">👩‍💻 1. Evaluate the fixed-size chunking strategy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy">👩‍💻 2. Evaluate the semantic chunking strategy</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
