@@ -188,10 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_search.html">3.2. Search Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
-
-
+<li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
@@ -391,9 +388,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-python-virtual-environment-in-visual-studio-code">Set up a Python virtual environment in Visual Studio Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-packages">1. Install packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-env-file-copy-env-sample-to-env-and-update-accordingly">Load .env file (Copy .env-sample to .env and update accordingly)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-python-virtual-environment-in-visual-studio-code">1. Set up a Python virtual environment in Visual Studio Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-required-packages">2. Install required packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-env-file">3. Load .env file</a></li>
 </ul>
             </nav>
         </div>
@@ -414,7 +411,7 @@ document.write(`
 <li><p>Azure OpenAI Service and text-embedding-ada-002 model deployed</p></li>
 </ul>
 <section id="set-up-a-python-virtual-environment-in-visual-studio-code">
-<h2>Set up a Python virtual environment in Visual Studio Code<a class="headerlink" href="#set-up-a-python-virtual-environment-in-visual-studio-code" title="Permalink to this heading">#</a></h2>
+<h2>1. Set up a Python virtual environment in Visual Studio Code<a class="headerlink" href="#set-up-a-python-virtual-environment-in-visual-studio-code" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Open the Command Palette (Ctrl+Shift+P).</p></li>
 <li><p>Search for <strong>Python: Create Environment</strong>.</p></li>
@@ -423,8 +420,8 @@ document.write(`
 </ol>
 <p>It can take a minute to set up. If you run into problems, see <a class="reference external" href="https://code.visualstudio.com/docs/python/environments">Python environments in VS Code</a>.</p>
 </section>
-<section id="install-packages">
-<h2>1. Install packages<a class="headerlink" href="#install-packages" title="Permalink to this heading">#</a></h2>
+<section id="install-required-packages">
+<h2>2. Install required packages<a class="headerlink" href="#install-required-packages" title="Permalink to this heading">#</a></h2>
 <p>Uncomment the line below, then comment it again - because we are running the pre-requisites.ipynb in other Jupyter Notebooks, but the installation should happen just once.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -434,8 +431,12 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="load-env-file-copy-env-sample-to-env-and-update-accordingly">
-<h2>Load .env file (Copy .env-sample to .env and update accordingly)<a class="headerlink" href="#load-env-file-copy-env-sample-to-env-and-update-accordingly" title="Permalink to this heading">#</a></h2>
+<section id="load-env-file">
+<h2>3. Load .env file<a class="headerlink" href="#load-env-file" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>First, copy <code class="docutils literal notranslate"><span class="pre">.env-sample</span></code> to <code class="docutils literal notranslate"><span class="pre">.env</span></code> and update the values accordingly.</p></li>
+<li><p>Then, run the code below:</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
@@ -453,9 +454,6 @@ document.write(`
 <span class="n">azure_openai_chat_deployment</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_CHAT_DEPLOYMENT_NAME&quot;</span><span class="p">]</span>
 
 <span class="n">credential</span> <span class="o">=</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">search_index_key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DefaultAzureCredential</span><span class="p">()</span>
-
-<span class="n">document_intelligence_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT&quot;</span><span class="p">]</span>
-<span class="n">document_intelligence_key</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_DOCUMENT_INTELLIGENCE_KEY&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -527,9 +525,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-python-virtual-environment-in-visual-studio-code">Set up a Python virtual environment in Visual Studio Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-packages">1. Install packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-env-file-copy-env-sample-to-env-and-update-accordingly">Load .env file (Copy .env-sample to .env and update accordingly)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-python-virtual-environment-in-visual-studio-code">1. Set up a Python virtual environment in Visual Studio Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-required-packages">2. Install required packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-env-file">3. Load .env file</a></li>
 </ul>
   </nav></div>
 

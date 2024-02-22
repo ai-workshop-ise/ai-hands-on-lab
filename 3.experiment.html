@@ -388,7 +388,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">The Role of Experimentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">💡The Role of Experimentation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯 Evaluation Metrics</a></li>
@@ -419,11 +419,12 @@ document.write(`
 As you build out your experimentation process for search, reference the [Things to Consider](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_ThingsToConsider.md) document which will highlight some important features to include in your experiments. You can see the [existing learnings from engagements ](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-our-engagements-2)
 ``` -->
 <section id="the-role-of-experimentation">
-<h2>The Role of Experimentation<a class="headerlink" href="#the-role-of-experimentation" title="Permalink to this heading">#</a></h2>
-<p>When creating/running search experiments, there are multiple factors that shape the outcome of each experiment. These are small changes that add up over time and change the functionality and effectiveness of your search experience. These tweaks should help you determine which combination of document shaping and indexing techniques will provide the most relevant set of documents returned for the set of queries that you care about.</p>
+<h2>💡The Role of Experimentation<a class="headerlink" href="#the-role-of-experimentation" title="Permalink to this heading">#</a></h2>
+<p>When creating/running search experiments, there are multiple factors that shape the outcome of each experiment. These are small changes that add up over time and change the functionality and effectiveness of your search experience.</p>
+<!-- These tweaks should help you determine which combination of document shaping and indexing techniques will provide the most relevant set of documents returned for the set of queries that you care about. -->
 <p>Creating an effective solution is a delicate balance of several factors, such as:</p>
 <ul class="simple">
-<li><p>Data ingestion: Optical Character Recognition (OCR), data conversation, use of Azure Form Recognizer to extract information from the documents, summarization, chunking, summarization, speech to text, tagging, etc. are all methods that can be considered and experimented with as part of the ingestion experimentation. See <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">learnings form engagements</a></p></li>
+<li><p>Data ingestion: Optical Character Recognition (OCR), data conversation, usage of Azure Form Recognizer to extract information from the documents, summarization, chunking, speech to text, tagging, etc. are all methods that can be considered and experimented with as part of the ingestion experimentation. See <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">learnings form engagements</a></p></li>
 <li><p>Which <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md">search mechanism</a> to use - whether it is vector search, semantic search, or other.</p></li>
 <li><p>Which model to use - <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models">GPT4, GPT3 (Ada, Curie, Da Vinci), GPT Turbo</a> etc.</p></li>
 <li><p>The prompt - the instruction given to the model in order to produce the desired result. Writing an effective prompt is referred to as “<a class="reference external" href="https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/prompt-engineering">Prompt Engineering</a>”. It is an empirical and iterative process.</p></li>
@@ -583,7 +584,7 @@ This is easier said than done. We are developing systems where the results are f
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">The Role of Experimentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">💡The Role of Experimentation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯 Evaluation Metrics</a></li>

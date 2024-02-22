@@ -399,8 +399,8 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">Evaluation Dataset</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">Evaluation Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯Evaluation Metrics</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-fixed-size-chunking-strategy">👩‍💻 1. Evaluate the fixed-size chunking strategy</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy">👩‍💻 2. Evaluate the semantic chunking strategy</a></li>
 </ul>
@@ -419,14 +419,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="chunking-experiment">
 <h1>3.2. Chunking Experiment<a class="headerlink" href="#chunking-experiment" title="Permalink to this heading">#</a></h1>
-<p>The search solution is comprised of both <strong>ingestion</strong> and <strong>retrieval</strong>. One does not exist without the other. While other experiments are focused on data retrieval, ingestion plays equal importance in the effectiveness of the search solution. During this experiment, we will look at various chunking strategies.</p>
+<p>There are multiple methods of ingestion, depending on the type of data. For example, unstructured data such as documents or web pages can be split into chunks and embedded into vectors, while structured data such as tables or databases can be summarized or converted into natural language. In our case, since we are working with unstructured text data, we will look into two chunking strategies: fixed-size chunking and semantic chunking.</p>
+<!--
+The search solution is comprised of both **ingestion** and **retrieval**. One does not exist without the other. While other experiments are focused on data retrieval, ingestion plays equal importance in the effectiveness of the search solution. During this experiment, we will look at various chunking strategies. -->
 <section id="experiment-overview">
 <h2>Experiment Overview<a class="headerlink" href="#experiment-overview" title="Permalink to this heading">#</a></h2>
-<p>There are multiple methods of ingestion, depending on the type of data. For example, unstructured data such as documents or web pages can be split into chunks and embedded into vectors, while structured data such as tables or databases can be summarized or converted into natural language. In our case, since we are working with unstructured text data, we will look into two chunking strategies: fixed-size chunking and semantic chunking.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Our goal here is not to identify which chunking strategy is the “best” in general but rather to demonstrate how the choice of chunking may have a non-trivial impact on the ultimate outcome from the RAG solution.</p>
-</div>
 <!-- Certain aspects of data ingestion need to be experimented as part of the experimentation phase: -->
 <!-- # Chunking Strategy
 
@@ -434,12 +431,42 @@ Code also https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c871
 
 There are multiple methods of ingestion, depending on the type of data. For example, unstructured data such as documents or web pages can be split into chunks and embedded into vectors, while structured data such as tables or databases can be summarized or converted into natural language. In our case, since we are working with unstructured text data, we will look into different chunking strategies.
  -->
-<p>📝<strong>Hypothesis</strong></p>
-<p>Exploratory hypothesis: “Can introducing a new chunking strategy improve system’s performance?”</p>
-<p>🎯 <strong>Evaluation Metrics</strong></p>
-<p>For this experiment we will look at Accuracy and Cosine Similarity to compare the performance.</p>
-<p>📊 <strong>Data</strong></p>
-<p>In this experiment, the data that we would like to chunk consists of the first 200 documents from the Solution Ops Playbook.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Topic</strong></p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>📝<strong>Hypothesis</strong></p></td>
+<td><p>Exploratory hypothesis: “Can introducing a new chunking strategy improve system’s performance?”</p></td>
+</tr>
+<tr class="row-odd"><td><p>👀<strong>Comparison</strong></p></td>
+<td><p>We will compare fixed-size chunking strategy to semantic chunking strategy.</p></td>
+</tr>
+<tr class="row-even"><td><p>🎯 <strong>Evaluation Metrics</strong></p></td>
+<td><p>We will look at Accuracy and Cosine Similarity to compare the performance.</p></td>
+</tr>
+<tr class="row-odd"><td><p>📊 <strong>Data</strong></p></td>
+<td><p>In this experiment, the data that we would like to chunk consists of the first 200 documents from the Solution Ops Playbook.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Our goal here is not to identify which chunking strategy is the “best” in general but rather to demonstrate how the choice of chunking may have a non-trivial impact on the ultimate outcome from the RAG solution.</p>
+</div>
+<!-- 📝**Hypothesis**
+
+Exploratory hypothesis: "Can introducing a new chunking strategy improve system's performance?"
+
+🎯 **Evaluation Metrics**
+
+For this experiment we will look at Accuracy and Cosine Similarity to compare the performance.
+
+📊 **Data**
+
+In this experiment, the data that we would like to chunk consists of the first 200 documents from the Solution Ops Playbook. -->
 <!-- The metrics used for document retrieval evaluation. -->
 <!-- [Learnings fromm other engagements](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1) -->
 <!-- https://vectara.com/blog/grounded-generation-done-right-chunking/#:~:text=In%20the%20context%20of%20Grounded%20Generation%2C%20chunking%20is,find%20natural%20segments%20like%20complete%20sentences%20or%20paragraphs. -->
@@ -867,7 +894,7 @@ Embeddings were already created for chunked data at: ./output/generated/semantic
 </div>
 </div>
 <section id="evaluation-dataset">
-<h3>Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
+<h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
 <p>Note: The evaluation dataset can be found at <a class="reference download internal" download="" href="_downloads/6f00dc06a7c24dedb0b02b4d88946edc/solution-ops-200-qa.json"><span class="xref download myst">solution-ops-200-qa.json</span></a>. The format is:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;user_prompt&quot;: &quot;&quot;, # The question
 &quot;output_prompt&quot;: &quot;&quot;, # The answer
@@ -887,7 +914,7 @@ Embeddings were already created for chunked data at: ./output/generated/semantic
 </div>
 </section>
 <section id="evaluation-metrics">
-<h3>Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this heading">#</a></h3>
+<h3>🎯Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this heading">#</a></h3>
 <!-- `Retrieval_evaluation` function goes through our evaluation dataset and verifies for each question if the retrieved documents include the expected document. -->
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1113,8 +1140,8 @@ Median score: 0.8171080900560082
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">Evaluation Dataset</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">Evaluation Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯Evaluation Metrics</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-fixed-size-chunking-strategy">👩‍💻 1. Evaluate the fixed-size chunking strategy</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy">👩‍💻 2. Evaluate the semantic chunking strategy</a></li>
 </ul>
