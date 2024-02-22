@@ -1,0 +1,140 @@
+Traceback (most recent call last):
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\anaconda3\Lib\asyncio\base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+with mlflow.start_run():
+    model_info = mlflow.openai.log_model(
+        # Your Azure OpenAI model e.g. gpt-3.5-turbo
+        model="gpt-4",
+        task=openai.ChatCompletion,
+        artifact_path="model",
+        messages=[{"role": "user", "content": "Tell me a joke about {animal}."}],
+    )
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mMissingConfigException[0m                    Traceback (most recent call last)
+Cell [1;32mIn[4], line 1[0m
+[1;32m----> 1[0m [38;5;28;01mwith[39;00m [43mmlflow[49m[38;5;241;43m.[39;49m[43mstart_run[49m[43m([49m[43m)[49m:
+[0;32m      2[0m     model_info [38;5;241m=[39m mlflow[38;5;241m.[39mopenai[38;5;241m.[39mlog_model(
+[0;32m      3[0m         [38;5;66;03m# Your Azure OpenAI model e.g. gpt-3.5-turbo[39;00m
+[0;32m      4[0m         model[38;5;241m=[39m[38;5;124m"[39m[38;5;124mgpt-4[39m[38;5;124m"[39m,
+[1;32m   (...)[0m
+[0;32m      7[0m         messages[38;5;241m=[39m[{[38;5;124m"[39m[38;5;124mrole[39m[38;5;124m"[39m: [38;5;124m"[39m[38;5;124muser[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mcontent[39m[38;5;124m"[39m: [38;5;124m"[39m[38;5;124mTell me a joke about [39m[38;5;132;01m{animal}[39;00m[38;5;124m.[39m[38;5;124m"[39m}],
+[0;32m      8[0m     )
+
+File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\mlflow\tracking\fluent.py:377[0m, in [0;36mstart_run[1;34m(run_id, experiment_id, run_name, nested, tags, description, log_system_metrics)[0m
+[0;32m    373[0m         user_specified_tags[MLFLOW_RUN_NAME] [38;5;241m=[39m run_name
+[0;32m    375[0m     resolved_tags [38;5;241m=[39m context_registry[38;5;241m.[39mresolve_tags(user_specified_tags)
+[1;32m--> 377[0m     active_run_obj [38;5;241m=[39m [43mclient[49m[38;5;241;43m.[39;49m[43mcreate_run[49m[43m([49m
+[0;32m    378[0m [43m        [49m[43mexperiment_id[49m[38;5;241;43m=[39;49m[43mexp_id_for_run[49m[43m,[49m
+[0;32m    379[0m [43m        [49m[43mtags[49m[38;5;241;43m=[39;49m[43mresolved_tags[49m[43m,[49m
+[0;32m    380[0m [43m        [49m[43mrun_name[49m[38;5;241;43m=[39;49m[43mrun_name[49m[43m,[49m
+[0;32m    381[0m [43m    [49m[43m)[49m
+[0;32m    383[0m [38;5;28;01mif[39;00m log_system_metrics [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m    384[0m     [38;5;66;03m# If `log_system_metrics` is not specified, we will check environment variable.[39;00m
+[0;32m    385[0m     log_system_metrics [38;5;241m=[39m MLFLOW_ENABLE_SYSTEM_METRICS_LOGGING[38;5;241m.[39mget()
+
+File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\mlflow\tracking\client.py:339[0m, in [0;36mMlflowClient.create_run[1;34m(self, experiment_id, start_time, tags, run_name)[0m
+[0;32m    288[0m [38;5;28;01mdef[39;00m [38;5;21mcreate_run[39m(
+[0;32m    289[0m     [38;5;28mself[39m,
+[0;32m    290[0m     experiment_id: [38;5;28mstr[39m,
+[1;32m   (...)[0m
+[0;32m    293[0m     run_name: Optional[[38;5;28mstr[39m] [38;5;241m=[39m [38;5;28;01mNone[39;00m,
+[0;32m    294[0m ) [38;5;241m-[39m[38;5;241m>[39m Run:
+[0;32m    295[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[0;32m    296[0m [38;5;124;03m    Create a :py:class:`mlflow.entities.Run` object that can be associated with[39;00m
+[0;32m    297[0m [38;5;124;03m    metrics, parameters, artifacts, etc.[39;00m
+[1;32m   (...)[0m
+[0;32m    337[0m [38;5;124;03m        status: RUNNING[39;00m
+[0;32m    338[0m [38;5;124;03m    """[39;00m
+[1;32m--> 339[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_tracking_client[49m[38;5;241;43m.[39;49m[43mcreate_run[49m[43m([49m[43mexperiment_id[49m[43m,[49m[43m [49m[43mstart_time[49m[43m,[49m[43m [49m[43mtags[49m[43m,[49m[43m [49m[43mrun_name[49m[43m)[49m
+
+File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\mlflow\tracking\_tracking_service\client.py:132[0m, in [0;36mTrackingServiceClient.create_run[1;34m(self, experiment_id, start_time, tags, run_name)[0m
+[0;32m    127[0m [38;5;66;03m# Extract user from tags[39;00m
+[0;32m    128[0m [38;5;66;03m# This logic is temporary; the user_id attribute of runs is deprecated and will be removed[39;00m
+[0;32m    129[0m [38;5;66;03m# in a later release.[39;00m
+[0;32m    130[0m user_id [38;5;241m=[39m tags[38;5;241m.[39mget(MLFLOW_USER, [38;5;124m"[39m[38;5;124munknown[39m[38;5;124m"[39m)
+[1;32m--> 132[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mstore[49m[38;5;241;43m.[39;49m[43mcreate_run[49m[43m([49m
+[0;32m    133[0m [43m    [49m[43mexperiment_id[49m[38;5;241;43m=[39;49m[43mexperiment_id[49m[43m,[49m
+[0;32m    134[0m [43m    [49m[43muser_id[49m[38;5;241;43m=[39;49m[43muser_id[49m[43m,[49m
+[0;32m    135[0m [43m    [49m[43mstart_time[49m[38;5;241;43m=[39;49m[43mstart_time[49m[43m [49m[38;5;129;43;01mor[39;49;00m[43m [49m[43mget_current_time_millis[49m[43m([49m[43m)[49m[43m,[49m
+[0;32m    136[0m [43m    [49m[43mtags[49m[38;5;241;43m=[39;49m[43m[[49m[43mRunTag[49m[43m([49m[43mkey[49m[43m,[49m[43m [49m[43mvalue[49m[43m)[49m[43m [49m[38;5;28;43;01mfor[39;49;00m[43m [49m[43m([49m[43mkey[49m[43m,[49m[43m [49m[43mvalue[49m[43m)[49m[43m [49m[38;5;129;43;01min[39;49;00m[43m [49m[43mtags[49m[38;5;241;43m.[39;49m[43mitems[49m[43m([49m[43m)[49m[43m][49m[43m,[49m
+[0;32m    137[0m [43m    [49m[43mrun_name[49m[38;5;241;43m=[39;49m[43mrun_name[49m[43m,[49m
+[0;32m    138[0m [43m[49m[43m)[49m
+
+File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\mlflow\store\tracking\file_store.py:604[0m, in [0;36mFileStore.create_run[1;34m(self, experiment_id, user_id, start_time, tags, run_name)[0m
+[0;32m    600[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
+[0;32m    601[0m [38;5;124;03mCreates a run with the specified attributes.[39;00m
+[0;32m    602[0m [38;5;124;03m"""[39;00m
+[0;32m    603[0m experiment_id [38;5;241m=[39m FileStore[38;5;241m.[39mDEFAULT_EXPERIMENT_ID [38;5;28;01mif[39;00m experiment_id [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m experiment_id
+[1;32m--> 604[0m experiment [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mget_experiment[49m[43m([49m[43mexperiment_id[49m[43m)[49m
+[0;32m    605[0m [38;5;28;01mif[39;00m experiment [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m    606[0m     [38;5;28;01mraise[39;00m MlflowException(
+[0;32m    607[0m         [38;5;124m"[39m[38;5;124mCould not create run under experiment with ID [39m[38;5;132;01m%s[39;00m[38;5;124m - no such experiment [39m[38;5;124m"[39m
+[0;32m    608[0m         [38;5;124m"[39m[38;5;124mexists.[39m[38;5;124m"[39m [38;5;241m%[39m experiment_id,
+[0;32m    609[0m         databricks_pb2[38;5;241m.[39mRESOURCE_DOES_NOT_EXIST,
+[0;32m    610[0m     )
+
+File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\mlflow\store\tracking\file_store.py:418[0m, in [0;36mFileStore.get_experiment[1;34m(self, experiment_id)[0m
+[0;32m    410[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
+[0;32m    411[0m [38;5;124;03mFetch the experiment.[39;00m
+[0;32m    412[0m [38;5;124;03mNote: This API will search for active as well as deleted experiments.[39;00m
+[1;32m   (...)[0m
+[0;32m    415[0m [38;5;124;03m:return: A single Experiment object if it exists, otherwise raises an Exception.[39;00m
+[0;32m    416[0m [38;5;124;03m"""[39;00m
+[0;32m    417[0m experiment_id [38;5;241m=[39m FileStore[38;5;241m.[39mDEFAULT_EXPERIMENT_ID [38;5;28;01mif[39;00m experiment_id [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m experiment_id
+[1;32m--> 418[0m experiment [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_get_experiment[49m[43m([49m[43mexperiment_id[49m[43m)[49m
+[0;32m    419[0m [38;5;28;01mif[39;00m experiment [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m    420[0m     [38;5;28;01mraise[39;00m MlflowException(
+[0;32m    421[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124mExperiment [39m[38;5;124m'[39m[38;5;132;01m{[39;00mexperiment_id[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m does not exist.[39m[38;5;124m"[39m,
+[0;32m    422[0m         databricks_pb2[38;5;241m.[39mRESOURCE_DOES_NOT_EXIST,
+[0;32m    423[0m     )
+
+File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\mlflow\store\tracking\file_store.py:395[0m, in [0;36mFileStore._get_experiment[1;34m(self, experiment_id, view_type)[0m
+[0;32m    390[0m [38;5;28;01mif[39;00m experiment_dir [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m    391[0m     [38;5;28;01mraise[39;00m MlflowException(
+[0;32m    392[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124mCould not find experiment with ID [39m[38;5;132;01m{[39;00mexperiment_id[38;5;132;01m}[39;00m[38;5;124m"[39m,
+[0;32m    393[0m         databricks_pb2[38;5;241m.[39mRESOURCE_DOES_NOT_EXIST,
+[0;32m    394[0m     )
+[1;32m--> 395[0m meta [38;5;241m=[39m [43mFileStore[49m[38;5;241;43m.[39;49m[43m_read_yaml[49m[43m([49m[43mexperiment_dir[49m[43m,[49m[43m [49m[43mFileStore[49m[38;5;241;43m.[39;49m[43mMETA_DATA_FILE_NAME[49m[43m)[49m
+[0;32m    396[0m meta[[38;5;124m"[39m[38;5;124mtags[39m[38;5;124m"[39m] [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_all_experiment_tags(experiment_id)
+[0;32m    397[0m experiment [38;5;241m=[39m _read_persisted_experiment_dict(meta)
+
+File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\mlflow\store\tracking\file_store.py:1303[0m, in [0;36mFileStore._read_yaml[1;34m(root, file_name, retries)[0m
+[0;32m   1300[0m         time[38;5;241m.[39msleep([38;5;241m0.1[39m [38;5;241m*[39m ([38;5;241m3[39m [38;5;241m-[39m attempts_remaining))
+[0;32m   1301[0m         [38;5;28;01mreturn[39;00m _read_helper(root, file_name, attempts_remaining [38;5;241m-[39m [38;5;241m1[39m)
+[1;32m-> 1303[0m [38;5;28;01mreturn[39;00m [43m_read_helper[49m[43m([49m[43mroot[49m[43m,[49m[43m [49m[43mfile_name[49m[43m,[49m[43m [49m[43mattempts_remaining[49m[38;5;241;43m=[39;49m[43mretries[49m[43m)[49m
+
+File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\mlflow\store\tracking\file_store.py:1296[0m, in [0;36mFileStore._read_yaml.<locals>._read_helper[1;34m(root, file_name, attempts_remaining)[0m
+[0;32m   1295[0m [38;5;28;01mdef[39;00m [38;5;21m_read_helper[39m(root, file_name, attempts_remaining[38;5;241m=[39m[38;5;241m2[39m):
+[1;32m-> 1296[0m     result [38;5;241m=[39m [43mread_yaml[49m[43m([49m[43mroot[49m[43m,[49m[43m [49m[43mfile_name[49m[43m)[49m
+[0;32m   1297[0m     [38;5;28;01mif[39;00m result [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mor[39;00m attempts_remaining [38;5;241m==[39m [38;5;241m0[39m:
+[0;32m   1298[0m         [38;5;28;01mreturn[39;00m result
+
+File [1;32mc:\Projects\Workshop2024\.venv\Lib\site-packages\mlflow\utils\file_utils.py:313[0m, in [0;36mread_yaml[1;34m(root, file_name)[0m
+[0;32m    311[0m file_path [38;5;241m=[39m os[38;5;241m.[39mpath[38;5;241m.[39mjoin(root, file_name)
+[0;32m    312[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m exists(file_path):
+[1;32m--> 313[0m     [38;5;28;01mraise[39;00m MissingConfigException([38;5;124mf[39m[38;5;124m"[39m[38;5;124mYaml file [39m[38;5;124m'[39m[38;5;132;01m{[39;00mfile_path[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m does not exist.[39m[38;5;124m"[39m)
+[0;32m    314[0m [38;5;28;01mtry[39;00m:
+[0;32m    315[0m     [38;5;28;01mwith[39;00m codecs[38;5;241m.[39mopen(file_path, mode[38;5;241m=[39m[38;5;124m"[39m[38;5;124mr[39m[38;5;124m"[39m, encoding[38;5;241m=[39mENCODING) [38;5;28;01mas[39;00m yaml_file:
+
+[1;31mMissingConfigException[0m: Yaml file 'C:\Projects\Workshop2024\workshop\book\mlruns\0\meta.yaml' does not exist.
+
