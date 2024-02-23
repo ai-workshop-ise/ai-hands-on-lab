@@ -1,4 +1,17 @@
 Traceback (most recent call last):
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 778, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 198, in ensure_async
+    result = await obj
+             ^^^^^^^^^
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\jupyter_client\channels.py", line 315, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "c:\Projects\Workshop2024\.venv\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
   File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 1305, in execute
@@ -12,61 +25,20 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^
   File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-# TODO: Replace the prefix with a relevant name given your embedding model
-prefix = openai_prefix
-index_name = (
-    f"{openai_prefix}-{totalNumberOfDocuments}-{chunking_size}-{chunking_overlap}"
-)
-
-cosine_similarities = retrieval_evaluation(
-    evaluation_data_path=path_to_evaulation_dataset,
-    embedding_function=oai_query_embedding,
-    search_index_name=index_name,
-)
-print(cosine_similarities)
-# print(f"{ percentage}% of the documents were correctly retrieved from Index {index_name} using OpenAI embedding model.")
-------------------
-
-
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mUFuncTypeError[0m                            Traceback (most recent call last)
-Cell [1;32mIn[14], line 7[0m
-[0;32m      2[0m prefix [38;5;241m=[39m openai_prefix
-[0;32m      3[0m index_name [38;5;241m=[39m (
-[0;32m      4[0m     [38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00mopenai_prefix[38;5;132;01m}[39;00m[38;5;124m-[39m[38;5;132;01m{[39;00mtotalNumberOfDocuments[38;5;132;01m}[39;00m[38;5;124m-[39m[38;5;132;01m{[39;00mchunking_size[38;5;132;01m}[39;00m[38;5;124m-[39m[38;5;132;01m{[39;00mchunking_overlap[38;5;132;01m}[39;00m[38;5;124m"[39m
-[0;32m      5[0m )
-[1;32m----> 7[0m cosine_similarities [38;5;241m=[39m [43mretrieval_evaluation[49m[43m([49m
-[0;32m      8[0m [43m    [49m[43mevaluation_data_path[49m[38;5;241;43m=[39;49m[43mpath_to_evaulation_dataset[49m[43m,[49m
-[0;32m      9[0m [43m    [49m[43membedding_function[49m[38;5;241;43m=[39;49m[43moai_query_embedding[49m[43m,[49m
-[0;32m     10[0m [43m    [49m[43msearch_index_name[49m[38;5;241;43m=[39;49m[43mindex_name[49m[43m,[49m
-[0;32m     11[0m [43m)[49m
-[0;32m     12[0m [38;5;28mprint[39m(cosine_similarities)
-[0;32m     13[0m [38;5;66;03m# print(f"{ percentage}% of the documents were correctly retrieved from Index {index_name} using OpenAI embedding model.")[39;00m
-
-Cell [1;32mIn[13], line 48[0m, in [0;36mretrieval_evaluation[1;34m(evaluation_data_path, embedding_function, search_index_name)[0m
-[0;32m     41[0m top_retrieved_document [38;5;241m=[39m retrieved_documents[[38;5;241m0[39m]
-[0;32m     42[0m [38;5;66;03m# retrieved_scores = [response["score"][39;00m
-[0;32m     43[0m [38;5;66;03m#                     for response in search_response][39;00m
-[0;32m     44[0m [38;5;66;03m# print(f"retrieved_scores: {retrieved_scores}")[39;00m
-[0;32m     45[0m [38;5;66;03m# cosine_similarities = [cosine_similarity([39;00m
-[0;32m     46[0m [38;5;66;03m#     expected_document_vector, response["chunkContentVector"]) for response in search_response][39;00m
-[1;32m---> 48[0m cosine_similarity [38;5;241m=[39m [43mcalculate_cosine_similarity[49m[43m([49m
-[0;32m     49[0m [43m    [49m
-[0;32m     50[0m [43m    [49m[43mexpected_document_vector[49m[43m,[49m[43m [49m[43mtop_retrieved_document[49m[43m)[49m
-[0;32m     51[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mcosine similarity: [39m[38;5;132;01m{[39;00mcosine_similarity[38;5;132;01m}[39;00m[38;5;124m"[39m)
-[0;32m     52[0m cosine_similarities[38;5;241m.[39mappend(cosine_similarity)
-
-Cell [1;32mIn[11], line 6[0m, in [0;36mcalculate_cosine_similarity[1;34m(expected_document_vector, retrieved_document_vector)[0m
-[0;32m      5[0m [38;5;28;01mdef[39;00m [38;5;21mcalculate_cosine_similarity[39m(expected_document_vector, retrieved_document_vector):
-[1;32m----> 6[0m     cosine_sim [38;5;241m=[39m [43mnp[49m[38;5;241;43m.[39;49m[43mdot[49m[43m([49m[43mexpected_document_vector[49m[43m,[49m[43m [49m[43mretrieved_document_vector[49m[43m)[49m [38;5;241m/[39m \
-[0;32m      7[0m         (norm(expected_document_vector)[38;5;241m*[39mnorm(retrieved_document_vector))
-[0;32m      8[0m     [38;5;28;01mreturn[39;00m [38;5;28mfloat[39m(cosine_sim)
-
-[1;31mUFuncTypeError[0m: ufunc 'multiply' did not contain a loop with signature matching types (dtype('<U14'), dtype('<U112')) -> None
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 1001, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 802, in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 852, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 100 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['# TODO: Replace the prefix with a relevant name given your embedding model', 'from statistics import mean, median', '', 'index_name = "fixed-size-chunks-180-30-batch-engineering-mlops-ada"', '']
+...
+[')', 'avg_score = mean(cosine_similarities)', 'print(f"Avg cosine similarity score:{avg_score}")', 'median_score = median(cosine_similarities)', 'print(f"Median cosine similarity score: {median_score}")']
+-------------------
 

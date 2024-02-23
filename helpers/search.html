@@ -189,12 +189,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
-
-
+<li class="toctree-l1"><a class="reference internal" href="../3.3.experiment_model.html">3.3. Language Models Experiment</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../10.evaluation-production.html">Post-production</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">5. Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5.1.generation-qa.html">Generation of synthetic data</a></li>
+
+
+
 </ul>
 
     </div>
@@ -637,6 +643,11 @@ document.write(`
 <span class="sd">    Returns:</span>
 <span class="sd">    list: The embeddings for the given query.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># If input has more than 8,000 words, shrink it to max</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">8000</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shrinked!!1&quot;</span><span class="p">)</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">[:</span><span class="mi">8000</span><span class="p">]</span>
+    <span class="c1"># print(len(query))</span>
     <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">}</span>
     <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
@@ -654,10 +665,38 @@ document.write(`
         <span class="k">return</span> <span class="n">embeddings_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to get embedding: &quot;</span><span class="p">,</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Length: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
         <span class="k">return</span> <span class="p">[]</span>
         <span class="c1"># print(&quot;Retried&quot;)</span>
         <span class="c1"># raise Exception(</span>
         <span class="c1">#     f&quot;failed to get embedding: {embedding_response.json()}&quot;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;abcdefr&quot;</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>abc
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;abc&#39;
 </pre></div>
 </div>
 </div>
@@ -688,17 +727,19 @@ document.write(`
             <span class="nb">print</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data at: </span><span class="si">{</span><span class="n">path_to_chunks_file</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># i = 0</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_chunks_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkId&quot;</span><span class="p">])</span>
                 <span class="n">content</span> <span class="o">=</span> <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
+                <span class="c1"># print(f&quot;Length: {len(content)}&quot;)</span>
+                <span class="c1"># print(i)</span>
+                <span class="c1"># print(chunk[&quot;chunkId&quot;])</span>
+
                 <span class="n">content_emebddings</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
                 <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_emebddings</span>
-                <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+                <span class="c1"># i = i+1</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Created </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> chunks&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Example of one chunk: </span><span class="si">{</span><span class="n">input_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 

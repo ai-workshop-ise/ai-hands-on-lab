@@ -4,7 +4,7 @@
         "output_prompt": "On the Solution Ops website, you can find a variety of resources related to Microsoft solutions, including case studies, best practices, and technical documentation.",
         "context": "layout: forward\ntarget: https:\/\/aka.ms\/solutionops\nrings:\n  - public\n\nforward",
         "chunk_id": "chunk0_0",
-        "source": "..\\data\\docs\\index.md"
+        "source": "..data\\docs\\index.md"
     },
     {
         "user_prompt": "Can you give me an overview of the Data Playbook?",

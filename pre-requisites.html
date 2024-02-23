@@ -189,10 +189,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_model.html">3.3. Language Models Experiment</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">5. Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="5.1.generation-qa.html">Generation of synthetic data</a></li>
+
+
+
 </ul>
 
     </div>
@@ -454,6 +462,20 @@ document.write(`
 <span class="n">azure_openai_chat_deployment</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_CHAT_DEPLOYMENT_NAME&quot;</span><span class="p">]</span>
 
 <span class="n">credential</span> <span class="o">=</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">search_index_key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DefaultAzureCredential</span><span class="p">()</span>
+
+<span class="n">path_to_evaulation_dataset</span> <span class="o">=</span> <span class="s2">&quot;./output/qa/evaluation/qa_pairs_solutionops.json&quot;</span>
+
+<span class="n">pregenerated_data_path</span> <span class="o">=</span> <span class="s2">&quot;./output/pre-generated&quot;</span>
+
+<span class="n">pregenerated_fixed_size_chunks</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/chunking/fixed-size-chunks-engineering-mlops-180-30.json&quot;</span>
+<span class="n">pregenerated_md_header_chunks</span> <span class="o">=</span>  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/chunking/md-header-text-splitter-engineering-mlops.json&quot;</span>
+<span class="n">pregenerated_semantic_chunks</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/chunking/semantic-chunks-engineering-mlops.json&quot;</span>
+
+<span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/fixed-size-chunks-180-30-engineering-mlops-ada.json&quot;</span>
+<span class="n">pregenerated_fixed_size_chunks_emebddings_os</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.json&quot;</span>
+
+<span class="n">pregenerated_markdown_header_chunks_embeddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/md-header-text-splitter-engineering-mlops-embedded-ada.json&quot;</span>
+<span class="n">pregenerated_semantic_chunks_embeddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/semantic-chunks-engineering-mlops-embedded-ada.json&quot;</span>
 </pre></div>
 </div>
 </div>

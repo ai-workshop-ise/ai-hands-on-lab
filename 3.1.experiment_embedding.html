@@ -189,10 +189,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_model.html">3.3. Language Models Experiment</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">5. Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="5.1.generation-qa.html">Generation of synthetic data</a></li>
+
+
+
 </ul>
 
     </div>
@@ -394,11 +402,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-e5-small-v2-from-hugging-face">👩‍💻 2. Use e5-small-v2 from Hugging Face</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-using-open-source-model-took-22-minutes">Generate embeddings using open source model - took 22 minutes.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯 Evaluation metrics</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model">👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model">👩‍💻2.Evaluate the system using <em>infloat/e5-small-v2</em> model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model-took-3min">👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model - took 3min</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model-took-4-40-min">👩‍💻2.Evaluate the system using <em>infloat/e5-small-v2</em> model - took 4.40 min</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
@@ -441,7 +450,10 @@ document.write(`
 <td><p>We will look at Accuracy and Cosine Similarity to compare the performance.</p></td>
 </tr>
 <tr class="row-odd"><td><p>📊 <strong>Data</strong></p></td>
-<td><p>The data that we would like to embed consists of the first 200 documents from the Solution Ops Playbook, which were previously chunked in size of 300. The dataset can be found at <a class="reference download internal" download="" href="_downloads/e9ffa9f8c73dc15acdc48ded749b2da4/chunks-solution-ops-200-300-0.json"><span class="xref download myst">chunks-solution-ops-200-300-0.json</span></a>.</p></td>
+<td><p>The data that we will use consists of <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository which were previously pre-chunked in chunks of 180 tokens with 30% overlap <span class="xref myst">fixed-size-chunks-engineering-mlops-180-30.json</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p>📊 <strong>Evaluation Dataset</strong></p></td>
+<td><p>200 question-answer pairs generated from <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository. See <a class="reference internal" href="5.1.generation-qa.html"><span class="doc std std-doc">Generation QA Notebook</span></a> for insights on how they were generated.</p></td>
 </tr>
 </tbody>
 </table>
@@ -475,10 +487,13 @@ Before we try out different embedding models, let's first try to understand the 
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
 
-<span class="n">totalNumberOfDocuments</span> <span class="o">=</span> <span class="mi">200</span>
-<span class="n">chunking_size</span> <span class="o">=</span> <span class="mi">300</span>
-<span class="n">chunking_overlap</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">path_to_chunked_documents</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="c1"># This is the path to the dataset that we want to embed</span>
+<span class="n">chunking_size</span> <span class="o">=</span> <span class="mi">180</span>
+<span class="n">chunking_overlap</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">fixed_chunks_output_prefix</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-engineering-mlops&quot;</span>
+<span class="n">path_to_chunked_documents</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/chunking/</span><span class="si">{</span><span class="n">fixed_chunks_output_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
+
+<span class="c1"># This is the path to the evaluation dataset</span>
 <span class="n">path_to_evaulation_dataset</span> <span class="o">=</span> <span class="s2">&quot;./output/qa/evaluation/solution-ops-200-qa.json&quot;</span> 
 </pre></div>
 </div>
@@ -499,6 +514,7 @@ Before we try out different embedding models, let's first try to understand the 
     <span class="n">api_key</span><span class="o">=</span><span class="n">azure_openai_key</span><span class="p">,</span>
     <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span>
     <span class="n">embedding_model_deployment</span><span class="o">=</span><span class="n">azure_openai_embedding_deployment</span><span class="p">,</span>
+    <span class="n">batch</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Query the OpenAI Embedding model to get the embeddings for the given query.</span>
@@ -522,8 +538,13 @@ Before we try out different embedding models, let's first try to understand the 
         <span class="n">data_values</span> <span class="o">=</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
         <span class="n">embeddings_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_value</span><span class="p">[</span><span class="s2">&quot;embedding&quot;</span><span class="p">]</span>
                               <span class="k">for</span> <span class="n">data_value</span> <span class="ow">in</span> <span class="n">data_values</span><span class="p">]</span>
+        <span class="c1"># return embeddings_vectors if batch else embeddings_vectors[0]</span>
         <span class="k">return</span> <span class="n">embeddings_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">query</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lengths: &quot;</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;failed to get embedding: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">lengths</span><span class="p">]</span> <span class="k">if</span> <span class="n">batch</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;failed to get embedding: </span><span class="si">{</span><span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -582,11 +603,54 @@ The length of the embedding is: 1536
 </div>
 </div>
 </div>
-<p><strong>1.3 Create a file with the embeddings</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">openai_prefix</span> <span class="o">=</span> <span class="s2">&quot;chunks-solution-ops-embedded-openai&quot;</span>
-<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+
+<span class="k">def</span> <span class="nf">generate_embeddings_for_chunks_in_batch</span><span class="p">(</span><span class="n">path_to_chunked_documents</span><span class="p">,</span> <span class="n">path_to_output_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate embeddings for chunked data</span>
+<span class="sd">    Args:</span>
+<span class="sd">    path_to_chunked_documents: str: path to the input file</span>
+<span class="sd">    path_to_output_file: str: path to the output file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> &quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_chunked_documents</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+            <span class="n">num_chunks</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_chunks</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+                <span class="n">batch_chunks</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">]</span>
+                <span class="n">batch_chunks_content</span> <span class="o">=</span> <span class="p">[</span><span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
+                                        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">batch_chunks</span><span class="p">]</span>
+                <span class="n">batch_embeddings</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span>
+                    <span class="n">batch_chunks_content</span><span class="p">,</span> <span class="n">batch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_chunks</span><span class="p">):</span>
+                    <span class="c1"># print(&quot;j : &quot;, j)</span>
+                    <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">batch_embeddings</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="c1"># content = chunk[&quot;chunkContent&quot;]</span>
+                    <span class="c1"># content_embeddings = oai_query_embedding(content)</span>
+                    <span class="c1"># chunk[&quot;chunkContentVector&quot;] = content_embeddings</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate embeddings for chunks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>1.3 Create a file with the embeddings</strong> - took 9/16 mins</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">openai_prefix</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-engineering-mlops-ada&quot;</span>
+<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">.json&quot;</span>
 <span class="n">generate_embeddings_for_chunks</span><span class="p">(</span>
     <span class="n">path_to_input_file</span><span class="o">=</span><span class="n">path_to_chunked_documents</span><span class="p">,</span>
     <span class="n">path_to_output_file</span><span class="o">=</span><span class="n">path_to_output_file</span><span class="p">,</span>
@@ -595,7 +659,25 @@ The length of the embedding is: 1536
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data ./output/chunks-solution-ops-200-300-0.json at: ./output/chunks-solution-ops-200-300-0.json 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json at: ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using batch - in 48 s BUT several batches were not embedded because of API limitation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">openai_batch_prefix</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-batch-engineering-mlops-ada&quot;</span>
+<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="n">generate_embeddings_for_chunks_in_batch</span><span class="p">(</span>
+    <span class="n">path_to_chunked_documents</span><span class="o">=</span><span class="n">path_to_chunked_documents</span><span class="p">,</span>
+    <span class="n">path_to_output_file</span><span class="o">=</span><span class="n">path_to_output_file</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json at: ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json 
 </pre></div>
 </div>
 </div>
@@ -621,7 +703,7 @@ The length of the embedding is: 1536
 </details>
 <p><strong>2.1. Create a function which is responsible to embed the chunks from an input file and save the result to another file</strong></p>
 <p>Create a function, similar to <code class="docutils literal notranslate"><span class="pre">generate_embeddings_for_chunks</span></code>, which is responsible to embed the chunked data and to save it to a file.</p>
-<p>Input file: <a class="reference download internal" download="" href="_downloads/e9ffa9f8c73dc15acdc48ded749b2da4/chunks-solution-ops-200-300-0.json"><span class="xref download myst">./output/chunks-solution-ops-200-300-0.json</span></a>.</p>
+<p>Input file: <span class="xref myst">./output/chunks-solution-ops-200-300-0.json</span>.</p>
 <p>The output file with the embeddings should be saved at <code class="docutils literal notranslate"><span class="pre">./output/generated/chunks-solution-ops-embedded-intfloat_e5_small_v2-200-300-10.json</span></code></p>
 <details markdown="1">
 <summary> 🔍 Solution:</summary>
@@ -715,14 +797,28 @@ The length of the embedding is: 1536
 </pre></div>
 </div>
 </div>
+</div>
+</section>
+</section>
+<section id="generate-embeddings-using-open-source-model-took-22-minutes">
+<h2>Generate embeddings using open source model - took 22 minutes.<a class="headerlink" href="#generate-embeddings-using-open-source-model-took-22-minutes" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e5_small_v2_prefix</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-engineering-mlops-e5-small-v2&quot;</span>
+<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">e5_small_v2_prefix</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="n">generate_embeddings_with_intfloat_e5_small_v2</span><span class="p">(</span>
+    <span class="n">path_to_input_file</span><span class="o">=</span><span class="n">path_to_chunked_documents</span><span class="p">,</span>
+    <span class="n">path_to_output_file</span><span class="o">=</span><span class="n">path_to_output_file</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Projects\Workshop2024\.venv\Lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json at: ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json 
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 </section>
 <section id="evaluation">
 <h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h2>
@@ -747,17 +843,25 @@ Therefore, for each embedding model we will:</p>
 <p>Sample code for creating a new index and uploading the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
-
-<span class="c1"># 1. Create a new index</span>
-<span class="n">prefix</span> <span class="o">=</span> <span class="n">openai_prefix</span> <span class="c1">#TODO: Replace the prefix with a relevant name given your embedding model</span>
-<span class="n">new_index_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="n">vector_size</span> <span class="o">=</span> <span class="mi">1536</span> <span class="c1">#TODO: Replace with the vector size of your embedding model</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create a new index</span>
+<span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
+<span class="n">new_index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-batch-engineering-mlops-ada&quot;</span>
+<span class="n">vector_size</span> <span class="o">=</span> <span class="mi">1536</span>  <span class="c1"># TODO: Replace with the vector size of your embedding model</span>
 <span class="n">create_index</span><span class="p">(</span><span class="n">new_index_name</span><span class="p">)</span>
 
 <span class="c1"># 2. Upload the embeddings to the new index</span>
-<span class="n">file_embeddings</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span> <span class="c1"># TODO: Replace the file_embeddings to point to the right file path</span>
-<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">file_embeddings</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
+<span class="c1"># TODO: Replace the file_embeddings to point to the right file path</span>
+<span class="n">file_embeddings</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">new_index_name</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">file_embeddings</span><span class="p">,</span>
+            <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;fixed-size-chunks-180-30-batch-engineering-mlops-ada&#39; created or updated
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 3236 documents to Index: fixed-size-chunks-180-30-batch-engineering-mlops-ada
 </pre></div>
 </div>
 </div>
@@ -766,31 +870,30 @@ Therefore, for each embedding model we will:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create a new index</span>
 <span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
-<span class="n">e5_small_prefix</span> <span class="o">=</span> <span class="s2">&quot;chunks-solution-ops-embedded-intfloat_e5_small_v2&quot;</span>
-<span class="n">prefix</span> <span class="o">=</span> <span class="n">e5_small_prefix</span>
-<span class="n">new_index_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="c1"># prefix = e5_small_v2_prefix</span>
+<span class="n">new_index_name</span> <span class="o">=</span> <span class="n">e5_small_v2_prefix</span>
 <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">384</span>  <span class="c1"># TODO: Replace with the vector size of your embedding model</span>
 <span class="n">create_index</span><span class="p">(</span><span class="n">new_index_name</span><span class="p">,</span> <span class="n">vector_size</span><span class="p">)</span>
 
 <span class="c1"># 2. Upload the embeddings to the new index</span>
 <span class="c1"># TODO: Replace the file_embeddings to point to the right file path</span>
-<span class="n">file_embeddings</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="n">file_embeddings</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">new_index_name</span><span class="si">}</span><span class="s2">.json&quot;</span>
 <span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">file_embeddings</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;chunks-solution-ops-embedded-intfloat_e5_small_v2-200-300-0&#39; created or updated
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;fixed-size-chunks-180-30-engineering-mlops-e5-small-v2&#39; created or updated
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 975 documents to Index: chunks-solution-ops-embedded-intfloat_e5_small_v2-200-300-0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 3236 documents to Index: fixed-size-chunks-180-30-engineering-mlops-e5-small-v2
 </pre></div>
 </div>
 </div>
 </div>
 <section id="evaluation-dataset">
 <h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
-<p>Note: The evaluation dataset can be found at <a class="reference download internal" download="" href="_downloads/6f00dc06a7c24dedb0b02b4d88946edc/solution-ops-200-qa.json"><span class="xref download myst">solution-ops-200-qa.json</span></a>. The format is:</p>
+<p>Note: The evaluation dataset can be found at <span class="xref myst">solution-ops-200-qa.json</span>. The format is:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;user_prompt&quot;: &quot;&quot;, # The question
 &quot;output_prompt&quot;: &quot;&quot;, # The answer
 &quot;context&quot;: &quot;&quot;, # The relevant piece of information from a document
@@ -859,7 +962,7 @@ Note: This can also be adapted to ensure that the `first` retrieved document is 
                 <span class="n">embedding_function</span><span class="o">=</span><span class="n">embedding_function</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="n">retrieved_documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+            <span class="n">retrieved_documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">])</span>
                                    <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">search_response</span><span class="p">]</span>
             <span class="n">top_retrieved_document</span> <span class="o">=</span> <span class="n">search_response</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span>
 
@@ -870,7 +973,7 @@ Note: This can also be adapted to ensure that the `first` retrieved document is 
 
             <span class="c1"># 3. If the expected document is part of the retrieved documents,</span>
             <span class="c1"># we will consider it correctly retrieved</span>
-            <span class="k">if</span> <span class="n">expected_document</span> <span class="ow">in</span> <span class="n">retrieved_documents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">expected_document</span><span class="p">)</span> <span class="ow">in</span> <span class="n">retrieved_documents</span><span class="p">:</span>
                 <span class="n">nr_correctly_retrieved_documents</span> <span class="o">+=</span> <span class="mi">1</span>
 
             <span class="n">nr_qa</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -883,18 +986,27 @@ Note: This can also be adapted to ensure that the `first` retrieved document is 
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
+</pre></div>
+</div>
+</div>
+</div>
 </section>
-<section id="evaluate-the-system-using-text-embedding-ada-002-model">
-<h3>👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model<a class="headerlink" href="#evaluate-the-system-using-text-embedding-ada-002-model" title="Permalink to this heading">#</a></h3>
+<section id="evaluate-the-system-using-text-embedding-ada-002-model-took-3min">
+<h3>👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model - took 3min<a class="headerlink" href="#evaluate-the-system-using-text-embedding-ada-002-model-took-3min" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Accuracy: 25.666666666666664% of the documents were correctly retrieved from Index fixed-size-chunks-180-30-batch-engineering-mlops-ada.</p></li>
+<li><p>Avg cosine similarity score:0.8214135393234611</p></li>
+<li><p>Median cosine similarity score: 0.7950691820676911</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
 <span class="kn">from</span> <span class="nn">statistics</span> <span class="kn">import</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span>
 
-<span class="n">prefix</span> <span class="o">=</span> <span class="n">openai_prefix</span>
-<span class="n">index_name</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">)</span>
+<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-batch-engineering-mlops-ada&quot;</span>
 
 <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
     <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
@@ -909,16 +1021,107 @@ Note: This can also be adapted to ensure that the `first` retrieved document is 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 50.0% of the documents were correctly retrieved from Index chunks-solution-ops-embedded-openai-200-300-0.
-Avg cosine similarity score:0.8334185719245075
-Median cosine similarity score: 0.8149765818260504
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">statistics</span> <span class="kn">import</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-batch-engineering-mlops-ada&quot;</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">embedding_function</span><span class="o">=</span><span class="n">oai_query_embedding</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">avg_score</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Avg cosine similarity score:</span><span class="si">{</span><span class="n">avg_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nn">Cell In[14], line 31,</span> in <span class="ni">calculate_metrics</span><span class="nt">(evaluation_data_path, embedding_function, search_index_name)</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="n">user_prompt</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;user_prompt&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="n">expected_document</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+<span class="ne">---&gt; </span><span class="mi">31</span> <span class="n">expected_document_vector</span> <span class="o">=</span> <span class="n">embedding_function</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">])</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="c1"># 1. Search in the index</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="n">search_response</span> <span class="o">=</span> <span class="n">search_documents</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span>     <span class="n">search_index_name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span>     <span class="nb">input</span><span class="o">=</span><span class="n">user_prompt</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span>     <span class="n">embedding_function</span><span class="o">=</span><span class="n">embedding_function</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span> <span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Temp\ipykernel_53424\1654927096.py:32,</span> in <span class="ni">oai_query_embedding</span><span class="nt">(query, endpoint, api_key, api_version, embedding_model_deployment)</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">}</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span> <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
+<span class="ne">---&gt; </span><span class="mi">32</span> <span class="n">embedding_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">request_url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">request_payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="c1"># embedding_response = embed_input(query)</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span> <span class="k">if</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span>     <span class="c1">#     time.sleep(2.5)</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span>     <span class="c1">#     embedding_response = embed_input(query)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\api.py:115,</span> in <span class="ni">post</span><span class="nt">(url, data, json, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">103</span> <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">104</span><span class="w">     </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sends a POST request.</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">106</span><span class="sd">     :param url: URL for the new :class:`Request` object.</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">112</span><span class="sd">     :rtype: requests.Response</span>
+<span class="g g-Whitespace">    </span><span class="mi">113</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">115</span>     <span class="k">return</span> <span class="n">request</span><span class="p">(</span><span class="s2">&quot;post&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">json</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\api.py:59,</span> in <span class="ni">request</span><span class="nt">(method, url, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="c1"># By using the &#39;with&#39; statement we are sure the session is closed, thus we</span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span> <span class="c1"># avoid leaving sockets open which can trigger a ResourceWarning in some</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="c1"># cases, and look like a memory leak in others.</span>
+<span class="g g-Whitespace">     </span><span class="mi">58</span> <span class="k">with</span> <span class="n">sessions</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">59</span>     <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\sessions.py:575,</span> in <span class="ni">Session.request</span><span class="nt">(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)</span>
+<span class="g g-Whitespace">    </span><span class="mi">562</span> <span class="c1"># Create the Request.</span>
+<span class="g g-Whitespace">    </span><span class="mi">563</span> <span class="n">req</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">564</span>     <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+<span class="g g-Whitespace">    </span><span class="mi">565</span>     <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">573</span>     <span class="n">hooks</span><span class="o">=</span><span class="n">hooks</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">574</span> <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">575</span> <span class="n">prep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">577</span> <span class="n">proxies</span> <span class="o">=</span> <span class="n">proxies</span> <span class="ow">or</span> <span class="p">{}</span>
+<span class="g g-Whitespace">    </span><span class="mi">579</span> <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_environment_settings</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">580</span>     <span class="n">prep</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">proxies</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">verify</span><span class="p">,</span> <span class="n">cert</span>
+<span class="g g-Whitespace">    </span><span class="mi">581</span> <span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\sessions.py:483,</span> in <span class="ni">Session.prepare_request</span><span class="nt">(self, request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">481</span> <span class="n">auth</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">auth</span>
+<span class="g g-Whitespace">    </span><span class="mi">482</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trust_env</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">auth</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">483</span>     <span class="n">auth</span> <span class="o">=</span> <span class="n">get_netrc_auth</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">485</span> <span class="n">p</span> <span class="o">=</span> <span class="n">PreparedRequest</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">486</span> <span class="n">p</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">487</span>     <span class="n">method</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+<span class="g g-Whitespace">    </span><span class="mi">488</span>     <span class="n">url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">498</span>     <span class="n">hooks</span><span class="o">=</span><span class="n">merge_hooks</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">hooks</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">499</span> <span class="p">)</span>
+
+<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\utils.py:222,</span> in <span class="ni">get_netrc_auth</span><span class="nt">(url, raise_errors)</span>
+<span class="g g-Whitespace">    </span><span class="mi">216</span> <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">217</span>     <span class="c1"># os.path.expanduser can fail when $HOME is undefined and</span>
+<span class="g g-Whitespace">    </span><span class="mi">218</span>     <span class="c1"># getpwuid fails. See https://bugs.python.org/issue20164 &amp;</span>
+<span class="g g-Whitespace">    </span><span class="mi">219</span>     <span class="c1"># https://github.com/psf/requests/issues/1846</span>
+<span class="g g-Whitespace">    </span><span class="mi">220</span>     <span class="k">return</span>
+<span class="ne">--&gt; </span><span class="mi">222</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">loc</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">223</span>     <span class="n">netrc_path</span> <span class="o">=</span> <span class="n">loc</span>
+<span class="g g-Whitespace">    </span><span class="mi">224</span>     <span class="k">break</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="evaluate-the-system-using-infloat-e5-small-v2-model">
-<h3>👩‍💻2.Evaluate the system using <em>infloat/e5-small-v2</em> model<a class="headerlink" href="#evaluate-the-system-using-infloat-e5-small-v2-model" title="Permalink to this heading">#</a></h3>
+<section id="evaluate-the-system-using-infloat-e5-small-v2-model-took-4-40-min">
+<h3>👩‍💻2.Evaluate the system using <em>infloat/e5-small-v2</em> model - took 4.40 min<a class="headerlink" href="#evaluate-the-system-using-infloat-e5-small-v2-model-took-4-40-min" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Accuracy: 88.33333333333333% of the documents were correctly retrieved from Index fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.</p></li>
+<li><p>Avg score:0.9596070531525336</p></li>
+<li><p>Median score: 0.9999999999999998</p></li>
+</ul>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">retrieval_evaluation</span></code> function, calculate how many documents are correctly retrieved using the infloat/e5-small-v2 open source model.</p>
 <details markdown="1">
 <summary> 🔍 Solution:</summary>
@@ -936,8 +1139,9 @@ Median cosine similarity score: 0.8149765818260504
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
-<span class="n">e5_small_prefix</span> <span class="o">=</span> <span class="s2">&quot;chunks-solution-ops-embedded-intfloat_e5_small_v2&quot;</span>
-<span class="n">index_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">e5_small_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="c1"># e5_small_prefix = &quot;chunks-solution-ops-embedded-intfloat_e5_small_v2&quot;</span>
+<span class="c1"># f&quot;{e5_small_prefix}-{totalNumberOfDocuments}-{chunking_size}-{chunking_overlap}&quot;</span>
+<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-engineering-mlops-e5-small-v2&quot;</span>
 <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
     <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
     <span class="n">embedding_function</span><span class="o">=</span><span class="n">embed_chunk</span><span class="p">,</span>
@@ -952,9 +1156,9 @@ Median cosine similarity score: 0.8149765818260504
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 50.0% of the documents were correctly retrieved from Index chunks-solution-ops-embedded-intfloat_e5_small_v2-200-300-0.
-Avg score:0.9143061793429577
-Median score: 0.9305137467120537
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 88.33333333333333% of the documents were correctly retrieved from Index fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.
+Avg score:0.9596070531525336
+Median score: 0.9999999999999998
 </pre></div>
 </div>
 </div>
@@ -1036,11 +1240,12 @@ Median score: 0.9305137467120537
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-e5-small-v2-from-hugging-face">👩‍💻 2. Use e5-small-v2 from Hugging Face</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-using-open-source-model-took-22-minutes">Generate embeddings using open source model - took 22 minutes.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯 Evaluation metrics</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model">👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model">👩‍💻2.Evaluate the system using <em>infloat/e5-small-v2</em> model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model-took-3min">👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model - took 3min</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model-took-4-40-min">👩‍💻2.Evaluate the system using <em>infloat/e5-small-v2</em> model - took 4.40 min</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>

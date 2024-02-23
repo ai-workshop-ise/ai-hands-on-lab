@@ -18,36 +18,14 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import pandas as pd
-import glob
-import os
-import openai
-import asyncio
-import json
-import nltk
-import tqdm
-import backoff
-from langchain_community.document_loaders import UnstructuredFileLoader
-from langchain.text_splitter import MarkdownHeaderTextSplitter, MarkdownTextSplitter, RecursiveCharacterTextSplitter
-from openai import AsyncAzureOpenAI
-from typing import Coroutine, Any, Tuple
-import plotly.express as px
-import tracemalloc
-
-from plotly import colors
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go 
+\ /
+_
 ------------------
 
 
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [1;32mIn[1], line 14[0m
-[0;32m     12[0m [38;5;28;01mfrom[39;00m [38;5;21;01mopenai[39;00m [38;5;28;01mimport[39;00m AsyncAzureOpenAI
-[0;32m     13[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtyping[39;00m [38;5;28;01mimport[39;00m Coroutine, Any, Tuple
-[1;32m---> 14[0m [38;5;28;01mimport[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01mexpress[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpx[39;00m
-[0;32m     15[0m [38;5;28;01mimport[39;00m [38;5;21;01mtracemalloc[39;00m
-[0;32m     17[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m [38;5;28;01mimport[39;00m colors
+[1;36m  Cell [1;32mIn[5], line 1[1;36m[0m
+[1;33m    \ /[0m
+[1;37m     ^[0m
+[1;31mSyntaxError[0m[1;31m:[0m unexpected character after line continuation character
 
-[1;31mModuleNotFoundError[0m: No module named 'plotly'
 

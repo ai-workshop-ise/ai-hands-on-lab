@@ -18,28 +18,29 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from matplotlib import pyplot as plt
+# totalNumberOfDocuments = 200
+# semantic_chunks_output_prefix = "semantic-chunks-solution-ops"
+# Took 9 mins
+semantic_chunks_output_prefix = "semantic-chunks-engineering-mlops"
 
-# lengths = {[Number of chunks]: [number of documents with that number of chunks]}
-x = chunks.keys()  # number of chunks per document
-y = chunks.values()  # number of documents with that number of chunks
+path_to_semantic_chunks_output = f"./output/pre-generated/chunking/{semantic_chunks_output_prefix}.json"
+print(path_to_semantic_chunks_output)
 
-plt.bar(x, y)
-plt.xlabel("Chunk Numbers")
-plt.ylabel("Number of Documents")
-plt.title("Distribution of Chunk Numbers")
-plt.show()
+chunks = create_semantic_chunks_and_save_to_file(
+    documents, path_to_semantic_chunks_output)
 ------------------
 
+----- stdout -----
+./output/pre-generated/chunking/semantic-chunks-engineering-mlops.json
+------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mAttributeError[0m                            Traceback (most recent call last)
-Cell [1;32mIn[11], line 4[0m
-[0;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m pyplot [38;5;28;01mas[39;00m plt
-[0;32m      3[0m [38;5;66;03m# lengths = {[Number of chunks]: [number of documents with that number of chunks]}[39;00m
-[1;32m----> 4[0m x [38;5;241m=[39m [43mchunks[49m[38;5;241;43m.[39;49m[43mkeys[49m()  [38;5;66;03m# number of chunks per document[39;00m
-[0;32m      5[0m y [38;5;241m=[39m chunks[38;5;241m.[39mvalues()  [38;5;66;03m# number of documents with that number of chunks[39;00m
-[0;32m      7[0m plt[38;5;241m.[39mbar(x, y)
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[34], line 9[0m
+[0;32m      6[0m path_to_semantic_chunks_output [38;5;241m=[39m [38;5;124mf[39m[38;5;124m"[39m[38;5;124m./output/pre-generated/chunking/[39m[38;5;132;01m{[39;00msemantic_chunks_output_prefix[38;5;132;01m}[39;00m[38;5;124m.json[39m[38;5;124m"[39m
+[0;32m      7[0m [38;5;28mprint[39m(path_to_semantic_chunks_output)
+[1;32m----> 9[0m chunks [38;5;241m=[39m [43mcreate_semantic_chunks_and_save_to_file[49m(
+[0;32m     10[0m     documents, path_to_semantic_chunks_output)
 
-[1;31mAttributeError[0m: 'NoneType' object has no attribute 'keys'
+[1;31mNameError[0m: name 'create_semantic_chunks_and_save_to_file' is not defined
 

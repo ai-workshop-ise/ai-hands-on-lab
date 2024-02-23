@@ -188,8 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_model.html">Previous code (look into this afterm because we log a MODEL)</a></li>
-
+<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_model.html">3.3. Language Models Experiment</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
@@ -403,9 +402,9 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-documents-into-smaller-pieces">Chunking documents into smaller pieces</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-using-markdown-headers">Splitting using Markdown headers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-with-markdown-headers-recursive-text-splitter">Chunking with Markdown headers + recursive text splitter</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder">Create chunks using the MarkdownTextsplitter using tiktoken encoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-using-markdown-headers">1. Splitting using Markdown headers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-with-markdown-headers-recursive-text-splitter">2. Chunking with Markdown headers + recursive text splitter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder">3. Create chunks using the MarkdownTextsplitter using tiktoken encoder</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qa-generation">QA generation</a></li>
@@ -435,6 +434,25 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="generation-of-synthetic-data">
 <h1>Generation of synthetic data<a class="headerlink" href="#generation-of-synthetic-data" title="Permalink to this heading">#</a></h1>
 <p>The goal of this notebook is to create a synthetically evaluation dataset using GPT-4 on a the Microsoft SolutionOps Repo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install plotly==5.19.0
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: plotly==5.19.0 in c:\projects\workshop2024\.venv\lib\site-packages (5.19.0)
+Requirement already satisfied: tenacity&gt;=6.2.0 in c:\projects\workshop2024\.venv\lib\site-packages (from plotly==5.19.0) (8.2.3)
+Requirement already satisfied: packaging in c:\projects\workshop2024\.venv\lib\site-packages (from plotly==5.19.0) (23.2)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 23.3.2 -&gt; 24.0
+[notice] To update, run: python.exe -m pip install --upgrade pip
+</pre></div>
+</div>
+</div>
+</div>
 <section id="imports-and-credentials">
 <h2>Imports and credentials<a class="headerlink" href="#imports-and-credentials" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -445,9 +463,8 @@ document.write(`
 <span class="kn">import</span> <span class="nn">openai</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">nltk</span>
 <span class="kn">import</span> <span class="nn">tqdm</span>
-<span class="kn">import</span> <span class="nn">backoff</span>
+
 <span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">UnstructuredFileLoader</span>
 <span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">MarkdownHeaderTextSplitter</span><span class="p">,</span> <span class="n">MarkdownTextSplitter</span><span class="p">,</span> <span class="n">RecursiveCharacterTextSplitter</span>
 <span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">AsyncAzureOpenAI</span>
@@ -457,36 +474,7 @@ document.write(`
 
 <span class="kn">from</span> <span class="nn">plotly</span> <span class="kn">import</span> <span class="n">colors</span>
 <span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
-<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span> 
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">14</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">AsyncAzureOpenAI</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Coroutine</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span>
-<span class="ne">---&gt; </span><span class="mi">14</span> <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">import</span> <span class="nn">tracemalloc</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span> <span class="nn">plotly</span> <span class="kn">import</span> <span class="n">colors</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;plotly&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aoai_key</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">aoai_endpoint</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;AZURE_OPENAI_KEY&quot;</span><span class="p">,</span> <span class="n">aoai_key</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;AZURE_OPENAI_ENDPOINT&quot;</span><span class="p">,</span> <span class="n">aoai_endpoint</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;https://sweraoaoai.openai.azure.com/&#39;
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 </pre></div>
 </div>
 </div>
@@ -530,14 +518,15 @@ The process if the following:</p>
     <span class="p">}</span>
 
     <span class="n">documents</span> <span class="o">=</span> <span class="p">[]</span>
-    
+
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
-        <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> 
+        <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="n">document</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-        <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;solutionops_section&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;solutionops_section&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">3</span><span class="p">])</span> 
         <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
         <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;document_text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
-        <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;document_length&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;document_length&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
         <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;document_path&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
         <span class="c1"># markdown_documents.append(document)</span>
@@ -548,7 +537,23 @@ The process if the following:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">markdown_documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span><span class="s2">&quot;../data/solutionops/**/*.md&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>\ <span class="o">/</span>
+<span class="n">_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+    \ <span class="o">/</span>
+     <span class="o">^</span>
+<span class="ne">SyntaxError</span>: unexpected character after line continuation character
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">markdown_documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span><span class="s2">&quot;..\data\docs\**\*.md&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -556,7 +561,7 @@ The process if the following:</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading documents...
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 776/776 [02:43&lt;00:00,  4.75it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 777/777 [08:38&lt;00:00,  1.50it/s]
 </pre></div>
 </div>
 </div>
@@ -603,43 +608,43 @@ The process if the following:</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>code-with-dataops</td>
-      <td>[page_content="rings:\n  - public\n\nData Play...</td>
-      <td>rings:\n  - public\n\nData Playbook\n\nThe Dat...</td>
-      <td>265</td>
-      <td>../data/solutionops/code-with-dataops/index.md</td>
+      <td>index.md</td>
+      <td>[page_content='layout: forward\ntarget: https:...</td>
+      <td>layout: forward\ntarget: https://aka.ms/soluti...</td>
+      <td>8</td>
+      <td>..\data\docs\index.md</td>
     </tr>
     <tr>
       <th>1</th>
       <td>code-with-dataops</td>
-      <td>[page_content='rings:\n  - public\n\nCapabilit...</td>
-      <td>rings:\n  - public\n\nCapabilities\n\nCapabili...</td>
-      <td>637</td>
-      <td>../data/solutionops/code-with-dataops/capabili...</td>
+      <td>[page_content="rings:\n  - public\n\nData Play...</td>
+      <td>rings:\n  - public\n\nData Playbook\n\nThe Dat...</td>
+      <td>265</td>
+      <td>..\data\docs\code-with-dataops\index.md</td>
     </tr>
     <tr>
       <th>2</th>
       <td>code-with-dataops</td>
-      <td>[page_content="rings:\n  - public\n\nData Gove...</td>
-      <td>rings:\n  - public\n\nData Governance and Prot...</td>
-      <td>59</td>
-      <td>../data/solutionops/code-with-dataops/capabili...</td>
+      <td>[page_content='rings:\n  - public\n\nCapabilit...</td>
+      <td>rings:\n  - public\n\nCapabilities\n\nCapabili...</td>
+      <td>637</td>
+      <td>..\data\docs\code-with-dataops\capabilities\in...</td>
     </tr>
     <tr>
       <th>3</th>
       <td>code-with-dataops</td>
-      <td>[page_content='rings:\n  - public\n\nData Gove...</td>
-      <td>rings:\n  - public\n\nData Governance\n\nData ...</td>
-      <td>196</td>
-      <td>../data/solutionops/code-with-dataops/capabili...</td>
+      <td>[page_content='rings:\n  - public\n\nAnalytica...</td>
+      <td>rings:\n  - public\n\nAnalytical Systems\n\nTh...</td>
+      <td>83</td>
+      <td>..\data\docs\code-with-dataops\capabilities\an...</td>
     </tr>
     <tr>
       <th>4</th>
       <td>code-with-dataops</td>
-      <td>[page_content="rings:\n  - public\n\nData Cata...</td>
-      <td>rings:\n  - public\n\nData Catalog\n\nA core c...</td>
-      <td>592</td>
-      <td>../data/solutionops/code-with-dataops/capabili...</td>
+      <td>[page_content='rings:\n  - public\n\nAdvanced ...</td>
+      <td>rings:\n  - public\n\nAdvanced Analytics\n\nMo...</td>
+      <td>67</td>
+      <td>..\data\docs\code-with-dataops\capabilities\an...</td>
     </tr>
   </tbody>
 </table>
@@ -647,34 +652,24 @@ The process if the following:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colors</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">DEFAULT_PLOTLY_COLORS</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unique_sections</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="n">color_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="n">section</span><span class="p">:</span> <span class="n">color</span> <span class="k">for</span> <span class="n">section</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">unique_sections</span><span class="p">,</span> <span class="n">colors</span><span class="p">)}</span>
+<span class="n">color_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="n">section</span><span class="p">:</span> <span class="n">color</span> <span class="k">for</span> <span class="n">section</span><span class="p">,</span>
+                 <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">unique_sections</span><span class="p">,</span> <span class="n">colors</span><span class="p">)}</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_mapping</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;code-with-dataops&#39;: &#39;rgb(31, 119, 180)&#39;,
- &#39;playbook&#39;: &#39;rgb(255, 127, 14)&#39;,
- &#39;code-with-platformops&#39;: &#39;rgb(44, 160, 44)&#39;,
- &#39;code-with-devsecops&#39;: &#39;rgb(214, 39, 40)&#39;,
- &#39;industryops&#39;: &#39;rgb(148, 103, 189)&#39;,
- &#39;code-with-engineering&#39;: &#39;rgb(140, 86, 75)&#39;,
- &#39;code-with-mlops&#39;: &#39;rgb(227, 119, 194)&#39;,
- &#39;code-with-fusionops&#39;: &#39;rgb(127, 127, 127)&#39;}
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Percentage of each section in the SolutionOps repo&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">,</span> <span class="n">color_discrete_map</span><span class="o">=</span><span class="n">color_mapping</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Percentage of each section in the SolutionOps repo&#39;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">,</span> <span class="n">color_discrete_map</span><span class="o">=</span><span class="n">color_mapping</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -719,24 +714,27 @@ The process if the following:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">specs</span><span class="o">=</span><span class="p">[[{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;xy&#39;</span><span class="p">}]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)],</span>
-                <span class="n">subplot_titles</span><span class="o">=</span><span class="n">unique_sections</span><span class="p">,</span>
-                <span class="n">shared_xaxes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">shared_yaxes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">subplot_titles</span><span class="o">=</span><span class="n">unique_sections</span><span class="p">,</span>
+                    <span class="n">shared_xaxes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">shared_yaxes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">n_sections</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 
 <span class="c1"># Create a color mapping for each unique &#39;solutionops_section&#39;</span>
-<span class="n">color_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="n">section</span><span class="p">:</span> <span class="n">color</span> <span class="k">for</span> <span class="n">section</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">colors</span><span class="p">)}</span>
+<span class="n">color_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="n">section</span><span class="p">:</span> <span class="n">color</span> <span class="k">for</span> <span class="n">section</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">colors</span><span class="p">)}</span>
 
 <span class="c1"># fig.add_trace(go.Pie(labels=df_markdown_documents[&#39;solutionops_section&#39;], marker=dict(colors=df_markdown_documents[&#39;solutionops_section&#39;].map(color_mapping)), values=df_markdown_documents[&#39;document_length&#39;],name=&quot;\% docs&quot;), 1, 1)</span>
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">section</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Histogram</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">section</span><span class="p">][</span><span class="s1">&#39;document_length&#39;</span><span class="p">],</span> <span class="n">marker_color</span><span class="o">=</span><span class="n">color_mapping</span><span class="p">[</span><span class="n">section</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">][</span><span class="sa">f</span><span class="s1">&#39;xaxis</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">showticklabels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">][</span><span class="sa">f</span><span class="s1">&#39;yaxis</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">showticklabels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Histogram</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">section</span><span class="p">]</span>
+                  <span class="p">[</span><span class="s1">&#39;document_length&#39;</span><span class="p">],</span> <span class="n">marker_color</span><span class="o">=</span><span class="n">color_mapping</span><span class="p">[</span><span class="n">section</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">][</span><span class="sa">f</span><span class="s1">&#39;xaxis</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">showticklabels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">][</span><span class="sa">f</span><span class="s1">&#39;yaxis</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">showticklabels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s1">&#39;Distribution of document lengths for each section&#39;</span><span class="p">,</span> <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">70</span><span class="p">])</span> 
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s1">&#39;Distribution of document lengths for each section&#39;</span><span class="p">,</span>
+                  <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">70</span><span class="p">])</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -747,9 +745,11 @@ The process if the following:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;document_length&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">,</span> <span class="n">color_discrete_map</span><span class="o">=</span><span class="n">color_mapping</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s1">&#39;Distribution of document lengths for each section&#39;</span><span class="p">,</span> <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
-<span class="c1"># fig.update_yaxes(range=[0, 70]) </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;document_length&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">,</span>
+                   <span class="n">color</span><span class="o">=</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">,</span> <span class="n">color_discrete_map</span><span class="o">=</span><span class="n">color_mapping</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+    <span class="n">title_text</span><span class="o">=</span><span class="s1">&#39;Distribution of document lengths for each section&#39;</span><span class="p">,</span> <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+<span class="c1"># fig.update_yaxes(range=[0, 70])</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -765,8 +765,10 @@ For engineering more than half documents are above 457 words, and for mlops more
 <p>We can see that almost 50% of the documents are in the “code-with-engineering” and “code-with-mlops” folders. Since we’re looking to create a smaller dataset, we decide to create a dataset only out of these two folders.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_docs_engineering</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;code-with-engineering&#39;</span><span class="p">])</span>
-<span class="n">n_docs_mlops</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;code-with-mlops&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_docs_engineering</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+    <span class="n">df_markdown_documents</span><span class="p">[</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;code-with-engineering&#39;</span><span class="p">])</span>
+<span class="n">n_docs_mlops</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+    <span class="n">df_markdown_documents</span><span class="p">[</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;code-with-mlops&#39;</span><span class="p">])</span>
 <span class="n">n</span> <span class="o">=</span> <span class="n">n_docs_engineering</span> <span class="o">+</span> <span class="n">n_docs_mlops</span>
 </pre></div>
 </div>
@@ -774,9 +776,11 @@ For engineering more than half documents are above 457 words, and for mlops more
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of documents in the code-with-engineering section: </span><span class="si">{</span><span class="n">n_docs_engineering</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Number of documents in the code-with-engineering section: </span><span class="si">{</span><span class="n">n_docs_engineering</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of documents in the code-with-mlops section: </span><span class="si">{</span><span class="n">n_docs_mlops</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of documents in the code-with-engineering + code-with-mlops sections: </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Number of documents in the code-with-engineering + code-with-mlops sections: </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_markdown_documents</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -790,7 +794,8 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset_df_markdown_documents</span> <span class="o">=</span> <span class="n">df_markdown_documents</span><span class="p">[</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;code-with-engineering&#39;</span><span class="p">,</span> <span class="s1">&#39;code-with-mlops&#39;</span><span class="p">])]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset_df_markdown_documents</span> <span class="o">=</span> <span class="n">df_markdown_documents</span><span class="p">[</span><span class="n">df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;code-with-engineering&#39;</span><span class="p">,</span> <span class="s1">&#39;code-with-mlops&#39;</span><span class="p">])]</span>
 </pre></div>
 </div>
 </div>
@@ -889,10 +894,10 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 <li><p>Split the documents into chunks of a fixed tokens length</p></li>
 </ol>
 <section id="splitting-using-markdown-headers">
-<h3>Splitting using Markdown headers<a class="headerlink" href="#splitting-using-markdown-headers" title="Permalink to this heading">#</a></h3>
+<h3>1. Splitting using Markdown headers<a class="headerlink" href="#splitting-using-markdown-headers" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_md_headers</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_md_headers</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating chunks...&quot;</span><span class="p">)</span>
     <span class="n">headers_to_split_on</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="s2">&quot;Header 1&quot;</span><span class="p">),</span>
@@ -900,26 +905,27 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
         <span class="p">(</span><span class="s2">&quot;###&quot;</span><span class="p">,</span> <span class="s2">&quot;Header 3&quot;</span><span class="p">),</span>
     <span class="p">]</span>
 
-    <span class="n">markdown_splitter</span> <span class="o">=</span> <span class="n">MarkdownHeaderTextSplitter</span><span class="p">(</span><span class="n">headers_to_split_on</span><span class="o">=</span><span class="n">headers_to_split_on</span><span class="p">,</span> <span class="n">strip_headers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">markdown_splitter</span> <span class="o">=</span> <span class="n">MarkdownHeaderTextSplitter</span><span class="p">(</span>
+        <span class="n">headers_to_split_on</span><span class="o">=</span><span class="n">headers_to_split_on</span><span class="p">,</span> <span class="n">strip_headers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">lengths</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">all_chunks</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">chunk_id</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="n">chunks</span>  <span class="o">=</span> <span class="p">{</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;chunk_id&quot;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s2">&quot;chunk_text&quot;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[]</span>
     <span class="p">}</span>
 
     <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">documents</span><span class="p">):</span>
-        <span class="n">current_chunks_text_list</span> <span class="o">=</span> <span class="n">markdown_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
+        <span class="n">current_chunks_text_list</span> <span class="o">=</span> <span class="n">markdown_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span>
+            <span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">current_chunks_text_list</span><span class="p">):</span>
             <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;chunk</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
             <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">])</span>
-
 
         <span class="n">chunk_id</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">chunks</span>
@@ -929,7 +935,8 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks_with_md_headers</span> <span class="o">=</span> <span class="n">create_chunks_md_headers</span><span class="p">(</span><span class="n">final_markdown_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks_with_md_headers</span> <span class="o">=</span> <span class="n">create_chunks_md_headers</span><span class="p">(</span>
+    <span class="n">final_markdown_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1029,7 +1036,8 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 <p>Let’s look at the distribution of lengths in the chunks. We create a new colum called chunk_text_length which contains the length of the chunk_text column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_md_headers</span><span class="p">[</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_chunks_with_md_headers</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_md_headers</span><span class="p">[</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_chunks_with_md_headers</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 </pre></div>
 </div>
 </div>
@@ -1150,7 +1158,8 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_chunks_with_md_headers</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Histogram of Chunk Text Length&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_chunks_with_md_headers</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">,</span>
+                   <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Histogram of Chunk Text Length&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1158,12 +1167,13 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 <div class="cell_output docutils container">
 </div>
 </div>
+<p>The chunks are quite big, you may wanna continue with another chunker</p>
 </section>
 <section id="chunking-with-markdown-headers-recursive-text-splitter">
-<h3>Chunking with Markdown headers + recursive text splitter<a class="headerlink" href="#chunking-with-markdown-headers-recursive-text-splitter" title="Permalink to this heading">#</a></h3>
+<h3>2. Chunking with Markdown headers + recursive text splitter<a class="headerlink" href="#chunking-with-markdown-headers-recursive-text-splitter" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_md_headers_and_recsplitter</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_md_headers_and_recsplitter</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating chunks...&quot;</span><span class="p">)</span>
     <span class="n">headers_to_split_on</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="s2">&quot;Header 1&quot;</span><span class="p">),</span>
@@ -1171,13 +1181,14 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
         <span class="p">(</span><span class="s2">&quot;###&quot;</span><span class="p">,</span> <span class="s2">&quot;Header 3&quot;</span><span class="p">),</span>
     <span class="p">]</span>
 
-    <span class="n">markdown_splitter</span> <span class="o">=</span> <span class="n">MarkdownHeaderTextSplitter</span><span class="p">(</span><span class="n">headers_to_split_on</span><span class="o">=</span><span class="n">headers_to_split_on</span><span class="p">,</span> <span class="n">strip_headers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">markdown_splitter</span> <span class="o">=</span> <span class="n">MarkdownHeaderTextSplitter</span><span class="p">(</span>
+        <span class="n">headers_to_split_on</span><span class="o">=</span><span class="n">headers_to_split_on</span><span class="p">,</span> <span class="n">strip_headers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">lengths</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">all_chunks</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">chunk_id</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="n">chunks</span>  <span class="o">=</span> <span class="p">{</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;chunk_id&quot;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s2">&quot;chunk_text&quot;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[]</span>
@@ -1185,22 +1196,21 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 
     <span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">250</span>
     <span class="n">chunk_overlap</span> <span class="o">=</span> <span class="mi">30</span>
-    
+
     <span class="n">text_splitter</span> <span class="o">=</span> <span class="n">RecursiveCharacterTextSplitter</span><span class="p">(</span>
         <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="n">chunk_overlap</span>
     <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">documents</span><span class="p">):</span>
-        <span class="n">current_chunks_text_list_with_md_headers</span> <span class="o">=</span> <span class="n">markdown_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
-        <span class="n">current_chunks_text_list</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_documents</span><span class="p">(</span><span class="n">current_chunks_text_list_with_md_headers</span><span class="p">)</span>
-
-
+        <span class="n">current_chunks_text_list_with_md_headers</span> <span class="o">=</span> <span class="n">markdown_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span>
+            <span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
+        <span class="n">current_chunks_text_list</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_documents</span><span class="p">(</span>
+            <span class="n">current_chunks_text_list_with_md_headers</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">current_chunks_text_list</span><span class="p">):</span>
             <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;chunk</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
             <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">])</span>
-
 
         <span class="n">chunk_id</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">chunks</span>
@@ -1210,7 +1220,8 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks_with_md_headers_and_recsplitter</span> <span class="o">=</span> <span class="n">create_chunks_md_headers_and_recsplitter</span><span class="p">(</span><span class="n">final_markdown_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks_with_md_headers_and_recsplitter</span> <span class="o">=</span> <span class="n">create_chunks_md_headers_and_recsplitter</span><span class="p">(</span>
+    <span class="n">final_markdown_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1225,7 +1236,8 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_md_headers_and_recsplitter</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">chunks_with_md_headers_and_recsplitter</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_md_headers_and_recsplitter</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">chunks_with_md_headers_and_recsplitter</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1297,14 +1309,16 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_md_headers_and_recsplitter</span><span class="p">[</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_chunks_with_md_headers_and_recsplitter</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_md_headers_and_recsplitter</span><span class="p">[</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_chunks_with_md_headers_and_recsplitter</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_chunks_with_md_headers_and_recsplitter</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Histogram of Chunk Text Length&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_chunks_with_md_headers_and_recsplitter</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">,</span>
+                   <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Histogram of Chunk Text Length&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1315,7 +1329,7 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 <p>Doing both is too restrictive, and we end up with a lot of chunks that are too small.</p>
 </section>
 <section id="create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder">
-<h3>Create chunks using the MarkdownTextsplitter using tiktoken encoder<a class="headerlink" href="#create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder" title="Permalink to this heading">#</a></h3>
+<h3>3. Create chunks using the MarkdownTextsplitter using tiktoken encoder<a class="headerlink" href="#create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder" title="Permalink to this heading">#</a></h3>
 <p>To decide the length of each chunk, we will look at the distribution of the document lengths and the distribution of the chunk lengths. We will then decide on a chunk length that will give us a good distribution of chunk lengths. We will use a splitter that uses the tiktoken tokenizer to split the documents into chunks. Hence we do the following:</p>
 <ol class="arabic simple">
 <li><p>Tokenize all the documents, and look at the distribution of the document lengths</p></li>
@@ -1329,8 +1343,10 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 
 <span class="n">encoding</span> <span class="o">=</span> <span class="n">tiktoken</span><span class="o">.</span><span class="n">get_encoding</span><span class="p">(</span><span class="s2">&quot;cl100k_base&quot;</span><span class="p">)</span>
 
-<span class="n">subset_df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subset_df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;document_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">encoding</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">subset_df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;n_tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subset_df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+<span class="n">subset_df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subset_df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;document_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">encoding</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">subset_df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;n_tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subset_df_markdown_documents</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1446,7 +1462,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <p>[TODO: ADD CORRELATION between n_tokens and document_lengths]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">subset_df_markdown_documents</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;n_tokens&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Distribution of tokenization lengths&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">subset_df_markdown_documents</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;n_tokens&#39;</span><span class="p">,</span>
+                   <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Distribution of tokenization lengths&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1457,31 +1474,30 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <p>We decide to use chunk size = q1/2 = 360/2 = 180 tokens. so that 75%+ of the documents will be represented by at least 2 chunks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_tokens</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_tokens</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating chunks...&quot;</span><span class="p">)</span>
 
-    
     <span class="n">markdown_splitter</span> <span class="o">=</span> <span class="n">MarkdownTextSplitter</span><span class="o">.</span><span class="n">from_tiktoken_encoder</span><span class="p">(</span>
-                <span class="n">chunk_size</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">30</span>
+        <span class="n">chunk_size</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">30</span>
     <span class="p">)</span>
 
     <span class="n">lengths</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">all_chunks</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">chunk_id</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="n">chunks</span>  <span class="o">=</span> <span class="p">{</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;chunk_id&quot;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s2">&quot;chunk_text&quot;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[]</span>
     <span class="p">}</span>
 
     <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">documents</span><span class="p">):</span>
-        <span class="n">current_chunks_text_list</span> <span class="o">=</span> <span class="n">markdown_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
+        <span class="n">current_chunks_text_list</span> <span class="o">=</span> <span class="n">markdown_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span>
+            <span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">current_chunks_text_list</span><span class="p">):</span>
             <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;chunk</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
             <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">])</span>
-
 
         <span class="n">chunk_id</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">chunks</span>
@@ -1491,7 +1507,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks_with_tokens</span> <span class="o">=</span> <span class="n">create_chunks_tokens</span><span class="p">(</span><span class="n">final_markdown_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks_with_tokens</span> <span class="o">=</span> <span class="n">create_chunks_tokens</span><span class="p">(</span>
+    <span class="n">final_markdown_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1578,14 +1595,16 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_tokens</span><span class="p">[</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_chunks_with_tokens</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_tokens</span><span class="p">[</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_chunks_with_tokens</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_chunks_with_tokens</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Histogram of Chunk Text Length&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_chunks_with_tokens</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">,</span>
+                   <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Histogram of Chunk Text Length&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">marginal</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1625,9 +1644,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     <span class="p">}</span>
 
     <span class="n">documents</span> <span class="o">=</span> <span class="p">[]</span>
-    
+
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
-        <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> 
+        <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="n">document</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
         <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;solutionops_section&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">3</span><span class="p">])</span>
         <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
@@ -1636,7 +1655,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
         <span class="c1"># markdown_documents.append(document)</span>
         <span class="n">df_documents</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_documents</span><span class="p">)</span>
-        <span class="n">subset_df_documents</span> <span class="o">=</span> <span class="n">df_documents</span><span class="p">[</span><span class="n">df_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">subset</span><span class="p">)]</span>
+        <span class="n">subset_df_documents</span> <span class="o">=</span> <span class="n">df_documents</span><span class="p">[</span><span class="n">df_documents</span><span class="p">[</span><span class="s1">&#39;solutionops_section&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+            <span class="n">subset</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">subset_df_documents</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1644,7 +1664,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_documents_from_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_documents_from_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="n">documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder_and_reduce</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">subset</span><span class="p">)</span>
     <span class="n">chunks</span> <span class="o">=</span> <span class="n">create_chunks_tokens</span><span class="p">(</span><span class="n">documents</span><span class="p">[</span><span class="s1">&#39;document_object&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">chunks</span>
@@ -1715,7 +1735,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_qa_from_chunk_text</span><span class="p">(</span><span class="n">chunk_text</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_qa_from_chunk_text</span><span class="p">(</span><span class="n">chunk_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="n">final_prompt</span> <span class="o">=</span> <span class="n">create_qa_generation_prompt_from_chunk_context</span><span class="p">(</span><span class="n">chunk_text</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">final_prompt</span>
 </pre></div>
@@ -1725,16 +1745,18 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_OPENAI_KEY&quot;</span><span class="p">)</span>
-<span class="n">openai</span><span class="o">.</span><span class="n">api_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_OPENAI_ENDPOINT&quot;</span><span class="p">)</span> <span class="c1"># your endpoint should look like the following https://YOUR_RESOURCE_NAME.openai.azure.com/</span>
+<span class="c1"># your endpoint should look like the following https://YOUR_RESOURCE_NAME.openai.azure.com/</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AZURE_OPENAI_ENDPOINT&quot;</span><span class="p">)</span>
 <span class="n">openai</span><span class="o">.</span><span class="n">api_type</span> <span class="o">=</span> <span class="s1">&#39;azure&#39;</span>
-<span class="n">openai</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s1">&#39;2023-05-15&#39;</span> <span class="c1"># this might change in the future</span>
+<span class="n">openai</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s1">&#39;2023-05-15&#39;</span>  <span class="c1"># this might change in the future</span>
+
 
 <span class="k">def</span> <span class="nf">call_aoai_gpt4</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;dep-gpt4&quot;</span><span class="p">,</span> <span class="c1"># engine = &quot;deployment_name&quot;.</span>
+        <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;dep-gpt4&quot;</span><span class="p">,</span>  <span class="c1"># engine = &quot;deployment_name&quot;.</span>
         <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>
     <span class="p">)</span>
-    
+
     <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
 </pre></div>
 </div>
@@ -1744,12 +1766,11 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># @backoff.on_exception(backoff.expo, openai.RateLimitError)</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">call_aoai_gpt4_async</span><span class="p">(</span>
-    <span class="n">client</span><span class="p">:</span> <span class="n">AsyncAzureOpenAI</span><span class="p">,</span>
-    <span class="n">list_pairs</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="n">chunk_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">chunk_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    
+        <span class="n">client</span><span class="p">:</span> <span class="n">AsyncAzureOpenAI</span><span class="p">,</span>
+        <span class="n">list_pairs</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">chunk_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">chunk_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 
     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;user_prompt&quot;</span><span class="p">:</span> <span class="p">[],</span>
@@ -1778,7 +1799,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
             <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span>
         <span class="p">}</span>
         <span class="n">list_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-            <span class="c1"># final_df = final_df._append(data, ignore_index=True) #logic needs to be rewritten here to write better code to create DF (lambd/map)</span>
+        <span class="c1"># final_df = final_df._append(data, ignore_index=True) #logic needs to be rewritten here to write better code to create DF (lambd/map)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1793,7 +1814,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <h2>Creation of jsonl files containing messages<a class="headerlink" href="#creation-of-jsonl-files-containing-messages" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">export_messages_to_jsonl</span><span class="p">(</span><span class="n">model</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">list_messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">export_messages_to_jsonl</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">list_messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/jsonl/new_messages_solutionops.jsonl&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">list_messages</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -1808,7 +1829,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks</span> <span class="o">=</span> <span class="n">process_documents_from_path</span><span class="p">(</span><span class="s2">&quot;../data/solutionops/**/*.md&quot;</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;code-with-engineering&#39;</span><span class="p">,</span> <span class="s1">&#39;code-with-mlops&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks</span> <span class="o">=</span> <span class="n">process_documents_from_path</span><span class="p">(</span>
+    <span class="s2">&quot;../data/solutionops/**/*.md&quot;</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;code-with-engineering&#39;</span><span class="p">,</span> <span class="s1">&#39;code-with-mlops&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1829,7 +1851,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">generate_qa_from_chunk_text</span><span class="p">(</span><span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]))]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">generate_qa_from_chunk_text</span><span class="p">(</span>
+    <span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">[</span><span class="s1">&#39;chunk_text&#39;</span><span class="p">]))]</span>
 </pre></div>
 </div>
 </div>
@@ -1866,7 +1889,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span class="c1">#     chunks_dict = process_documents_from_path(path, subset)</span>
 
 <span class="c1">#     print(&quot;Got chunks&quot;)</span>
-    
+
 <span class="c1">#     client = AsyncAzureOpenAI(</span>
 <span class="c1">#         api_key=aoai_key,</span>
 <span class="c1">#         api_version=&quot;2023-05-15&quot;,</span>
@@ -2088,8 +2111,8 @@ The Modern Data Warehouse solution in the Data Playbook is designed to help ente
 <h2>Creating df from output jsonl file<a class="headerlink" href="#creating-df-from-output-jsonl-file" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span> 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">tqdm</span>
 
@@ -2105,16 +2128,18 @@ The Modern Data Warehouse solution in the Data Playbook is designed to help ente
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">dict_line</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="n">qa_pair_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">dict_line</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+            <span class="n">qa_pair_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+                <span class="n">dict_line</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;choices&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">qa_pair_dict</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span>
                     <span class="n">question</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;assistant&quot;</span><span class="p">:</span>
                     <span class="n">answer</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
             <span class="c1"># print(dict_line[0][&#39;messages&#39;][1][&#39;content&#39;])</span>
-            <span class="n">source</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;CONTEXT:(.*)END OF CONTEXT&#39;</span><span class="p">,</span> <span class="n">dict_line</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;messages&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;CONTEXT:(.*)END OF CONTEXT&#39;</span><span class="p">,</span>
+                               <span class="n">dict_line</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;messages&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="c1"># source = re.search(r&#39;CONTEXT:(.*)+&#39;, dict_line[0][&#39;messages&#39;][1][&#39;content&#39;]).group(1)</span>
-            
+
             <span class="k">if</span> <span class="n">question</span> <span class="ow">and</span> <span class="n">answer</span> <span class="ow">and</span> <span class="n">source</span><span class="p">:</span>
                 <span class="n">data_final</span><span class="p">[</span><span class="s1">&#39;question&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
                 <span class="n">data_final</span><span class="p">[</span><span class="s1">&#39;answer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
@@ -2327,9 +2352,9 @@ The Modern Data Warehouse solution in the Data Playbook is designed to help ente
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-documents-into-smaller-pieces">Chunking documents into smaller pieces</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-using-markdown-headers">Splitting using Markdown headers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-with-markdown-headers-recursive-text-splitter">Chunking with Markdown headers + recursive text splitter</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder">Create chunks using the MarkdownTextsplitter using tiktoken encoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-using-markdown-headers">1. Splitting using Markdown headers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chunking-with-markdown-headers-recursive-text-splitter">2. Chunking with Markdown headers + recursive text splitter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder">3. Create chunks using the MarkdownTextsplitter using tiktoken encoder</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qa-generation">QA generation</a></li>
