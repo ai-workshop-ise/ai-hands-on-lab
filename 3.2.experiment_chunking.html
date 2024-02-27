@@ -178,7 +178,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Baseline implementation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="current nav bd-sidenav">
@@ -407,7 +407,6 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Chunk the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Analysis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-fixed-size-chunking-strategy">👩‍💻 Create a function to chunk data from Solution-Ops using Fixed-Size Chunking Strategy</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-chunking">3. Semantic Chunking</a><ul class="nav section-nav flex-column">
@@ -415,11 +414,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Analysis??</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker">👩‍💻 Create a function to chunk data from Solution-Ops using Semantic Chunker</a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-3-search-indexes">Create 3 search indexes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯Evaluation Metrics</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-markdown-header-text-splitter-took-3-min">👩‍💻 1. Evaluate the Markdown Header Text Splitter - took 3 min</a></li>
@@ -464,7 +460,7 @@ There are multiple methods of ingestion, depending on the type of data. For exam
 <td><p>Exploratory hypothesis: “Can introducing a new chunking strategy improve system’s performance?”</p></td>
 </tr>
 <tr class="row-odd"><td><p>⚖️ <strong>Comparison</strong></p></td>
-<td><p>We will compare fixed-size chunking strategy (<a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/markdown_header_metadata">MarkdownHeaderTextSplitter</a>, <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/markdown_header_metadata">MarkdownTextSplitter</a>) to semantic chunking strategy (<a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">SemanticChunker</a>).</p></td>
+<td><p>We will compare <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/markdown_header_metadata">MarkdownHeaderTextSplitter</a>, <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/markdown_header_metadata">MarkdownTextSplitter</a> and semantic chunking strategy (<a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">SemanticChunker</a>).</p></td>
 </tr>
 <tr class="row-even"><td><p>🎯 <strong>Evaluation Metrics</strong></p></td>
 <td><p>We will look at Accuracy and Cosine Similarity to compare the performance.</p></td>
@@ -642,61 +638,6 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 
         <span class="n">chunk_id</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">chunks</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import json</span>
-
-
-<span class="c1"># def create_md_header_chunks_and_save_to_file(documents, path_to_output) -&gt; list:</span>
-<span class="c1">#     try:</span>
-<span class="c1">#         if os.path.exists(path_to_output):</span>
-<span class="c1">#             print(f&quot;Chunks already created at: {path_to_output} &quot;)</span>
-<span class="c1">#             return</span>
-<span class="c1">#         lengths = {}</span>
-<span class="c1">#         all_chunks = []</span>
-<span class="c1">#         chunk_id = 0</span>
-<span class="c1">#         # tqdm.tqdm(</span>
-<span class="c1">#         headers_to_split_on = [</span>
-<span class="c1">#             (&quot;#&quot;, &quot;Header 1&quot;),</span>
-<span class="c1">#             (&quot;##&quot;, &quot;Header 2&quot;),</span>
-<span class="c1">#             (&quot;###&quot;, &quot;Header 3&quot;),</span>
-<span class="c1">#         ]</span>
-
-<span class="c1">#         markdown_splitter = MarkdownHeaderTextSplitter(</span>
-<span class="c1">#             headers_to_split_on=headers_to_split_on, strip_headers=False)</span>
-
-<span class="c1">#         for document in documents:</span>
-<span class="c1">#             current_chunks_text_list = markdown_splitter.split_text(</span>
-<span class="c1">#                 document[0].page_content)</span>
-<span class="c1">#             source = document[0].metadata[&quot;source&quot;]</span>
-
-<span class="c1">#             for i, chunk in enumerate(current_chunks_text_list):</span>
-
-<span class="c1">#                 current_chunk_dict = {</span>
-<span class="c1">#                     &quot;chunkId&quot;: f&quot;chunk{chunk_id}_{i}&quot;,</span>
-<span class="c1">#                     &quot;chunkContent&quot;: chunk.page_content,</span>
-<span class="c1">#                     &quot;source&quot;: source,</span>
-<span class="c1">#                 }</span>
-<span class="c1">#                 all_chunks.append(current_chunk_dict)</span>
-<span class="c1">#             chunk_id += 1</span>
-<span class="c1">#         with open(path_to_output, &quot;w&quot;) as f:</span>
-<span class="c1">#             json.dump(all_chunks, f)</span>
-<span class="c1">#     except Exception as e:</span>
-<span class="c1">#         print(f&quot;Error creating chunks: {e}&quot;)</span>
-<span class="c1">#     return all_chunks</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># path_to_output = f&quot;./output/pre-generated/chunking/md-header-text-splitter-engineering-mlops.json&quot;</span>
-
-<span class="c1"># create_md_header_chunks_and_save_to_file(documents, path_to_output)</span>
 </pre></div>
 </div>
 </div>
@@ -897,6 +838,10 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </div>
 <p><img alt="image.png" src="_images/md_header_text_splitter_histogram.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the interest of time, we have already chunked the data from Solution Ops repo using Markdown Header Text Splitter approach. The result can be found at <a class="reference download internal" download="" href="_downloads/cfbef1c1e8ba04b16d47666cd0da557c/md-header-text-splitter-engineering-mlops.json"><span class="xref download myst">md-header-text-splitter-engineering-mlops.json</span></a></p>
+</div>
 </section>
 </section>
 <section id="markdown-text-splitter-using-tiktoken-encoder">
@@ -969,7 +914,6 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </section>
 <section id="id3">
 <h3>Chunk the data<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
-<p>todo: we don’t need two loading functions,..</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_documents_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
@@ -982,7 +926,6 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
         <span class="s2">&quot;document_path&quot;</span><span class="p">:</span> <span class="p">[]</span>
     <span class="p">}</span>
 
-    <span class="n">documents</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
             <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
@@ -1002,24 +945,10 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;..\data\docs\code-with-engineering\**\*.md&quot;</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
+<span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;..\data\docs\code-with-engineering\**\*.md&quot;</span><span class="p">,</span>
          <span class="s2">&quot;..\data\docs\code-with-mlops\**\*.md&quot;</span><span class="p">]</span>
 <span class="n">markdown_documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading documents...
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:1: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-&lt;&gt;:2: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-&lt;&gt;:1: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-&lt;&gt;:2: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_40316\1254506238.py:1: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-  paths = [&quot;..\data\docs\code-with-engineering\**\*.md&quot;,
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_40316\1254506238.py:2: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-  &quot;..\data\docs\code-with-mlops\**\*.md&quot;]
 </pre></div>
 </div>
 </div>
@@ -1103,6 +1032,7 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_40316\1254506238.py:2: SyntaxWarn
 </table>
 </div></div></div>
 </div>
+<p>Let’s look at the distribution of tokens in the chunks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tiktoken</span>
@@ -1133,14 +1063,11 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_40316\1254506238.py:2: SyntaxWarn
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_tokens</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating chunks...&quot;</span><span class="p">)</span>
 
     <span class="n">markdown_splitter</span> <span class="o">=</span> <span class="n">MarkdownTextSplitter</span><span class="o">.</span><span class="n">from_tiktoken_encoder</span><span class="p">(</span>
         <span class="n">chunk_size</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">30</span>
     <span class="p">)</span>
 
-    <span class="n">lengths</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">all_chunks</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">chunk_id</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="n">chunks</span> <span class="o">=</span> <span class="p">{</span>
@@ -1167,11 +1094,6 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_40316\1254506238.py:2: SyntaxWarn
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks_with_tokens</span> <span class="o">=</span> <span class="n">create_chunks_tokens</span><span class="p">(</span>
     <span class="n">markdown_files</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating chunks...
 </pre></div>
 </div>
 </div>
@@ -1245,6 +1167,7 @@ C:\Users\adnegrau\AppData\Local\Temp\ipykernel_40316\1254506238.py:2: SyntaxWarn
 </table>
 </div></div></div>
 </div>
+<p>Let’s look at the distribution of lengths in the chunks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_tokens</span><span class="p">[</span><span class="s1">&#39;chunk_text_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_chunks_with_tokens</span><span class="p">[</span><span class="s1">&#39;chunkContent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
@@ -1284,126 +1207,11 @@ Concept to know:
 
 - **Chunk Size** - The number of characters you would like in your chunks. 50, 100, 100,000, etc.
 - **Chunk Overlap** - The amount you would like your sequential chunks to overlap. This is to try to avoid cutting a single piece of context into multiple pieces. This will create duplicate data across chunks. -->
-</section>
-<section id="create-a-function-to-chunk-data-from-solution-ops-using-fixed-size-chunking-strategy">
-<h3>👩‍💻 Create a function to chunk data from Solution-Ops using Fixed-Size Chunking Strategy<a class="headerlink" href="#create-a-function-to-chunk-data-from-solution-ops-using-fixed-size-chunking-strategy" title="Permalink to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import json</span>
-
-
-<span class="c1"># def create_chunks_and_save_to_file(</span>
-<span class="c1">#     documents, path_to_output, chunk_size=300, chunk_overlap=30</span>
-<span class="c1"># ) -&gt; list:</span>
-<span class="c1">#     try:</span>
-<span class="c1">#         if os.path.exists(path_to_output):</span>
-<span class="c1">#             print(f&quot;Chunks already created at: {path_to_output} &quot;)</span>
-<span class="c1">#             return</span>
-
-<span class="c1">#         print(&quot;Creating chunks...&quot;)</span>
-<span class="c1">#         markdown_splitter = MarkdownTextSplitter.from_tiktoken_encoder(</span>
-<span class="c1">#             chunk_size=chunk_size, chunk_overlap=chunk_overlap</span>
-<span class="c1">#         )</span>
-<span class="c1">#         lengths = {}</span>
-<span class="c1">#         all_chunks = []</span>
-<span class="c1">#         chunk_id = 0</span>
-<span class="c1">#         for document in documents:</span>
-<span class="c1">#             current_chunks_text_list = markdown_splitter.split_text(</span>
-<span class="c1">#                 document[0].page_content</span>
-<span class="c1">#             )</span>
-<span class="c1">#             for i, chunk in enumerate(</span>
-<span class="c1">#                 current_chunks_text_list</span>
-<span class="c1">#             ):</span>
-<span class="c1">#                 source = document[0].metadata[&quot;source&quot;]</span>
-<span class="c1">#                 current_chunk_dict = {</span>
-<span class="c1">#                     &quot;chunkId&quot;: f&quot;chunk{chunk_id}_{i}&quot;,</span>
-<span class="c1">#                     &quot;chunkContent&quot;: chunk,</span>
-<span class="c1">#                     &quot;source&quot;: source,</span>
-<span class="c1">#                 }</span>
-<span class="c1">#                 all_chunks.append(current_chunk_dict)</span>
-
-<span class="c1">#             chunk_id += 1</span>
-
-<span class="c1">#             n_chunks = len(current_chunks_text_list)</span>
-<span class="c1">#             # lengths = {[Number of chunks]: [number of documents with that number of chunks]}</span>
-<span class="c1">#             if n_chunks not in lengths:</span>
-<span class="c1">#                 lengths[n_chunks] = 1</span>
-<span class="c1">#             else:</span>
-<span class="c1">#                 lengths[n_chunks] += 1</span>
-
-<span class="c1">#         with open(path_to_output, &quot;w&quot;) as f:</span>
-<span class="c1">#             json.dump(all_chunks, f)</span>
-<span class="c1">#         # print(f&quot;Chunks created: &quot;, lengths)</span>
-<span class="c1">#     except Exception as e:</span>
-<span class="c1">#         print(f&quot;Error creating chunks: {e}&quot;)</span>
-<span class="c1">#     return lengths</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Create the chunks - took 1.5s</p>
-<p>Note:</p>
-<ul class="simple">
-<li><p>we are only chunking the first <code class="docutils literal notranslate"><span class="pre">totalNumberOfDocuments</span></code> from <code class="docutils literal notranslate"><span class="pre">..\data\docs\**\*.md</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> is the number of tokens a chunk should have</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">chunk_overlap</span></code> is the percentage of overlap between two chunks</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # totalNumberOfDocuments = 200</span>
-<span class="c1"># # Took 1.5s</span>
-<span class="c1"># chunk_size = 180</span>
-<span class="c1"># chunk_overlap = 30</span>
-<span class="c1"># fixed_chunks_output_prefix = &quot;fixed-size-chunks-engineering-mlops&quot;</span>
-
-<span class="c1"># # path_to_chunks_output = f&quot;./output/generated/{fixed_chunks_output_prefix}-{totalNumberOfDocuments}-{chunk_size}-{chunk_overlap}.json&quot;</span>
-<span class="c1"># path_to_chunks_output = f&quot;./output/generated/chunking/{</span>
-<span class="c1">#     fixed_chunks_output_prefix}-{chunk_size}-{chunk_overlap}.json&quot;</span>
-
-<span class="c1"># print(path_to_chunks_output)</span>
-
-
-<span class="c1"># chunks = create_chunks_and_save_to_file(</span>
-<span class="c1">#     documents, path_to_chunks_output, chunk_size=chunk_size, chunk_overlap=chunk_overlap)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>./output/generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json
-Creating chunks...
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 397/397 [00:01&lt;00:00, 262.54it/s]
-</pre></div>
-</div>
-</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the interest of time, we have already chunked the data from Solution Ops repo using Markdown Text Splitter using tiktoken encoder approach. The result can be found at <a class="reference download internal" download="" href="_downloads/a386584edd55612607aa4bbb3b7276f1/fixed-size-chunks-engineering-mlops-180-30.json"><span class="xref download myst">fixed-size-chunks-engineering-mlops-180-30.json.json</span></a></p>
 </div>
 <!-- In this workshop, to separate our experiments, we will take the _Full Reindex_ strategy by creating a new index -->
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %run -i ./helpers/search.ipynb</span>
-
-<span class="c1"># # 1. Create the new index</span>
-<span class="c1"># fixed_chunking_index_name = &quot;solution-ops-fixed-chunking-300-30&quot;</span>
-<span class="c1"># create_index(fixed_chunking_index_name)</span>
-
-<span class="c1"># # 2. Generate embeddings for the new chunks</span>
-<span class="c1"># generated_embeddings_path = f&quot;./output/generated/{fixed_chunks_output_prefix}-embedded-{totalNumberOfDocuments}-{chunk_size}-{chunk_overlap}.json&quot;</span>
-<span class="c1"># generate_embeddings_for_chunks_and_save_to_file(path_to_chunks_file=path_to_chunks_output, path_to_output=generated_embeddings_path)</span>
-
-<span class="c1"># # 3. Upload the embeddings to the new index</span>
-<span class="c1"># upload_data(file_path=generated_embeddings_path, search_index_name=fixed_chunking_index_name)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;solution-ops-fixed-chunking-300-30&#39; created or updated
-Embeddings were already created for chunked data at: ./output/generated/fixed-size-chunks-solution-ops-200-300-30.json 
-Uploaded 991 documents to Index: solution-ops-fixed-chunking-300-30
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="semantic-chunking">
@@ -1457,85 +1265,9 @@ Though pull-based model for data ingestion is the most fault tolerant model, its
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="id7">
-<h2>Analysis??<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
-<section id="create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker">
-<h3>👩‍💻 Create a function to chunk data from Solution-Ops using Semantic Chunker<a class="headerlink" href="#create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker" title="Permalink to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import json</span>
-
-
-<span class="c1"># def create_semantic_chunks_and_save_to_file(documents, path_to_output) -&gt; list:</span>
-<span class="c1">#     try:</span>
-<span class="c1">#         if os.path.exists(path_to_output):</span>
-<span class="c1">#             print(f&quot;Chunks already created at: {path_to_output} &quot;)</span>
-<span class="c1">#             return</span>
-<span class="c1">#         lengths = {}</span>
-<span class="c1">#         all_chunks = []</span>
-<span class="c1">#         chunk_id = 0</span>
-<span class="c1">#         # tqdm.tqdm(</span>
-<span class="c1">#         embeddings = AzureOpenAIEmbeddings(</span>
-<span class="c1">#             azure_deployment=azure_openai_embedding_deployment,</span>
-<span class="c1">#             openai_api_version=&quot;2023-05-15&quot;,</span>
-<span class="c1">#         )</span>
-
-<span class="c1">#         text_splitter = SemanticChunker(embeddings)</span>
-<span class="c1">#         for document in documents:</span>
-<span class="c1">#             content = document[0].page_content</span>
-<span class="c1">#             source = document[0].metadata[&quot;source&quot;]</span>
-
-<span class="c1">#             splitted_documents = text_splitter.create_documents(</span>
-<span class="c1">#                 [content])</span>
-<span class="c1">#             for i, splitted_content in enumerate(splitted_documents):</span>
-<span class="c1">#                 current_chunk_dict = {</span>
-<span class="c1">#                     &quot;chunkId&quot;: f&quot;chunk{chunk_id}_{i}&quot;,</span>
-<span class="c1">#                     &quot;chunkContent&quot;: splitted_content.page_content,</span>
-<span class="c1">#                     &quot;source&quot;: source,</span>
-<span class="c1">#                 }</span>
-<span class="c1">#                 chunk_id += 1</span>
-<span class="c1">#                 all_chunks.append(current_chunk_dict)</span>
-<span class="c1">#         with open(path_to_output, &quot;w&quot;) as f:</span>
-<span class="c1">#             json.dump(all_chunks, f)</span>
-<span class="c1">#     except Exception as e:</span>
-<span class="c1">#         print(f&quot;Error creating chunks: {e}&quot;)</span>
-<span class="c1">#     return all_chunks</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># totalNumberOfDocuments = 200</span>
-<span class="c1"># semantic_chunks_output_prefix = &quot;semantic-chunks-solution-ops&quot;</span>
-<span class="c1"># Took 9 mins</span>
-<span class="n">semantic_chunks_output_prefix</span> <span class="o">=</span> <span class="s2">&quot;semantic-chunks-engineering-mlops&quot;</span>
-
-<span class="n">path_to_semantic_chunks_output</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/chunking/</span><span class="si">{</span>
-<span class="w">    </span><span class="n">semantic_chunks_output_prefix</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">path_to_semantic_chunks_output</span><span class="p">)</span>
-
-<span class="n">chunks</span> <span class="o">=</span> <span class="n">create_semantic_chunks_and_save_to_file</span><span class="p">(</span>
-    <span class="n">documents</span><span class="p">,</span> <span class="n">path_to_semantic_chunks_output</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>./output/pre-generated/chunking/semantic-chunks-engineering-mlops.json
-</pre></div>
-</div>
-</div>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In the interest of time, we have already embedded the chunks using OAI embedding model:</p>
-<ul class="simple">
-<li><p>The pre-generated embeddings for Markdown Header Text Splitter can be found at <a class="reference download internal" download="" href="_downloads/d295485e187eb076b477aeb4e4dd33d7/fixed-size-chunks-180-30-engineering-mlops-ada.json"><span class="xref download myst">fixed-size-chunks-180-30-engineering-mlops-ada.json</span></a></p></li>
-<li><p>The pre-generated embeddings for Markdown Text Splitter using tiktoken encode can be found at <a class="reference download internal" download="" href="_downloads/0cdbe0ef61500f2626407bc52c5886ec/md-header-text-splitter-engineering-mlops-embedded-ada.json"><span class="xref download myst">md-header-text-splitter-engineering-mlops-embedded-ada</span></a></p></li>
-<li><p>The pre-generated embeddings for Semantic Chunking approach can be found at: <span class="xref myst">semantic-chunks-engineering-mlops-embedded-ada.json</span></p></li>
-</ul>
+<p>In the interest of time, we have already chunked the data from Solution Ops repo using Semantic Chunking approach. The result can be found at <a class="reference download internal" download="" href="_downloads/a1835e08e7cdef66768c87b2cca335c2/semantic-chunks-engineering-mlops.json"><span class="xref download myst">semantic-chunks-engineering-mlops.json</span></a></p>
 </div>
 <!-- # Use the built-in skillset: [SplitSkill](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-textsplit) -->
 </section>
@@ -1546,12 +1278,17 @@ Though pull-based model for data ingestion is the most fault tolerant model, its
 <p>Therefore, for each chunking strategy we will:</p>
 <ol class="arabic simple">
 <li><p>Create a new index. Note: make sure to give a relevant name.</p></li>
-<li><p>Embed the chunks that you have previously created.</p></li>
+<li><p>Embed the chunks that have been previously created. Note: In this experiment we are using AOI embedding model.</p></li>
 <li><p>Populate the index with chunks.</p></li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="doc std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>. By running the next cell, all the functions from search.ipynb will become available.</p>
+<p>In the interest of time, we have already embedded the chunks using OAI embedding model:</p>
+<ul class="simple">
+<li><p>The pre-generated embeddings for Markdown Header Text Splitter can be found at <a class="reference download internal" download="" href="_downloads/d295485e187eb076b477aeb4e4dd33d7/fixed-size-chunks-180-30-engineering-mlops-ada.json"><span class="xref download myst">fixed-size-chunks-180-30-engineering-mlops-ada.json</span></a></p></li>
+<li><p>The pre-generated embeddings for Markdown Text Splitter using tiktoken encode can be found at <a class="reference download internal" download="" href="_downloads/0cdbe0ef61500f2626407bc52c5886ec/md-header-text-splitter-engineering-mlops-embedded-ada.json"><span class="xref download myst">md-header-text-splitter-engineering-mlops-embedded-ada</span></a></p></li>
+<li><p>The pre-generated embeddings for Semantic Chunking approach can be found at: <span class="xref myst">semantic-chunks-engineering-mlops-embedded-ada.json</span></p></li>
+</ul>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1581,6 +1318,12 @@ Pre-generated embeddings for Semantic Chunks Splitter: ./output/pre-generated/em
 </div>
 </div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="doc std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>.</p>
+</div>
+<section id="create-3-search-indexes">
+<h3>Create 3 search indexes<a class="headerlink" href="#create-3-search-indexes" title="Permalink to this heading">#</a></h3>
 <p>Sample code for creating a new index and uploading the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1597,13 +1340,8 @@ Pre-generated embeddings for Semantic Chunks Splitter: ./output/pre-generated/em
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:21: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_40316\2555628560.py:21: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-  &quot;..\data\docs\code-with-engineering\**\*.md&quot;, totalNumberOfDocuments)
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;fixed-size-180-30&#39; created or updated
-Error uploading documents: azure.search.documents._generated.operations._documents_operations.DocumentsOperations.index() got multiple values for keyword argument &#39;error_map&#39;
+Uploaded 3236 documents to Index: fixed-size-180-30
 </pre></div>
 </div>
 </div>
@@ -1649,13 +1387,13 @@ Uploaded 1216 documents to Index: semantic-chunking
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>abc
-Index: &#39;markdwon-header-chunkig&#39; created or updated
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;markdwon-header-chunkig&#39; created or updated
 Uploaded 407 documents to Index: markdwon-header-chunkig
 </pre></div>
 </div>
 </div>
 </div>
+</section>
 <section id="evaluation-dataset">
 <h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
 <p>Note: The evaluation dataset can be found at <a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">solution-ops-200-qa.json</span></a>. The format is:</p>
@@ -1743,13 +1481,8 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 
             <span class="n">retrieved_documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">])</span>
                                    <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">search_response</span><span class="p">]</span>
-            <span class="c1"># print(&quot;Retrieved docs: &quot;)</span>
-            <span class="c1"># for doc in retrieved_documents:</span>
-            <span class="c1">#     print(doc)</span>
             <span class="n">top_retrieved_document</span> <span class="o">=</span> <span class="n">search_response</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span>
 
-            <span class="c1"># print(&quot;Expected doc: &quot;, os.path.normpath(expected_document))</span>
-            <span class="c1"># print(&quot;\n&quot;)</span>
 
             <span class="c1"># 2. Calculate cosine similarity between the expected document and the top retrieved document</span>
             <span class="n">cosine_similarity</span> <span class="o">=</span> <span class="n">calculate_cosine_similarity</span><span class="p">(</span>
@@ -1759,11 +1492,7 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
             <span class="c1"># 3. If the expected document is part of the retrieved documents,</span>
             <span class="c1"># we will consider it correctly retrieved</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">expected_document</span><span class="p">)</span> <span class="ow">in</span> <span class="n">retrieved_documents</span><span class="p">:</span>
-                <span class="c1"># print(&quot;Found&quot;)</span>
-                <span class="c1"># for doc in retrieved_documents:</span>
-                <span class="c1">#     print(doc)</span>
                 <span class="n">nr_correctly_retrieved_documents</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="c1"># print(&quot;\n&quot;)</span>
             <span class="n">nr_qa</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">accuracy</span> <span class="o">=</span> <span class="p">(</span><span class="n">nr_correctly_retrieved_documents</span> <span class="o">/</span> <span class="n">nr_qa</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
     <span class="nb">print</span><span class="p">(</span>
@@ -1952,7 +1681,6 @@ Median score: 0.8739910472047012
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Chunk the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Analysis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-fixed-size-chunking-strategy">👩‍💻 Create a function to chunk data from Solution-Ops using Fixed-Size Chunking Strategy</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-chunking">3. Semantic Chunking</a><ul class="nav section-nav flex-column">
@@ -1960,11 +1688,8 @@ Median score: 0.8739910472047012
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Analysis??</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-function-to-chunk-data-from-solution-ops-using-semantic-chunker">👩‍💻 Create a function to chunk data from Solution-Ops using Semantic Chunker</a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-3-search-indexes">Create 3 search indexes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯Evaluation Metrics</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-markdown-header-text-splitter-took-3-min">👩‍💻 1. Evaluate the Markdown Header Text Splitter - took 3 min</a></li>

@@ -178,7 +178,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Baseline implementation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="current nav bd-sidenav">
@@ -612,7 +612,7 @@ The length of the embedding is: 1536
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pre-generated embeddings using intfloat/e5-small-vs: ./output/pre-generated/embeddings/fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.json
-Pre-generated embeddings using text-embedding-ada-002: ./output/pre-generated/embeddings/fixed-size-chunks-180-30-engineering-mlops-ada.json
+Pre-generated embeddings using text-embedding-ada-002: ./output/pre-generated/embeddings/fixed-size-chunks-180-30-batch-engineering-mlops-ada.json
 </pre></div>
 </div>
 </div>
@@ -662,7 +662,7 @@ Therefore, for each embedding model we will:</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;fixed-size-chunks-180-30-batch-engineering-mlops-ada&#39; created or updated
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error uploading documents: azure.search.documents._generated.operations._documents_operations.DocumentsOperations.index() got multiple values for keyword argument &#39;error_map&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 3236 documents to Index: fixed-size-chunks-180-30-batch-engineering-mlops-ada
 </pre></div>
 </div>
 </div>

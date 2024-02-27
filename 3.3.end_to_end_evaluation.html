@@ -178,7 +178,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Baseline implementation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="current nav bd-sidenav">
@@ -398,9 +398,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#human-centric-metrics">Human-Centric Metrics</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#llm-as-judge">LLM as Judge</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#faithfulness-metric">Faithfulness metric</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relevance-metric">Relevance metric</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-metric">Similarity metric</a></li>
@@ -486,7 +484,7 @@ For each question:</p>
 <section id="llm-as-judge">
 <h3><a class="reference external" href="https://mlflow.org/docs/latest/llms/llm-evaluate/index.html#metrics-with-llm-as-the-judge">LLM as Judge</a><a class="headerlink" href="#llm-as-judge" title="Permalink to this heading">#</a></h3>
 <p>Set the LLM model that you would like to use as judge.
-Note: This steps assumes that you have previously deployed this model in your Azure OpenAI resource group.</p>
+Note: This step assumes that you have previously deployed this model in your Azure OpenAI resource group.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">judge_model</span> <span class="o">=</span> <span class="s2">&quot;openai:/gpt-35-turbo&quot;</span>
@@ -495,9 +493,8 @@ Note: This steps assumes that you have previously deployed this model in your Az
 </div>
 </div>
 </section>
-</section>
 <section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
@@ -510,20 +507,16 @@ Note: This steps assumes that you have previously deployed this model in your Az
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">azureml.core</span> <span class="kn">import</span> <span class="n">Workspace</span>
-<span class="kn">from</span> <span class="nn">getpass</span> <span class="kn">import</span> <span class="n">getpass</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">openai</span>
 <span class="kn">import</span> <span class="nn">mlflow</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="n">azure_openai_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_KEY&quot;</span><span class="p">]</span>
-<span class="n">azure_aoai_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_ENDPOINT&quot;</span><span class="p">]</span>
-<span class="n">aoi_deployment_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_CHAT_DEPLOYMENT_NAME&quot;</span><span class="p">]</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_KEY&quot;</span><span class="p">,</span> <span class="n">azure_openai_key</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_BASE&quot;</span><span class="p">,</span> <span class="n">azure_aoai_endpoint</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_VERSION&quot;</span><span class="p">,</span> <span class="s2">&quot;2023-05-15&quot;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_API_TYPE&quot;</span><span class="p">,</span> <span class="s2">&quot;azure&quot;</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_DEPLOYMENT_NAME&quot;</span><span class="p">,</span> <span class="n">aoi_deployment_name</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;OPENAI_DEPLOYMENT_NAME&quot;</span><span class="p">,</span> <span class="n">azure_openai_judge</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -533,6 +526,7 @@ Note: This steps assumes that you have previously deployed this model in your Az
 </div>
 </div>
 </div>
+</section>
 <section id="faithfulness-metric">
 <h3>Faithfulness metric<a class="headerlink" href="#faithfulness-metric" title="Permalink to this heading">#</a></h3>
 <p>This metric evaluates how faithful the model’s generated output is to the context provided. High scores mean that the outputs contain information that is in line with the context, while low scores mean that outputs may disagree with the context (input is ignored). It uses <a class="reference external" href="https://en.wikipedia.org/wiki/Likert_scale">Likert scale</a>.</p>
@@ -758,6 +752,7 @@ mlflow_tracking_uri = ws.get_mlflow_tracking_uri()
 </div>
 </div>
 </div>
+<p>Create an evaluation function</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
@@ -857,7 +852,8 @@ mlflow_tracking_uri = ws.get_mlflow_tracking_uri()
 <details markdown="1">
 <summary> 🔍 Pre-calculated results: </summary>
 <p><img alt="results.png" src="_images/results.png" /></p>
-</details></section>
+</details>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -930,9 +926,7 @@ mlflow_tracking_uri = ws.get_mlflow_tracking_uri()
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#human-centric-metrics">Human-Centric Metrics</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#llm-as-judge">LLM as Judge</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#faithfulness-metric">Faithfulness metric</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relevance-metric">Relevance metric</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-metric">Similarity metric</a></li>

@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'pre-requisites';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="RAG - Implementation" href="2.rag-implementation.html" />
+    <link rel="next" title="RAG - Baseline implementation" href="2.rag-implementation.html" />
     <link rel="prev" title="Context" href="context.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -178,7 +178,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Baseline implementation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="nav bd-sidenav">
@@ -478,11 +478,13 @@ If the dependencies were not installed, run</p>
 
 <span class="n">service_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_SEARCH_SERVICE_ENDPOINT&quot;</span><span class="p">]</span>
 <span class="n">search_index_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_SEARCH_ADMIN_KEY&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_SEARCH_ADMIN_KEY&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+
 <span class="n">azure_aoai_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_ENDPOINT&quot;</span><span class="p">]</span> <span class="c1"># your endpoint should look like the following https://YOUR_RESOURCE_NAME.openai.azure.com/</span>
 <span class="n">azure_openai_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_KEY&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_KEY&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
 <span class="n">azure_openai_embedding_deployment</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;</span><span class="p">]</span> <span class="c1"># used to be called azure_openai_embedding_deployment</span>
 <span class="n">azure_openai_chat_deployment</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_CHAT_DEPLOYMENT_NAME&quot;</span><span class="p">]</span>
 <span class="n">azure_openai_api_version</span> <span class="o">=</span> <span class="s2">&quot;2023-07-01-preview&quot;</span>
+<span class="n">azure_openai_judge</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_JUDGE_DEPLOYMENT&quot;</span><span class="p">]</span>
 
 <span class="n">credential</span> <span class="o">=</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">search_index_key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DefaultAzureCredential</span><span class="p">()</span>
 
@@ -494,7 +496,7 @@ If the dependencies were not installed, run</p>
 <span class="n">pregenerated_md_header_chunks</span> <span class="o">=</span>  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/chunking/md-header-text-splitter-engineering-mlops.json&quot;</span>
 <span class="n">pregenerated_semantic_chunks</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/chunking/semantic-chunks-engineering-mlops.json&quot;</span>
 
-<span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/fixed-size-chunks-180-30-engineering-mlops-ada.json&quot;</span>
+<span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/fixed-size-chunks-180-30-batch-engineering-mlops-ada.json&quot;</span>
 <span class="n">pregenerated_fixed_size_chunks_emebddings_os</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.json&quot;</span>
 
 <span class="n">pregenerated_markdown_header_chunks_embeddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/md-header-text-splitter-engineering-mlops-embedded-ada.json&quot;</span>
@@ -551,7 +553,7 @@ If the dependencies were not installed, run</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">RAG - Implementation</p>
+        <p class="prev-next-title">RAG - Baseline implementation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
