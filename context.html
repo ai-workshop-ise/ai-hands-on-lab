@@ -396,6 +396,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="context">
 <h1>Context<a class="headerlink" href="#context" title="Permalink to this heading">#</a></h1>
+<p>In this workshop we aim to create a Question-Answer (QA) system using RAG architecture. We are using <a class="reference external" href="https://github.com/cse-labs/opsplaybook">Solution Ops</a> repository as the corpus on which we would like to be able to easily retrieve answers. The repo has been added as a submodule in the current repository in <span class="xref myst">data</span>.</p>
+<p>We have identified that most of the content in Solution Ops is present in <a class="reference external" href="https://github.com/cse-labs/opsplaybook/tree/main/docs/code-with-engineering">code-with-engineeer</a> and <a class="reference external" href="https://github.com/cse-labs/opsplaybook/tree/main/docs/code-with-mlops">code-with-mlops</a> sections. Therefore, we have decided to focus only on those two parts. More information on the analysis can be found <a class="reference internal" href="5.1.generation-qa.html"><span class="doc std std-doc">here</span></a>.</p>
+<p>We will start with a <a class="reference internal" href="2.rag-implementation.html"><span class="doc std std-doc">baseline RAG implementation</span></a>, where we will take the most obvious choices. Afterwards we will go through two experiments <a class="reference internal" href="3.1.experiment_embedding.html"><span class="doc std std-doc">Experiment 1</span></a> and <a class="reference internal" href="3.2.experiment_chunking.html"><span class="doc std std-doc">Experiment 2</span></a> where we will focus on different aspects of a RAG solution, such as: embedding and chunking. Afterwards, we will build a new RAG solution, using the best choices, as resulted in the two experiments.</p>
+<p>Finally, we will evaluate the system’s performance end to end.</p>
+<p>After looking at different aspects of a RAG solution, experimenting and evaluating, we will look into A/B testing and post-production related topics.</p>
 </section>
 
     <script type="text/x-thebe-config">

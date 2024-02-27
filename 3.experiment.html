@@ -461,6 +461,7 @@ As you build out your experimentation process for search, reference the [Things 
 <ul class="simple">
 <li><p><strong>Retrieval Component</strong> - responsible to retrieve the most relevant documents from the Index, based on the input query.</p></li>
 <li><p><strong>Generative Component</strong> - responsible to return a response, based on the input query and extracted documents.</p></li>
+<li><p><strong>End-to-end Solution</strong> - given a question, the RAG solution is responsible to formulate an answer which is grounded in relevant data.</p></li>
 </ul>
 </div>
 <section id="evaluation-dataset">
@@ -478,15 +479,16 @@ As you build out your experimentation process for search, reference the [Things 
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In our workshop, we followed the third option and we generated the data using an LLM (GPT4). You can find the generated data in <span class="xref myst">solution-ops-200-qa-generated-answer</span>. You can find in <a class="reference internal" href="generate-qa.html"><span class="doc std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
-<p>The evaluation data is composed of:</p>
+<p>In our workshop, we followed the third option and we generated the data using an LLM (GPT4). You can find the generated data in <a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">qa_pairs_solutionops</span></a>. You can find in <a class="reference internal" href="5.1.generation-qa.html"><span class="doc std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
+<p>The evaluation data consists of:</p>
 <ul class="simple">
-<li><p>question: the user question</p></li>
-<li><p>citation: the piece(s) of text that contains the relevant content to answer the user question</p></li>
-<li><p>answer: the final answer in a human readable/friendly format</p></li>
+<li><p>user_prompt: the input question</p></li>
+<li><p>context: the piece(s) of text that contains the relevant content to answer the input question</p></li>
+<li><p>output_prompt: the final answer in a human readable/friendly format</p></li>
 </ul>
-<p>For the <strong>Retrieval Component</strong>, the dataset is composed of question and citation. Evaluating the Retrieval Component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s).</p>
-<p>For the <strong>Generative Component</strong>, the dataset is composted of question, citation and answer. Evaluating the Generative Component means to evaluate if for a given query (user question) and a given set of retrieved documented, the engine is returning good answer. TODO: “GOOD answer? refer here to metrics</p>
+<p>For the <strong>Retrieval Component</strong>, the dataset is composed of question and citation (context). Evaluating the Retrieval Component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s).</p>
+<p>For the <strong>Generative Component</strong>, the dataset is composted of question, citation (context) and answer (output_prompt). Evaluating the Generative Component means to evaluate if for a given query (user question) and a given set of retrieved documented, the engine is returning a good answer.</p>
+<p>For the <strong>End-to-end Solution</strong>, we evaluate if for a given question, the system is able to retrieve relevant documents and formulate an answer.</p>
 </div>
 </section>
 <section id="evaluation-metrics">
@@ -503,7 +505,7 @@ This is easier said than done. We are developing systems where the results are f
 <!-- A RAG solution is a system that combines retrieval and generation to produce natural language outputs based on relevant information from a large corpus of documents. To evaluate the performance of a RAG solution, you need to consider both the quality of the retrieved documents and the quality of the generated outputs. These components (retrieval & generative part) must be evaluated individually before evaluating the end-to-end solution. -->
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In our workshop, we will focus on the technical evaluation for both components:</p>
+<p>In our workshop, we will focus on the technical evaluation for two components:</p>
 <ul>
 <li><p>For the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-retrieval-component">Retrieval Component</a></p>
 <ul>
@@ -513,7 +515,7 @@ This is easier said than done. We are developing systems where the results are f
 </li>
 </ul>
 </li>
-<li><p>For the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-generative-component">Generative Component</a></p>
+<li><p>For the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-generative-component">End-to-end Solution</a></p>
 <ul class="simple">
 <li><p>We will look at human-centric metrics (<a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-model-monitoring-generative-ai-evaluation-metrics?view=azureml-api-2">Groundedness, Relevance, Coherence, Similarity, Fluency</a>) using <a class="reference external" href="https://arxiv.org/pdf/2311.09476.pdf">another LLM as judge approach</a>.</p></li>
 </ul>
