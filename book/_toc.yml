@@ -18,13 +18,14 @@ parts:
   - file: 3.1.experiment_embedding
   # - file: 3.2.experiment_search
   - file: 3.2.experiment_chunking
-  - file: 3.3.experiment_model
+  - file: 3.3.end_to_end_evaluation
 - caption: 4. Production
   chapters:
   - file: 10.evaluation-production
-- caption: 5. Appendix
+- caption: Appendix
   chapters:
   - file: 5.1.generation-qa
+
 # chapters:
 # - file: 1.rag-intro
 # - file: context
