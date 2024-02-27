@@ -174,28 +174,24 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../1.rag-intro.html">RAG - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../context.html">Context</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../pre-requisites.html">Pre-requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pre-requisites.html">Setup</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../2.rag-implementation.html">RAG - Implementation</a></li>
-
-
-
-
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../3.3.experiment_model.html">3.3. Language Models Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.3.end_to_end_evaluation.html">End-to-end evaluation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../10.evaluation-production.html">Post-production</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">5. Appendix</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../5.1.generation-qa.html">Generation of synthetic data</a></li>
 
@@ -398,9 +394,13 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Create Index Function</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunking-function">Create Chunking Function</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-embeddings-function">Create Embeddings Function</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-embeddings-functions">Create Embeddings Functions</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-data-to-the-index-function">Upload data to the Index Function</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-using-open-source-model-for-fixed-size-chunking">Generate embeddings using open source model for fixed size chunking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-using-open-source-model-for-semantic-chunking">Generate embeddings using open source model for semantic chunking</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#search-documents-function">Search documents Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-prompt">Create a prompt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#call-llm">Call LLM</a></li>
 </ul>
 </li>
 </ul>
@@ -543,8 +543,7 @@ document.write(`
 <h1>Create Chunking Function<a class="headerlink" href="#create-chunking-function" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tqdm</span>
-<span class="kn">import</span> <span class="nn">glob</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">from</span> <span class="nn">langchain_community.document_loaders</span> <span class="kn">import</span> <span class="n">UnstructuredFileLoader</span>
 <span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">MarkdownTextSplitter</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -552,13 +551,71 @@ document.write(`
 </div>
 </div>
 </div>
+<p>Create chunks using markdown text splitter</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_documents_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">MarkdownHeaderTextSplitter</span>
+
+
+<span class="k">def</span> <span class="nf">create_md_header_chunks_and_save_to_file</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="n">path_to_output</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chunks already created at: </span><span class="si">{</span><span class="n">path_to_output</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">all_chunks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">chunk_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># tqdm.tqdm(</span>
+        <span class="n">headers_to_split_on</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="s2">&quot;Header 1&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;##&quot;</span><span class="p">,</span> <span class="s2">&quot;Header 2&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;###&quot;</span><span class="p">,</span> <span class="s2">&quot;Header 3&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="n">markdown_splitter</span> <span class="o">=</span> <span class="n">MarkdownHeaderTextSplitter</span><span class="p">(</span>
+            <span class="n">headers_to_split_on</span><span class="o">=</span><span class="n">headers_to_split_on</span><span class="p">,</span> <span class="n">strip_headers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">:</span>
+            <span class="n">current_chunks_text_list</span> <span class="o">=</span> <span class="n">markdown_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span>
+                <span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">current_chunks_text_list</span><span class="p">):</span>
+
+                <span class="n">current_chunk_dict</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;chunkId&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;chunk</span><span class="si">{</span><span class="n">chunk_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;chunkContent&quot;</span><span class="p">:</span> <span class="n">chunk</span><span class="o">.</span><span class="n">page_content</span><span class="p">,</span>
+                    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="n">all_chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_chunk_dict</span><span class="p">)</span>
+            <span class="n">chunk_id</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_output</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">all_chunks</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error creating chunks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">all_chunks</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># path_to_output = f&quot;./output/pre-generated/chunking/md-header-text-splitter-engineering-mlops.json&quot;</span>
+
+<span class="c1"># create_md_header_chunks_and_save_to_file(documents, path_to_output)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
+<span class="k">def</span> <span class="nf">load_documents_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">totalNumberOfDocuments</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading documents...&quot;</span><span class="p">)</span>
     <span class="n">markdown_documents</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="n">document</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
         <span class="n">markdown_documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
@@ -583,7 +640,7 @@ document.write(`
     <span class="n">lengths</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">all_chunks</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">chunk_id</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">documents</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">:</span>
         <span class="n">current_chunks_text_list</span> <span class="o">=</span> <span class="n">markdown_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span>
             <span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span>
         <span class="p">)</span>  <span class="c1"># output = [&quot;content chunk1&quot;, &quot;content chunk2&quot;, ...]</span>
@@ -616,8 +673,9 @@ document.write(`
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="create-embeddings-function">
-<h1>Create Embeddings Function<a class="headerlink" href="#create-embeddings-function" title="Permalink to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="create-embeddings-functions">
+<h1>Create Embeddings Functions<a class="headerlink" href="#create-embeddings-functions" title="Permalink to this heading">#</a></h1>
+<p>Create embeddings using AOI:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
@@ -648,7 +706,8 @@ document.write(`
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shrinked!!1&quot;</span><span class="p">)</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">[:</span><span class="mi">8000</span><span class="p">]</span>
     <span class="c1"># print(len(query))</span>
-    <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span>
+<span class="w">        </span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">}</span>
     <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
     <span class="n">embedding_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
@@ -674,51 +733,55 @@ document.write(`
 </div>
 </div>
 </div>
+<p>Create embeddings using OpenAI</p>
+<p>Create embeddings using AOI in batch:</p>
+<p>Took 48s</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;abcdefr&quot;</span>
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+
+<span class="k">def</span> <span class="nf">generate_embeddings_for_chunks_in_batch</span><span class="p">(</span><span class="n">path_to_chunked_documents</span><span class="p">,</span> <span class="n">path_to_output_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate embeddings for chunked data</span>
+<span class="sd">    Args:</span>
+<span class="sd">    path_to_chunked_documents: str: path to the input file</span>
+<span class="sd">    path_to_output_file: str: path to the output file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span>
+<span class="w">                </span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> &quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_chunked_documents</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+            <span class="n">num_chunks</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_chunks</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+                <span class="n">batch_chunks</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">]</span>
+                <span class="n">batch_chunks_content</span> <span class="o">=</span> <span class="p">[</span><span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
+                                        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">batch_chunks</span><span class="p">]</span>
+                <span class="n">batch_embeddings</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span>
+                    <span class="n">batch_chunks_content</span><span class="p">,</span> <span class="n">batch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_chunks</span><span class="p">):</span>
+                    <span class="c1"># print(&quot;j : &quot;, j)</span>
+                    <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">batch_embeddings</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="c1"># content = chunk[&quot;chunkContent&quot;]</span>
+                    <span class="c1"># content_embeddings = oai_query_embedding(content)</span>
+                    <span class="c1"># chunk[&quot;chunkContentVector&quot;] = content_embeddings</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate embeddings for chunks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>abc
-</pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;abc&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># def embed_input(query,</span>
-<span class="c1">#                 endpoint=azure_aoai_endpoint,</span>
-<span class="c1">#                 api_key=azure_openai_key,</span>
-<span class="c1">#                 api_version=&quot;2023-07-01-preview&quot;,</span>
-<span class="c1">#                 embedding_model_deployment=azure_openai_embedding_deployment):</span>
-<span class="c1">#     request_url = f&quot;{endpoint}/openai/deployments/{embedding_model_deployment}/embeddings?api-version={api_version}&quot;</span>
-<span class="c1">#     headers = {&quot;Content-Type&quot;: &quot;application/json&quot;, &quot;api-key&quot;: api_key}</span>
-<span class="c1">#     request_payload = {&quot;input&quot;: query}</span>
-<span class="c1">#     embedding_response = requests.post(</span>
-<span class="c1">#         request_url, json=request_payload, headers=headers, timeout=None</span>
-<span class="c1">#     )</span>
-<span class="c1">#     return embedding_response</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Create embeddings using AOI and save to file:</p>
+<p>Took 16 mins</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_embeddings_for_chunks_and_save_to_file</span><span class="p">(</span><span class="n">path_to_chunks_file</span><span class="p">,</span> <span class="n">path_to_output</span><span class="p">):</span>
@@ -753,6 +816,29 @@ document.write(`
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">intfloat_e5_small_v2_query_embedding</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)):</span>
+    <span class="n">embedded_input</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">chunk</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>  <span class="c1"># Note that the type is a ndarray.</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">embedded_input</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="p">)</span>  <span class="c1"># We need to reshape the array to be a list of floats</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\tqdm\auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="upload-data-to-the-index-function">
 <h1>Upload data to the Index Function<a class="headerlink" href="#upload-data-to-the-index-function" title="Permalink to this heading">#</a></h1>
@@ -777,6 +863,80 @@ document.write(`
 </div>
 </div>
 </div>
+<section id="generate-embeddings-using-open-source-model-for-fixed-size-chunking">
+<h2>Generate embeddings using open source model for fixed size chunking<a class="headerlink" href="#generate-embeddings-using-open-source-model-for-fixed-size-chunking" title="Permalink to this heading">#</a></h2>
+<p>Took 22 minutes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">embed_chunk</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)):</span>
+    <span class="n">embedded_input</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">chunk</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>  <span class="c1"># Note that the type is a ndarray.</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">embedded_input</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="p">)</span>  <span class="c1"># We need to reshape the array to be a list of floats</span>
+
+
+<span class="k">def</span> <span class="nf">generate_embeddings_with_intfloat_e5_small_v2</span><span class="p">(</span>
+    <span class="n">path_to_input_file</span><span class="p">,</span> <span class="n">path_to_output_file</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span>
+<span class="w">                </span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> &quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_input_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
+                <span class="n">content_emebddings</span> <span class="o">=</span> <span class="n">embed_chunk</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+                <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_emebddings</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate embeddings for chunks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># e5_small_v2_prefix = &quot;fixed-size-chunks-180-30-engineering-mlops-e5-small-v2&quot;</span>
+<span class="c1"># path_to_output_file = f&quot;../output/pre-generated/embeddings/{</span>
+<span class="c1">#     e5_small_v2_prefix}.json&quot;</span>
+<span class="c1"># pregenerated_fixed_size_chunks = &#39;../output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json&#39;</span>
+<span class="c1"># generate_embeddings_with_intfloat_e5_small_v2(</span>
+<span class="c1">#     path_to_input_file=pregenerated_fixed_size_chunks,</span>
+<span class="c1">#     path_to_output_file=path_to_output_file,</span>
+<span class="c1"># )</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-embeddings-using-open-source-model-for-semantic-chunking">
+<h2>Generate embeddings using open source model for semantic chunking<a class="headerlink" href="#generate-embeddings-using-open-source-model-for-semantic-chunking" title="Permalink to this heading">#</a></h2>
+<p>Took 12 minutes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># path_to_chunked_documents = &quot;../output/pre-generated/chunking/semantic-chunks-engineering-mlops.json&quot;</span>
+<span class="c1"># e5_small_v2_prefix = &quot;semantic-chunking-engineering-mlops-e5-small-v2&quot;</span>
+<span class="c1"># path_to_output_file = f&quot;../output/pre-generated/embeddings/{</span>
+<span class="c1">#     e5_small_v2_prefix}.json&quot;</span>
+<span class="c1"># generate_embeddings_with_intfloat_e5_small_v2(</span>
+<span class="c1">#     path_to_input_file=path_to_chunked_documents,</span>
+<span class="c1">#     path_to_output_file=path_to_output_file,</span>
+<span class="c1"># )</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="search-documents-function">
 <h2>Search documents Function<a class="headerlink" href="#search-documents-function" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -801,13 +961,70 @@ document.write(`
     <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
         <span class="n">item</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">item</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
-        <span class="n">item</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+        <span class="n">item</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">])</span>
         <span class="n">item</span><span class="p">[</span><span class="s2">&quot;chunkId&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s2">&quot;chunkId&quot;</span><span class="p">]</span>
         <span class="n">item</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s1">&#39;@search.score&#39;</span><span class="p">]</span>
         <span class="n">item</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span>
         <span class="n">documents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">documents</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-a-prompt">
+<h2>Create a prompt<a class="headerlink" href="#create-a-prompt" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_prompt</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">documents</span><span class="p">):</span>
+    <span class="n">system_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">    Instructions:</span>
+
+<span class="s2">    &quot;You are an AI assistant that helps users answer questions given a specific context.</span>
+<span class="s2">    You will be given a context (&quot;chunkContent&quot;) in Retrieved Documents and will be asked a question (User Question) based on that context.</span>
+<span class="s2">    Your answer should be as precise as possible and should only come from the context.</span>
+<span class="s2">    Please add citation after each sentence when possible in a form &quot;(Source: source+chunkId),</span>
+<span class="s2">    where both &#39;source&#39; and &#39;chunkId&#39; are taken from the Retrieved Documents.&quot;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">user_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    ## Retrieve Documents:</span>
+<span class="s2">    </span><span class="si">{</span><span class="n">documents</span><span class="si">}</span>
+
+<span class="s2">    ## User Question</span>
+<span class="s2">    </span><span class="si">{</span><span class="n">query</span><span class="si">}</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">final_message</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_prompt</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">user_prompt</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">END OF CONTEXT&quot;</span><span class="p">},</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">final_message</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="call-llm">
+<h2>Call LLM<a class="headerlink" href="#call-llm" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">AzureOpenAI</span>
+
+
+<span class="k">def</span> <span class="nf">call_llm</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]):</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">AzureOpenAI</span><span class="p">(</span>
+        <span class="n">api_key</span><span class="o">=</span><span class="n">azure_openai_key</span><span class="p">,</span>
+        <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span>
+        <span class="n">azure_endpoint</span><span class="o">=</span><span class="n">azure_aoai_endpoint</span>
+    <span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">azure_openai_chat_deployment</span><span class="p">,</span> <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
 </pre></div>
 </div>
 </div>
@@ -863,9 +1080,13 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Create Index Function</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-chunking-function">Create Chunking Function</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-embeddings-function">Create Embeddings Function</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#create-embeddings-functions">Create Embeddings Functions</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#upload-data-to-the-index-function">Upload data to the Index Function</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-using-open-source-model-for-fixed-size-chunking">Generate embeddings using open source model for fixed size chunking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-using-open-source-model-for-semantic-chunking">Generate embeddings using open source model for semantic chunking</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#search-documents-function">Search documents Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-prompt">Create a prompt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#call-llm">Call LLM</a></li>
 </ul>
 </li>
 </ul>

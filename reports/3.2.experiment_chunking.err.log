@@ -1,46 +1,46 @@
 Traceback (most recent call last):
-  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 778, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_core\utils\__init__.py", line 198, in ensure_async
+    result = await obj
+             ^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_client\channels.py", line 315, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
-  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 1305, in execute
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1305, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
     return loop.run_until_complete(inner)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\adnegrau\AppData\Local\anaconda3\Lib\asyncio\base_events.py", line 653, in run_until_complete
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 685, in run_until_complete
     return future.result()
            ^^^^^^^^^^^^^^^
-  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 705, in async_execute
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "c:\Projects\Workshop2024\.venv\Lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-# totalNumberOfDocuments = 200
-# semantic_chunks_output_prefix = "semantic-chunks-solution-ops"
-# Took 9 mins
-semantic_chunks_output_prefix = "semantic-chunks-engineering-mlops"
-
-path_to_semantic_chunks_output = f"./output/pre-generated/chunking/{semantic_chunks_output_prefix}.json"
-print(path_to_semantic_chunks_output)
-
-chunks = create_semantic_chunks_and_save_to_file(
-    documents, path_to_semantic_chunks_output)
-------------------
-
------ stdout -----
-./output/pre-generated/chunking/semantic-chunks-engineering-mlops.json
-------------------
-
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mNameError[0m                                 Traceback (most recent call last)
-Cell [1;32mIn[34], line 9[0m
-[0;32m      6[0m path_to_semantic_chunks_output [38;5;241m=[39m [38;5;124mf[39m[38;5;124m"[39m[38;5;124m./output/pre-generated/chunking/[39m[38;5;132;01m{[39;00msemantic_chunks_output_prefix[38;5;132;01m}[39;00m[38;5;124m.json[39m[38;5;124m"[39m
-[0;32m      7[0m [38;5;28mprint[39m(path_to_semantic_chunks_output)
-[1;32m----> 9[0m chunks [38;5;241m=[39m [43mcreate_semantic_chunks_and_save_to_file[49m(
-[0;32m     10[0m     documents, path_to_semantic_chunks_output)
-
-[1;31mNameError[0m: name 'create_semantic_chunks_and_save_to_file' is not defined
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1001, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 802, in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 852, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 100 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+%%capture --no-display
+paths = [os.path.normpath("..\data\docs\code-with-engineering\**\*.md"),
+         os.path.normpath("..\data\docs\code-with-mlops\**\*.md")]
+documents = load_documents_from_folder(
+    paths)
+-------------------
 

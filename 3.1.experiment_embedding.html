@@ -174,28 +174,24 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Pre-requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Setup</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Implementation</a></li>
-
-
-
-
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_model.html">3.3. Language Models Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.end_to_end_evaluation.html">End-to-end evaluation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">5. Appendix</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="5.1.generation-qa.html">Generation of synthetic data</a></li>
 
@@ -397,17 +393,19 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-overview">Experiment Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-text-embedding-ada-002-from-openai">1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-e5-small-v2-from-hugging-face">👩‍💻 2. Use e5-small-v2 from Hugging Face</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-text-embedding-ada-002-from-openai">1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-intfloat-e5-small-v2-from-hugging-face">2. Use <code class="docutils literal notranslate"><span class="pre">intfloat/e5-small-v2</span></code> from Hugging Face</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-two-indexes">👩‍💻 Create two indexes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-new-index-and-upload-the-embeddings-created-with-intfloat-e5-small-v2-model">👩‍💻 Create a new index and upload the embeddings created with intfloat/e5-small-v2 model.</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-using-open-source-model-took-22-minutes">Generate embeddings using open source model - took 22 minutes.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯 Evaluation metrics</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model-took-3min">👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model - took 3min</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model-took-4-40-min">👩‍💻2.Evaluate the system using <em>infloat/e5-small-v2</em> model - took 4.40 min</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model">👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model">👩‍💻2. Evaluate the system using <em>infloat/e5-small-v2</em> model</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
@@ -425,14 +423,14 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="embeddings-experiment">
 <h1>3.1. Embeddings Experiment<a class="headerlink" href="#embeddings-experiment" title="Permalink to this heading">#</a></h1>
 <p>According to <a class="reference external" href="https://mitsloan.mit.edu/ideas-made-to-matter/tapping-power-unstructured-data">multiple estimates</a>, 80% of data generated by businesses today is unstructured data such as text, images, or audio. This data has enormous potential for machine learning applications, but there is <em>some</em> work to be done before it can be used directly. <a class="reference external" href="https://medium.com/analytics-vidhya/introduction-to-word-embeddings-c2ba135dce2f">Embeddings</a> are the backbone of our system. Our goal is to understand how different embeddings have an impact on the returned results for a given query.</p>
-<!-- relevancy of -->
-<section id="experiment-overview">
-<h2>Experiment Overview<a class="headerlink" href="#experiment-overview" title="Permalink to this heading">#</a></h2>
-<p>Which Embeddings Model to use?! Glad you asked! There are several embedding options:</p>
+<p>Which Embeddings Model to use?! Glad you asked! There are several options available:</p>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://openai.com/blog/new-embedding-models-and-api-updates?ref=haihai.ai">OpenAI models</a>, such as: <a class="reference external" href="https://platform.openai.com/docs/guides/embeddings/what-are-embeddings">text-embedding-ada-002</a>, text-embedding-3-small, text-embedding-3-large</p></li>
 <li><p>Open source models, which you can find at <a class="reference external" href="https://huggingface.co/models">HuggingFace</a>. The <a class="reference external" href="https://huggingface.co/spaces/mteb/leaderboard">MTEB Leaderboard</a> ranks the performance of embeddings models on a few axis, though not all models can be run locally.</p></li>
 </ol>
+<!-- relevancy of -->
+<section id="experiment-overview">
+<h2>Experiment Overview<a class="headerlink" href="#experiment-overview" title="Permalink to this heading">#</a></h2>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>Topic</strong></p></th>
@@ -450,10 +448,10 @@ document.write(`
 <td><p>We will look at Accuracy and Cosine Similarity to compare the performance.</p></td>
 </tr>
 <tr class="row-odd"><td><p>📊 <strong>Data</strong></p></td>
-<td><p>The data that we will use consists of <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository which were previously pre-chunked in chunks of 180 tokens with 30% overlap <span class="xref myst">fixed-size-chunks-engineering-mlops-180-30.json</span>.</p></td>
+<td><p>The data that we will use consists of <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository which were previously pre-chunked in chunks of 180 tokens with 30% overlap <a class="reference download internal" download="" href="_downloads/a386584edd55612607aa4bbb3b7276f1/fixed-size-chunks-engineering-mlops-180-30.json"><span class="xref download myst">fixed-size-chunks-engineering-mlops-180-30.json</span></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p>📊 <strong>Evaluation Dataset</strong></p></td>
-<td><p>200 question-answer pairs generated from <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository. See <a class="reference internal" href="5.1.generation-qa.html"><span class="doc std std-doc">Generation QA Notebook</span></a> for insights on how they were generated.</p></td>
+<td><p><a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">300 question-answer</span></a> pairs generated from <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository. See <a class="reference internal" href="5.1.generation-qa.html"><span class="doc std std-doc">Generation QA Notebook</span></a> for insights on how they were generated.</p></td>
 </tr>
 </tbody>
 </table>
@@ -487,22 +485,23 @@ Before we try out different embedding models, let's first try to understand the 
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
 
-<span class="c1"># This is the path to the dataset that we want to embed</span>
-<span class="n">chunking_size</span> <span class="o">=</span> <span class="mi">180</span>
-<span class="n">chunking_overlap</span> <span class="o">=</span> <span class="mi">30</span>
-<span class="n">fixed_chunks_output_prefix</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-engineering-mlops&quot;</span>
-<span class="n">path_to_chunked_documents</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/chunking/</span><span class="si">{</span><span class="n">fixed_chunks_output_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
-
-<span class="c1"># This is the path to the evaluation dataset</span>
-<span class="n">path_to_evaulation_dataset</span> <span class="o">=</span> <span class="s2">&quot;./output/qa/evaluation/solution-ops-200-qa.json&quot;</span> 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Evaluation dataset: </span><span class="si">{</span><span class="n">path_to_evaulation_dataset</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-chunked documents: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluation dataset: ./output/qa/evaluation/qa_pairs_solutionops.json
+Pre-chunked documents: ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json
 </pre></div>
 </div>
 </div>
 </div>
+</section>
 <section id="use-text-embedding-ada-002-from-openai">
-<h3>1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI<a class="headerlink" href="#use-text-embedding-ada-002-from-openai" title="Permalink to this heading">#</a></h3>
+<h2>1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI<a class="headerlink" href="#use-text-embedding-ada-002-from-openai" title="Permalink to this heading">#</a></h2>
 <p>This model has a maximum token limit of <a class="reference external" href="https://platform.openai.com/docs/guides/embeddings/embedding-models">8191</a>. Usage is priced per input token, it is available either as Pay-As-You-Go or as Provisioned Throughput Units (PTUs) model. More price related info can be found <a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/">here</a>.</p>
-<p><strong>1.1 Create a function which is responsible to embed an input query using <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code></strong></p>
+<p>Let’s create a function which is responsible to embed an input query using `text-embedding-ada-002. We will use the REST API, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/reference?WT.mc_id=AZ-MVP-5004796#embeddings">here</a> you can see the documentation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
@@ -513,8 +512,7 @@ Before we try out different embedding models, let's first try to understand the 
     <span class="n">endpoint</span><span class="o">=</span><span class="n">azure_aoai_endpoint</span><span class="p">,</span>
     <span class="n">api_key</span><span class="o">=</span><span class="n">azure_openai_key</span><span class="p">,</span>
     <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span>
-    <span class="n">embedding_model_deployment</span><span class="o">=</span><span class="n">azure_openai_embedding_deployment</span><span class="p">,</span>
-    <span class="n">batch</span><span class="o">=</span><span class="kc">False</span>
+    <span class="n">embedding_model_deployment</span><span class="o">=</span><span class="n">azure_openai_embedding_deployment</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Query the OpenAI Embedding model to get the embeddings for the given query.</span>
@@ -528,7 +526,8 @@ Before we try out different embedding models, let's first try to understand the 
 <span class="sd">    Returns:</span>
 <span class="sd">    list: The embeddings for the given query.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span>
+<span class="w">        </span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">}</span>
     <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
     <span class="n">embedding_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
@@ -538,283 +537,82 @@ Before we try out different embedding models, let's first try to understand the 
         <span class="n">data_values</span> <span class="o">=</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
         <span class="n">embeddings_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_value</span><span class="p">[</span><span class="s2">&quot;embedding&quot;</span><span class="p">]</span>
                               <span class="k">for</span> <span class="n">data_value</span> <span class="ow">in</span> <span class="n">data_values</span><span class="p">]</span>
-        <span class="c1"># return embeddings_vectors if batch else embeddings_vectors[0]</span>
         <span class="k">return</span> <span class="n">embeddings_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">query</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lengths: &quot;</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;failed to get embedding: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">lengths</span><span class="p">]</span> <span class="k">if</span> <span class="n">batch</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;failed to get embedding: </span><span class="si">{</span><span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>👩‍💻 Try it out. Feel free to pass another query:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
 
 <span class="n">query_vectors</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The query is: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The embedded vector is: </span><span class="si">{</span><span class="n">query_vectors</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The length of the embedding is: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">query_vectors</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The embedded vector is: [-0.021819873, -0.0072516315, -0.02838273, -0.02452299, -0.023587296, 0.028824585, -0.012300482, -0.002914298, -0.008369266, -0.0053834915, 0.029370407, -0.0032050782, -0.015555919, -0.0026917458, 0.012313478, -0.0009478779, 0.038779333, 0.0057538706, 0.018687896, -0.0139704365, -0.019740552, 0.009954749, 0.0052600317, 0.009025552, -0.0081548365, -0.0052242936, 0.0024545733, -0.012345967, 0.003312293, -0.015659885, 0.0036940433, -0.016166719, -0.017882159, -0.012904785, 0.0040774182, -0.016218703, -0.0010892067, -0.00985728, 0.021300042, -0.008564203, 0.013080227, -0.0062801987, 0.00324569, -0.0067642904, -0.02804484, 0.013216683, -0.012378457, 0.00046459824, -0.014815161, 0.03599824, 0.009187999, 0.0127943205, -0.014750182, -0.0007468498, -0.0061697345, -0.01472419, -0.0077584656, 0.0062542073, 0.007641504, -0.043587763, 0.002810332, 0.024042146, -0.0059455577, 0.015023093, -0.0044477973, 0.020221395, 0.015101068, 0.0052957702, 0.008122347, 0.017739207, 0.022768563, 0.019454645, 0.011943099, -0.011351792, 0.017128406, -0.016556593, -0.011936601, -0.0033756474, -0.013619551, -2.1130793e-06, 0.014516259, -0.01610174, -0.01799912, 0.016881486, 0.023431346, 0.011306307, -0.01946764, 0.029240448, -0.014009424, -0.032255463, 0.016608575, 0.019142747, -0.0038272499, 0.027291086, -0.015893808, 0.0025504169, -0.02057228, 0.02822678, 0.011065885, -0.006647329, 0.0098052975, 0.01925971, -0.0009673715, -0.0052275425, -0.017687222, -0.009278969, -0.019311693, -0.009149011, 0.020364348, 0.0048636612, -0.0046654763, 0.016751528, -0.009356944, -0.046732735, -0.007635006, -0.010565549, -0.0019997219, -0.0057051363, -0.009987238, -0.013054236, 0.021131098, 0.011189345, 0.016166719, -0.0011168227, 0.016465621, 0.0023895944, -0.013515585, -0.020559285, 0.0035315964, -0.0021280549, 0.029812261, -0.0056693982, -0.007862432, -0.0071866526, -0.019558612, 0.017843172, -0.012365461, 0.028018847, -0.028278762, -0.019298697, -0.010188672, 0.027551001, 0.0010753988, -0.0040709204, -0.020559285, 0.011163354, -0.00492864, -0.014243348, 0.014776173, -0.014906131, 0.0047499486, 0.012248499, 0.01196909, 0.0010802721, 0.0024350795, 0.01585482, -0.007368593, 0.0136975255, -0.004671974, -0.026134463, -0.016088745, 0.0022823794, 0.0051073316, -0.012248499, -0.0034406262, 0.015412966, 0.020455318, 0.018207053, -0.0012540903, -0.005841592, 0.022365695, 0.0066050924, -0.035712335, 0.01738832, -0.0055329427, 0.013502589, 0.011267319, 0.01781718, -0.032307446, -0.038597394, -0.029266441, 0.0069787204, 0.017037435, 0.028954543, -9.581831e-07, 0.009909263, 0.012417444, 0.0056693982, 0.014802165, -0.019753547, 0.017037435, 0.023951177, 0.02856467, -0.016036762, -0.70239455, -0.005247036, 0.025510667, 0.00933745, 0.018272031, 0.041716374, 0.024458012, 0.017245367, -0.00998074, 0.037973598, 0.015997775, 0.01815507, 0.007173657, 0.00054582173, 0.0138144875, -0.002543919, -0.0061339964, -0.0023733499, 0.0034113857, -0.0010965168, -0.011085379, 0.014646216, -0.017596252, 0.0016634567, 0.008954075, 0.007056695, 0.015179042, -0.0050748424, -0.01680351, 0.008837113, -0.013541576, 0.01157272, 0.0035218496, -0.0065076244, 0.053750444, -0.0023213667, 0.010650021, 0.021572953, 0.006250958, 0.028356738, -0.006056022, -0.005516698, 0.005870832, -0.017609248, 0.015283008, 0.0065628565, -0.0042626075, 0.00471421, 0.004337333, 0.0010022976, 0.011241328, 0.0052957702, -0.019532619, 0.020533293, 0.0038597393, -0.0004308905, 0.025172777, -0.010097702, 0.0020305868, 0.014555246, 0.0034926091, -0.0053185127, -0.018843845, -0.00063070026, -0.022651602, 0.0035478412, -0.011722171, -0.015179042, -0.0057571195, 0.0029370408, -0.0069852183, 0.0056044194, -0.014607228, -0.004369823, 0.019610595, 0.031761624, 0.016036762, -0.025432693, -0.011683184, 0.00048531021, 0.0055426895, -0.008226313, -0.0137755005, -0.01840199, 0.030877914, -0.029812261, -0.017583257, -9.650363e-05, 0.0038889798, 0.01114386, 0.012631874, 0.04028684, 0.0047564465, -0.017401315, 0.0073555973, 0.000913764, -0.03113783, 0.018804858, 0.0042203716, -0.030514034, 0.0031368504, -0.0038499925, -0.005519947, -0.0075960187, 0.02382122, 0.0112608215, -0.03631014, 0.043275863, 0.023678266, -0.018687896, -0.0074660615, 0.006998214, -0.008700658, 0.018986799, 0.009207493, -0.030695973, -0.010383609, 0.006952729, 0.02341835, -0.031813607, -0.00048571636, 0.0057051363, 0.021170085, -0.011117868, -0.0011688058, 0.022313712, 0.0017950387, 0.0064134053, -0.020403335, 0.008349773, 0.018103087, -0.007940406, 0.009954749, -0.01019517, 0.016816506, -0.0125539, 0.010753987, -0.023587296, -0.008492726, 0.00014041507, 0.006585599, 0.012625376, -0.019155743, -0.015945792, -0.0060040387, -0.0122420015, -0.009136016, -0.007706483, -0.005045602, 0.0029922726, 0.0077909552, 0.011514239, -0.005903322, 0.017479291, 0.026979188, -0.010253651, 0.0052340403, -0.011800146, -0.041924305, -0.0054972046, -0.00842125, 0.029526355, -0.010455085, -2.784442e-05, -0.012008077, -0.024094129, -0.002069574, 0.005718132, -0.0016082247, -0.041404475, 0.021533966, -0.019337684, -0.02562763, 0.011371286, 0.019688569, -0.002543919, -0.009168505, 0.005471213, 0.0018437727, -0.021391014, 0.025289739, -0.010961919, -0.0070307036, 0.012755333, 0.021559957, -0.0007066442, 0.01935068, 0.024743918, -0.016894482, 0.008518717, 0.0131841935, 0.00890859, -0.022612615, 0.0020435825, 0.010201667, 0.00630619, 0.0062282155, -0.0018681398, 0.008655173, 0.0202084, 0.027862899, 0.0028704375, 0.027499018, -0.024730923, -0.012898287, -0.0128593, -0.003385394, -0.010130191, 0.024120122, 0.017947137, -0.001436031, -0.018090092, -0.011241328, 0.0057928576, 0.018479964, 0.027005179, -0.0021605443, -0.0007553783, -0.016751528, -0.009064539, -0.0026462607, -0.010572047, 0.0028834331, -0.004675223, 0.006335431, 0.029058509, 0.011514239, 0.03360702, -0.00027920568, -0.007167159, -0.009480404, 0.011169852, 0.00094462896, 0.0062542073, -0.0016797014, -0.010734494, 0.008518717, -0.024652947, 0.02859066, -0.017492287, -0.0056564026, 0.02237869, 0.02859066, -0.0257186, 0.011897613, 0.013437611, 0.0053217616, -0.0003797197, 0.023158435, 0.02547168, 0.004181384, 0.00333666, 0.0006095821, -0.0044348016, 0.0020322113, -0.013632547, -0.018077096, 0.011891115, 0.014126386, 0.026095476, -0.009207493, 0.018311018, 0.0007147665, -0.0031124833, 0.008798126, -0.005575179, -0.009226986, -0.019090764, 0.00985728, -0.004564759, 0.013294658, 0.0011111371, 0.030592008, -0.017258363, 0.020741224, 0.017310346, 0.0021572954, 0.0072581293, -0.01677752, -0.01187812, -0.024237083, -0.029682305, 0.009103526, 0.012326473, -0.0034601197, -0.0056564026, -0.043665737, -0.00064897555, 0.007914415, 0.020065445, 0.005214547, 0.00310761, 0.013158202, -0.017089417, -0.0136975255, 0.012670862, 0.033970904, -0.0030085172, -0.0136975255, 0.006263954, 0.009792302, 0.008830615, 0.0107474895, -0.019792534, -0.0031027365, 0.013106219, -0.02066325, -0.018661905, -0.00064247765, -0.00012345967, 0.005035855, 0.006991716, -0.0076155122, 0.0034146346, 0.005302268, 0.019545615, -0.020884179, -0.009441416, 0.013047738, -0.019298697, -0.010260149, -0.014776173, -0.0051788082, 0.0050163614, 0.08499224, 0.021832868, -0.0067123077, -0.012339469, 0.007648002, 0.020715233, -0.0060170344, -0.013658538, -0.0037915115, -0.014243348, 0.0007565966, -0.002436704, -0.020078441, 0.033659007, 0.009467407, -0.012638371, -0.0016066002, -0.0029159226, -0.00084716076, 0.0074985507, -0.006588848, -0.010656519, 0.0037980094, 0.01851895, 0.024678938, -0.013827483, 0.007849436, 0.034230817, 0.00022986242, -0.001778794, -0.004311342, 0.0057928576, 0.0071411673, 0.011715673, 0.024821892, 0.0073815887, -0.019987471, 0.019792534, 0.008804624, -0.0065563587, 0.008063866, 0.00333666, 0.012021073, -0.018700892, 0.00038175032, -0.017726209, -0.01068251, 0.019272706, -0.0047856867, -0.0023213667, 0.026953196, 0.0019087516, -0.020689242, -0.016322669, -0.0043860674, 0.012709849, -0.011670188, -6.863383e-05, -0.016062753, -1.6866561e-05, -0.0066603245, -0.019779539, -0.005493955, 0.009935255, -0.027784925, -0.045563117, -0.01815507, -0.0028883065, -0.011507741, 0.007420576, -0.009285467, -0.006894248, 0.00048368576, -0.0023960923, 0.0071931505, 0.020611268, -0.00095031457, -0.021468988, 0.018025111, -0.0016634567, 0.0015992901, -0.026121467, 0.007641504, -0.016543597, -0.002810332, 0.003762271, -0.013619551, 0.0023376115, -0.005672647, 0.017869163, 0.025731595, 0.0072906185, 0.0044900333, 0.008018381, 0.008856607, -0.003156344, 0.015698873, -1.0736728e-05, -0.019792534, -0.0056369086, 0.009525889, -0.017102413, -0.00486691, -0.011312805, 0.025653621, 0.0029240448, 0.007686989, 0.013554572, 0.0062347134, 0.0023554806, 0.024730923, -0.023951177, 0.0060365284, -0.0014303452, 0.0016179715, 0.011072383, 0.00842125, 0.029500363, -0.037115876, -0.018103087, 0.004087165, -0.03971503, 0.007485555, 0.00985728, 0.004178135, -0.007180155, 0.010065212, -0.0060170344, 0.010533059, -0.0019428654, -0.007524542, 0.026979188, -0.008713653, -0.014750182, -0.026017502, -0.0021962826, -0.0042626075, -0.0016894481, -0.021196077, -0.032073524, -0.031371754, -0.0058188494, 0.008466735, -0.025588641, -0.014386301, -0.052268926, -0.008928084, 0.004301595, -0.0017999121, 0.0033788963, -0.010487574, 0.013086725, -0.02436704, -0.028668636, -0.010844958, -0.020156415, -0.004080667, 0.0016025391, 0.037635706, 0.025575645, 0.013463602, 0.0043243375, 0.011618205, -0.008960573, 0.008499224, 0.0051203277, 0.0049448847, -0.008135343, -0.0090190545, 0.014425288, 0.0127943205, 0.036076218, -0.0034763645, -0.0114167705, 0.0041358992, 0.014126386, -0.0060332795, -0.0031465972, -0.00998074, -0.011657192, -0.004993619, -0.010182174, -0.0017008195, 0.0097663095, 0.012670862, -0.017362328, 0.031189812, 0.016413638, 0.02773294, 0.0023181178, 0.03098188, -0.012274491, 0.032125507, 0.018921819, 0.014347314, 0.023509322, -0.011306307, -0.022911517, -0.007115176, 0.018220048, -0.0061372453, 0.026017502, -0.029708296, -0.005838343, -0.006432899, 0.032541372, -0.009740318, -0.0042885994, -0.0010258524, 0.0016959461, -0.0020858187, -0.025822565, -0.022768563, -0.01050057, 0.006267203, -0.007940406, -0.010442089, 0.037557732, -0.016673554, -0.01248892, -0.0088631045, -0.00847973, 0.021183081, -0.0036453092, 0.014204361, 0.018298022, -0.014685203, -0.02736906, -0.0006769976, -0.0155039355, -0.01582883, 0.026212437, -0.00209719, 0.010260149, -0.025315732, -0.0020582026, -0.00872665, -0.013983432, -0.011319303, 0.012592887, 0.02317143, -0.0035283475, -0.020234391, 0.0027697203, -0.013905458, 0.023340376, 0.0049188933, -0.017180389, -0.017700218, 0.0051593147, -0.011709175, 0.013723518, -0.009506395, 0.01160521, 0.02856467, -0.012384955, -0.015789842, 0.0009145763, -0.0017154397, 0.006088511, -0.0089410795, 0.015529927, -0.008928084, 0.0051723104, 0.0030361332, -0.014256343, -0.036726005, -0.013944445, 0.003505605, 0.026745263, -0.025029825, 0.01962359, 0.005614166, 0.0068097757, 0.020182408, -0.0011265695, -0.012696853, -0.025913535, -0.018596925, -0.0077714617, 0.035478413, -0.0011671813, -0.006894248, -0.006527118, -0.014386301, -0.024964845, -0.033165168, 0.005783111, 0.0087071555, -0.013671534, -0.015373978, -0.017934142, 0.001910376, 0.017310346, 0.0071866526, -0.029136483, 0.03098188, 0.019922493, -0.0195976, -0.001388109, 0.0064751348, -0.005253534, -0.028538678, 0.013086725, 0.0064946287, -0.018843845, 0.009473906, -0.014555246, -0.018116083, 0.009298462, 0.0044900333, 0.009149011, 0.003606322, 0.010468081, -0.0027664714, 0.016972456, 0.0058805794, 0.0009852407, -0.014737186, 0.00955188, -0.003668052, 0.013424615, -0.011039894, -0.014061407, 0.018168066, -0.016465621, 0.016764523, 0.010760485, -0.019363675, 0.017700218, 0.009948251, -0.0026413873, -0.009395931, -0.019584604, -0.0026332648, -0.009772807, -0.024393031, -0.0048506656, 0.01695946, -0.011156856, 0.010909936, -0.00701121, -0.0025276744, 0.018025111, -0.0006847138, -0.0013450606, -0.002571535, -0.008115849, -0.0072841207, -0.0065563587, -0.018285027, 0.03407487, 0.025341723, -0.016296677, -0.0122420015, 0.008642177, -0.010740992, 0.0058578365, -0.004304844, -0.0029419141, 0.010110698, 0.015815834, 0.0075960187, 0.02143, -0.021183081, 0.013177696, -0.021715907, -0.014659212, 0.007180155, 0.004740202, 0.016218703, -0.01576385, -0.012469427, -0.02201481, 0.005045602, 0.003772018, -0.024600964, 0.013099721, -0.012696853, -0.012839806, -0.016751528, 0.009772807, -0.030955888, -0.008278296, 0.033970904, -0.014828157, -0.003315542, 0.0074465675, -0.026537333, 0.005558934, -0.025874548, 0.002543919, -0.005273028, 0.01573786, -0.001259776, 0.0048019313, 0.016608575, -0.027914882, 0.015789842, 0.011514239, -0.0089410795, 0.03527048, -0.0069397334, 0.0054419725, -0.011689682, 0.008648675, -0.0070436993, -0.006335431, 0.018752875, -0.017336337, -0.012781325, -0.032229472, -0.021326033, -0.02669328, 0.004675223, -0.022742571, -0.008986564, -0.013801492, 0.01925971, -0.0051333234, -0.013944445, -0.0077519678, -0.01705043, -0.015880812, 9.1173344e-05, -0.021962825, 0.017245367, 0.00835627, 0.0060105366, 0.012540904, -0.019168738, -0.013567569, 0.0046394845, 0.008206819, 0.00056490925, 0.022443669, 0.2262301, -0.022248732, -0.013580564, 0.050995342, 0.018025111, 0.017973129, 0.01833701, 0.00624446, -0.0020955654, 0.02599151, -0.013119215, -7.553783e-05, -0.012846304, 0.011215337, 0.0070307036, -0.0011793647, -0.024574973, -0.023093456, -0.021559957, -0.012677359, -0.005087838, -0.0104745785, -0.022937508, -0.0029467875, 0.036777988, 0.005211298, -0.025081808, 0.0057668663, 0.010039221, -0.0049643787, -0.01763524, -0.029058509, 0.008765637, 0.014776173, -0.0070436993, -0.005422479, 0.005022859, 0.0058123516, 0.022040801, 0.011871622, -0.0054744617, -0.007173657, -0.007108678, -0.014659212, -0.005623913, -0.0016894481, -0.006146992, -0.01105289, -0.011267319, 0.02427607, -0.022729576, 0.0048831548, 0.026056489, 0.04922792, 0.0027632224, -0.003000395, 0.007888423, 0.0047466997, -0.016218703, 0.012677359, -0.013567569, 0.034022886, -0.0012589637, 0.01720638, -0.026927205, 0.0074075805, -0.01016268, -0.0020062197, 0.011546728, -0.005841592, -0.022053797, -0.0046004974, 0.00061080046, -0.006777286, -0.018687896, -0.03633613, 0.015088072, 0.005516698, 0.03064399, 0.012716346, -0.0041553928, -0.00030133908, -0.010013229, -0.020338356, -0.010721498, -0.030228127, 0.012781325, 0.020520298, 0.007972896, 0.0009909263, -0.0066018435, -0.010370612, -0.014763177, 0.003970203, 0.01754427, 0.008843611, 0.0006152678, 0.013827483, -0.013294658, 0.018298022, -0.02317143, 0.016790515, -0.010812468, 0.013710521, -0.020611268, 0.008200321, 0.0030150153, 0.003447124, 0.0012435314, -0.029630322, -0.022885524, -0.0053802426, -0.0011233205, -0.0016171592, 0.01643963, 0.0070436993, 0.005370496, -0.008811122, 0.006143743, 0.0012516537, 0.0073166103, -0.004619991, 0.0027567246, 0.010507068, -0.014204361, -0.016608575, -0.022638606, -0.008304288, 0.010013229, -0.029032517, -0.001128194, -0.016114736, 0.01659558, -0.0033236644, -0.013216683, -0.012508415, 0.0017446801, 0.003208327, -0.0013223181, 0.0046654763, -0.009441416, -0.019038782, 0.0081938235, 0.015127059, -0.005565432, -0.03269732, 0.03287926, -0.027291086, -0.009493399, 0.0065596076, -0.018635912, -0.00059171295, -0.02213177, 0.004503029, 0.028538678, -0.0114557585, -0.022313712, -0.019272706, -0.017947137, -0.0043763206, -0.0058123516, 0.0051073316, 0.023132443, 0.007004712, -0.0168425, -0.013944445, -0.16852894, 0.04995568, 0.0049091466, -0.023093456, 0.021092111, 0.015049084, 0.015425961, 0.00056328473, -0.010948923, 0.016075749, 0.028486695, 0.0022385188, -0.022157762, -0.010253651, -0.013983432, -0.011832635, 0.012209512, 0.013333645, 0.003508854, 0.033996895, 0.025055816, -0.01754427, 0.014126386, -0.008330279, 0.01601077, -0.003058876, -0.0006185167, 0.01634866, 0.01359356, 0.0012329723, -0.023626283, -0.011299809, 0.012229006, 0.020780213, 0.006423152, 0.007966398, 0.0047921846, -0.017713213, -0.008492726, 0.015815834, 0.021988818, 0.02391219, 0.008024879, -0.0035965752, -0.018388994, 0.008109352, 0.025003832, 0.02100114, 0.011657192, -0.023002487, 0.0035283475, -0.0019461144, 0.017583257, 0.014516259, 0.012365461, 0.021105107, -0.001803161, 0.014919126, 0.012904785, 0.0006465388, -0.009454411, 0.007420576, 0.010539558, -0.008115849, 0.00024793463, -0.012209512, -0.0015131932, 0.02684923, -0.008947577, 0.024535986, 0.00231162, -0.036907945, 0.003931216, -0.03168365, 0.009519391, 0.01506208, -0.015880812, 0.016465621, -0.009714327, -0.010695507, -0.022911517, -0.0018388993, -0.012099048, 0.00073872745, 0.02140401, 0.0034373773, 0.004555012, -0.009577871, -0.020000467, -0.039455112, 0.015711868, -0.006202224, -0.0047889357, -0.023899194, 0.011156856, 0.00419438, 0.014412292, 0.020949157, -0.0063874135, -0.015698873, 0.001432782, -0.0088241175, -0.017726209, 0.018817853, 0.024133118, -0.01851895, 0.010279642, 0.024938853, 0.014009424, -0.025172777, -0.0106305275, 0.0053542512, 0.011904112, 0.03165766, -0.0003516976, 0.006332182, 0.003820752, -0.0024480755, 0.0002599151, -0.016699545, 0.042210214, -0.013879467, -0.009071037, -0.015685877, -6.00546e-05, 0.0042333673, -0.116234034, -0.024873875, 0.0044315523, 0.01304124, -0.017869163, 0.025939528, 0.0050196103, 0.009090531, -0.011384281, 0.03131977, -0.013918454, -0.027291086, -0.025978515, 0.0065466114, 0.017024439, -0.011897613, -0.014451279, -0.01386647, -0.009077535, 0.0057571195, 0.0016894481, 0.013086725, 0.008557704, -0.00090970285, 0.003000395, 0.0030507536, -0.007738972, 0.02574459, 0.026901213, -0.008538211, 0.009694833, -0.027602984, 0.01754427, -0.021598944, -0.018414985, 0.0064134053, -0.039767012, 0.019038782, 0.012203014, -0.029136483, 0.021092111, 0.015127059, 0.009967744, -0.05128125, 0.011169852, -0.0088631045, -0.009746816, 0.031865593, 0.010338123, 0.0029013024, -0.035504404, -0.020884179, -0.04525122, 0.00021138407, 0.028252771, 0.005903322, 0.008024879, 0.03682997, -0.011436264, 0.0051268255, 0.0019721058, -0.00065872236, -0.017804185, 0.030098168, -0.006621337, -0.022209745, -0.010273145, 0.00074116414, 0.002868813, -0.014308326, -0.013398623, -0.007680491, -0.01876587, 0.015516931, -0.020221395, 0.016725536, -0.04267806, -0.0077194786, -0.004308093, -0.02127405, -0.025146786, -0.009584369, 0.006530367, -0.0041099074, 0.0006871506, -0.006933235, -0.0061339964, -0.0050715934, -0.009382935, -0.025757587, -0.0016139103, 3.370774e-05, 0.0073880865, -0.004717459, 0.014867144, 0.02736906, -0.0033041707, -0.012748836, 0.010617532, 0.012449933, -0.01766123, -0.0068877502, -0.06861759, 0.03168365, 0.0034666175, -0.0007001463, 0.0034926091, -0.0042301184, 0.019090764, -0.014243348, -0.0043178396, -0.018804858, -0.023353372, 0.0003984011, -0.007842938, -0.001858393, -0.030851923, -0.0035283475, 0.020936161, -0.004551763, 0.014269339, 0.005838343, -0.004278852, -0.022937508, 0.0069722226, -0.008674666, 0.0023278645, 0.010663017, -0.027083153, 0.019636586, 0.0072581293, -0.009129518, 0.0031790866, -0.034854613, 0.0101042, 0.024055142, -0.008746143, -0.0054907063, 0.004779189, 0.017713213, 0.0060170344, 0.014893135, -0.029630322, -0.022885524, 0.010766983, 7.939594e-05, 0.007699985, 0.008577199, 0.015477944, -0.013385627, 0.022781558, 0.0023652273, 0.0017528025, 0.006952729, -0.027057162, -0.0065076244, -0.014698199, 0.012495418, -0.016387647, -0.0035445923, -0.006777286, -0.010955421, 0.01677752, 0.0039149714, 0.00664408, -0.004340582, 0.013132211, 0.01598478, -0.016530601, -0.0153479865, 0.0043795696, -0.021754894, -0.015633894, -0.00040266535, -0.010676012, 0.012729342, 0.024107127, 0.012293984, 0.008674666, 0.022937508, -0.01858393, 0.03532246, 0.0066050924, 0.01705043, -0.05044952, -0.00036956678, 0.021663923, 0.022703584, -0.014152377, -0.0043568267, -0.008180828, 0.00881762, -0.022261728, -0.011507741, 0.009558378, 0.017310346, -0.010656519, -0.012508415, -0.0011111371, -0.0009145763, 0.02874661, 0.02152097, 0.007583023, 0.0056499047, -0.011020401, -0.007842938, 0.008915088, -0.005867583, -0.020650255, -0.04852615, -0.011046392, 0.015334991, 0.019493632, 0.008557704, 0.006829269, 0.026979188, -0.01686849, 0.0079209125, -0.008018381, -0.023652274, -0.03012416, 0.038129546, 0.005523196, -0.0017609248, 0.020936161, -0.021754894, 0.008044372, 0.0028704375, 0.0035283475, -0.013002253, 0.007855934, -0.007680491, 0.003664803, -0.012904785, -0.0127943205, -0.022638606, -0.015075075, 0.010961919, -0.0049123955, 0.02522476, -0.018947812, 0.06253558, -0.011468754, -0.01196909, 0.015412966, 0.011020401, 0.01187812, -0.0023977167, 0.010078208, -0.013281662, -0.0061307475, -0.009265973, -0.007063193, -0.016491612, 0.008720152, -0.0064783837, 0.008811122, -0.015075075, 0.010825464, -0.02391219, 0.0063776667, 0.02075422, -0.021897847, 0.02176789, 0.0007123298, 0.00030499412, -0.012112044, 0.0133011555, 0.0036290647, -0.022937508, -0.01454225, 0.016218703, 0.0070696906, -0.029136483, -0.006208722, 0.021923838, -0.02210578, -0.0053282594, -0.031891584, -0.008239308, 0.008304288, 0.009701331, 0.0068682567, -0.019701565, -0.026615307, 0.021170085, -0.004896151, -0.020273378, -0.004392565, -0.0034146346]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The query is: Hello
+The embedded vector is: [-0.021819873, -0.0072516315, -0.02838273, -0.02452299, -0.023587296, 0.028824585, -0.012300482, -0.002914298, -0.008369266, -0.0053834915, 0.029370407, -0.0032050782, -0.015555919, -0.0026917458, 0.012313478, -0.0009478779, 0.038779333, 0.0057538706, 0.018687896, -0.0139704365, -0.019740552, 0.009954749, 0.0052600317, 0.009025552, -0.0081548365, -0.0052242936, 0.0024545733, -0.012345967, 0.003312293, -0.015659885, 0.0036940433, -0.016166719, -0.017882159, -0.012904785, 0.0040774182, -0.016218703, -0.0010892067, -0.00985728, 0.021300042, -0.008564203, 0.013080227, -0.0062801987, 0.00324569, -0.0067642904, -0.02804484, 0.013216683, -0.012378457, 0.00046459824, -0.014815161, 0.03599824, 0.009187999, 0.0127943205, -0.014750182, -0.0007468498, -0.0061697345, -0.01472419, -0.0077584656, 0.0062542073, 0.007641504, -0.043587763, 0.002810332, 0.024042146, -0.0059455577, 0.015023093, -0.0044477973, 0.020221395, 0.015101068, 0.0052957702, 0.008122347, 0.017739207, 0.022768563, 0.019454645, 0.011943099, -0.011351792, 0.017128406, -0.016556593, -0.011936601, -0.0033756474, -0.013619551, -2.1130793e-06, 0.014516259, -0.01610174, -0.01799912, 0.016881486, 0.023431346, 0.011306307, -0.01946764, 0.029240448, -0.014009424, -0.032255463, 0.016608575, 0.019142747, -0.0038272499, 0.027291086, -0.015893808, 0.0025504169, -0.02057228, 0.02822678, 0.011065885, -0.006647329, 0.0098052975, 0.01925971, -0.0009673715, -0.0052275425, -0.017687222, -0.009278969, -0.019311693, -0.009149011, 0.020364348, 0.0048636612, -0.0046654763, 0.016751528, -0.009356944, -0.046732735, -0.007635006, -0.010565549, -0.0019997219, -0.0057051363, -0.009987238, -0.013054236, 0.021131098, 0.011189345, 0.016166719, -0.0011168227, 0.016465621, 0.0023895944, -0.013515585, -0.020559285, 0.0035315964, -0.0021280549, 0.029812261, -0.0056693982, -0.007862432, -0.0071866526, -0.019558612, 0.017843172, -0.012365461, 0.028018847, -0.028278762, -0.019298697, -0.010188672, 0.027551001, 0.0010753988, -0.0040709204, -0.020559285, 0.011163354, -0.00492864, -0.014243348, 0.014776173, -0.014906131, 0.0047499486, 0.012248499, 0.01196909, 0.0010802721, 0.0024350795, 0.01585482, -0.007368593, 0.0136975255, -0.004671974, -0.026134463, -0.016088745, 0.0022823794, 0.0051073316, -0.012248499, -0.0034406262, 0.015412966, 0.020455318, 0.018207053, -0.0012540903, -0.005841592, 0.022365695, 0.0066050924, -0.035712335, 0.01738832, -0.0055329427, 0.013502589, 0.011267319, 0.01781718, -0.032307446, -0.038597394, -0.029266441, 0.0069787204, 0.017037435, 0.028954543, -9.581831e-07, 0.009909263, 0.012417444, 0.0056693982, 0.014802165, -0.019753547, 0.017037435, 0.023951177, 0.02856467, -0.016036762, -0.70239455, -0.005247036, 0.025510667, 0.00933745, 0.018272031, 0.041716374, 0.024458012, 0.017245367, -0.00998074, 0.037973598, 0.015997775, 0.01815507, 0.007173657, 0.00054582173, 0.0138144875, -0.002543919, -0.0061339964, -0.0023733499, 0.0034113857, -0.0010965168, -0.011085379, 0.014646216, -0.017596252, 0.0016634567, 0.008954075, 0.007056695, 0.015179042, -0.0050748424, -0.01680351, 0.008837113, -0.013541576, 0.01157272, 0.0035218496, -0.0065076244, 0.053750444, -0.0023213667, 0.010650021, 0.021572953, 0.006250958, 0.028356738, -0.006056022, -0.005516698, 0.005870832, -0.017609248, 0.015283008, 0.0065628565, -0.0042626075, 0.00471421, 0.004337333, 0.0010022976, 0.011241328, 0.0052957702, -0.019532619, 0.020533293, 0.0038597393, -0.0004308905, 0.025172777, -0.010097702, 0.0020305868, 0.014555246, 0.0034926091, -0.0053185127, -0.018843845, -0.00063070026, -0.022651602, 0.0035478412, -0.011722171, -0.015179042, -0.0057571195, 0.0029370408, -0.0069852183, 0.0056044194, -0.014607228, -0.004369823, 0.019610595, 0.031761624, 0.016036762, -0.025432693, -0.011683184, 0.00048531021, 0.0055426895, -0.008226313, -0.0137755005, -0.01840199, 0.030877914, -0.029812261, -0.017583257, -9.650363e-05, 0.0038889798, 0.01114386, 0.012631874, 0.04028684, 0.0047564465, -0.017401315, 0.0073555973, 0.000913764, -0.03113783, 0.018804858, 0.0042203716, -0.030514034, 0.0031368504, -0.0038499925, -0.005519947, -0.0075960187, 0.02382122, 0.0112608215, -0.03631014, 0.043275863, 0.023678266, -0.018687896, -0.0074660615, 0.006998214, -0.008700658, 0.018986799, 0.009207493, -0.030695973, -0.010383609, 0.006952729, 0.02341835, -0.031813607, -0.00048571636, 0.0057051363, 0.021170085, -0.011117868, -0.0011688058, 0.022313712, 0.0017950387, 0.0064134053, -0.020403335, 0.008349773, 0.018103087, -0.007940406, 0.009954749, -0.01019517, 0.016816506, -0.0125539, 0.010753987, -0.023587296, -0.008492726, 0.00014041507, 0.006585599, 0.012625376, -0.019155743, -0.015945792, -0.0060040387, -0.0122420015, -0.009136016, -0.007706483, -0.005045602, 0.0029922726, 0.0077909552, 0.011514239, -0.005903322, 0.017479291, 0.026979188, -0.010253651, 0.0052340403, -0.011800146, -0.041924305, -0.0054972046, -0.00842125, 0.029526355, -0.010455085, -2.784442e-05, -0.012008077, -0.024094129, -0.002069574, 0.005718132, -0.0016082247, -0.041404475, 0.021533966, -0.019337684, -0.02562763, 0.011371286, 0.019688569, -0.002543919, -0.009168505, 0.005471213, 0.0018437727, -0.021391014, 0.025289739, -0.010961919, -0.0070307036, 0.012755333, 0.021559957, -0.0007066442, 0.01935068, 0.024743918, -0.016894482, 0.008518717, 0.0131841935, 0.00890859, -0.022612615, 0.0020435825, 0.010201667, 0.00630619, 0.0062282155, -0.0018681398, 0.008655173, 0.0202084, 0.027862899, 0.0028704375, 0.027499018, -0.024730923, -0.012898287, -0.0128593, -0.003385394, -0.010130191, 0.024120122, 0.017947137, -0.001436031, -0.018090092, -0.011241328, 0.0057928576, 0.018479964, 0.027005179, -0.0021605443, -0.0007553783, -0.016751528, -0.009064539, -0.0026462607, -0.010572047, 0.0028834331, -0.004675223, 0.006335431, 0.029058509, 0.011514239, 0.03360702, -0.00027920568, -0.007167159, -0.009480404, 0.011169852, 0.00094462896, 0.0062542073, -0.0016797014, -0.010734494, 0.008518717, -0.024652947, 0.02859066, -0.017492287, -0.0056564026, 0.02237869, 0.02859066, -0.0257186, 0.011897613, 0.013437611, 0.0053217616, -0.0003797197, 0.023158435, 0.02547168, 0.004181384, 0.00333666, 0.0006095821, -0.0044348016, 0.0020322113, -0.013632547, -0.018077096, 0.011891115, 0.014126386, 0.026095476, -0.009207493, 0.018311018, 0.0007147665, -0.0031124833, 0.008798126, -0.005575179, -0.009226986, -0.019090764, 0.00985728, -0.004564759, 0.013294658, 0.0011111371, 0.030592008, -0.017258363, 0.020741224, 0.017310346, 0.0021572954, 0.0072581293, -0.01677752, -0.01187812, -0.024237083, -0.029682305, 0.009103526, 0.012326473, -0.0034601197, -0.0056564026, -0.043665737, -0.00064897555, 0.007914415, 0.020065445, 0.005214547, 0.00310761, 0.013158202, -0.017089417, -0.0136975255, 0.012670862, 0.033970904, -0.0030085172, -0.0136975255, 0.006263954, 0.009792302, 0.008830615, 0.0107474895, -0.019792534, -0.0031027365, 0.013106219, -0.02066325, -0.018661905, -0.00064247765, -0.00012345967, 0.005035855, 0.006991716, -0.0076155122, 0.0034146346, 0.005302268, 0.019545615, -0.020884179, -0.009441416, 0.013047738, -0.019298697, -0.010260149, -0.014776173, -0.0051788082, 0.0050163614, 0.08499224, 0.021832868, -0.0067123077, -0.012339469, 0.007648002, 0.020715233, -0.0060170344, -0.013658538, -0.0037915115, -0.014243348, 0.0007565966, -0.002436704, -0.020078441, 0.033659007, 0.009467407, -0.012638371, -0.0016066002, -0.0029159226, -0.00084716076, 0.0074985507, -0.006588848, -0.010656519, 0.0037980094, 0.01851895, 0.024678938, -0.013827483, 0.007849436, 0.034230817, 0.00022986242, -0.001778794, -0.004311342, 0.0057928576, 0.0071411673, 0.011715673, 0.024821892, 0.0073815887, -0.019987471, 0.019792534, 0.008804624, -0.0065563587, 0.008063866, 0.00333666, 0.012021073, -0.018700892, 0.00038175032, -0.017726209, -0.01068251, 0.019272706, -0.0047856867, -0.0023213667, 0.026953196, 0.0019087516, -0.020689242, -0.016322669, -0.0043860674, 0.012709849, -0.011670188, -6.863383e-05, -0.016062753, -1.6866561e-05, -0.0066603245, -0.019779539, -0.005493955, 0.009935255, -0.027784925, -0.045563117, -0.01815507, -0.0028883065, -0.011507741, 0.007420576, -0.009285467, -0.006894248, 0.00048368576, -0.0023960923, 0.0071931505, 0.020611268, -0.00095031457, -0.021468988, 0.018025111, -0.0016634567, 0.0015992901, -0.026121467, 0.007641504, -0.016543597, -0.002810332, 0.003762271, -0.013619551, 0.0023376115, -0.005672647, 0.017869163, 0.025731595, 0.0072906185, 0.0044900333, 0.008018381, 0.008856607, -0.003156344, 0.015698873, -1.0736728e-05, -0.019792534, -0.0056369086, 0.009525889, -0.017102413, -0.00486691, -0.011312805, 0.025653621, 0.0029240448, 0.007686989, 0.013554572, 0.0062347134, 0.0023554806, 0.024730923, -0.023951177, 0.0060365284, -0.0014303452, 0.0016179715, 0.011072383, 0.00842125, 0.029500363, -0.037115876, -0.018103087, 0.004087165, -0.03971503, 0.007485555, 0.00985728, 0.004178135, -0.007180155, 0.010065212, -0.0060170344, 0.010533059, -0.0019428654, -0.007524542, 0.026979188, -0.008713653, -0.014750182, -0.026017502, -0.0021962826, -0.0042626075, -0.0016894481, -0.021196077, -0.032073524, -0.031371754, -0.0058188494, 0.008466735, -0.025588641, -0.014386301, -0.052268926, -0.008928084, 0.004301595, -0.0017999121, 0.0033788963, -0.010487574, 0.013086725, -0.02436704, -0.028668636, -0.010844958, -0.020156415, -0.004080667, 0.0016025391, 0.037635706, 0.025575645, 0.013463602, 0.0043243375, 0.011618205, -0.008960573, 0.008499224, 0.0051203277, 0.0049448847, -0.008135343, -0.0090190545, 0.014425288, 0.0127943205, 0.036076218, -0.0034763645, -0.0114167705, 0.0041358992, 0.014126386, -0.0060332795, -0.0031465972, -0.00998074, -0.011657192, -0.004993619, -0.010182174, -0.0017008195, 0.0097663095, 0.012670862, -0.017362328, 0.031189812, 0.016413638, 0.02773294, 0.0023181178, 0.03098188, -0.012274491, 0.032125507, 0.018921819, 0.014347314, 0.023509322, -0.011306307, -0.022911517, -0.007115176, 0.018220048, -0.0061372453, 0.026017502, -0.029708296, -0.005838343, -0.006432899, 0.032541372, -0.009740318, -0.0042885994, -0.0010258524, 0.0016959461, -0.0020858187, -0.025822565, -0.022768563, -0.01050057, 0.006267203, -0.007940406, -0.010442089, 0.037557732, -0.016673554, -0.01248892, -0.0088631045, -0.00847973, 0.021183081, -0.0036453092, 0.014204361, 0.018298022, -0.014685203, -0.02736906, -0.0006769976, -0.0155039355, -0.01582883, 0.026212437, -0.00209719, 0.010260149, -0.025315732, -0.0020582026, -0.00872665, -0.013983432, -0.011319303, 0.012592887, 0.02317143, -0.0035283475, -0.020234391, 0.0027697203, -0.013905458, 0.023340376, 0.0049188933, -0.017180389, -0.017700218, 0.0051593147, -0.011709175, 0.013723518, -0.009506395, 0.01160521, 0.02856467, -0.012384955, -0.015789842, 0.0009145763, -0.0017154397, 0.006088511, -0.0089410795, 0.015529927, -0.008928084, 0.0051723104, 0.0030361332, -0.014256343, -0.036726005, -0.013944445, 0.003505605, 0.026745263, -0.025029825, 0.01962359, 0.005614166, 0.0068097757, 0.020182408, -0.0011265695, -0.012696853, -0.025913535, -0.018596925, -0.0077714617, 0.035478413, -0.0011671813, -0.006894248, -0.006527118, -0.014386301, -0.024964845, -0.033165168, 0.005783111, 0.0087071555, -0.013671534, -0.015373978, -0.017934142, 0.001910376, 0.017310346, 0.0071866526, -0.029136483, 0.03098188, 0.019922493, -0.0195976, -0.001388109, 0.0064751348, -0.005253534, -0.028538678, 0.013086725, 0.0064946287, -0.018843845, 0.009473906, -0.014555246, -0.018116083, 0.009298462, 0.0044900333, 0.009149011, 0.003606322, 0.010468081, -0.0027664714, 0.016972456, 0.0058805794, 0.0009852407, -0.014737186, 0.00955188, -0.003668052, 0.013424615, -0.011039894, -0.014061407, 0.018168066, -0.016465621, 0.016764523, 0.010760485, -0.019363675, 0.017700218, 0.009948251, -0.0026413873, -0.009395931, -0.019584604, -0.0026332648, -0.009772807, -0.024393031, -0.0048506656, 0.01695946, -0.011156856, 0.010909936, -0.00701121, -0.0025276744, 0.018025111, -0.0006847138, -0.0013450606, -0.002571535, -0.008115849, -0.0072841207, -0.0065563587, -0.018285027, 0.03407487, 0.025341723, -0.016296677, -0.0122420015, 0.008642177, -0.010740992, 0.0058578365, -0.004304844, -0.0029419141, 0.010110698, 0.015815834, 0.0075960187, 0.02143, -0.021183081, 0.013177696, -0.021715907, -0.014659212, 0.007180155, 0.004740202, 0.016218703, -0.01576385, -0.012469427, -0.02201481, 0.005045602, 0.003772018, -0.024600964, 0.013099721, -0.012696853, -0.012839806, -0.016751528, 0.009772807, -0.030955888, -0.008278296, 0.033970904, -0.014828157, -0.003315542, 0.0074465675, -0.026537333, 0.005558934, -0.025874548, 0.002543919, -0.005273028, 0.01573786, -0.001259776, 0.0048019313, 0.016608575, -0.027914882, 0.015789842, 0.011514239, -0.0089410795, 0.03527048, -0.0069397334, 0.0054419725, -0.011689682, 0.008648675, -0.0070436993, -0.006335431, 0.018752875, -0.017336337, -0.012781325, -0.032229472, -0.021326033, -0.02669328, 0.004675223, -0.022742571, -0.008986564, -0.013801492, 0.01925971, -0.0051333234, -0.013944445, -0.0077519678, -0.01705043, -0.015880812, 9.1173344e-05, -0.021962825, 0.017245367, 0.00835627, 0.0060105366, 0.012540904, -0.019168738, -0.013567569, 0.0046394845, 0.008206819, 0.00056490925, 0.022443669, 0.2262301, -0.022248732, -0.013580564, 0.050995342, 0.018025111, 0.017973129, 0.01833701, 0.00624446, -0.0020955654, 0.02599151, -0.013119215, -7.553783e-05, -0.012846304, 0.011215337, 0.0070307036, -0.0011793647, -0.024574973, -0.023093456, -0.021559957, -0.012677359, -0.005087838, -0.0104745785, -0.022937508, -0.0029467875, 0.036777988, 0.005211298, -0.025081808, 0.0057668663, 0.010039221, -0.0049643787, -0.01763524, -0.029058509, 0.008765637, 0.014776173, -0.0070436993, -0.005422479, 0.005022859, 0.0058123516, 0.022040801, 0.011871622, -0.0054744617, -0.007173657, -0.007108678, -0.014659212, -0.005623913, -0.0016894481, -0.006146992, -0.01105289, -0.011267319, 0.02427607, -0.022729576, 0.0048831548, 0.026056489, 0.04922792, 0.0027632224, -0.003000395, 0.007888423, 0.0047466997, -0.016218703, 0.012677359, -0.013567569, 0.034022886, -0.0012589637, 0.01720638, -0.026927205, 0.0074075805, -0.01016268, -0.0020062197, 0.011546728, -0.005841592, -0.022053797, -0.0046004974, 0.00061080046, -0.006777286, -0.018687896, -0.03633613, 0.015088072, 0.005516698, 0.03064399, 0.012716346, -0.0041553928, -0.00030133908, -0.010013229, -0.020338356, -0.010721498, -0.030228127, 0.012781325, 0.020520298, 0.007972896, 0.0009909263, -0.0066018435, -0.010370612, -0.014763177, 0.003970203, 0.01754427, 0.008843611, 0.0006152678, 0.013827483, -0.013294658, 0.018298022, -0.02317143, 0.016790515, -0.010812468, 0.013710521, -0.020611268, 0.008200321, 0.0030150153, 0.003447124, 0.0012435314, -0.029630322, -0.022885524, -0.0053802426, -0.0011233205, -0.0016171592, 0.01643963, 0.0070436993, 0.005370496, -0.008811122, 0.006143743, 0.0012516537, 0.0073166103, -0.004619991, 0.0027567246, 0.010507068, -0.014204361, -0.016608575, -0.022638606, -0.008304288, 0.010013229, -0.029032517, -0.001128194, -0.016114736, 0.01659558, -0.0033236644, -0.013216683, -0.012508415, 0.0017446801, 0.003208327, -0.0013223181, 0.0046654763, -0.009441416, -0.019038782, 0.0081938235, 0.015127059, -0.005565432, -0.03269732, 0.03287926, -0.027291086, -0.009493399, 0.0065596076, -0.018635912, -0.00059171295, -0.02213177, 0.004503029, 0.028538678, -0.0114557585, -0.022313712, -0.019272706, -0.017947137, -0.0043763206, -0.0058123516, 0.0051073316, 0.023132443, 0.007004712, -0.0168425, -0.013944445, -0.16852894, 0.04995568, 0.0049091466, -0.023093456, 0.021092111, 0.015049084, 0.015425961, 0.00056328473, -0.010948923, 0.016075749, 0.028486695, 0.0022385188, -0.022157762, -0.010253651, -0.013983432, -0.011832635, 0.012209512, 0.013333645, 0.003508854, 0.033996895, 0.025055816, -0.01754427, 0.014126386, -0.008330279, 0.01601077, -0.003058876, -0.0006185167, 0.01634866, 0.01359356, 0.0012329723, -0.023626283, -0.011299809, 0.012229006, 0.020780213, 0.006423152, 0.007966398, 0.0047921846, -0.017713213, -0.008492726, 0.015815834, 0.021988818, 0.02391219, 0.008024879, -0.0035965752, -0.018388994, 0.008109352, 0.025003832, 0.02100114, 0.011657192, -0.023002487, 0.0035283475, -0.0019461144, 0.017583257, 0.014516259, 0.012365461, 0.021105107, -0.001803161, 0.014919126, 0.012904785, 0.0006465388, -0.009454411, 0.007420576, 0.010539558, -0.008115849, 0.00024793463, -0.012209512, -0.0015131932, 0.02684923, -0.008947577, 0.024535986, 0.00231162, -0.036907945, 0.003931216, -0.03168365, 0.009519391, 0.01506208, -0.015880812, 0.016465621, -0.009714327, -0.010695507, -0.022911517, -0.0018388993, -0.012099048, 0.00073872745, 0.02140401, 0.0034373773, 0.004555012, -0.009577871, -0.020000467, -0.039455112, 0.015711868, -0.006202224, -0.0047889357, -0.023899194, 0.011156856, 0.00419438, 0.014412292, 0.020949157, -0.0063874135, -0.015698873, 0.001432782, -0.0088241175, -0.017726209, 0.018817853, 0.024133118, -0.01851895, 0.010279642, 0.024938853, 0.014009424, -0.025172777, -0.0106305275, 0.0053542512, 0.011904112, 0.03165766, -0.0003516976, 0.006332182, 0.003820752, -0.0024480755, 0.0002599151, -0.016699545, 0.042210214, -0.013879467, -0.009071037, -0.015685877, -6.00546e-05, 0.0042333673, -0.116234034, -0.024873875, 0.0044315523, 0.01304124, -0.017869163, 0.025939528, 0.0050196103, 0.009090531, -0.011384281, 0.03131977, -0.013918454, -0.027291086, -0.025978515, 0.0065466114, 0.017024439, -0.011897613, -0.014451279, -0.01386647, -0.009077535, 0.0057571195, 0.0016894481, 0.013086725, 0.008557704, -0.00090970285, 0.003000395, 0.0030507536, -0.007738972, 0.02574459, 0.026901213, -0.008538211, 0.009694833, -0.027602984, 0.01754427, -0.021598944, -0.018414985, 0.0064134053, -0.039767012, 0.019038782, 0.012203014, -0.029136483, 0.021092111, 0.015127059, 0.009967744, -0.05128125, 0.011169852, -0.0088631045, -0.009746816, 0.031865593, 0.010338123, 0.0029013024, -0.035504404, -0.020884179, -0.04525122, 0.00021138407, 0.028252771, 0.005903322, 0.008024879, 0.03682997, -0.011436264, 0.0051268255, 0.0019721058, -0.00065872236, -0.017804185, 0.030098168, -0.006621337, -0.022209745, -0.010273145, 0.00074116414, 0.002868813, -0.014308326, -0.013398623, -0.007680491, -0.01876587, 0.015516931, -0.020221395, 0.016725536, -0.04267806, -0.0077194786, -0.004308093, -0.02127405, -0.025146786, -0.009584369, 0.006530367, -0.0041099074, 0.0006871506, -0.006933235, -0.0061339964, -0.0050715934, -0.009382935, -0.025757587, -0.0016139103, 3.370774e-05, 0.0073880865, -0.004717459, 0.014867144, 0.02736906, -0.0033041707, -0.012748836, 0.010617532, 0.012449933, -0.01766123, -0.0068877502, -0.06861759, 0.03168365, 0.0034666175, -0.0007001463, 0.0034926091, -0.0042301184, 0.019090764, -0.014243348, -0.0043178396, -0.018804858, -0.023353372, 0.0003984011, -0.007842938, -0.001858393, -0.030851923, -0.0035283475, 0.020936161, -0.004551763, 0.014269339, 0.005838343, -0.004278852, -0.022937508, 0.0069722226, -0.008674666, 0.0023278645, 0.010663017, -0.027083153, 0.019636586, 0.0072581293, -0.009129518, 0.0031790866, -0.034854613, 0.0101042, 0.024055142, -0.008746143, -0.0054907063, 0.004779189, 0.017713213, 0.0060170344, 0.014893135, -0.029630322, -0.022885524, 0.010766983, 7.939594e-05, 0.007699985, 0.008577199, 0.015477944, -0.013385627, 0.022781558, 0.0023652273, 0.0017528025, 0.006952729, -0.027057162, -0.0065076244, -0.014698199, 0.012495418, -0.016387647, -0.0035445923, -0.006777286, -0.010955421, 0.01677752, 0.0039149714, 0.00664408, -0.004340582, 0.013132211, 0.01598478, -0.016530601, -0.0153479865, 0.0043795696, -0.021754894, -0.015633894, -0.00040266535, -0.010676012, 0.012729342, 0.024107127, 0.012293984, 0.008674666, 0.022937508, -0.01858393, 0.03532246, 0.0066050924, 0.01705043, -0.05044952, -0.00036956678, 0.021663923, 0.022703584, -0.014152377, -0.0043568267, -0.008180828, 0.00881762, -0.022261728, -0.011507741, 0.009558378, 0.017310346, -0.010656519, -0.012508415, -0.0011111371, -0.0009145763, 0.02874661, 0.02152097, 0.007583023, 0.0056499047, -0.011020401, -0.007842938, 0.008915088, -0.005867583, -0.020650255, -0.04852615, -0.011046392, 0.015334991, 0.019493632, 0.008557704, 0.006829269, 0.026979188, -0.01686849, 0.0079209125, -0.008018381, -0.023652274, -0.03012416, 0.038129546, 0.005523196, -0.0017609248, 0.020936161, -0.021754894, 0.008044372, 0.0028704375, 0.0035283475, -0.013002253, 0.007855934, -0.007680491, 0.003664803, -0.012904785, -0.0127943205, -0.022638606, -0.015075075, 0.010961919, -0.0049123955, 0.02522476, -0.018947812, 0.06253558, -0.011468754, -0.01196909, 0.015412966, 0.011020401, 0.01187812, -0.0023977167, 0.010078208, -0.013281662, -0.0061307475, -0.009265973, -0.007063193, -0.016491612, 0.008720152, -0.0064783837, 0.008811122, -0.015075075, 0.010825464, -0.02391219, 0.0063776667, 0.02075422, -0.021897847, 0.02176789, 0.0007123298, 0.00030499412, -0.012112044, 0.0133011555, 0.0036290647, -0.022937508, -0.01454225, 0.016218703, 0.0070696906, -0.029136483, -0.006208722, 0.021923838, -0.02210578, -0.0053282594, -0.031891584, -0.008239308, 0.008304288, 0.009701331, 0.0068682567, -0.019701565, -0.026615307, 0.021170085, -0.004896151, -0.020273378, -0.004392565, -0.0034146346]
 The length of the embedding is: 1536
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>1.2. Create a function which is responsible to embed the chunks from an input file and save the result to another file</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-
-
-<span class="k">def</span> <span class="nf">generate_embeddings_for_chunks</span><span class="p">(</span><span class="n">path_to_input_file</span><span class="p">,</span> <span class="n">path_to_output_file</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate embeddings for chunked data</span>
-<span class="sd">    Args:</span>
-<span class="sd">    path_to_input_file: str: path to the input file</span>
-<span class="sd">    path_to_output_file: str: path to the output file</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> &quot;</span>
-        <span class="p">)</span>
-        <span class="k">return</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_input_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
-                <span class="n">content</span> <span class="o">=</span> <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
-                <span class="n">content_emebddings</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-                <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_emebddings</span>
-
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate embeddings for chunks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-
-
-<span class="k">def</span> <span class="nf">generate_embeddings_for_chunks_in_batch</span><span class="p">(</span><span class="n">path_to_chunked_documents</span><span class="p">,</span> <span class="n">path_to_output_file</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate embeddings for chunked data</span>
-<span class="sd">    Args:</span>
-<span class="sd">    path_to_chunked_documents: str: path to the input file</span>
-<span class="sd">    path_to_output_file: str: path to the output file</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> &quot;</span>
-        <span class="p">)</span>
-        <span class="k">return</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_chunked_documents</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-            <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
-            <span class="n">num_chunks</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_chunks</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
-                <span class="n">batch_chunks</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">]</span>
-                <span class="n">batch_chunks_content</span> <span class="o">=</span> <span class="p">[</span><span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
-                                        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">batch_chunks</span><span class="p">]</span>
-                <span class="n">batch_embeddings</span> <span class="o">=</span> <span class="n">oai_query_embedding</span><span class="p">(</span>
-                    <span class="n">batch_chunks_content</span><span class="p">,</span> <span class="n">batch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_chunks</span><span class="p">):</span>
-                    <span class="c1"># print(&quot;j : &quot;, j)</span>
-                    <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">batch_embeddings</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-                    <span class="c1"># content = chunk[&quot;chunkContent&quot;]</span>
-                    <span class="c1"># content_embeddings = oai_query_embedding(content)</span>
-                    <span class="c1"># chunk[&quot;chunkContentVector&quot;] = content_embeddings</span>
-
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate embeddings for chunks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>1.3 Create a file with the embeddings</strong> - took 9/16 mins</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">openai_prefix</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-engineering-mlops-ada&quot;</span>
-<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">generate_embeddings_for_chunks</span><span class="p">(</span>
-    <span class="n">path_to_input_file</span><span class="o">=</span><span class="n">path_to_chunked_documents</span><span class="p">,</span>
-    <span class="n">path_to_output_file</span><span class="o">=</span><span class="n">path_to_output_file</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json at: ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json 
-</pre></div>
-</div>
-</div>
-</div>
-<p>Using batch - in 48 s BUT several batches were not embedded because of API limitation</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">openai_batch_prefix</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-batch-engineering-mlops-ada&quot;</span>
-<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">openai_prefix</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">generate_embeddings_for_chunks_in_batch</span><span class="p">(</span>
-    <span class="n">path_to_chunked_documents</span><span class="o">=</span><span class="n">path_to_chunked_documents</span><span class="p">,</span>
-    <span class="n">path_to_output_file</span><span class="o">=</span><span class="n">path_to_output_file</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json at: ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json 
-</pre></div>
-</div>
-</div>
-</div>
 </section>
-<section id="use-e5-small-v2-from-hugging-face">
-<h3>👩‍💻 2. Use e5-small-v2 from Hugging Face<a class="headerlink" href="#use-e5-small-v2-from-hugging-face" title="Permalink to this heading">#</a></h3>
-<p>We will use <a class="reference external" href="https://huggingface.co/intfloat/e5-small-v2"><code class="docutils literal notranslate"><span class="pre">infloat/e5-small-v2</span></code></a> from Hugging Face. This model is open source, size 0.13 GB. The model is limited to working with English texts and can handle texts with a maximum of 512 tokens. Being open sourced, it means there is no price associated with it.
+<section id="use-intfloat-e5-small-v2-from-hugging-face">
+<h2>2. Use <code class="docutils literal notranslate"><span class="pre">intfloat/e5-small-v2</span></code> from Hugging Face<a class="headerlink" href="#use-intfloat-e5-small-v2-from-hugging-face" title="Permalink to this heading">#</a></h2>
+<p>This model is open source and has a size 0.13 GB. The model is limited to working with English texts and can handle texts with a maximum of 512 tokens. Being open sourced, it means there is no price associated with it, you can download it locally, you can fine-tune it etc.
 <a class="reference external" href="https://huggingface.co/intfloat/e5-small-v2#e5-small-v2">The embedding size is 384</a>.</p>
-<p><strong>2.1. Create a function which is responsible to embed an input query using <code class="docutils literal notranslate"><span class="pre">e5-small-v2</span> <span class="pre">model</span></code></strong></p>
+<p><strong>👩‍💻 Embed an input query using <code class="docutils literal notranslate"><span class="pre">e5-small-v2</span> <span class="pre">model</span></code></strong></p>
 <p>Look at the <a class="reference external" href="https://huggingface.co/intfloat/e5-small-v2">&lt;/&gt; Use in sentence-transformers</a> section from Hugging Face.</p>
 <details markdown="1">
-<summary> 🔍 Solution:</summary>
+<summary> 🔍 Solution. Expand this only if you got stuck: </summary>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
 
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)</span>
 <span class="n">embedded_input</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">embedded_input</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The query is: </span><span class="si">{</span><span class="nb">input</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The embedded vector is: </span><span class="si">{</span><span class="n">embedded_input</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The length of the embedding is: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">embedded_input</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </details>
-<p><strong>2.1. Create a function which is responsible to embed the chunks from an input file and save the result to another file</strong></p>
-<p>Create a function, similar to <code class="docutils literal notranslate"><span class="pre">generate_embeddings_for_chunks</span></code>, which is responsible to embed the chunked data and to save it to a file.</p>
-<p>Input file: <span class="xref myst">./output/chunks-solution-ops-200-300-0.json</span>.</p>
-<p>The output file with the embeddings should be saved at <code class="docutils literal notranslate"><span class="pre">./output/generated/chunks-solution-ops-embedded-intfloat_e5_small_v2-200-300-10.json</span></code></p>
-<details markdown="1">
-<summary> 🔍 Solution:</summary>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">sentence_transformers</span>
-
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-
-<span class="k">def</span> <span class="nf">embed_chunk</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-    <span class="n">embedded_input</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-        <span class="n">chunk</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>  <span class="c1"># Note that the type is a ndarray.</span>
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">embedded_input</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-    <span class="p">)</span>  <span class="c1"># We need to reshape the array to be a list of floats</span>
-
-
-<span class="k">def</span> <span class="nf">generate_embeddings_with_intfloat_e5_small_v2</span><span class="p">(</span>
-    <span class="n">path_to_input_file</span><span class="p">,</span> <span class="n">path_to_output_file</span>
-<span class="p">):</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> &quot;</span>
-        <span class="p">)</span>
-        <span class="k">return</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_input_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
-                <span class="n">content</span> <span class="o">=</span> <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
-                <span class="n">content_emebddings</span> <span class="o">=</span> <span class="n">embed_chunk</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
-                <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_emebddings</span>
-
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate embeddings for chunks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-</pre></div>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">#</a></h2>
+<p>So far we have been looking at two different embedding models and we’ve listed some of their characteristics. Let’s try now to evaluate how well each model performs in our context. For this, we should first create embeddings from our data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the interest of time, we have pre-generated the embeddings for you:</p>
+<ul class="simple">
+<li><p>The pre-generated embeddings using <code class="docutils literal notranslate"><span class="pre">intfloat/e5-small-v2</span></code> can be found at <a class="reference download internal" download="" href="_downloads/83a3dcff04741dbdffe38a0f7e227f3a/fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.json"><span class="xref download myst">fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.json</span></a></p></li>
+<li><p>The pre-generated embeddings using <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> can be found at <a class="reference download internal" download="" href="_downloads/d295485e187eb076b477aeb4e4dd33d7/fixed-size-chunks-180-30-engineering-mlops-ada.json"><span class="xref download myst">fixed-size-chunks-180-30-engineering-mlops-ada.json</span></a></p></li>
+</ul>
 </div>
-</details>
-<p><strong>2.3. Create a file with the embeddings</strong></p>
-<details markdown="1">
-<summary> 🔍 Solution:</summary>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">e5_small_prefix</span> <span class="o">=</span> <span class="s2">&quot;chunks-solution-ops-embedded-intfloat_e5_small_v2&quot;</span>
-<span class="n">path_to_output_file</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/generated/</span><span class="si">{</span><span class="n">e5_small_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">generate_embeddings_with_intfloat_e5_small_v2</span><span class="p">(</span><span class="n">path_to_input_file</span><span class="o">=</span><span class="n">path_to_chunked_documents</span><span class="p">,</span> <span class="n">path_to_output_file</span><span class="o">=</span><span class="n">path_to_output_file</span><span class="p">)</span>
-</pre></div>
-</div>
-</details>
+<p>Let’s load the path to each file. Note the name of variables:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
 
-
-<span class="k">def</span> <span class="nf">embed_chunk</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)):</span>
-    <span class="n">embedded_input</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-        <span class="n">chunk</span><span class="p">,</span> <span class="n">normalize_embeddings</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>  <span class="c1"># Note that the type is a ndarray.</span>
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">embedded_input</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-    <span class="p">)</span>  <span class="c1"># We need to reshape the array to be a list of floats</span>
-
-
-<span class="k">def</span> <span class="nf">generate_embeddings_with_intfloat_e5_small_v2</span><span class="p">(</span>
-    <span class="n">path_to_input_file</span><span class="p">,</span> <span class="n">path_to_output_file</span>
-<span class="p">):</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_input_file</span><span class="si">}</span><span class="s2"> &quot;</span>
-        <span class="p">)</span>
-        <span class="k">return</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;intfloat/e5-small-v2&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_input_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="n">input_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">:</span>
-                <span class="n">content</span> <span class="o">=</span> <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContent&quot;</span><span class="p">]</span>
-                <span class="n">content_emebddings</span> <span class="o">=</span> <span class="n">embed_chunk</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
-                <span class="n">chunk</span><span class="p">[</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">content_emebddings</span>
-
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate embeddings for chunks: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="generate-embeddings-using-open-source-model-took-22-minutes">
-<h2>Generate embeddings using open source model - took 22 minutes.<a class="headerlink" href="#generate-embeddings-using-open-source-model-took-22-minutes" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e5_small_v2_prefix</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-engineering-mlops-e5-small-v2&quot;</span>
-<span class="n">path_to_output_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">e5_small_v2_prefix</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">generate_embeddings_with_intfloat_e5_small_v2</span><span class="p">(</span>
-    <span class="n">path_to_input_file</span><span class="o">=</span><span class="n">path_to_chunked_documents</span><span class="p">,</span>
-    <span class="n">path_to_output_file</span><span class="o">=</span><span class="n">path_to_output_file</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings using intfloat/e5-small-vs: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks_emebddings_os</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings using text-embedding-ada-002: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embeddings were already created for chunked data ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json at: ./output/pre-generated/chunking/fixed-size-chunks-engineering-mlops-180-30.json 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pre-generated embeddings using intfloat/e5-small-vs: ./output/pre-generated/embeddings/fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.json
+Pre-generated embeddings using text-embedding-ada-002: ./output/pre-generated/embeddings/fixed-size-chunks-180-30-engineering-mlops-ada.json
 </pre></div>
 </div>
 </div>
@@ -830,8 +628,11 @@ Therefore, for each embedding model we will:</p>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="doc std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>. By running the next cell, all the functions from search.ipynb will become available.</p>
+<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="doc std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>.</p>
 </div>
+<section id="create-two-indexes">
+<h3>👩‍💻 Create two indexes<a class="headerlink" href="#create-two-indexes" title="Permalink to this heading">#</a></h3>
+<p>By running the next cell, all the functions from search.ipynb will become available:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
@@ -840,7 +641,7 @@ Therefore, for each embedding model we will:</p>
 </div>
 </div>
 </div>
-<p>Sample code for creating a new index and uploading the data:</p>
+<p>Sample code for creating a new index and uploading the data which was previously embedded using AOI model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create a new index</span>
@@ -850,9 +651,9 @@ Therefore, for each embedding model we will:</p>
 <span class="n">create_index</span><span class="p">(</span><span class="n">new_index_name</span><span class="p">)</span>
 
 <span class="c1"># 2. Upload the embeddings to the new index</span>
-<span class="c1"># TODO: Replace the file_embeddings to point to the right file path</span>
-<span class="n">file_embeddings</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">new_index_name</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">file_embeddings</span><span class="p">,</span>
+<span class="c1"># TODO: Replace the emebddings_file_path to point to the right file path</span>
+<span class="n">emebddings_file_path</span> <span class="o">=</span> <span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span>
+<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">emebddings_file_path</span><span class="p">,</span>
             <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -861,39 +662,33 @@ Therefore, for each embedding model we will:</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;fixed-size-chunks-180-30-batch-engineering-mlops-ada&#39; created or updated
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 3236 documents to Index: fixed-size-chunks-180-30-batch-engineering-mlops-ada
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error uploading documents: azure.search.documents._generated.operations._documents_operations.DocumentsOperations.index() got multiple values for keyword argument &#39;error_map&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create a new index</span>
-<span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
-<span class="c1"># prefix = e5_small_v2_prefix</span>
-<span class="n">new_index_name</span> <span class="o">=</span> <span class="n">e5_small_v2_prefix</span>
+<section id="create-a-new-index-and-upload-the-embeddings-created-with-intfloat-e5-small-v2-model">
+<h4>👩‍💻 Create a new index and upload the embeddings created with intfloat/e5-small-v2 model.<a class="headerlink" href="#create-a-new-index-and-upload-the-embeddings-created-with-intfloat-e5-small-v2-model" title="Permalink to this heading">#</a></h4>
+<details markdown="1">
+<summary> 🔍 Solution. Expand this only if you got stuck: </summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="c1"># 1. Create a new index</span>
+<span class="n">new_index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-engineering-mlops-e5-small-v2&quot;</span>
 <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">384</span>  <span class="c1"># TODO: Replace with the vector size of your embedding model</span>
 <span class="n">create_index</span><span class="p">(</span><span class="n">new_index_name</span><span class="p">,</span> <span class="n">vector_size</span><span class="p">)</span>
 
 <span class="c1"># 2. Upload the embeddings to the new index</span>
-<span class="c1"># TODO: Replace the file_embeddings to point to the right file path</span>
-<span class="n">file_embeddings</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/pre-generated/embeddings/</span><span class="si">{</span><span class="n">new_index_name</span><span class="si">}</span><span class="s2">.json&quot;</span>
-<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">file_embeddings</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
+<span class="n">emebddings_file_path</span> <span class="o">=</span> <span class="n">pregenerated_fixed_size_chunks_emebddings_os</span>
+<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">emebddings_file_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;fixed-size-chunks-180-30-engineering-mlops-e5-small-v2&#39; created or updated
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 3236 documents to Index: fixed-size-chunks-180-30-engineering-mlops-e5-small-v2
-</pre></div>
-</div>
-</div>
-</div>
+</details>
+</section>
+</section>
 <section id="evaluation-dataset">
 <h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
-<p>Note: The evaluation dataset can be found at <span class="xref myst">solution-ops-200-qa.json</span>. The format is:</p>
+<p>Note: The evaluation dataset can be found at <a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">qa_pairs_solutionops.json</span></a>. The format is:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;user_prompt&quot;: &quot;&quot;, # The question
 &quot;output_prompt&quot;: &quot;&quot;, # The answer
 &quot;context&quot;: &quot;&quot;, # The relevant piece of information from a document
@@ -904,9 +699,16 @@ Therefore, for each embedding model we will:</p>
 </section>
 <section id="evaluation-metrics">
 <h3>🎯 Evaluation metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this heading">#</a></h3>
-<!-- `Retrieval_evaluation` function is going through the evaluation dataset and, for each `user_prompt`, it embeds it using the `embedding_function` passed as parameter and then it does a vector search in the Index with name `search_index_name`. If the retrieved documents includes the `source` from the evaluation dataset, then it is considered a success.
-
-Note: This can also be adapted to ensure that the `first` retrieved document is the expected one. -->
+<p>Let us try to evaluate our baseline model. We will have two metrics:</p>
+<ul>
+<li><p>Cosine similarity:</p>
+<p>Using cosine similarity we will calculate how similar in meaning is the first text that was retrieved from the search index compare to the text that was used to formulate the question (and hence, to answer to it). Note: our search index returns the top 3 nearest neighbors, but we will look at the first retrieved one. We will then calculate the mean and median cosine across our evaluation dataset.</p>
+</li>
+<li><p>Accuracy:</p>
+<p>By accuracy we mean how many times the search returned the document (the file path to the document) which we expected in our evaluation dataset. We will return the percentage of successfully retrieved documents across our evaluation dataset.</p>
+<!-- `Retrieval_evaluation` function is going through the evaluation dataset and, for each `user_prompt`, it embeds it using the `embedding_function` passed as parameter and then it does a vector search in the Index with name `search_index_name`. If the retrieved documents includes the `source` from the evaluation dataset, then it is considered a success. Note: This can also be adapted to ensure that the `first` retrieved document is the expected one. -->
+</li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -941,7 +743,8 @@ Note: This can also be adapted to ensure that the `first` retrieved document is 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The path to the evaluation data set </span><span class="si">{</span><span class="n">evaluation_data_path</span><span class="si">}</span><span class="s2"> does not exist. Please check the path and try again.&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;The path to the evaluation data set </span><span class="si">{</span>
+<span class="w">                </span><span class="n">evaluation_data_path</span><span class="si">}</span><span class="s2"> does not exist. Please check the path and try again.&quot;</span>
         <span class="p">)</span>
         <span class="k">return</span>
     <span class="n">nr_correctly_retrieved_documents</span> <span class="o">=</span> <span class="mi">0</span>
@@ -994,16 +797,11 @@ Note: This can also be adapted to ensure that the `first` retrieved document is 
 </div>
 </div>
 </section>
-<section id="evaluate-the-system-using-text-embedding-ada-002-model-took-3min">
-<h3>👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model - took 3min<a class="headerlink" href="#evaluate-the-system-using-text-embedding-ada-002-model-took-3min" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Accuracy: 25.666666666666664% of the documents were correctly retrieved from Index fixed-size-chunks-180-30-batch-engineering-mlops-ada.</p></li>
-<li><p>Avg cosine similarity score:0.8214135393234611</p></li>
-<li><p>Median cosine similarity score: 0.7950691820676911</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
+<section id="evaluate-the-system-using-text-embedding-ada-002-model">
+<h3>👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model<a class="headerlink" href="#evaluate-the-system-using-text-embedding-ada-002-model" title="Permalink to this heading">#</a></h3>
+<details markdown="1">
+<summary> 🔍 Sample code. Feel free to expand it. It may take up to 4 minutes to run: </summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
 <span class="kn">from</span> <span class="nn">statistics</span> <span class="kn">import</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span>
 
 <span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-batch-engineering-mlops-ada&quot;</span>
@@ -1019,128 +817,14 @@ Note: This can also be adapted to ensure that the `first` retrieved document is 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median cosine similarity score: </span><span class="si">{</span><span class="n">median_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">statistics</span> <span class="kn">import</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-batch-engineering-mlops-ada&quot;</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">embedding_function</span><span class="o">=</span><span class="n">oai_query_embedding</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">avg_score</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Avg cosine similarity score:</span><span class="si">{</span><span class="n">avg_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="nn">Cell In[14], line 31,</span> in <span class="ni">calculate_metrics</span><span class="nt">(evaluation_data_path, embedding_function, search_index_name)</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="n">user_prompt</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;user_prompt&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="n">expected_document</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
-<span class="ne">---&gt; </span><span class="mi">31</span> <span class="n">expected_document_vector</span> <span class="o">=</span> <span class="n">embedding_function</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">])</span>
-<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="c1"># 1. Search in the index</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="n">search_response</span> <span class="o">=</span> <span class="n">search_documents</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">35</span>     <span class="n">search_index_name</span><span class="o">=</span><span class="n">search_index_name</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">36</span>     <span class="nb">input</span><span class="o">=</span><span class="n">user_prompt</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span>     <span class="n">embedding_function</span><span class="o">=</span><span class="n">embedding_function</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">38</span> <span class="p">)</span>
-
-<span class="nn">File ~\AppData\Local\Temp\ipykernel_53424\1654927096.py:32,</span> in <span class="ni">oai_query_embedding</span><span class="nt">(query, endpoint, api_key, api_version, embedding_model_deployment)</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">}</span>
-<span class="g g-Whitespace">     </span><span class="mi">31</span> <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
-<span class="ne">---&gt; </span><span class="mi">32</span> <span class="n">embedding_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">request_url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">request_payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="c1"># embedding_response = embed_input(query)</span>
-<span class="g g-Whitespace">     </span><span class="mi">36</span> <span class="k">if</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span>     <span class="c1">#     time.sleep(2.5)</span>
-<span class="g g-Whitespace">     </span><span class="mi">38</span>     <span class="c1">#     embedding_response = embed_input(query)</span>
-
-<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\api.py:115,</span> in <span class="ni">post</span><span class="nt">(url, data, json, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">103</span> <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">104</span><span class="w">     </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sends a POST request.</span>
-<span class="g g-Whitespace">    </span><span class="mi">105</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">106</span><span class="sd">     :param url: URL for the new :class:`Request` object.</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">112</span><span class="sd">     :rtype: requests.Response</span>
-<span class="g g-Whitespace">    </span><span class="mi">113</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">115</span>     <span class="k">return</span> <span class="n">request</span><span class="p">(</span><span class="s2">&quot;post&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">json</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\api.py:59,</span> in <span class="ni">request</span><span class="nt">(method, url, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="c1"># By using the &#39;with&#39; statement we are sure the session is closed, thus we</span>
-<span class="g g-Whitespace">     </span><span class="mi">56</span> <span class="c1"># avoid leaving sockets open which can trigger a ResourceWarning in some</span>
-<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="c1"># cases, and look like a memory leak in others.</span>
-<span class="g g-Whitespace">     </span><span class="mi">58</span> <span class="k">with</span> <span class="n">sessions</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">59</span>     <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\sessions.py:575,</span> in <span class="ni">Session.request</span><span class="nt">(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)</span>
-<span class="g g-Whitespace">    </span><span class="mi">562</span> <span class="c1"># Create the Request.</span>
-<span class="g g-Whitespace">    </span><span class="mi">563</span> <span class="n">req</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">564</span>     <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
-<span class="g g-Whitespace">    </span><span class="mi">565</span>     <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">573</span>     <span class="n">hooks</span><span class="o">=</span><span class="n">hooks</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">574</span> <span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">575</span> <span class="n">prep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">577</span> <span class="n">proxies</span> <span class="o">=</span> <span class="n">proxies</span> <span class="ow">or</span> <span class="p">{}</span>
-<span class="g g-Whitespace">    </span><span class="mi">579</span> <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_environment_settings</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">580</span>     <span class="n">prep</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">proxies</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">verify</span><span class="p">,</span> <span class="n">cert</span>
-<span class="g g-Whitespace">    </span><span class="mi">581</span> <span class="p">)</span>
-
-<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\sessions.py:483,</span> in <span class="ni">Session.prepare_request</span><span class="nt">(self, request)</span>
-<span class="g g-Whitespace">    </span><span class="mi">481</span> <span class="n">auth</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">auth</span>
-<span class="g g-Whitespace">    </span><span class="mi">482</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trust_env</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">auth</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">483</span>     <span class="n">auth</span> <span class="o">=</span> <span class="n">get_netrc_auth</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">485</span> <span class="n">p</span> <span class="o">=</span> <span class="n">PreparedRequest</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">486</span> <span class="n">p</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">487</span>     <span class="n">method</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
-<span class="g g-Whitespace">    </span><span class="mi">488</span>     <span class="n">url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">498</span>     <span class="n">hooks</span><span class="o">=</span><span class="n">merge_hooks</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">hooks</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hooks</span><span class="p">),</span>
-<span class="g g-Whitespace">    </span><span class="mi">499</span> <span class="p">)</span>
-
-<span class="nn">File c:\Projects\Workshop2024\.venv\Lib\site-packages\requests\utils.py:222,</span> in <span class="ni">get_netrc_auth</span><span class="nt">(url, raise_errors)</span>
-<span class="g g-Whitespace">    </span><span class="mi">216</span> <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">217</span>     <span class="c1"># os.path.expanduser can fail when $HOME is undefined and</span>
-<span class="g g-Whitespace">    </span><span class="mi">218</span>     <span class="c1"># getpwuid fails. See https://bugs.python.org/issue20164 &amp;</span>
-<span class="g g-Whitespace">    </span><span class="mi">219</span>     <span class="c1"># https://github.com/psf/requests/issues/1846</span>
-<span class="g g-Whitespace">    </span><span class="mi">220</span>     <span class="k">return</span>
-<span class="ne">--&gt; </span><span class="mi">222</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">loc</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">223</span>     <span class="n">netrc_path</span> <span class="o">=</span> <span class="n">loc</span>
-<span class="g g-Whitespace">    </span><span class="mi">224</span>     <span class="k">break</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="evaluate-the-system-using-infloat-e5-small-v2-model-took-4-40-min">
-<h3>👩‍💻2.Evaluate the system using <em>infloat/e5-small-v2</em> model - took 4.40 min<a class="headerlink" href="#evaluate-the-system-using-infloat-e5-small-v2-model-took-4-40-min" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Accuracy: 88.33333333333333% of the documents were correctly retrieved from Index fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.</p></li>
-<li><p>Avg score:0.9596070531525336</p></li>
-<li><p>Median score: 0.9999999999999998</p></li>
-</ul>
-<p>Using the <code class="docutils literal notranslate"><span class="pre">retrieval_evaluation</span></code> function, calculate how many documents are correctly retrieved using the infloat/e5-small-v2 open source model.</p>
-<details markdown="1">
-<summary> 🔍 Solution:</summary>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">e5_small_prefix</span> <span class="o">=</span> <span class="s2">&quot;chunks-solution-ops-embedded-intfloat_e5_small_v2&quot;</span> <span class="c1">#TODO: Replace the prefix with a relevant name given your embedding model</span>
-<span class="n">index_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">e5_small_prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunking_overlap</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="n">percentage</span> <span class="o">=</span> <span class="n">retrieval_evaluation</span><span class="p">(</span>
-    <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
-    <span class="n">embedding_function</span><span class="o">=</span><span class="n">embed_chunk</span><span class="p">,</span>
-    <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="w"> </span><span class="n">percentage</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2"> using infloat/e5-small-v2 open source embedding model.&quot;</span><span class="p">))</span>
-</pre></div>
-</div>
 </details>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
-<span class="c1"># e5_small_prefix = &quot;chunks-solution-ops-embedded-intfloat_e5_small_v2&quot;</span>
-<span class="c1"># f&quot;{e5_small_prefix}-{totalNumberOfDocuments}-{chunking_size}-{chunking_overlap}&quot;</span>
+</section>
+<section id="evaluate-the-system-using-infloat-e5-small-v2-model">
+<h3>👩‍💻2. Evaluate the system using <em>infloat/e5-small-v2</em> model<a class="headerlink" href="#evaluate-the-system-using-infloat-e5-small-v2-model" title="Permalink to this heading">#</a></h3>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">calculate_metrics</span></code> function, calculate the metrics using the infloat/e5-small-v2 open source model.</p>
+<details markdown="1">
+<summary> 🔍 Sample code. It may take up to 4 minutes to run:</summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
 <span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-engineering-mlops-e5-small-v2&quot;</span>
 <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
     <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
@@ -1154,19 +838,28 @@ Note: This can also be adapted to ensure that the `first` retrieved document is 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median score: </span><span class="si">{</span><span class="n">median_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 88.33333333333333% of the documents were correctly retrieved from Index fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.
-Avg score:0.9596070531525336
-Median score: 0.9999999999999998
-</pre></div>
-</div>
-</div>
-</div>
+</details>
 </section>
 </section>
 <section id="conclusions">
 <h2>💡 Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">#</a></h2>
+<p>What conclusions can you reach? Are you surprised by the results? In what cases would you find useful to use the open source model? Discuss these questions and any other ideas you may have with your colleagues.</p>
+<details markdown="1">
+<summary> Possible conclusions. Expand this only after you reached your own conclusions: </summary>
+<p>Evaluation Results for text-embedding-ada-002:</p>
+<ul class="simple">
+<li><p>Accuracy: 25.666666666666664% of the documents were correctly retrieved from Index fixed-size-chunks-180-30-batch-engineering-mlops-ada.</p></li>
+<li><p>Avg cosine similarity score:0.8214135393234611</p></li>
+<li><p>Median cosine similarity score: 0.7950691820676911</p></li>
+</ul>
+<p>Evaluation Results for infloat/e5-small-v2:</p>
+<ul class="simple">
+<li><p>Accuracy: 88.33333333333333% of the documents were correctly retrieved from Index fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.</p></li>
+<li><p>Avg score:0.9596070531525336</p></li>
+<li><p>Median score: 0.9999999999999998</p></li>
+</ul>
+<p>Open source models can be useful when you need more control over the model, such as running it offline, fine-tuning it, or customizing it for your specific needs. As it was proven in our experiment, the open-source model did even better than the AOI model. However, open source models may require more engineering effort, have lower performance on some tasks, and have less safety and content filtering features than closed source models.</p>
+</details>
 </section>
 </section>
 
@@ -1235,17 +928,19 @@ Median score: 0.9999999999999998
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiment-overview">Experiment Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-text-embedding-ada-002-from-openai">1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-e5-small-v2-from-hugging-face">👩‍💻 2. Use e5-small-v2 from Hugging Face</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-text-embedding-ada-002-from-openai">1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-intfloat-e5-small-v2-from-hugging-face">2. Use <code class="docutils literal notranslate"><span class="pre">intfloat/e5-small-v2</span></code> from Hugging Face</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-two-indexes">👩‍💻 Create two indexes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-new-index-and-upload-the-embeddings-created-with-intfloat-e5-small-v2-model">👩‍💻 Create a new index and upload the embeddings created with intfloat/e5-small-v2 model.</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-embeddings-using-open-source-model-took-22-minutes">Generate embeddings using open source model - took 22 minutes.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯 Evaluation metrics</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model-took-3min">👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model - took 3min</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model-took-4-40-min">👩‍💻2.Evaluate the system using <em>infloat/e5-small-v2</em> model - took 4.40 min</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-text-embedding-ada-002-model">👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-system-using-infloat-e5-small-v2-model">👩‍💻2. Evaluate the system using <em>infloat/e5-small-v2</em> model</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>

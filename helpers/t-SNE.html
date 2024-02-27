@@ -174,28 +174,29 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../1.rag-intro.html">RAG - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../context.html">Context</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../pre-requisites.html">Pre-requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pre-requisites.html">Setup</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../2.rag-implementation.html">RAG - Implementation</a></li>
-
-
-
-
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../3.2.experiment_search.html">3.2. Search Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../3.3.experiment_chunking.html">3.3. Chunking Experiment</a></li>
-
-
+<li class="toctree-l1"><a class="reference internal" href="../3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.3.end_to_end_evaluation.html">End-to-end evaluation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../10.evaluation-production.html">Post-production</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5.1.generation-qa.html">Generation of synthetic data</a></li>
+
+
+
 </ul>
 
     </div>
@@ -540,6 +541,29 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">14</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">)):</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">file_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./output/chunks-solution-ops-embedded-</span><span class="si">{</span><span class="n">totalNumberOfDocuments</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">chunk_overlap</span><span class="si">}</span><span class="s2">.json&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">14</span> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">dfcluster</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rec</span> <span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python312\Lib\site-packages\IPython\core\interactiveshell.py:310,</span> in <span class="ni">_modified_open</span><span class="nt">(file, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span> <span class="k">if</span> <span class="n">file</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}:</span>
+<span class="g g-Whitespace">    </span><span class="mi">304</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">305</span>         <span class="sa">f</span><span class="s2">&quot;IPython won&#39;t let you open fd=</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2"> by default &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">306</span>         <span class="s2">&quot;as it is likely to crash IPython. If you know what you are doing, &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">307</span>         <span class="s2">&quot;you can use builtins&#39; open.&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">308</span>     <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">310</span> <span class="k">return</span> <span class="n">io_open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;./output/chunks-solution-ops-embedded-200-300-0.json&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -627,16 +651,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;whole&#39;,
- &#39;those&#39;,
- &#39;she&#39;,
- &#39;fifty&#39;,
- &#39;thus&#39;,
- &#39;each&#39;,
- &#39;anything&#39;,
- &#39;beforehand&#39;,
- &#39;but&#39;,
- &#39;where&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;against&#39;,
+ &#39;although&#39;,
+ &#39;rather&#39;,
+ &#39;seems&#39;,
+ &#39;re&#39;,
+ &#39;himself&#39;,
+ &#39;thereafter&#39;,
+ &#39;four&#39;,
+ &#39;again&#39;,
+ &#39;an&#39;]
 </pre></div>
 </div>
 </div>
@@ -890,7 +914,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b545fb050d2f030fc8a155a47b1909079b5d02571e81f97478c0a97af04209d7.png" src="../_images/b545fb050d2f030fc8a155a47b1909079b5d02571e81f97478c0a97af04209d7.png" />
+<img alt="../_images/9625ba1757407a901048e8d695dfee4a9979822224971dcdac781f0618e17287.png" src="../_images/9625ba1757407a901048e8d695dfee4a9979822224971dcdac781f0618e17287.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -907,6 +931,48 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>chunkId</th>
+      <th>chunkContent</th>
+      <th>source</th>
+      <th>chunkContentVector</th>
+      <th>y</th>
+      <th>x_write</th>
+      <th>y_write</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>chunk0_0</td>
+      <td>layout forward \n target https://aka.ms/ ops \n rings \n   public \n\n forward</td>
+      <td>..\data\docs\index.md</td>
+      <td>[-0.00085263106, 0.013627768, -0.033589367, 0.0006770894, 0.007336926, 0.021093663, -0.031382557, -0.014071995, -0.0029304714, -0.0024987822, 0.031755134, -0.016508084, -0.005685401, -0.022311708, 0.004453027, 0.0032887198, 0.004736043, -0.020434486, 0.00033652954, -0.01417947, -0.017124271, -0.017840767, -0.00016860063, 0.0028946467, -0.016594063, -0.0073440913, -0.00041713542, -0.03671329, -0.009300127, -0.01735355, 0.024317898, -0.0219248, -0.02587986, -0.007358421, 0.018027056, -0.0033066322, -0.015390349, -0.007917289, -0.009400437, -0.010539667, 0.017539838, -0.006831796, 0.022111088, -0.0033066322, -0.026753986, 0.012610342, 0.00047691813, -0.014974781, -0.029691624, 0.008734095, -0.0054740347, -0.00029018117, -0.04955291, 0.005513442, 0.0118866805, -0.0044494444, -0.0040195463, -0.0011356473, 0.0020187295, -0.014537718, 0.020477476, 0.0028713606, -0.04276052, 0.0025471458, -0.0047969455, 0.0062836763, -0.016894992, 0.01751118, -0.003439184, -0.023644391, 0.04276052, 0.030981317, -0.0070574926, 0.0014043335, -0.0031687065, -0.011750546, -0.018700564, -0.027671102, 0.008884559, -0.0067995535, 0.029662963, 0.008920384, -0.001252078, 0.02848791, 0.019230772, 0.021953458, -0.006935688, 0.02811533, 0.003326336, -0.009787345, 0.021050673, 0.005140864, 0.013799726, 0.005617334, -0.020176547, 0.022626966, 0.0059254277, 0.024661817, -0.01514674, -0.01957469, ...]</td>
+      <td>3</td>
+      <td>0.525234</td>
+      <td>3.310192</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <section id="generate-word-clouds-per-cluster">
 <h2>Generate word clouds per cluster<a class="headerlink" href="#generate-word-clouds-per-cluster" title="Permalink to this heading">#</a></h2>
@@ -917,7 +983,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generate words per cluster...
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generate word clouds per cluster
 </pre></div>
 </div>
 </div>
@@ -977,7 +1043,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-1 {
+<div class="output text_html"><style>#sk-container-id-2 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: black;
   --sklearn-color-line: gray;
@@ -1007,15 +1073,15 @@ document.write(`
   }
 }
 
-#sk-container-id-1 {
+#sk-container-id-2 {
   color: var(--sklearn-color-text);
 }
 
-#sk-container-id-1 pre {
+#sk-container-id-2 pre {
   padding: 0;
 }
 
-#sk-container-id-1 input.sk-hidden--visually {
+#sk-container-id-2 input.sk-hidden--visually {
   border: 0;
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
@@ -1027,7 +1093,7 @@ document.write(`
   width: 1px;
 }
 
-#sk-container-id-1 div.sk-dashed-wrapped {
+#sk-container-id-2 div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -1035,7 +1101,7 @@ document.write(`
   background-color: var(--sklearn-color-background);
 }
 
-#sk-container-id-1 div.sk-container {
+#sk-container-id-2 div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -1045,7 +1111,7 @@ document.write(`
   position: relative;
 }
 
-#sk-container-id-1 div.sk-text-repr-fallback {
+#sk-container-id-2 div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -1061,14 +1127,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-#sk-container-id-1 div.sk-parallel-item::after {
+#sk-container-id-2 div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-#sk-container-id-1 div.sk-parallel {
+#sk-container-id-2 div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -1076,28 +1142,28 @@ div.sk-item {
   position: relative;
 }
 
-#sk-container-id-1 div.sk-parallel-item {
+#sk-container-id-2 div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-#sk-container-id-1 div.sk-serial {
+#sk-container-id-2 div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1115,14 +1181,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-#sk-container-id-1 div.sk-toggleable {
+#sk-container-id-2 div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
+#sk-container-id-2 label.sk-toggleable__label {
   cursor: pointer;
   display: block;
   width: 100%;
@@ -1132,7 +1198,7 @@ clickable and can be expanded/collapsed.
   text-align: center;
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -1140,13 +1206,13 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-#sk-container-id-1 div.sk-toggleable__content {
+#sk-container-id-2 div.sk-toggleable__content {
   max-height: 0;
   max-width: 0;
   overflow: hidden;
@@ -1155,12 +1221,12 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted {
+#sk-container-id-2 div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content pre {
+#sk-container-id-2 div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -1168,79 +1234,79 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   max-height: 200px;
   max-width: 100%;
   overflow: auto;
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-#sk-container-id-1 div.sk-label label {
+#sk-container-id-2 div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   display: inline-block;
   line-height: 1.2em;
 }
 
-#sk-container-id-1 div.sk-label-container {
+#sk-container-id-2 div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
+#sk-container-id-2 div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -1250,18 +1316,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted {
+#sk-container-id-2 div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
+#sk-container-id-2 div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted:hover {
+#sk-container-id-2 div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -1348,7 +1414,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-#sk-container-id-1 a.estimator_doc_link {
+#sk-container-id-2 a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -1363,26 +1429,26 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted {
+#sk-container-id-2 a.estimator_doc_link.fitted {
   /* fitted */
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
   color: var(--sklearn-color-fitted-level-1);
 }
 
 /* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
+#sk-container-id-2 a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LatentDirichletAllocation(learning_method=&#x27;online&#x27;, n_components=1,
-                          random_state=42, verbose=False)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow ">&nbsp;&nbsp;LatentDirichletAllocation<a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.decomposition.LatentDirichletAllocation.html">?<span>Documentation for LatentDirichletAllocation</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></label><div class="sk-toggleable__content "><pre>LatentDirichletAllocation(learning_method=&#x27;online&#x27;, n_components=1,
+</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LatentDirichletAllocation(learning_method=&#x27;online&#x27;, n_components=1,
+                          random_state=42, verbose=False)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow ">&nbsp;&nbsp;LatentDirichletAllocation<a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.decomposition.LatentDirichletAllocation.html">?<span>Documentation for LatentDirichletAllocation</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></label><div class="sk-toggleable__content "><pre>LatentDirichletAllocation(learning_method=&#x27;online&#x27;, n_components=1,
                           random_state=42, verbose=False)</pre></div> </div></div></div></div></div></div>
 </div>
 <div class="cell docutils container">
@@ -1470,23 +1536,23 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 1&#39;s Keywords:
 </pre></div>
 </div>
-<img alt="../_images/4855bc845a91e1ec972418a58863160e77f3928b09cda39f2970847f8d54799c.png" src="../_images/4855bc845a91e1ec972418a58863160e77f3928b09cda39f2970847f8d54799c.png" />
+<img alt="../_images/647719b5d4b222ebde4cee28b15817bcdd5c0be04bc35fbcbae994eb448a994b.png" src="../_images/647719b5d4b222ebde4cee28b15817bcdd5c0be04bc35fbcbae994eb448a994b.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 2&#39;s Keywords:
 </pre></div>
 </div>
-<img alt="../_images/12fd9ac3624515017a2119ed479fc27141cf808432ac5b6d58cf8ddce77a6d09.png" src="../_images/12fd9ac3624515017a2119ed479fc27141cf808432ac5b6d58cf8ddce77a6d09.png" />
+<img alt="../_images/b8a6e1e461f10c9f5f826489249947b48c4f45adfbc1a9a1c78124c020ef0932.png" src="../_images/b8a6e1e461f10c9f5f826489249947b48c4f45adfbc1a9a1c78124c020ef0932.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 3&#39;s Keywords:
 </pre></div>
 </div>
-<img alt="../_images/c1e7a42fe6d6b63256f489a8fc1e1792eea976f54510bc842d2d7d29e3224832.png" src="../_images/c1e7a42fe6d6b63256f489a8fc1e1792eea976f54510bc842d2d7d29e3224832.png" />
+<img alt="../_images/242a15c02fa25877ffcf0a9375e0ce292c90c901969f40ecc0ad8d2abb51e93c.png" src="../_images/242a15c02fa25877ffcf0a9375e0ce292c90c901969f40ecc0ad8d2abb51e93c.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 4&#39;s Keywords:
 </pre></div>
 </div>
-<img alt="../_images/7ea1fc95c0323b484bf474717eb6638bd48bae31acd32bb4eddcaf96fad57a82.png" src="../_images/7ea1fc95c0323b484bf474717eb6638bd48bae31acd32bb4eddcaf96fad57a82.png" />
+<img alt="../_images/e7af3e9f7641c5e49af23331c52f6d8d18d9efc9ac01dc3aefe991c4b643f43f.png" src="../_images/e7af3e9f7641c5e49af23331c52f6d8d18d9efc9ac01dc3aefe991c4b643f43f.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 5&#39;s Keywords:
 </pre></div>
 </div>
-<img alt="../_images/b2cff1c4ceb9d74817cf355ce77e921d0f8344fc079be70d02250a78e4637a0a.png" src="../_images/b2cff1c4ceb9d74817cf355ce77e921d0f8344fc079be70d02250a78e4637a0a.png" />
+<img alt="../_images/9cbd05350d682fa06ca7353a8d57cb530de6e7ed462587bb9f875f457be940ab.png" src="../_images/9cbd05350d682fa06ca7353a8d57cb530de6e7ed462587bb9f875f457be940ab.png" />
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1300x900 with 0 Axes&gt;
 </pre></div>
 </div>

@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Pre-requisites &#8212; AI Workshop</title>
+    <title>Setup &#8212; AI Workshop</title>
   
   
   
@@ -174,28 +174,24 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Pre-requisites</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Setup</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Implementation</a></li>
-
-
-
-
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.experiment_model.html">3.3. Language Models Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.end_to_end_evaluation.html">End-to-end evaluation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">5. Appendix</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="5.1.generation-qa.html">Generation of synthetic data</a></li>
 
@@ -386,7 +382,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Pre-requisites</h1>
+    <h1>Setup</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -396,9 +392,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-python-virtual-environment-in-visual-studio-code">1. Set up a Python virtual environment in Visual Studio Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-required-packages">2. Install required packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-env-file">3. Load .env file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploy-required-azure-resources">1. Deploy required Azure resources:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-environment">2. Set up the environment.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-use-github-codespaces">a) Use Github Codespaces</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-use-devcontainer">b) Use devcontainer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-set-up-a-python-virtual-environment-in-visual-studio-code">c) Set up a Python virtual environment in Visual Studio Code</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-env-file">3. Configure .env file</a></li>
 </ul>
             </nav>
         </div>
@@ -410,37 +411,53 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="pre-requisites">
-<h1>Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h1>
+<section id="deploy-required-azure-resources">
+<h2>1. Deploy required Azure resources:<a class="headerlink" href="#deploy-required-azure-resources" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://aka.ms/oai/access">Request Access to Azure OpenAI Service</a></p></li>
-<li><p>Visual Studio Code</p></li>
-<li><p>Azure Search Service (which can host one or more search indexes) with Semantic Ranker enabled. Note: it is not supported in sweden central <a class="reference external" href="https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/?products=search">https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/?products=search</a></p></li>
-<li><p>Azure OpenAI Service and text-embedding-ada-002 model deployed</p></li>
+<li><p>Note: You need access to Azure OpenAI Service: <a class="reference external" href="https://aka.ms/oai/access">Request Access to Azure OpenAI Service</a> &amp; Visual Studio Code installed</p></li>
+<li><p>Azure Search Service</p></li>
+<li><p>Azure OpenAI Service in Sweden with text-embedding-ada-002, gpt3.5 model deployed (gpt4 for llm as a judge)</p></li>
 </ul>
-<section id="set-up-a-python-virtual-environment-in-visual-studio-code">
-<h2>1. Set up a Python virtual environment in Visual Studio Code<a class="headerlink" href="#set-up-a-python-virtual-environment-in-visual-studio-code" title="Permalink to this heading">#</a></h2>
+<!-- (which can host one or more search indexes) with Semantic Ranker enabled. Note: it is not supported in sweden central https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/?products=search -->
+</section>
+<section id="set-up-the-environment">
+<h2>2. Set up the environment.<a class="headerlink" href="#set-up-the-environment" title="Permalink to this heading">#</a></h2>
+<p>You have three options.</p>
+<section id="a-use-github-codespaces">
+<h3>a) Use Github Codespaces<a class="headerlink" href="#a-use-github-codespaces" title="Permalink to this heading">#</a></h3>
+<p>Use this option if you don’t have either Python, Docker Desktop or Visual Studio Code installed on your machine.</p>
+<p><span class="xref myst"><img alt="Open in GitHub Codespaces" src="https://github.com/codespaces/badge.svg" /></span></p>
+</section>
+<section id="b-use-devcontainer">
+<h3>b) Use devcontainer<a class="headerlink" href="#b-use-devcontainer" title="Permalink to this heading">#</a></h3>
+<p>Use this option if you have Visual Studio Code and Docker Desktop installed.</p>
+<ol class="arabic simple">
+<li><p>Open the Command Palette (Ctrl+Shift+P).</p></li>
+<li><p>Search for <strong>Dev Containers: Rebuild and Reopen in Container</strong>.</p></li>
+</ol>
+</section>
+<section id="c-set-up-a-python-virtual-environment-in-visual-studio-code">
+<h3>c) Set up a Python virtual environment in Visual Studio Code<a class="headerlink" href="#c-set-up-a-python-virtual-environment-in-visual-studio-code" title="Permalink to this heading">#</a></h3>
+<p>Note: this can take up a long time. To speed up the process, we have checked in the <code class="docutils literal notranslate"><span class="pre">.venv</span></code> - you can just reuse that for the workshop.</p>
+<p>Use this option if you have Visual Studio Code and Python installed.</p>
 <ol class="arabic simple">
 <li><p>Open the Command Palette (Ctrl+Shift+P).</p></li>
 <li><p>Search for <strong>Python: Create Environment</strong>.</p></li>
 <li><p>Select <strong>Venv</strong>.</p></li>
 <li><p>Select a Python interpreter. Choose 3.10 or later.</p></li>
+<li><p>Select <em>workshop\book\requirements.txt</em> as dependencies to install.</p></li>
 </ol>
-<p>It can take a minute to set up. If you run into problems, see <a class="reference external" href="https://code.visualstudio.com/docs/python/environments">Python environments in VS Code</a>.</p>
-</section>
-<section id="install-required-packages">
-<h2>2. Install required packages<a class="headerlink" href="#install-required-packages" title="Permalink to this heading">#</a></h2>
-<p>Uncomment the line below, then comment it again - because we are running the pre-requisites.ipynb in other Jupyter Notebooks, but the installation should happen just once.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %pip install -r requirements.txt --quiet</span>
+<p>It can take a minute to set up. If you run into problems, see <a class="reference external" href="https://code.visualstudio.com/docs/python/environments">Python environments in VS Code</a>.
+If the dependencies were not installed, run</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
-</div>
-</div>
 </section>
-<section id="load-env-file">
-<h2>3. Load .env file<a class="headerlink" href="#load-env-file" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="configure-env-file">
+<h2>3. Configure .env file<a class="headerlink" href="#configure-env-file" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>First, copy <code class="docutils literal notranslate"><span class="pre">.env-sample</span></code> to <code class="docutils literal notranslate"><span class="pre">.env</span></code> and update the values accordingly.</p></li>
 <li><p>Then, run the code below:</p></li>
@@ -454,12 +471,18 @@ document.write(`
 <span class="o">%</span><span class="k">reload_ext</span> dotenv
 <span class="o">%</span><span class="k">dotenv</span>
 
+<span class="n">workspace_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;workspace_name&quot;</span><span class="p">]</span>
+<span class="n">resource_group_name</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;resource_group_name&quot;</span><span class="p">]</span>
+<span class="n">workspace_name</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;workspace_name&quot;</span><span class="p">]</span>
+<span class="n">subscription_id</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;subscription_id&quot;</span><span class="p">]</span>
+
 <span class="n">service_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_SEARCH_SERVICE_ENDPOINT&quot;</span><span class="p">]</span>
 <span class="n">search_index_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_SEARCH_ADMIN_KEY&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_SEARCH_ADMIN_KEY&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
 <span class="n">azure_aoai_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_ENDPOINT&quot;</span><span class="p">]</span> <span class="c1"># your endpoint should look like the following https://YOUR_RESOURCE_NAME.openai.azure.com/</span>
 <span class="n">azure_openai_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_KEY&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_KEY&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
 <span class="n">azure_openai_embedding_deployment</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_EMBEDDING_DEPLOYMENT&quot;</span><span class="p">]</span> <span class="c1"># used to be called azure_openai_embedding_deployment</span>
 <span class="n">azure_openai_chat_deployment</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AZURE_OPENAI_CHAT_DEPLOYMENT_NAME&quot;</span><span class="p">]</span>
+<span class="n">azure_openai_api_version</span> <span class="o">=</span> <span class="s2">&quot;2023-07-01-preview&quot;</span>
 
 <span class="n">credential</span> <span class="o">=</span> <span class="n">AzureKeyCredential</span><span class="p">(</span><span class="n">search_index_key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DefaultAzureCredential</span><span class="p">()</span>
 
@@ -476,6 +499,7 @@ document.write(`
 
 <span class="n">pregenerated_markdown_header_chunks_embeddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/md-header-text-splitter-engineering-mlops-embedded-ada.json&quot;</span>
 <span class="n">pregenerated_semantic_chunks_embeddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/semantic-chunks-engineering-mlops-embedded-ada.json&quot;</span>
+<span class="n">pregenerated_semantic_chunks_embeddings_os</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/semantic-chunking-engineering-mlops-e5-small-v2.json&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -547,9 +571,14 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-python-virtual-environment-in-visual-studio-code">1. Set up a Python virtual environment in Visual Studio Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-required-packages">2. Install required packages</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-env-file">3. Load .env file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploy-required-azure-resources">1. Deploy required Azure resources:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-environment">2. Set up the environment.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-use-github-codespaces">a) Use Github Codespaces</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-use-devcontainer">b) Use devcontainer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-set-up-a-python-virtual-environment-in-visual-studio-code">c) Set up a Python virtual environment in Visual Studio Code</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-env-file">3. Configure .env file</a></li>
 </ul>
   </nav></div>
 
