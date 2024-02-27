@@ -399,7 +399,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-set-up-a-python-virtual-environment-in-visual-studio-code">c) Set up a Python virtual environment in Visual Studio Code</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-env-file">3. Configure .env file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-env-file">3. Configure .env file</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-the-git-submodule">3. Initialize the git submodule</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -428,7 +431,7 @@ document.write(`
 <section id="a-use-github-codespaces">
 <h3>a) Use Github Codespaces<a class="headerlink" href="#a-use-github-codespaces" title="Permalink to this heading">#</a></h3>
 <p>Use this option if you don’t have either Python, Docker Desktop or Visual Studio Code installed on your machine.</p>
-<p><span class="xref myst"><img alt="Open in GitHub Codespaces" src="https://github.com/codespaces/badge.svg" /></span></p>
+<p><a class="reference external" href="https://codespaces.new/ai-workshop-ise/ai-hands-on-lab?quickstart=1"><img alt="Open in GitHub Codespaces" src="https://github.com/codespaces/badge.svg" /></a></p>
 </section>
 <section id="b-use-devcontainer">
 <h3>b) Use devcontainer<a class="headerlink" href="#b-use-devcontainer" title="Permalink to this heading">#</a></h3>
@@ -440,7 +443,6 @@ document.write(`
 </section>
 <section id="c-set-up-a-python-virtual-environment-in-visual-studio-code">
 <h3>c) Set up a Python virtual environment in Visual Studio Code<a class="headerlink" href="#c-set-up-a-python-virtual-environment-in-visual-studio-code" title="Permalink to this heading">#</a></h3>
-<p>Note: this can take up a long time. To speed up the process, we have checked in the <code class="docutils literal notranslate"><span class="pre">.venv</span></code> - you can just reuse that for the workshop.</p>
 <p>Use this option if you have Visual Studio Code and Python installed.</p>
 <ol class="arabic simple">
 <li><p>Open the Command Palette (Ctrl+Shift+P).</p></li>
@@ -449,8 +451,8 @@ document.write(`
 <li><p>Select a Python interpreter. Choose 3.10 or later.</p></li>
 <li><p>Select <em>workshop\book\requirements.txt</em> as dependencies to install.</p></li>
 </ol>
-<p>It can take a minute to set up. If you run into problems, see <a class="reference external" href="https://code.visualstudio.com/docs/python/environments">Python environments in VS Code</a>.
-If the dependencies were not installed, run</p>
+<p>It can take a minute to set up. If you run into problems, see <a class="reference external" href="https://code.visualstudio.com/docs/python/environments">Python environments in VS Code</a>.</p>
+<p>If the dependencies were not installed, run</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
@@ -506,6 +508,13 @@ If the dependencies were not installed, run</p>
 </div>
 </div>
 </div>
+<section id="initialize-the-git-submodule">
+<h3>3. Initialize the git submodule<a class="headerlink" href="#initialize-the-git-submodule" title="Permalink to this heading">#</a></h3>
+<p>In a terminal, go to <strong>data</strong> folder and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -580,7 +589,10 @@ If the dependencies were not installed, run</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-set-up-a-python-virtual-environment-in-visual-studio-code">c) Set up a Python virtual environment in Visual Studio Code</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-env-file">3. Configure .env file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-env-file">3. Configure .env file</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-the-git-submodule">3. Initialize the git submodule</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
