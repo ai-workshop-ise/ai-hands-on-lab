@@ -8,10 +8,10 @@ azure-search-documents==11.4.0
 azure-ai-ml
 python-dotenv
 langchain-community==0.0.18
-unstructured==0.12.3
-unstructured-client==0.17.0
 langchain==0.1.5
 langchain-experimental==0.0.51
 langchain-openai==0.0.6
 plotly==5.19.0
 evaluate==0.4.1
+sentence-transformers
+ipykernel==6.29.0
