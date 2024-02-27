@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="3.1. Embeddings Experiment" href="3.1.experiment_embedding.html" />
-    <link rel="prev" title="RAG - Implementation" href="2.rag-implementation.html" />
+    <link rel="prev" title="RAG - Baseline implementation" href="2.rag-implementation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -174,25 +174,29 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Pre-requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Setup</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Implementation</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="2.rag-implementation.html">RAG - Baseline implementation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.end_to_end_evaluation.html">End-to-end evaluation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="5.1.generation-qa.html">Generation of synthetic data</a></li>
+
+
+
 </ul>
 
     </div>
@@ -388,7 +392,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">The Role of Experimentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">💡The Role of Experimentation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯 Evaluation Metrics</a></li>
@@ -419,11 +423,12 @@ document.write(`
 As you build out your experimentation process for search, reference the [Things to Consider](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_ThingsToConsider.md) document which will highlight some important features to include in your experiments. You can see the [existing learnings from engagements ](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-our-engagements-2)
 ``` -->
 <section id="the-role-of-experimentation">
-<h2>The Role of Experimentation<a class="headerlink" href="#the-role-of-experimentation" title="Permalink to this heading">#</a></h2>
-<p>When creating/running search experiments, there are multiple factors that shape the outcome of each experiment. These are small changes that add up over time and change the functionality and effectiveness of your search experience. These tweaks should help you determine which combination of document shaping and indexing techniques will provide the most relevant set of documents returned for the set of queries that you care about.</p>
+<h2>💡The Role of Experimentation<a class="headerlink" href="#the-role-of-experimentation" title="Permalink to this heading">#</a></h2>
+<p>When creating/running search experiments, there are multiple factors that shape the outcome of each experiment. These are small changes that add up over time and change the functionality and effectiveness of your search experience.</p>
+<!-- These tweaks should help you determine which combination of document shaping and indexing techniques will provide the most relevant set of documents returned for the set of queries that you care about. -->
 <p>Creating an effective solution is a delicate balance of several factors, such as:</p>
 <ul class="simple">
-<li><p>Data ingestion: Optical Character Recognition (OCR), data conversation, use of Azure Form Recognizer to extract information from the documents, summarization, chunking, summarization, speech to text, tagging, etc. are all methods that can be considered and experimented with as part of the ingestion experimentation. See <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">learnings form engagements</a></p></li>
+<li><p>Data ingestion: Optical Character Recognition (OCR), data conversation, usage of Azure Form Recognizer to extract information from the documents, summarization, chunking, speech to text, tagging, etc. are all methods that can be considered and experimented with as part of the ingestion experimentation. See <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-engagements-1">learnings form engagements</a></p></li>
 <li><p>Which <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md">search mechanism</a> to use - whether it is vector search, semantic search, or other.</p></li>
 <li><p>Which model to use - <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models">GPT4, GPT3 (Ada, Curie, Da Vinci), GPT Turbo</a> etc.</p></li>
 <li><p>The prompt - the instruction given to the model in order to produce the desired result. Writing an effective prompt is referred to as “<a class="reference external" href="https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/prompt-engineering">Prompt Engineering</a>”. It is an empirical and iterative process.</p></li>
@@ -456,6 +461,7 @@ As you build out your experimentation process for search, reference the [Things 
 <ul class="simple">
 <li><p><strong>Retrieval Component</strong> - responsible to retrieve the most relevant documents from the Index, based on the input query.</p></li>
 <li><p><strong>Generative Component</strong> - responsible to return a response, based on the input query and extracted documents.</p></li>
+<li><p><strong>End-to-end Solution</strong> - given a question, the RAG solution is responsible to formulate an answer which is grounded in relevant data.</p></li>
 </ul>
 </div>
 <section id="evaluation-dataset">
@@ -473,15 +479,16 @@ As you build out your experimentation process for search, reference the [Things 
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In our workshop, we followed the third option and we generated the data using an LLM (GPT4). You can find the generated data in <span class="xref myst">solution-ops-200-qa-generated-answer</span>. You can find in <a class="reference internal" href="generate-qa.html"><span class="doc std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
-<p>The evaluation data is composed of:</p>
+<p>In our workshop, we followed the third option and we generated the data using an LLM (GPT4). You can find the generated data in <a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">qa_pairs_solutionops</span></a>. You can find in <a class="reference internal" href="5.1.generation-qa.html"><span class="doc std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
+<p>The evaluation data consists of:</p>
 <ul class="simple">
-<li><p>question: the user question</p></li>
-<li><p>citation: the piece(s) of text that contains the relevant content to answer the user question</p></li>
-<li><p>answer: the final answer in a human readable/friendly format</p></li>
+<li><p>user_prompt: the input question</p></li>
+<li><p>context: the piece(s) of text that contains the relevant content to answer the input question</p></li>
+<li><p>output_prompt: the final answer in a human readable/friendly format</p></li>
 </ul>
-<p>For the <strong>Retrieval Component</strong>, the dataset is composed of question and citation. Evaluating the Retrieval Component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s).</p>
-<p>For the <strong>Generative Component</strong>, the dataset is composted of question, citation and answer. Evaluating the Generative Component means to evaluate if for a given query (user question) and a given set of retrieved documented, the engine is returning good answer. TODO: “GOOD answer? refer here to metrics</p>
+<p>For the <strong>Retrieval Component</strong>, the dataset is composed of question and citation (context). Evaluating the Retrieval Component means to evaluate if for a given query (user question) the search engine is returning the relevant citation(s).</p>
+<p>For the <strong>Generative Component</strong>, the dataset is composted of question, citation (context) and answer (output_prompt). Evaluating the Generative Component means to evaluate if for a given query (user question) and a given set of retrieved documented, the engine is returning a good answer.</p>
+<p>For the <strong>End-to-end Solution</strong>, we evaluate if for a given question, the system is able to retrieve relevant documents and formulate an answer.</p>
 </div>
 </section>
 <section id="evaluation-metrics">
@@ -498,7 +505,7 @@ This is easier said than done. We are developing systems where the results are f
 <!-- A RAG solution is a system that combines retrieval and generation to produce natural language outputs based on relevant information from a large corpus of documents. To evaluate the performance of a RAG solution, you need to consider both the quality of the retrieved documents and the quality of the generated outputs. These components (retrieval & generative part) must be evaluated individually before evaluating the end-to-end solution. -->
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In our workshop, we will focus on the technical evaluation for both components:</p>
+<p>In our workshop, we will focus on the technical evaluation for two components:</p>
 <ul>
 <li><p>For the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-retrieval-component">Retrieval Component</a></p>
 <ul>
@@ -508,7 +515,7 @@ This is easier said than done. We are developing systems where the results are f
 </li>
 </ul>
 </li>
-<li><p>For the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-generative-component">Generative Component</a></p>
+<li><p>For the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-generative-component">End-to-end Solution</a></p>
 <ul class="simple">
 <li><p>We will look at human-centric metrics (<a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-model-monitoring-generative-ai-evaluation-metrics?view=azureml-api-2">Groundedness, Relevance, Coherence, Similarity, Fluency</a>) using <a class="reference external" href="https://arxiv.org/pdf/2311.09476.pdf">another LLM as judge approach</a>.</p></li>
 </ul>
@@ -555,7 +562,7 @@ This is easier said than done. We are developing systems where the results are f
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">RAG - Implementation</p>
+        <p class="prev-next-title">RAG - Baseline implementation</p>
       </div>
     </a>
     <a class="right-next"
@@ -583,7 +590,7 @@ This is easier said than done. We are developing systems where the results are f
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">The Role of Experimentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-experimentation">💡The Role of Experimentation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">📈 Evaluation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-dataset">📊 Evaluation Dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯 Evaluation Metrics</a></li>
