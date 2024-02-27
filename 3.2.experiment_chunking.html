@@ -420,7 +420,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯Evaluation Metrics</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-markdown-header-text-splitter-took-3-min">👩‍💻 1. Evaluate the Markdown Header Text Splitter - took 3 min</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-markdown-text-splitter-using-tiktoken-encode">👩‍💻 2. Evaluate the Markdown Text Splitter using tiktoken encode</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy-took-3-min">👩‍💻 3. Evaluate the semantic chunking strategy - took 3 min</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy">👩‍💻 3. Evaluate the semantic chunking strategy</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
@@ -1506,14 +1506,10 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 </section>
 <section id="evaluate-the-markdown-header-text-splitter-took-3-min">
 <h3>👩‍💻 1. Evaluate the Markdown Header Text Splitter - took 3 min<a class="headerlink" href="#evaluate-the-markdown-header-text-splitter-took-3-min" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Accuracy: 28.999999999999996% of the documents were correctly retrieved from Index markdwon-header-chunkig.</p></li>
-<li><p>Avg cosine score:0.8077330619452607</p></li>
-<li><p>Median cosine score: 0.8036465351518314</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace this with the name of the index you want to evaluate</span>
+<details markdown="1">
+<summary> 🔍 Code. It may take up to 3 minutes: </summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># TODO: Replace this with the name of the index you want to evaluate</span>
 <span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;markdwon-header-chunkig&quot;</span>
 
 <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
@@ -1527,52 +1523,44 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median score: </span><span class="si">{</span><span class="n">median_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 28.999999999999996% of the documents were correctly retrieved from Index markdwon-header-chunkig.
-Avg score:0.8077330619452607
-Median score: 0.8036465351518314
-</pre></div>
-</div>
-</div>
-</div>
+</details>
+<!-- - Accuracy: 28.999999999999996% of the documents were correctly retrieved from Index markdwon-header-chunkig.
+
+- Avg cosine score:0.8077330619452607
+
+- Median cosine score: 0.8036465351518314 -->
 </section>
 <section id="evaluate-the-markdown-text-splitter-using-tiktoken-encode">
 <h3>👩‍💻 2. Evaluate the Markdown Text Splitter using tiktoken encode<a class="headerlink" href="#evaluate-the-markdown-text-splitter-using-tiktoken-encode" title="Permalink to this heading">#</a></h3>
-<p>It’s equivalent to the first experiment from embeddings experiment (since in this experiment we use ADA model )</p>
-<!-- - BLOCKED because I couldn't upload the embeddings
+<p>Note: It’s equivalent to the first experiment.</p>
+<details markdown="1">
+<summary> 🔍 Code. It may take up to 3 minutes: </summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># TODO: Replace this with the name of the index you want to evaluate</span>
+<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-180-30&quot;</span>
 
-error:
-Error uploading documents: 'error_map' -->
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # TODO: Replace this with the name of the index you want to evaluate</span>
-<span class="c1"># index_name = &quot;fixed-size-180-30&quot;</span>
+<span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
+    <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
+    <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span>
+<span class="p">)</span>
 
-<span class="c1"># cosine_similarities = calculate_metrics(</span>
-<span class="c1">#     evaluation_data_path=path_to_evaulation_dataset,</span>
-<span class="c1">#     search_index_name=index_name,</span>
-<span class="c1"># )</span>
-
-<span class="c1"># avg_score = mean(cosine_similarities)</span>
-<span class="c1"># print(f&quot;Avg score:{avg_score}&quot;)</span>
-<span class="c1"># median_score = median(cosine_similarities)</span>
-<span class="c1"># print(f&quot;Median score: {median_score}&quot;)</span>
+<span class="n">avg_score</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Avg score:</span><span class="si">{</span><span class="n">avg_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">median_score</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">cosine_similarities</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median score: </span><span class="si">{</span><span class="n">median_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-</section>
-<section id="evaluate-the-semantic-chunking-strategy-took-3-min">
-<h3>👩‍💻 3. Evaluate the semantic chunking strategy - took 3 min<a class="headerlink" href="#evaluate-the-semantic-chunking-strategy-took-3-min" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Accuracy: 70.33333333333334% of the documents were correctly retrieved from Index semantic-chunking.</p></li>
-<li><p>Avg score:0.8640008644417442</p></li>
-<li><p>Median score: 0.8739910472047012</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace this with the name of the index you want to evaluate</span>
+</details></section>
+<section id="evaluate-the-semantic-chunking-strategy">
+<h3>👩‍💻 3. Evaluate the semantic chunking strategy<a class="headerlink" href="#evaluate-the-semantic-chunking-strategy" title="Permalink to this heading">#</a></h3>
+<!-- 
+- Accuracy: 70.33333333333334% of the documents were correctly retrieved from Index semantic-chunking.
+- Avg score:0.8640008644417442
+- Median score: 0.8739910472047012 -->
+<details markdown="1">
+<summary> 🔍 Code. It may take up to 3 minutes: </summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># TODO: Replace this with the name of the index you want to evaluate</span>
 <span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;semantic-chunking&quot;</span>
 
 <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
@@ -1586,19 +1574,16 @@ Error uploading documents: 'error_map' -->
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median score: </span><span class="si">{</span><span class="n">median_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 70.33333333333334% of the documents were correctly retrieved from Index semantic-chunking.
-Avg score:0.8640008890623165
-Median score: 0.8739910472047012
-</pre></div>
-</div>
-</div>
-</div>
+</details>
 </section>
 </section>
 <section id="conclusions">
 <h2>💡 Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">#</a></h2>
+<p>Take few moments to analyse the results.</p>
+<details markdown="1">
+<summary> 🔍 Pre-calculated results: </summary>
+<p><img alt="results.png" src="_images/chunking_results.png" /></p>
+</details>
 </section>
 </section>
 
@@ -1694,7 +1679,7 @@ Median score: 0.8739910472047012
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-metrics">🎯Evaluation Metrics</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-markdown-header-text-splitter-took-3-min">👩‍💻 1. Evaluate the Markdown Header Text Splitter - took 3 min</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-markdown-text-splitter-using-tiktoken-encode">👩‍💻 2. Evaluate the Markdown Text Splitter using tiktoken encode</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy-took-3-min">👩‍💻 3. Evaluate the semantic chunking strategy - took 3 min</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-the-semantic-chunking-strategy">👩‍💻 3. Evaluate the semantic chunking strategy</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">💡 Conclusions</a></li>
