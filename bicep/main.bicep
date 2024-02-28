@@ -103,7 +103,7 @@ module azureOpenAI 'modules/azure-openai.bicep' = {
   name: 'azureOpenAI'
   params: {
     //Azure OpenAI resource
-    nameAOAI: 'aoai-eastus-${environmentType}-${uniqueString(resourceGroup().id)}'
+    nameAOAI: 'aoai-${environmentType}-${uniqueString(resourceGroup().id)}'
     location: location
     deployments: [
       {
