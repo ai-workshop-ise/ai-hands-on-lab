@@ -172,9 +172,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Introduction</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Setup</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
@@ -413,10 +413,10 @@ document.write(`
 <h1><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingExperimentation.md">Experiments</a><a class="headerlink" href="#experiments" title="Permalink to this heading">#</a></h1>
 <p>It sounds like a simplistic statement, but “the best Search solution is the one that returns the best results”.</p>
 <p>The only way to get the best and most relevant results is via experimentation. As a result, the experimentation phase is crucial and effort should be invested to create experiments that can be <em>tracked</em>, <em>evaluated</em> against a consistent set of metrics and can be <em>repeatable</em>.</p>
-<p>We will follow the <a class="reference external" href="https://github.com/cse-labs/ai-garden/blob/main/docs/templates/using-the-templates.md#using-the-experiment-template">experiment template</a> from ai-garden</p>
+<p>We will follow the <a class="reference external" href="https://github.com/cse-labs/ai-garden/blob/main/docs/templates/using-the-templates.md#using-the-experiment-template">experiment template</a> from ai-garden to craft our experiments.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Each situation is different, and the techniques you use will depend on the type of documents you have, the type of queries you expect to receive, and the type of results you want to return. Work out with your data scientist to work this out for a specific engagement.</p>
+<p>Each situation is different, and the techniques you use will depend on the type of documents you have, the type of queries you expect to receive, and the type of results you want to return. Team up with your data scientist to work this out for a specific engagement.</p>
 </div>
 <!--
 ```{seealso}
@@ -450,7 +450,7 @@ As you build out your experimentation process for search, reference the [Things 
 <li><p>An agent that takes care of the conversation part of the solution.</p></li>
 <li><p>An agent that detects intent within a conversation.</p></li>
 <li><p>An agent that extracts vehicle information from a conversation.</p></li>
-<li><p>In addition, the system may need to be integrated with live services. For example, aN agent that needs to make calls to a hosted API to help verify that the customer has fully specified the vehicle’s manufacture, model to be able to progress the conversation.</p></li>
+<li><p>In addition, the system may need to be integrated with live services. For example, an agent that needs to make calls to a hosted API to help verify that the customer has fully specified the vehicle’s manufacture, model to be able to progress the conversation.</p></li>
 </ul>
 <p>In evaluating the system, we need to account for evaluating all components of the system individually and not only the ones that are using LLMs.</p>
 <!-- A RAG solution is a system that combines retrieval and generation to produce natural language outputs based on relevant information from a large corpus of documents.  -->
@@ -461,8 +461,8 @@ As you build out your experimentation process for search, reference the [Things 
 <ul class="simple">
 <li><p><strong>Retrieval Component</strong> - responsible to retrieve the most relevant documents from the Index, based on the input query.</p></li>
 <li><p><strong>Generative Component</strong> - responsible to return a response, based on the input query and extracted documents.</p></li>
-<li><p><strong>End-to-end Solution</strong> - given a question, the RAG solution is responsible to formulate an answer which is grounded in relevant data.</p></li>
 </ul>
+<p>Eventually, the <strong>End-to-end Solution</strong> should also be evaluated. Essentially, it requires to evaluate that given a question, the system is able to formulate an answer which is grounded in relevant data.</p>
 </div>
 <section id="evaluation-dataset">
 <h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
@@ -505,7 +505,7 @@ This is easier said than done. We are developing systems where the results are f
 <!-- A RAG solution is a system that combines retrieval and generation to produce natural language outputs based on relevant information from a large corpus of documents. To evaluate the performance of a RAG solution, you need to consider both the quality of the retrieved documents and the quality of the generated outputs. These components (retrieval & generative part) must be evaluated individually before evaluating the end-to-end solution. -->
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In our workshop, we will focus on the technical evaluation for two components:</p>
+<p>In our workshop, we will focus on the technical evaluation:</p>
 <ul>
 <li><p>For the <a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md#evaluating-the-retrieval-component">Retrieval Component</a></p>
 <ul>

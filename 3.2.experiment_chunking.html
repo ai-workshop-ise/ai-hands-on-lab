@@ -172,9 +172,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Introduction</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Setup</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
@@ -396,21 +396,21 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-chunking-matter">Why does chunking matter?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown-header-text-splitter">1. Markdown Header Text Splitter</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-todo">Overview TODO</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chunk-the-data">Chunk the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown-text-splitter-using-tiktoken-encoder">2. Markdown Text Splitter using tiktoken encoder</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Overview TODO</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Overview</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Chunk the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Analysis</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-chunking">3. Semantic Chunking</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Overview TODO</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Overview</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Example</a></li>
 </ul>
 </li>
@@ -552,8 +552,8 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </section>
 <section id="markdown-header-text-splitter">
 <h2>1. Markdown Header Text Splitter<a class="headerlink" href="#markdown-header-text-splitter" title="Permalink to this heading">#</a></h2>
-<section id="overview-todo">
-<h3>Overview TODO<a class="headerlink" href="#overview-todo" title="Permalink to this heading">#</a></h3>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h3>
 <p>In this approach we will leverage the fact that our documents are markdown files and we will consider that the markdown pages are well structured. Therefore, we will split using the markdown headers.</p>
 </section>
 <section id="example">
@@ -847,7 +847,7 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 <section id="markdown-text-splitter-using-tiktoken-encoder">
 <h2>2. Markdown Text Splitter using tiktoken encoder<a class="headerlink" href="#markdown-text-splitter-using-tiktoken-encoder" title="Permalink to this heading">#</a></h2>
 <section id="id1">
-<h3>Overview TODO<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>Overview<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <p>To decide the length of each chunk, we will look at the distribution of the document lengths and the distribution of the chunk lengths. We will then decide on a chunk length that will give us a good distribution of chunk lengths. We will use a splitter that uses the tiktoken tokenizer to split the documents into chunks. Hence we do the following:</p>
 <ol class="arabic simple">
 <li><p>Tokenize all the documents, and look at the distribution of the document lengths</p></li>
@@ -1048,7 +1048,6 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </div>
 </div>
-<p>[TODO: ADD CORRELATION between n_tokens and document_lengths]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fig = px.histogram(markdown_files, x=&#39;n_tokens&#39;,</span>
@@ -1217,7 +1216,7 @@ Concept to know:
 <section id="semantic-chunking">
 <h2>3. <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">Semantic Chunking</a><a class="headerlink" href="#semantic-chunking" title="Permalink to this heading">#</a></h2>
 <section id="id5">
-<h3>Overview TODO<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<h3>Overview<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <!-- Azure: https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept-retrieval-augumented-generation?view=doc-intel-4.0.0#semantic-chunking) -->
 <p>In the previous approach, we chose a constant value for chunk size, in a random way. We did not leverage the actual content of the document, the structure, etc. In this section, we will look at <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">Semantic Chunking</a> from LangChain. This approach splits the text based on semantic similarity.</p>
 <p>For insights on what it is doing, you can have a look at <a class="reference external" href="https://github.com/FullStackRetrieval-com/RetrievalTutorials/blob/main/5_Levels_Of_Text_Splitting.ipynb">Level 4. Semantic Splitting</a>.</p>
@@ -1483,7 +1482,6 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
                                    <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">search_response</span><span class="p">]</span>
             <span class="n">top_retrieved_document</span> <span class="o">=</span> <span class="n">search_response</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span>
 
-
             <span class="c1"># 2. Calculate cosine similarity between the expected document and the top retrieved document</span>
             <span class="n">cosine_similarity</span> <span class="o">=</span> <span class="n">calculate_cosine_similarity</span><span class="p">(</span>
                 <span class="n">expected_document_vector</span><span class="p">,</span> <span class="n">top_retrieved_document</span><span class="p">)</span>
@@ -1550,10 +1548,11 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median score: </span><span class="si">{</span><span class="n">median_score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</details></section>
+</details>
+</section>
 <section id="evaluate-the-semantic-chunking-strategy">
 <h3>👩‍💻 3. Evaluate the semantic chunking strategy<a class="headerlink" href="#evaluate-the-semantic-chunking-strategy" title="Permalink to this heading">#</a></h3>
-<!-- 
+<!--
 - Accuracy: 70.33333333333334% of the documents were correctly retrieved from Index semantic-chunking.
 - Avg score:0.8640008644417442
 - Median score: 0.8739910472047012 -->
@@ -1655,21 +1654,21 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-chunking-matter">Why does chunking matter?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown-header-text-splitter">1. Markdown Header Text Splitter</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-todo">Overview TODO</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chunk-the-data">Chunk the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown-text-splitter-using-tiktoken-encoder">2. Markdown Text Splitter using tiktoken encoder</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Overview TODO</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Overview</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Chunk the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Analysis</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-chunking">3. Semantic Chunking</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Overview TODO</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Overview</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Example</a></li>
 </ul>
 </li>

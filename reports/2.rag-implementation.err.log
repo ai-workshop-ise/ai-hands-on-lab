@@ -37,8 +37,6 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['# 1. Create a new index', '# TODO: Replace the prefix with a relevant name given your embedding model', 'new_index_name = "fixed-size-chunks-180-30-batch-engineering-mlops-ada"', 'vector_size = 1536  # TODO: Replace with the vector size of your embedding model', 'create_index(new_index_name)']
-...
-['# 2. Upload the embeddings to the new index', '# TODO: Replace the emebddings_file_path to point to the right file path', 'emebddings_file_path = pregenerated_fixed_size_chunks_emebddings_ada', 'upload_data(file_path=emebddings_file_path,', '            search_index_name=new_index_name)']
+upload_data(path_to_embedded_chunks, search_index_name)
 -------------------
 
