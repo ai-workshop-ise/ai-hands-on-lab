@@ -50,3 +50,5 @@ resource search 'Microsoft.Search/searchServices@2020-08-01' = {
     hostingMode: hostingMode
   }
 }
+
+output searchName string = search.name
