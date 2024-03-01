@@ -22,7 +22,8 @@
 			"settings": {},
 			"extensions": [
 				"ms-python.python",
-				"ms-vscode.azure-account"
+				"ms-vscode.azure-account",
+				"ms-toolsai.jupyter"
 			]
 		}
 	},
