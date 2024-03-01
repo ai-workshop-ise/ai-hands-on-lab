@@ -27,10 +27,6 @@ param keyVaultId string
 @description('Resource ID of the storage account resource')
 param storageAccountId string
 
-@description('Resource ID of the Azure OpenAI  resource')
-param azureOpenAIId string
-
-
 resource machineLearning 'Microsoft.MachineLearningServices/workspaces@2023-10-01' = {
   name: nameMachineLearning
   location: location
