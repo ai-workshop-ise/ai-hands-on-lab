@@ -1,6 +1,6 @@
 #!/bin/bash
 repoRoot=$(
-    cd "$(dirname "${BASH_SOURCE[0]}")/../../../"
+    cd "$(dirname "${BASH_SOURCE[0]}")/../../"
     pwd -P
 )
 
@@ -91,42 +91,42 @@ if [[ -z "${RESOURCE_GROUP}" ]]; then
     exit 1
 fi
 
-# if [[ $SUBSCRIPTION_ID ]]; then
-#     printProgress "Interactive Azure login..."
-#     if [[ -z $TENANT_ID ]]; then
-#         az login || exit 1
-#     else
-#         az login -t $TENANT_ID || exit 1
-#     fi  
-#     if [[ ! -z $SUBSCRIPTION_ID ]]; then
-#         az account set -s $SUBSCRIPTION_ID
-#     fi     
-# fi
-# checkLoginAndSubscription
+if [[ $SUBSCRIPTION_ID ]]; then
+    printProgress "Interactive Azure login..."
+    if [[ -z $TENANT_ID ]]; then
+        az login || exit 1
+    else
+        az login -t $TENANT_ID || exit 1
+    fi  
+    if [[ ! -z $SUBSCRIPTION_ID ]]; then
+        az account set -s $SUBSCRIPTION_ID
+    fi     
+fi
+checkLoginAndSubscription
 
 # az account show
 
-# printProgress "Getting Resource Group Name..."
+printProgress "Getting Resource Group Name..."
 resourceGroupName="${RESOURCE_GROUP}"
-# printProgress "Resource Group Name: ${resourceGroupName}"
+printProgress "Resource Group Name: ${resourceGroupName}"
 
 
 
-# pathToBicep="${repoRoot}/ai-hands-on-lab/bicep/main.bicep"
+pathToBicep="${repoRoot}/bicep/main.bicep"
 
 
-# #Deploy infrastructure using main.bicep file
-# printProgress "Deploying resources in resource group ${resourceGroupName}..."
-# az deployment group create --mode Incremental --resource-group $resourceGroupName --template-file $pathToBicep  --parameters environmentType=DEV
+#Deploy infrastructure using main.bicep file
+printProgress "Deploying resources in resource group ${resourceGroupName}..."
+az deployment group create --mode Incremental --resource-group $resourceGroupName --template-file $pathToBicep  --parameters environmentType=DEV
 
-# #Getting Azure Key Vault and Azure ML workspace names from the deployment named "main" and "azuremlWorkspace"
+#Getting Azure Key Vault and Azure ML workspace names from the deployment named "main" and "azuremlWorkspace"
 
 
 nameAmlWorkspace=$(az deployment group show --resource-group ${resourceGroupName} --name azuremlWorkspace --query properties.outputs.nameMachineLearning.value -o tsv)
 nameAiSearch=$(az deployment group show --resource-group ${resourceGroupName} --name aiSearch --query properties.outputs.searchName.value -o tsv)
 nameAOAI=$(az deployment group show --resource-group ${resourceGroupName} --name azureOpenAI --query properties.outputs.azureOpenAIName.value -o tsv)
 # Getting Azure AI Search endpoint and key
-aiSearchEndpoint=$(az search service show --name ${nameAiSearch} --resource-group ${resourceGroupName} --query endpoint --output tsv)
+aiSearchEndpoint=https://${nameAiSearch}.search.windows.net
 aiSearchKey=$(az search admin-key show --service-name ${nameAiSearch} --resource-group ${resourceGroupName} --query primaryKey --output tsv)
 
 # Getting Azure OpenAI endpoint and key
@@ -147,15 +147,30 @@ if [ -z "$nameAOAI" ];  then
     printProgress "Missing nameAOAI"
     exit 1
 fi
+if [ -z "$aiSearchEndpoint" ];  then
+    printProgress "Missing aiSearchEndpoint"
+    exit 1
+fi
+if [ -z "$aiSearchKey" ];  then
+    printProgress "Missing aiSearchKey"
+    exit 1
+fi
+if [ -z "$aoaiEndpoint" ];  then
+    printProgress "Missing aoaiEndpoint"
+    exit 1
+fi
+if [ -z "$aoaiKey" ];  then
+    printProgress "Missing aoaiKey"
+    exit 1
+fi
 
-escapedaiSearchEndpoint=$(echo "$aiSearchEndpoint" | sed 's/\//\\\//g')
-escapedaoaiEndpoint$(echo "$aoaiEndpoint" | sed 's/\//\\\//g')
+cp ${repoRoot}/book/.env.sample ${repoRoot}/book/.env
+sed -i "s|AZURE_SEARCH_SERVICE_ENDPOINT=.*|AZURE_SEARCH_SERVICE_ENDPOINT=\"$aiSearchEndpoint\"|g" ${repoRoot}/book/.env
+sed -i "s|AZURE_SEARCH_ADMIN_KEY=.*|AZURE_SEARCH_ADMIN_KEY=\"$aoaiKey\"|g" ${repoRoot}/book/.env
+sed -i "s|AZURE_OPENAI_ENDPOINT=.*|AZURE_OPENAI_ENDPOINT=\"$aoaiEndpoint\"|g" ${repoRoot}/book/.env
+sed -i "s|AZURE_OPENAI_KEY=.*|AZURE_OPENAI_KEY=\"$aiSearchKey\"|g" ${repoRoot}/book/.env
+sed -i "s|workspace_name=.*|workspace_name=\"$nameAmlWorkspace\"|g" ${repoRoot}/book/.env
+sed -i "s|resource_group_name=.*|resource_group_name=\"$resourceGroupName\"|g" ${repoRoot}/book/.env
+sed -i "s|subscription_id=.*|subscription_id=\"$SUBSCRIPTION_ID\"|g" ${repoRoot}/book/.env
 
-sed -i "s/AZURE_SEARCH_SERVICE_ENDPOINT=\"\"/AZURE_SEARCH_SERVICE_ENDPOINT=\"$escapedaiSearchEndpoint\"/g" "${repoRoot}/ai-hands-on-lab/book/.env"
-sed -i "s/AZURE_SEARCH_ADMIN_KEY=\"\"/AZURE_SEARCH_ADMIN_KEY=\"$aiSearchKey\"/g" "${repoRoot}/ai-hands-on-lab/book/.env"
-sed -i "s/AZURE_OPENAI_ENDPOINT=\"\"/AZURE_OPENAI_ENDPOINT=\"$escapedaoaiEndpoint\"/g" "${repoRoot}/ai-hands-on-lab/book/.env"
-sed -i "s/AZURE_OPENAI_KEY=\"\"/AZURE_OPENAI_KEY=\"$aoaiKey\"/g" "${repoRoot}/ai-hands-on-lab/book/.env"
-sed -i "s/subscription_id=\"\"/subscription_id=\"$SUBSCRIPTION_ID\"/g" "${repoRoot}/ai-hands-on-lab/book/.env"
-sed -i "s/resource_group_name=\"\"/resource_group_name=\"$resourceGroupName\"/g" "${repoRoot}/ai-hands-on-lab/book/.env"
-sed -i "s/workspace_name=\"\"/workspace_name=\"$nameAmlWorkspace\"/g" "${repoRoot}/ai-hands-on-lab/book/.env"
 printMessage "Deployment in resource group ${resourceGroupName} successful!"
