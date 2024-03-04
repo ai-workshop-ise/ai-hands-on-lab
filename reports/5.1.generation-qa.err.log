@@ -18,14 +18,16 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-\ /
-_
+unique_sections = list(df_markdown_documents['solutionops_section'].unique())
+color_mapping = {section: color for section, color in zip(unique_sections, colors)}
 ------------------
 
 
-[1;36m  Cell [1;32mIn[5], line 1[1;36m[0m
-[1;33m    \ /[0m
-[1;37m     ^[0m
-[1;31mSyntaxError[0m[1;31m:[0m unexpected character after line continuation character
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mTypeError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[8], line 2[0m
+[0;32m      1[0m unique_sections [38;5;241m=[39m [38;5;28mlist[39m(df_markdown_documents[[38;5;124m'[39m[38;5;124msolutionops_section[39m[38;5;124m'[39m][38;5;241m.[39munique())
+[1;32m----> 2[0m color_mapping [38;5;241m=[39m {section: color [38;5;28;01mfor[39;00m section, color [38;5;129;01min[39;00m [38;5;28;43mzip[39;49m[43m([49m[43munique_sections[49m[43m,[49m[43m [49m[43mcolors[49m[43m)[49m}
 
+[1;31mTypeError[0m: 'module' object is not iterable
 

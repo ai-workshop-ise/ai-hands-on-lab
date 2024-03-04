@@ -172,9 +172,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Introduction</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../pre-requisites.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.setup.html">Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../1.rag-intro.html">RAG - Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.context.html">Context</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
@@ -182,14 +182,14 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../3.experiment.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.0.experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../3.3.end_to_end_evaluation.html">End-to-end evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.3.end_to_end_evaluation.html">3.3. End-to-end evaluation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../10.evaluation-production.html">Post-production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.post-production.html">Post-production</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -706,8 +706,7 @@ document.write(`
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shrinked!!1&quot;</span><span class="p">)</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">[:</span><span class="mi">8000</span><span class="p">]</span>
     <span class="c1"># print(len(query))</span>
-    <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span>
-<span class="w">        </span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">}</span>
     <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
     <span class="n">embedding_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
@@ -750,8 +749,7 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_output_file</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span>
-<span class="w">                </span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Embeddings were already created for chunked data </span><span class="si">{</span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> at: </span><span class="si">{</span><span class="n">path_to_chunked_documents</span><span class="si">}</span><span class="s2"> &quot;</span>
         <span class="p">)</span>
         <span class="k">return</span>
     <span class="k">try</span><span class="p">:</span>

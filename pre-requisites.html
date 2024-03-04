@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Setup &#8212; AI Workshop</title>
+    <title>&lt;no title&gt; &#8212; AI Workshop</title>
   
   
   
@@ -65,8 +65,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'pre-requisites';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="RAG - Introduction" href="1.rag-intro.html" />
-    <link rel="prev" title="Welcome" href="0.intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -128,6 +126,8 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -171,10 +171,10 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Introduction</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Setup</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.setup.html">Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.context.html">Context</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="nav bd-sidenav">
@@ -182,14 +182,14 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.0.experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.end_to_end_evaluation.html">End-to-end evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.end_to_end_evaluation.html">3.3. End-to-end evaluation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.post-production.html">Post-production</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -382,7 +382,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Setup</h1>
+    <h1><no title></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -391,19 +391,9 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploy-required-azure-resources">1. Deploy required Azure resources:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-environment">2. Set up the environment</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-use-github-codespaces">a) Use Github Codespaces</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-set-up-a-python-virtual-environment-in-visual-studio-code">b) Set up a Python virtual environment in Visual Studio Code</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-use-devcontainer">c) Use devcontainer</a></li>
+                <ul class="simple visible nav section-nav flex-column">
 </ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-env-file">3. Configure .env file</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-the-git-submodule">3. Initialize the git submodule</a></li>
-</ul>
-</li>
-</ul>
+
             </nav>
         </div>
     </div>
@@ -414,74 +404,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="setup">
-<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Link to the repo: <a class="github reference external" href="https://github.com/ai-workshop-ise/ai-hands-on-lab">ai-workshop-ise/ai-hands-on-lab</a></p>
-</div>
-<section id="deploy-required-azure-resources">
-<h2>1. Deploy required Azure resources:<a class="headerlink" href="#deploy-required-azure-resources" title="Permalink to this heading">#</a></h2>
-<!-- - Note: You need access to Azure OpenAI Service: [Request Access to Azure OpenAI Service](https://aka.ms/oai/access) & Visual Studio Code installed -->
-<p>The following resources will be needed:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/search/search-create-service-portal">Azure Search Service</a></p></li>
-<li><p>Azure OpenAI Service with the following models:</p>
-<ul>
-<li><p>text-embedding-ada-002</p></li>
-<li><p>GPT3.5</p></li>
-<li><p>Optional: GPT4 for llm as a judge. Alternatively, you can use GPT3.5 as judge.</p></li>
-</ul>
-</li>
-<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/quickstart-create-resources?view=azureml-api-2#create-the-workspace">Azure Machine Learning Workspace</a></p></li>
-</ul>
-<p>You can deploy them through the following script:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bicep</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">deploy</span><span class="o">-</span><span class="n">infra</span><span class="o">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">r</span> <span class="s2">&quot;[RGNAME]&quot;</span> <span class="o">-</span><span class="n">s</span> <span class="s2">&quot;[SUSCRIPTION_ID]&quot;</span> <span class="o">-</span><span class="n">t</span> <span class="s2">&quot;[TENANT_ID]&quot;</span>
-</pre></div>
-</div>
-<!-- (which can host one or more search indexes) with Semantic Ranker enabled. Note: it is not supported in sweden central https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/?products=search -->
-</section>
-<section id="set-up-the-environment">
-<h2>2. Set up the environment<a class="headerlink" href="#set-up-the-environment" title="Permalink to this heading">#</a></h2>
-<p>There are three options:</p>
-<section id="a-use-github-codespaces">
-<h3>a) Use Github Codespaces<a class="headerlink" href="#a-use-github-codespaces" title="Permalink to this heading">#</a></h3>
-<p>Use this option if you don’t have either Python, Docker Desktop or Visual Studio Code installed on your machine.</p>
-<p><a class="reference external" href="https://codespaces.new/ai-workshop-ise/ai-hands-on-lab"><img alt="Open in GitHub Codespaces" src="https://github.com/codespaces/badge.svg" /></a></p>
-<!-- https://codespaces.new/ai-workshop-ise/ai-hands-on-lab -->
-</section>
-<section id="b-set-up-a-python-virtual-environment-in-visual-studio-code">
-<h3>b) Set up a Python virtual environment in Visual Studio Code<a class="headerlink" href="#b-set-up-a-python-virtual-environment-in-visual-studio-code" title="Permalink to this heading">#</a></h3>
-<p>Use this option if you have Visual Studio Code and Python installed.</p>
-<ol class="arabic simple">
-<li><p>Open the Command Palette (Ctrl+Shift+P).</p></li>
-<li><p>Search for <strong>Python: Create Environment</strong>.</p></li>
-<li><p>Select <strong>Venv</strong>.</p></li>
-<li><p>Select a Python interpreter. Choose 3.10 or later.</p></li>
-<li><p>Select <em>workshop\book\requirements.txt</em> as dependencies to install.</p></li>
-</ol>
-<p>It can take a minute to set up. If you run into problems, see <a class="reference external" href="https://code.visualstudio.com/docs/python/environments">Python environments in VS Code</a>.</p>
-<p>If the dependencies were not installed, run</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
-</pre></div>
-</div>
-</section>
-<section id="c-use-devcontainer">
-<h3>c) Use devcontainer<a class="headerlink" href="#c-use-devcontainer" title="Permalink to this heading">#</a></h3>
-<p>Use this option if you have Visual Studio Code and Docker installed.</p>
-<ol class="arabic simple">
-<li><p>Open the Command Palette (Ctrl+Shift+P).</p></li>
-<li><p>Search for <strong>Dev Containers: Rebuild and Reopen in Container</strong>.</p></li>
-</ol>
-</section>
-</section>
-<section id="configure-env-file">
-<h2>3. Configure .env file<a class="headerlink" href="#configure-env-file" title="Permalink to this heading">#</a></h2>
-<ul class="simple">
-<li><p>First, copy <code class="docutils literal notranslate"><span class="pre">.env-sample</span></code> to <code class="docutils literal notranslate"><span class="pre">.env</span></code> and update the values accordingly.</p></li>
-<li><p>Then, run the code below:</p></li>
-</ul>
-<div class="cell docutils container">
+  <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
 <span class="kn">from</span> <span class="nn">azure.core.credentials</span> <span class="kn">import</span> <span class="n">AzureKeyCredential</span>
@@ -515,7 +438,7 @@ document.write(`
 <span class="n">pregenerated_md_header_chunks</span> <span class="o">=</span>  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/chunking/md-header-text-splitter-engineering-mlops.json&quot;</span>
 <span class="n">pregenerated_semantic_chunks</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/chunking/semantic-chunks-engineering-mlops.json&quot;</span>
 
-<span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/fixed-size-chunks-180-30-batch-engineering-mlops-ada.json&quot;</span>
+<span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/fixed-size-chunks-180-30-engineering-mlops-ada.json&quot;</span>
 <span class="n">pregenerated_fixed_size_chunks_emebddings_os</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/fixed-size-chunks-180-30-engineering-mlops-e5-small-v2.json&quot;</span>
 
 <span class="n">pregenerated_markdown_header_chunks_embeddings_ada</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pregenerated_data_path</span><span class="si">}</span><span class="s2">/embeddings/md-header-text-splitter-engineering-mlops-embedded-ada.json&quot;</span>
@@ -525,15 +448,6 @@ document.write(`
 </div>
 </div>
 </div>
-<section id="initialize-the-git-submodule">
-<h3>3. Initialize the git submodule<a class="headerlink" href="#initialize-the-git-submodule" title="Permalink to this heading">#</a></h3>
-<p>In a terminal, go to <strong>data</strong> folder and run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
-</pre></div>
-</div>
-</section>
-</section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -565,24 +479,6 @@ document.write(`
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="0.intro.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Welcome</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="1.rag-intro.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">RAG - Introduction</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -598,19 +494,9 @@ document.write(`
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploy-required-azure-resources">1. Deploy required Azure resources:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-environment">2. Set up the environment</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-use-github-codespaces">a) Use Github Codespaces</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-set-up-a-python-virtual-environment-in-visual-studio-code">b) Set up a Python virtual environment in Visual Studio Code</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-use-devcontainer">c) Use devcontainer</a></li>
+    <ul class="simple visible nav section-nav flex-column">
 </ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-env-file">3. Configure .env file</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-the-git-submodule">3. Initialize the git submodule</a></li>
-</ul>
-</li>
-</ul>
+
   </nav></div>
 
 </div></div>

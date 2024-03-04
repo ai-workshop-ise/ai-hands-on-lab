@@ -65,8 +65,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = '2.rag-implementation';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Experiments" href="3.experiment.html" />
-    <link rel="prev" title="Context" href="context.html" />
+    <link rel="next" title="Experiments" href="3.0.experiments.html" />
+    <link rel="prev" title="Context" href="1.context.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -172,9 +172,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">1. Introduction</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="pre-requisites.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.setup.html">Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="1.rag-intro.html">RAG - Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.context.html">Context</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">2. Implementation</span></p>
 <ul class="current nav bd-sidenav">
@@ -182,14 +182,14 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">3. Experimentation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="3.experiment.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.0.experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.1.experiment_embedding.html">3.1. Embeddings Experiment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.2.experiment_chunking.html">3.2. Chunking Experiment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3.3.end_to_end_evaluation.html">End-to-end evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.3.end_to_end_evaluation.html">3.3. End-to-end evaluation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">4. Production</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="10.evaluation-production.html">Post-production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.post-production.html">Post-production</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -525,29 +525,24 @@ Used for SearchField inspiration - https://github.com/Azure/azure-sdk-for-python
 <tr class="row-odd"><th class="head"><p>Field</p></th>
 <th class="head"><p>Type</p></th>
 <th class="head"><p>Description</p></th>
-<th class="head"><p>Searchable</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>ChunkId</p></td>
 <td><p>SimpleField</p></td>
 <td><p>The id of the chunk, in the form of <code class="docutils literal notranslate"><span class="pre">source_document_name+chunk_number</span></code></p></td>
-<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>Source</p></td>
 <td><p>SimpleField</p></td>
 <td><p>The path to the source document</p></td>
-<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p>ChunkContent</p></td>
 <td><p>SearchableField</p></td>
 <td><p>The content of the chunk</p></td>
-<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>ChunkContentVector</p></td>
 <td><p>SearchField</p></td>
 <td><p>The vectorized content of the chunk</p></td>
-<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -691,10 +686,14 @@ Used for SearchField inspiration - https://github.com/Azure/azure-sdk-for-python
 </div>
 </div>
 </div>
-<p>Comment out the next cell and run it:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># upload_data(path_to_embedded_chunks, search_index_name)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upload_data</span><span class="p">(</span><span class="n">path_to_embedded_chunks</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 3236 documents to Index: first_index
 </pre></div>
 </div>
 </div>
@@ -882,7 +881,7 @@ However, since we are having a QA system and not a chat, in our workshop we are 
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>User question: What does the develop phase include?
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response: The Develop Phase includes designing the interface together where both developers design the method signatures and names, write documentation or docstrings for what the methods are intended to do, make architecture decisions that would influence testing such as factory patterns, etc. (Source: ..\data\docs\code-with-engineering\agile-development\advanced-topics\collaboration\virtual-collaboration.md, chunk16_3).
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Response: The develop phase includes designing the interface together, such as method signatures and names, writing documentation or docstrings for what the methods are intended to do and making architecture decisions that would influence testing, such as Factory patterns, etc. (Source: ..\data\docs\code-with-engineering\agile-development\advanced-topics\collaboration\virtual-collaboration.md, chunk16_3)
 </pre></div>
 </div>
 </div>
@@ -932,7 +931,7 @@ However, since we are having a QA system and not a chat, in our workshop we are 
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="context.html"
+       href="1.context.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
@@ -941,7 +940,7 @@ However, since we are having a QA system and not a chat, in our workshop we are 
       </div>
     </a>
     <a class="right-next"
-       href="3.experiment.html"
+       href="3.0.experiments.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
