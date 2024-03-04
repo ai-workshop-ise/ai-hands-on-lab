@@ -12,6 +12,9 @@
         },
         "ghcr.io/rchaganti/vsc-devcontainer-features/azurebicep:1": {
             "version": "latest"
+        },
+		"ghcr.io/devcontainers/features/git-lfs:1": {
+            "version": "latest"
         }
 	},
 
@@ -43,7 +46,7 @@
 	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "virtualenv -p3.9 .myvenv && . .myvenv/bin/activate && pip3 install -r book/requirements.txt --no-cache-dir"
+	"postCreateCommand": "pip3 install -r book/requirements.txt --no-cache-dir "
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"

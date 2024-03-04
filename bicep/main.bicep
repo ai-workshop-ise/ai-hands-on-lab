@@ -78,7 +78,6 @@ module azuremlWorkspace 'modules/machine-learning-workspace.bicep' = {
     containerRegistryId: containerRegistry.outputs.containerRegistryId
     keyVaultId: keyVault.outputs.keyVaultId
     storageAccountId: storage.outputs.storageId
-    azureOpenAIId: azureOpenAI.outputs.azureOpenAIId
 
   }
   dependsOn: [
