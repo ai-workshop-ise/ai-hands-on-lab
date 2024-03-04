@@ -1,1 +1,2 @@
+book/output/pre-generated/embeddings/fixed-size-chunks-180-30-engineering-mlops-ada.json filter=lfs diff=lfs merge=lfs -text
 book/output/pre-generated/embeddings/fixed-size-chunks-180-30-batch-engineering-mlops-ada.json filter=lfs diff=lfs merge=lfs -text
