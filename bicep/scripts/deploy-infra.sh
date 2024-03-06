@@ -166,9 +166,9 @@ fi
 
 cp ${repoRoot}/book/.env.sample ${repoRoot}/book/.env
 sed -i "s|AZURE_SEARCH_SERVICE_ENDPOINT=.*|AZURE_SEARCH_SERVICE_ENDPOINT=\"$aiSearchEndpoint\"|g" ${repoRoot}/book/.env
-sed -i "s|AZURE_SEARCH_ADMIN_KEY=.*|AZURE_SEARCH_ADMIN_KEY=\"$aoaiKey\"|g" ${repoRoot}/book/.env
+sed -i "s|AZURE_SEARCH_ADMIN_KEY=.*|AZURE_SEARCH_ADMIN_KEY=\"$aiSearchKey\"|g" ${repoRoot}/book/.env
 sed -i "s|AZURE_OPENAI_ENDPOINT=.*|AZURE_OPENAI_ENDPOINT=\"$aoaiEndpoint\"|g" ${repoRoot}/book/.env
-sed -i "s|AZURE_OPENAI_KEY=.*|AZURE_OPENAI_KEY=\"$aiSearchKey\"|g" ${repoRoot}/book/.env
+sed -i "s|AZURE_OPENAI_KEY=.*|AZURE_OPENAI_KEY=\"$aoaiKey\"|g" ${repoRoot}/book/.env
 sed -i "s|workspace_name=.*|workspace_name=\"$nameAmlWorkspace\"|g" ${repoRoot}/book/.env
 sed -i "s|resource_group_name=.*|resource_group_name=\"$resourceGroupName\"|g" ${repoRoot}/book/.env
 sed -i "s|subscription_id=.*|subscription_id=\"$SUBSCRIPTION_ID\"|g" ${repoRoot}/book/.env
