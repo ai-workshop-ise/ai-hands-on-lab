@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Generation of synthetic data &#8212; AI Workshop</title>
   
@@ -29,39 +28,35 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '5.1.generation-qa';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -159,7 +154,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -428,10 +434,10 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="generation-of-synthetic-data">
-<h1>Generation of synthetic data<a class="headerlink" href="#generation-of-synthetic-data" title="Permalink to this heading">#</a></h1>
+<h1>Generation of synthetic data<a class="headerlink" href="#generation-of-synthetic-data" title="Link to this heading">#</a></h1>
 <p>The goal of this notebook is to create a synthetically evaluation dataset using GPT-4 on a the Microsoft SolutionOps Repo.</p>
 <section id="imports-and-credentials">
-<h2>Imports and credentials<a class="headerlink" href="#imports-and-credentials" title="Permalink to this heading">#</a></h2>
+<h2>Imports and credentials<a class="headerlink" href="#imports-and-credentials" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -481,7 +487,7 @@ document.write(`
 </div>
 </section>
 <section id="load-documents">
-<h2>Load documents<a class="headerlink" href="#load-documents" title="Permalink to this heading">#</a></h2>
+<h2>Load documents<a class="headerlink" href="#load-documents" title="Link to this heading">#</a></h2>
 <p>We aim to create an evaluation dataset that contains 300 samples. Each sample is represented by a question/answer pair that will be used to evaluate how well our QA (Question Answering) system is doing.
 The process if the following:</p>
 <ol class="arabic simple">
@@ -496,7 +502,7 @@ The process if the following:</p>
 <li><p>The distribution of the chunk lengths</p></li>
 </ol>
 <section id="documents-in-the-repo">
-<h3>Documents in the repo<a class="headerlink" href="#documents-in-the-repo" title="Permalink to this heading">#</a></h3>
+<h3>Documents in the repo<a class="headerlink" href="#documents-in-the-repo" title="Link to this heading">#</a></h3>
 <p>Let’s first load all the documents in the repo, and look at how many documents we have.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -840,14 +846,14 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 </section>
 </section>
 <section id="chunking-documents-into-smaller-pieces">
-<h2>Chunking documents into smaller pieces<a class="headerlink" href="#chunking-documents-into-smaller-pieces" title="Permalink to this heading">#</a></h2>
+<h2>Chunking documents into smaller pieces<a class="headerlink" href="#chunking-documents-into-smaller-pieces" title="Link to this heading">#</a></h2>
 <p>We will now chunk the documents into smaller pieces. We can think of two strategies:</p>
 <ol class="arabic simple">
 <li><p>Consider that the markdown pages are well structured, and split using the markdown headers</p></li>
 <li><p>Split the documents into chunks of a fixed tokens length</p></li>
 </ol>
 <section id="splitting-using-markdown-headers">
-<h3>Splitting using Markdown headers<a class="headerlink" href="#splitting-using-markdown-headers" title="Permalink to this heading">#</a></h3>
+<h3>Splitting using Markdown headers<a class="headerlink" href="#splitting-using-markdown-headers" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_md_headers</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -1118,7 +1124,7 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 </div>
 </section>
 <section id="chunking-with-markdown-headers-recursive-text-splitter">
-<h3>Chunking with Markdown headers + recursive text splitter<a class="headerlink" href="#chunking-with-markdown-headers-recursive-text-splitter" title="Permalink to this heading">#</a></h3>
+<h3>Chunking with Markdown headers + recursive text splitter<a class="headerlink" href="#chunking-with-markdown-headers-recursive-text-splitter" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_md_headers_and_recsplitter</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -1273,7 +1279,7 @@ Number of documents in the code-with-engineering + code-with-mlops sections: 397
 <p>Doing both is too restrictive, and we end up with a lot of chunks that are too small.</p>
 </section>
 <section id="create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder">
-<h3>Create chunks using the MarkdownTextsplitter using tiktoken encoder<a class="headerlink" href="#create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder" title="Permalink to this heading">#</a></h3>
+<h3>Create chunks using the MarkdownTextsplitter using tiktoken encoder<a class="headerlink" href="#create-chunks-using-the-markdowntextsplitter-using-tiktoken-encoder" title="Link to this heading">#</a></h3>
 <p>To decide the length of each chunk, we will look at the distribution of the document lengths and the distribution of the chunk lengths. We will then decide on a chunk length that will give us a good distribution of chunk lengths. We will use a splitter that uses the tiktoken tokenizer to split the documents into chunks. Hence we do the following:</p>
 <ol class="arabic simple">
 <li><p>Tokenize all the documents, and look at the distribution of the document lengths</p></li>
@@ -1554,7 +1560,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 </section>
 <section id="qa-generation">
-<h2>QA generation<a class="headerlink" href="#qa-generation" title="Permalink to this heading">#</a></h2>
+<h2>QA generation<a class="headerlink" href="#qa-generation" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chunks</span> <span class="o">=</span> <span class="n">create_chunks_tokens</span><span class="p">(</span><span class="n">final_markdown_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">])</span>
@@ -1746,9 +1752,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="creation-of-qa-pairs">
-<h1>Creation of QA Pairs<a class="headerlink" href="#creation-of-qa-pairs" title="Permalink to this heading">#</a></h1>
+<h1>Creation of QA Pairs<a class="headerlink" href="#creation-of-qa-pairs" title="Link to this heading">#</a></h1>
 <section id="creation-of-jsonl-files-containing-messages">
-<h2>Creation of jsonl files containing messages<a class="headerlink" href="#creation-of-jsonl-files-containing-messages" title="Permalink to this heading">#</a></h2>
+<h2>Creation of jsonl files containing messages<a class="headerlink" href="#creation-of-jsonl-files-containing-messages" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">export_messages_to_jsonl</span><span class="p">(</span><span class="n">model</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">list_messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1817,7 +1823,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="use-parallel-script">
-<h1>Use parallel script<a class="headerlink" href="#use-parallel-script" title="Permalink to this heading">#</a></h1>
+<h1>Use parallel script<a class="headerlink" href="#use-parallel-script" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># async def generate_qa_pairs(path: str, subset:list[str]) -&gt; Tuple[pd.DataFrame, list]:</span>
@@ -1946,7 +1952,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="other">
-<h1>Other<a class="headerlink" href="#other" title="Permalink to this heading">#</a></h1>
+<h1>Other<a class="headerlink" href="#other" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;you are a prompt creator and have ability to generate new JSON prompts based on the given CONTEXT.</span>
@@ -2043,7 +2049,7 @@ The Modern Data Warehouse solution in the Data Playbook is designed to help ente
 </div>
 </div>
 <section id="creating-df-from-output-jsonl-file">
-<h2>Creating df from output jsonl file<a class="headerlink" href="#creating-df-from-output-jsonl-file" title="Permalink to this heading">#</a></h2>
+<h2>Creating df from output jsonl file<a class="headerlink" href="#creating-df-from-output-jsonl-file" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span> 
@@ -2327,7 +2333,7 @@ By Raouf Aliouat & Adina Stoll
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>

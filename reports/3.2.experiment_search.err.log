@@ -1,33 +1,24 @@
 Traceback (most recent call last):
-  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+  File "/Users/raouf/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1305, in execute
+  File "/Users/raouf/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/nbclient/client.py", line 1314, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+  File "/Users/raouf/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
     return loop.run_until_complete(inner)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 685, in run_until_complete
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
     return future.result()
-           ^^^^^^^^^^^^^^^
-  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 705, in async_execute
+  File "/Users/raouf/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/nbclient/client.py", line 709, in async_execute
     await self.async_execute_cell(
-  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+  File "/Users/raouf/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/nbclient/client.py", line 1062, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "C:\Users\adnegrau\AppData\Local\Programs\Python\Python312\Lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+  File "/Users/raouf/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-query = "tools for software development"
-
-query_embeddings = get_query_embedding(query)
-vector_query = VectorizedQuery(
-    vector=query_embeddings[0], k_nearest_neighbors=1, fields="chunkContentVector"
-)
+query = "How can I test my solution"
 
 results = search_client.search(
-    search_text=None,
-    vector_queries=[vector_query],
+    search_text=query,
     select=["chunkId", "chunkContent", "source"],
     top=1,
 )
@@ -37,23 +28,63 @@ for result in results:
     print(f"source: {result['source']}")
     print(f"Score: {result['@search.score']}")
     print(f"chunkContent: {result['chunkContent']}")
+    print("\n")
+print(results)
 ------------------
 
 
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mNameError[0m                                 Traceback (most recent call last)
-Cell [1;32mIn[4], line 3[0m
-[0;32m      1[0m query [38;5;241m=[39m [38;5;124m"[39m[38;5;124mtools for software development[39m[38;5;124m"[39m
-[1;32m----> 3[0m query_embeddings [38;5;241m=[39m [43mget_query_embedding[49m(query)
-[0;32m      4[0m vector_query [38;5;241m=[39m VectorizedQuery(
-[0;32m      5[0m     vector[38;5;241m=[39mquery_embeddings[[38;5;241m0[39m], k_nearest_neighbors[38;5;241m=[39m[38;5;241m1[39m, fields[38;5;241m=[39m[38;5;124m"[39m[38;5;124mchunkContentVector[39m[38;5;124m"[39m
-[0;32m      6[0m )
-[0;32m      8[0m results [38;5;241m=[39m search_client[38;5;241m.[39msearch(
-[0;32m      9[0m     search_text[38;5;241m=[39m[38;5;28;01mNone[39;00m,
-[0;32m     10[0m     vector_queries[38;5;241m=[39m[vector_query],
-[0;32m     11[0m     select[38;5;241m=[39m[[38;5;124m"[39m[38;5;124mchunkId[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mchunkContent[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124msource[39m[38;5;124m"[39m],
-[0;32m     12[0m     top[38;5;241m=[39m[38;5;241m1[39m,
-[0;32m     13[0m )
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mResourceNotFoundError[0m                     Traceback (most recent call last)
+Cell [0;32mIn[3], line 9[0m
+[1;32m      1[0m query [38;5;241m=[39m [38;5;124m"[39m[38;5;124mHow can I test my solution[39m[38;5;124m"[39m
+[1;32m      3[0m results [38;5;241m=[39m search_client[38;5;241m.[39msearch(
+[1;32m      4[0m     search_text[38;5;241m=[39mquery,
+[1;32m      5[0m     select[38;5;241m=[39m[[38;5;124m"[39m[38;5;124mchunkId[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mchunkContent[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124msource[39m[38;5;124m"[39m],
+[1;32m      6[0m     top[38;5;241m=[39m[38;5;241m1[39m,
+[1;32m      7[0m )
+[0;32m----> 9[0m [38;5;28;01mfor[39;00m result [38;5;129;01min[39;00m results:
+[1;32m     10[0m     [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mchunkId: [39m[38;5;132;01m{[39;00mresult[[38;5;124m'[39m[38;5;124mchunkId[39m[38;5;124m'[39m][38;5;132;01m}[39;00m[38;5;124m"[39m)
+[1;32m     11[0m     [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124msource: [39m[38;5;132;01m{[39;00mresult[[38;5;124m'[39m[38;5;124msource[39m[38;5;124m'[39m][38;5;132;01m}[39;00m[38;5;124m"[39m)
 
-[1;31mNameError[0m: name 'get_query_embedding' is not defined
+File [0;32m~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/azure/search/documents/_paging.py:54[0m, in [0;36mSearchItemPaged.__next__[0;34m(self)[0m
+[1;32m     52[0m     first_iterator [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_first_iterator_instance()
+[1;32m     53[0m     [38;5;28mself[39m[38;5;241m.[39m_page_iterator [38;5;241m=[39m itertools[38;5;241m.[39mchain[38;5;241m.[39mfrom_iterable(first_iterator)
+[0;32m---> 54[0m [38;5;28;01mreturn[39;00m [38;5;28;43mnext[39;49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_page_iterator[49m[43m)[49m
+
+File [0;32m~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/azure/core/paging.py:75[0m, in [0;36mPageIterator.__next__[0;34m(self)[0m
+[1;32m     73[0m     [38;5;28;01mraise[39;00m [38;5;167;01mStopIteration[39;00m([38;5;124m"[39m[38;5;124mEnd of paging[39m[38;5;124m"[39m)
+[1;32m     74[0m [38;5;28;01mtry[39;00m:
+[0;32m---> 75[0m     [38;5;28mself[39m[38;5;241m.[39m_response [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_get_next[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mcontinuation_token[49m[43m)[49m
+[1;32m     76[0m [38;5;28;01mexcept[39;00m AzureError [38;5;28;01mas[39;00m error:
+[1;32m     77[0m     [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m error[38;5;241m.[39mcontinuation_token:
+
+File [0;32m~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/azure/search/documents/_paging.py:124[0m, in [0;36mSearchPageIterator._get_next_cb[0;34m(self, continuation_token)[0m
+[1;32m    122[0m [38;5;28;01mdef[39;00m [38;5;21m_get_next_cb[39m([38;5;28mself[39m, continuation_token):
+[1;32m    123[0m     [38;5;28;01mif[39;00m continuation_token [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m--> 124[0m         [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_client[49m[38;5;241;43m.[39;49m[43mdocuments[49m[38;5;241;43m.[39;49m[43msearch_post[49m[43m([49m[43msearch_request[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_initial_query[49m[38;5;241;43m.[39;49m[43mrequest[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_kwargs[49m[43m)[49m
+[1;32m    126[0m     _next_link, next_page_request [38;5;241m=[39m unpack_continuation_token(continuation_token)
+[1;32m    128[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_client[38;5;241m.[39mdocuments[38;5;241m.[39msearch_post(search_request[38;5;241m=[39mnext_page_request, [38;5;241m*[39m[38;5;241m*[39m[38;5;28mself[39m[38;5;241m.[39m_kwargs)
+
+File [0;32m~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/azure/core/tracing/decorator.py:78[0m, in [0;36mdistributed_trace.<locals>.decorator.<locals>.wrapper_use_tracer[0;34m(*args, **kwargs)[0m
+[1;32m     76[0m span_impl_type [38;5;241m=[39m settings[38;5;241m.[39mtracing_implementation()
+[1;32m     77[0m [38;5;28;01mif[39;00m span_impl_type [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m---> 78[0m     [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m     80[0m [38;5;66;03m# Merge span is parameter is set, but only if no explicit parent are passed[39;00m
+[1;32m     81[0m [38;5;28;01mif[39;00m merge_span [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m passed_in_parent:
+
+File [0;32m~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/azure/search/documents/_generated/operations/_documents_operations.py:754[0m, in [0;36mDocumentsOperations.search_post[0;34m(self, search_request, request_options, **kwargs)[0m
+[1;32m    751[0m response [38;5;241m=[39m pipeline_response[38;5;241m.[39mhttp_response
+[1;32m    753[0m [38;5;28;01mif[39;00m response[38;5;241m.[39mstatus_code [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m [[38;5;241m200[39m]:
+[0;32m--> 754[0m     [43mmap_error[49m[43m([49m[43mstatus_code[49m[38;5;241;43m=[39;49m[43mresponse[49m[38;5;241;43m.[39;49m[43mstatus_code[49m[43m,[49m[43m [49m[43mresponse[49m[38;5;241;43m=[39;49m[43mresponse[49m[43m,[49m[43m [49m[43merror_map[49m[38;5;241;43m=[39;49m[43merror_map[49m[43m)[49m
+[1;32m    755[0m     error [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_deserialize[38;5;241m.[39mfailsafe_deserialize(_models[38;5;241m.[39mSearchError, pipeline_response)
+[1;32m    756[0m     [38;5;28;01mraise[39;00m HttpResponseError(response[38;5;241m=[39mresponse, model[38;5;241m=[39merror)
+
+File [0;32m~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/azure/core/exceptions.py:164[0m, in [0;36mmap_error[0;34m(status_code, response, error_map)[0m
+[1;32m    162[0m     [38;5;28;01mreturn[39;00m
+[1;32m    163[0m error [38;5;241m=[39m error_type(response[38;5;241m=[39mresponse)
+[0;32m--> 164[0m [38;5;28;01mraise[39;00m error
+
+[0;31mResourceNotFoundError[0m: () The index 'index_chunks_2' for service 'aisearch-workshop-xz27sepwdcenq' was not found.
+Code: 
+Message: The index 'index_chunks_2' for service 'aisearch-workshop-xz27sepwdcenq' was not found.
 

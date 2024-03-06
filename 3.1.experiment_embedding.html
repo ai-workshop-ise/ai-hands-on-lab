@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>3.1. Embeddings Experiment &#8212; AI Workshop</title>
   
@@ -29,39 +28,35 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3.1.experiment_embedding';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -160,7 +155,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -421,7 +427,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="embeddings-experiment">
-<h1>3.1. Embeddings Experiment<a class="headerlink" href="#embeddings-experiment" title="Permalink to this heading">#</a></h1>
+<h1>3.1. Embeddings Experiment<a class="headerlink" href="#embeddings-experiment" title="Link to this heading">#</a></h1>
 <p>According to <a class="reference external" href="https://mitsloan.mit.edu/ideas-made-to-matter/tapping-power-unstructured-data">multiple estimates</a>, 80% of data generated by businesses today is unstructured data such as text, images, or audio. This data has enormous potential for machine learning applications, but there is <em>some</em> work to be done before it can be used directly. <a class="reference external" href="https://medium.com/analytics-vidhya/introduction-to-word-embeddings-c2ba135dce2f">Embeddings</a> are the backbone of our system. Our goal is to understand how different embeddings have an impact on the returned results for a given query.</p>
 <p>Which Embeddings Model to use?! Glad you asked! There are several options available:</p>
 <ol class="arabic simple">
@@ -430,7 +436,7 @@ document.write(`
 </ol>
 <!-- relevancy of -->
 <section id="experiment-overview">
-<h2>Experiment Overview<a class="headerlink" href="#experiment-overview" title="Permalink to this heading">#</a></h2>
+<h2>Experiment Overview<a class="headerlink" href="#experiment-overview" title="Link to this heading">#</a></h2>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>Topic</strong></p></th>
@@ -448,10 +454,10 @@ document.write(`
 <td><p>We will look at Accuracy and Cosine Similarity to compare the performance.</p></td>
 </tr>
 <tr class="row-odd"><td><p>📊 <strong>Data</strong></p></td>
-<td><p>The data that we will use consists of <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository which were previously pre-chunked in chunks of 180 tokens with 30% overlap <a class="reference download internal" download="" href="_downloads/a386584edd55612607aa4bbb3b7276f1/fixed-size-chunks-engineering-mlops-180-30.json"><span class="xref download myst">fixed-size-chunks-engineering-mlops-180-30.json</span></a>.</p></td>
+<td><p>The data that we will use consists of <a class="reference internal" href="#../data/docs/code-with-engineering/"><span class="xref myst">code-with-engineering</span></a> and <a class="reference internal" href="#../data/docs/code-with-mlops/"><span class="xref myst">code-with-mlops</span></a> sections from Solution Ops repository which were previously pre-chunked in chunks of 180 tokens with 30% overlap <a class="reference download internal" download="" href="_downloads/a386584edd55612607aa4bbb3b7276f1/fixed-size-chunks-engineering-mlops-180-30.json"><span class="xref download myst">fixed-size-chunks-engineering-mlops-180-30.json</span></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p>📊 <strong>Evaluation Dataset</strong></p></td>
-<td><p><a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">300 question-answer</span></a> pairs generated from <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository. See <a class="reference internal" href="5.1.generation-qa.html"><span class="doc std std-doc">Generation QA Notebook</span></a> for insights on how they were generated.</p></td>
+<td><p><a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">300 question-answer</span></a> pairs generated from <a class="reference internal" href="#../data/docs/code-with-engineering/"><span class="xref myst">code-with-engineering</span></a> and <a class="reference internal" href="#../data/docs/code-with-mlops/"><span class="xref myst">code-with-mlops</span></a> sections from Solution Ops repository. See <a class="reference internal" href="5.1.generation-qa.html"><span class="std std-doc">Generation QA Notebook</span></a> for insights on how they were generated.</p></td>
 </tr>
 </tbody>
 </table>
@@ -479,13 +485,13 @@ Before we try out different embedding models, let's first try to understand the 
 <!-- As we have seen from the cluster from above, the data `can` be clustered, and the clusters seem to be different from one another. One is centered on data (sql, databricks) vs backlog related (stories, sprint, team) vs engineering fundamentals (security, testing, code). However, if we think about these clusters on a broader sense, they are part of one big cluster, which is IT. -->
 </section>
 <section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <p>Import necessary libraries</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Evaluation dataset: </span><span class="si">{</span><span class="n">path_to_evaulation_dataset</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Evaluation dataset: </span><span class="si">{</span><span class="n">path_to_evaluation_dataset</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-chunked documents: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -499,7 +505,7 @@ Pre-chunked documents: ./output/pre-generated/chunking/fixed-size-chunks-enginee
 </div>
 </section>
 <section id="use-text-embedding-ada-002-from-openai">
-<h2>1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI<a class="headerlink" href="#use-text-embedding-ada-002-from-openai" title="Permalink to this heading">#</a></h2>
+<h2>1. Use <code class="docutils literal notranslate"><span class="pre">text-embedding-ada-002</span></code> from OpenAI<a class="headerlink" href="#use-text-embedding-ada-002-from-openai" title="Link to this heading">#</a></h2>
 <p>This model has a maximum token limit of <a class="reference external" href="https://platform.openai.com/docs/guides/embeddings/embedding-models">8191</a>. Usage is priced per input token, it is available either as Pay-As-You-Go or as Provisioned Throughput Units (PTUs) model. More price related info can be found <a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/">here</a>.</p>
 <p>Let’s create a function which is responsible to embed an input query using `text-embedding-ada-002. We will use the REST API, <a class="reference external" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/reference?WT.mc_id=AZ-MVP-5004796#embeddings">here</a> you can see the documentation.</p>
 <div class="cell docutils container">
@@ -509,33 +515,19 @@ Pre-chunked documents: ./output/pre-generated/chunking/fixed-size-chunks-enginee
 
 
 <span class="k">def</span> <span class="nf">oai_query_embedding</span><span class="p">(</span>
-
     <span class="n">query</span><span class="p">,</span>
-
     <span class="n">endpoint</span><span class="o">=</span><span class="n">azure_aoai_endpoint</span><span class="p">,</span>
-
     <span class="n">api_key</span><span class="o">=</span><span class="n">azure_openai_key</span><span class="p">,</span>
-
     <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;2023-07-01-preview&quot;</span><span class="p">,</span>
-
     <span class="n">embedding_model_deployment</span><span class="o">=</span><span class="n">azure_openai_embedding_deployment</span>
-
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-
 <span class="sd">    Query the OpenAI Embedding model to get the embeddings for the given query.</span>
-
-
 <span class="sd">    Args:</span>
-
 <span class="sd">    query (str): The query for which to get the embeddings.</span>
-
 <span class="sd">    endpoint (str): The endpoint for the OpenAI service.</span>
-
 <span class="sd">    api_key (str): The API key for the OpenAI service.</span>
-
 <span class="sd">    api_version (str): The API version for the OpenAI service.</span>
-
 <span class="sd">    embedding_model_deployment (str): The deployment for the OpenAI embedding model.</span>
 
 <span class="sd">    Returns:</span>
@@ -543,35 +535,19 @@ Pre-chunked documents: ./output/pre-generated/chunking/fixed-size-chunks-enginee
 <span class="sd">    list: The embeddings for the given query.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span>
-
-<span class="w">        </span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
-
+    <span class="n">request_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">/openai/deployments/</span><span class="si">{</span><span class="n">embedding_model_deployment</span><span class="si">}</span><span class="s2">/embeddings?api-version=</span><span class="si">{</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;api-key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">}</span>
-
     <span class="n">request_payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}</span>
-
     <span class="n">embedding_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-
         <span class="n">request_url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">request_payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span>
-
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-
         <span class="n">data_values</span> <span class="o">=</span> <span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
-
-        <span class="n">embeddings_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_value</span><span class="p">[</span><span class="s2">&quot;embedding&quot;</span><span class="p">]</span>
-
-                              <span class="k">for</span> <span class="n">data_value</span> <span class="ow">in</span> <span class="n">data_values</span><span class="p">]</span>
-
+        <span class="n">embeddings_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_value</span><span class="p">[</span><span class="s2">&quot;embedding&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">data_value</span> <span class="ow">in</span> <span class="n">data_values</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">embeddings_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
     <span class="k">else</span><span class="p">:</span>
-
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-
-            <span class="sa">f</span><span class="s2">&quot;failed to get embedding: </span><span class="si">{</span><span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;failed to get embedding: </span><span class="si">{</span><span class="n">embedding_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -599,7 +575,7 @@ The length of the embedding is: 1536
 </div>
 </section>
 <section id="use-intfloat-e5-small-v2-from-hugging-face">
-<h2>2. Use <code class="docutils literal notranslate"><span class="pre">intfloat/e5-small-v2</span></code> from Hugging Face<a class="headerlink" href="#use-intfloat-e5-small-v2-from-hugging-face" title="Permalink to this heading">#</a></h2>
+<h2>2. Use <code class="docutils literal notranslate"><span class="pre">intfloat/e5-small-v2</span></code> from Hugging Face<a class="headerlink" href="#use-intfloat-e5-small-v2-from-hugging-face" title="Link to this heading">#</a></h2>
 <p>This model is open source and has a size 0.13 GB. The model is limited to working with English texts and can handle texts with a maximum of 512 tokens. Being open sourced, it means there is no price associated with it, you can download it locally, you can fine-tune it etc.
 <a class="reference external" href="https://huggingface.co/intfloat/e5-small-v2#e5-small-v2">The embedding size is 384</a>.</p>
 <p><strong>👩‍💻 Embed an input query using <code class="docutils literal notranslate"><span class="pre">e5-small-v2</span> <span class="pre">model</span></code></strong></p>
@@ -621,7 +597,7 @@ The length of the embedding is: 1536
 </details>
 </section>
 <section id="analysis">
-<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">#</a></h2>
+<h2>Analysis<a class="headerlink" href="#analysis" title="Link to this heading">#</a></h2>
 <p>So far we have been looking at two different embedding models and we’ve listed some of their characteristics. Let’s try now to evaluate how well each model performs in our context. For this, we should first create embeddings from our data.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -636,8 +612,8 @@ The length of the embedding is: 1536
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings using intfloat/e5-small-vs: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks_emebddings_os</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings using text-embedding-ada-002: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings using intfloat/e5-small-vs: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks_embeddings_os</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings using text-embedding-ada-002: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks_embeddings_ada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -650,7 +626,7 @@ Pre-generated embeddings using text-embedding-ada-002: ./output/pre-generated/em
 </div>
 </section>
 <section id="evaluation">
-<h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h2>
+<h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading">#</a></h2>
 <p>In this workshop, to separate our experiments, we will take the <strong>Full Reindex</strong> strategy and we will create a new index per embedding model.
 Therefore, for each embedding model we will:</p>
 <ol class="arabic simple">
@@ -659,10 +635,10 @@ Therefore, for each embedding model we will:</p>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="doc std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>.</p>
+<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>.</p>
 </div>
 <section id="create-two-indexes">
-<h3>👩‍💻 Create two indexes<a class="headerlink" href="#create-two-indexes" title="Permalink to this heading">#</a></h3>
+<h3>👩‍💻 Create two indexes<a class="headerlink" href="#create-two-indexes" title="Link to this heading">#</a></h3>
 <p>By running the next cell, all the functions from search.ipynb will become available:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -681,11 +657,12 @@ Therefore, for each embedding model we will:</p>
 <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">1536</span>  <span class="c1"># TODO: Replace with the vector size of your embedding model</span>
 <span class="n">create_index</span><span class="p">(</span><span class="n">new_index_name</span><span class="p">)</span>
 
-<span class="c1"># 2. Upload the embeddings to the new index</span>
-<span class="c1"># TODO: Replace the emebddings_file_path to point to the right file path</span>
-<span class="n">emebddings_file_path</span> <span class="o">=</span> <span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span>
-<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">emebddings_file_path</span><span class="p">,</span>
-            <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
+<span class="c1"># Uncomment the following when running the cell:</span>
+<span class="c1"># # 2. Upload the embeddings to the new index</span>
+<span class="c1"># # TODO: Replace the embeddings_file_path to point to the right file path</span>
+<span class="c1"># embeddings_file_path = pregenerated_fixed_size_chunks_embeddings_ada</span>
+<span class="c1"># upload_data(file_path=embeddings_file_path,</span>
+<span class="c1">#             search_index_name=new_index_name)</span>
 </pre></div>
 </div>
 </div>
@@ -693,13 +670,10 @@ Therefore, for each embedding model we will:</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;fixed-size-chunks-180-30-engineering-mlops-ada&#39; created or updated
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error uploading documents: azure.search.documents._generated.operations._documents_operations.DocumentsOperations.index() got multiple values for keyword argument &#39;error_map&#39;
-</pre></div>
-</div>
 </div>
 </div>
 <section id="create-a-new-index-and-upload-the-embeddings-created-with-intfloat-e5-small-v2-model">
-<h4>👩‍💻 Create a new index and upload the embeddings created with intfloat/e5-small-v2 model.<a class="headerlink" href="#create-a-new-index-and-upload-the-embeddings-created-with-intfloat-e5-small-v2-model" title="Permalink to this heading">#</a></h4>
+<h4>👩‍💻 Create a new index and upload the embeddings created with intfloat/e5-small-v2 model.<a class="headerlink" href="#create-a-new-index-and-upload-the-embeddings-created-with-intfloat-e5-small-v2-model" title="Link to this heading">#</a></h4>
 <details markdown="1">
 <summary> 🔍 Solution. Expand this only if you got stuck: </summary>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
@@ -710,26 +684,26 @@ Therefore, for each embedding model we will:</p>
 <span class="n">create_index</span><span class="p">(</span><span class="n">new_index_name</span><span class="p">,</span> <span class="n">vector_size</span><span class="p">)</span>
 
 <span class="c1"># 2. Upload the embeddings to the new index</span>
-<span class="n">emebddings_file_path</span> <span class="o">=</span> <span class="n">pregenerated_fixed_size_chunks_emebddings_os</span>
-<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">emebddings_file_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
+<span class="n">embeddings_file_path</span> <span class="o">=</span> <span class="n">pregenerated_fixed_size_chunks_emebddings_os</span>
+<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">embeddings_file_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">new_index_name</span><span class="p">)</span>
 </pre></div>
 </div>
 </details>
 </section>
 </section>
 <section id="evaluation-dataset">
-<h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
+<h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Link to this heading">#</a></h3>
 <p>Note: The evaluation dataset can be found at <a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">qa_pairs_solutionops.json</span></a>. The format is:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;user_prompt&quot;: &quot;&quot;, # The question
-&quot;output_prompt&quot;: &quot;&quot;, # The answer
-&quot;context&quot;: &quot;&quot;, # The relevant piece of information from a document
-&quot;chunk_id&quot;: &quot;&quot;, # The ID of the chunk
-&quot;source&quot;: &quot;&quot; # The path to the document, i.e. &quot;..\\data\\docs\\code-with-dataops\\index.md&quot;
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;user_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">ques</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span>
+<span class="nt">&quot;output_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">a</span><span class="kc">ns</span><span class="err">wer</span>
+<span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">releva</span><span class="kc">nt</span><span class="w"> </span><span class="err">piece</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">i</span><span class="kc">nf</span><span class="err">orma</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="kc">fr</span><span class="err">om</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">docume</span><span class="kc">nt</span>
+<span class="nt">&quot;chunk_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">chu</span><span class="kc">n</span><span class="err">k</span>
+<span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">pa</span><span class="kc">t</span><span class="err">h</span><span class="w"> </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">docume</span><span class="kc">nt</span><span class="p">,</span><span class="w"> </span><span class="err">i.e.</span><span class="w"> </span><span class="s2">&quot;..\\data\\docs\\code-with-dataops\\index.md&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="evaluation-metrics">
-<h3>🎯 Evaluation metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this heading">#</a></h3>
+<h3>🎯 Evaluation metrics<a class="headerlink" href="#evaluation-metrics" title="Link to this heading">#</a></h3>
 <p>Let us try to evaluate our baseline model. We will have two metrics:</p>
 <ul>
 <li><p>Cosine similarity:</p>
@@ -757,7 +731,7 @@ Therefore, for each embedding model we will:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
+<span class="kn">import</span> <span class="nn">ntpath</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">norm</span>
 
@@ -774,9 +748,7 @@ Therefore, for each embedding model we will:</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The path to the evaluation data set </span><span class="si">{</span>
-<span class="w">                </span><span class="n">evaluation_data_path</span><span class="si">}</span><span class="s2"> does not exist. Please check the path and try again.&quot;</span>
-        <span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;The path to the evaluation data set </span><span class="si">{</span><span class="n">evaluation_data_path</span><span class="si">}</span><span class="s2"> does not exist. Please check the path and try again.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
     <span class="n">nr_correctly_retrieved_documents</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">nr_qa</span> <span class="o">=</span> <span class="mi">0</span>
@@ -796,7 +768,7 @@ Therefore, for each embedding model we will:</p>
                 <span class="n">embedding_function</span><span class="o">=</span><span class="n">embedding_function</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="n">retrieved_documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">])</span>
+            <span class="n">retrieved_documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">ntpath</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">])</span>
                                    <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">search_response</span><span class="p">]</span>
             <span class="n">top_retrieved_document</span> <span class="o">=</span> <span class="n">search_response</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span>
 
@@ -807,13 +779,12 @@ Therefore, for each embedding model we will:</p>
 
             <span class="c1"># 3. If the expected document is part of the retrieved documents,</span>
             <span class="c1"># we will consider it correctly retrieved</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">expected_document</span><span class="p">)</span> <span class="ow">in</span> <span class="n">retrieved_documents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ntpath</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">expected_document</span><span class="p">)</span> <span class="ow">in</span> <span class="n">retrieved_documents</span><span class="p">:</span>
                 <span class="n">nr_correctly_retrieved_documents</span> <span class="o">+=</span> <span class="mi">1</span>
 
             <span class="n">nr_qa</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">accuracy</span> <span class="o">=</span> <span class="p">(</span><span class="n">nr_correctly_retrieved_documents</span> <span class="o">/</span> <span class="n">nr_qa</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">cosine_similarities</span>
 </pre></div>
@@ -829,13 +800,13 @@ Therefore, for each embedding model we will:</p>
 </div>
 </section>
 <section id="evaluate-the-system-using-text-embedding-ada-002-model">
-<h3>👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model<a class="headerlink" href="#evaluate-the-system-using-text-embedding-ada-002-model" title="Permalink to this heading">#</a></h3>
+<h3>👩‍💻 1. Evaluate the system using <em>text-embedding-ada-002</em> model<a class="headerlink" href="#evaluate-the-system-using-text-embedding-ada-002-model" title="Link to this heading">#</a></h3>
 <details markdown="1">
 <summary> 🔍 Sample code. Feel free to expand it. It may take up to 4 minutes to run: </summary>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
 <span class="kn">from</span> <span class="nn">statistics</span> <span class="kn">import</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span>
 
-<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-batch-engineering-mlops-ada&quot;</span>
+<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-engineering-mlops-ada&quot;</span>
 
 <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
     <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
@@ -851,14 +822,14 @@ Therefore, for each embedding model we will:</p>
 </details>
 </section>
 <section id="evaluate-the-system-using-infloat-e5-small-v2-model">
-<h3>👩‍💻2. Evaluate the system using <em>infloat/e5-small-v2</em> model<a class="headerlink" href="#evaluate-the-system-using-infloat-e5-small-v2-model" title="Permalink to this heading">#</a></h3>
+<h3>👩‍💻2. Evaluate the system using <em>infloat/e5-small-v2</em> model<a class="headerlink" href="#evaluate-the-system-using-infloat-e5-small-v2-model" title="Link to this heading">#</a></h3>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">calculate_metrics</span></code> function, calculate the metrics using the infloat/e5-small-v2 open source model.</p>
 <details markdown="1">
 <summary> 🔍 Sample code. It may take up to 4 minutes to run:</summary>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Replace the prefix with a relevant name given your embedding model</span>
 <span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-chunks-180-30-engineering-mlops-e5-small-v2&quot;</span>
 <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
-    <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
+    <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaluation_dataset</span><span class="p">,</span>
     <span class="n">embedding_function</span><span class="o">=</span><span class="n">embed_chunk</span><span class="p">,</span>
     <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span>
 <span class="p">)</span>
@@ -873,12 +844,12 @@ Therefore, for each embedding model we will:</p>
 </section>
 </section>
 <section id="conclusions">
-<h2>💡 Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">#</a></h2>
+<h2>💡 Conclusions<a class="headerlink" href="#conclusions" title="Link to this heading">#</a></h2>
 <p>What conclusions can you reach? Are you surprised by the results? In what cases would you find useful to use the open source model? Discuss these questions and any other ideas you may have with your colleagues.</p>
 <details markdown="1">
 <summary> Possible conclusions. Expand this only after you reached your own conclusions: </summary>
 <p><img alt="results.png" src="_images/results-embedding.png" /></p>
-<p>Open source models can be useful when you need more control over the model, such as running it offline, fine-tuning it, or customizing it for your specific needs. As it was proven in our experiment, the open-source model did even better than the AOI model. However, open source models may require more engineering effort, have lower performance on some tasks, and have less safety and content filtering features than closed source models.</p>
+<p>Open source models can be useful when you need more control over the model, such as running it offline, fine-tuning it, or customizing it for your specific needs. As it was proven in our experiment, the trade-off is excellent. However, open source models may require more engineering effort, have lower performance on some tasks, and have less safety and content filtering features than closed source models.</p>
 </details>
 </section>
 </section>
@@ -988,7 +959,7 @@ By Raouf Aliouat & Adina Stoll
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>

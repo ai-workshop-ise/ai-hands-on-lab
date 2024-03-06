@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Experiments &#8212; AI Workshop</title>
   
@@ -29,39 +28,35 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3.0.experiments';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -160,7 +155,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -410,7 +416,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="experiments">
-<h1><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingExperimentation.md">Experiments</a><a class="headerlink" href="#experiments" title="Permalink to this heading">#</a></h1>
+<h1><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingExperimentation.md">Experiments</a><a class="headerlink" href="#experiments" title="Link to this heading">#</a></h1>
 <p>It sounds like a simplistic statement, but “the best Search solution is the one that returns the best results”.</p>
 <p>The only way to get the best and most relevant results is via experimentation. As a result, the experimentation phase is crucial and effort should be invested to create experiments that can be <em>tracked</em>, <em>evaluated</em> against a consistent set of metrics and can be <em>repeatable</em>.</p>
 <p>We will follow the <a class="reference external" href="https://github.com/cse-labs/ai-garden/blob/main/docs/templates/using-the-templates.md#using-the-experiment-template">experiment template</a> from ai-garden</p>
@@ -423,7 +429,7 @@ document.write(`
 As you build out your experimentation process for search, reference the [Things to Consider](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_ThingsToConsider.md) document which will highlight some important features to include in your experiments. You can see the [existing learnings from engagements ](https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingSearch.md#learnings-from-our-engagements-2)
 ``` -->
 <section id="the-role-of-experimentation">
-<h2>💡The Role of Experimentation<a class="headerlink" href="#the-role-of-experimentation" title="Permalink to this heading">#</a></h2>
+<h2>💡The Role of Experimentation<a class="headerlink" href="#the-role-of-experimentation" title="Link to this heading">#</a></h2>
 <p>When creating/running search experiments, there are multiple factors that shape the outcome of each experiment. These are small changes that add up over time and change the functionality and effectiveness of your search experience.</p>
 <!-- These tweaks should help you determine which combination of document shaping and indexing techniques will provide the most relevant set of documents returned for the set of queries that you care about. -->
 <p>Creating an effective solution is a delicate balance of several factors, such as:</p>
@@ -442,7 +448,7 @@ As you build out your experimentation process for search, reference the [Things 
 </div>
 </section>
 <section id="evaluation">
-<h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h2>
+<h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading">#</a></h2>
 <p>One of the most important aspects of developing a system for production is regular evaluation and iterative experimentation. This process allows you to measure performance, troubleshoot issues, and fine-tune to improve it.</p>
 <p><strong><a class="reference external" href="https://github.com/microsoft/rag-openai/blob/main/topics/RAG_EnablingEvaluation.md">Evaluation Strategy</a></strong></p>
 <p>A RAG solution may involve different components that will work together to make up the core functionalities. For example, we could have:</p>
@@ -465,7 +471,7 @@ As you build out your experimentation process for search, reference the [Things 
 </ul>
 </div>
 <section id="evaluation-dataset">
-<h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
+<h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Link to this heading">#</a></h3>
 <p>A key part of this process is creating an evaluation dataset for each component.</p>
 <!-- - Evaluate each component of the solution - Develop Dataset for each
 - Evaluate the end-to-end output flow (User input to UI output) - Develop Dataset for output flow
@@ -479,7 +485,7 @@ As you build out your experimentation process for search, reference the [Things 
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In our workshop, we followed the third option and we generated the data using an LLM (GPT4). You can find the generated data in <a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">qa_pairs_solutionops</span></a>. You can find in <a class="reference internal" href="5.1.generation-qa.html"><span class="doc std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
+<p>In our workshop, we followed the third option and we generated the data using an LLM (GPT4). You can find the generated data in <a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">qa_pairs_solutionops</span></a>. You can find in <a class="reference internal" href="5.1.generation-qa.html"><span class="std std-doc">generate-qa.ipynb</span></a> how we generated them.</p>
 <p>The evaluation data consists of:</p>
 <ul class="simple">
 <li><p>user_prompt: the input question</p></li>
@@ -492,7 +498,7 @@ As you build out your experimentation process for search, reference the [Things 
 </div>
 </section>
 <section id="evaluation-metrics">
-<h3>🎯 Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this heading">#</a></h3>
+<h3>🎯 Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Link to this heading">#</a></h3>
 <!-- Quality measurement guides the entire development process of the Search solution. The team must know what performance metric they are chasing.
 
 This is easier said than done. We are developing systems where the results are fuzzy by nature. What documents do you expect to be retrieved when you ask a question? -->
@@ -620,7 +626,7 @@ By Raouf Aliouat & Adina Stoll
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>

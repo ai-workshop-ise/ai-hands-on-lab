@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>3.2. Chunking Experiment &#8212; AI Workshop</title>
   
@@ -29,39 +28,35 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3.2.experiment_chunking';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -160,7 +155,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -436,12 +442,12 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="chunking-experiment">
-<h1>3.2. Chunking Experiment<a class="headerlink" href="#chunking-experiment" title="Permalink to this heading">#</a></h1>
+<h1>3.2. Chunking Experiment<a class="headerlink" href="#chunking-experiment" title="Link to this heading">#</a></h1>
 <p>There are multiple methods of ingestion, depending on the type of data. For example, unstructured data such as documents or web pages can be split into chunks and embedded into vectors, while structured data such as tables or databases can be summarized or converted into natural language. In our case, since we are working with text data, we will look into different chunking strategies.</p>
 <!--
 The search solution is comprised of both **ingestion** and **retrieval**. One does not exist without the other. While other experiments are focused on data retrieval, ingestion plays equal importance in the effectiveness of the search solution. During this experiment, we will look at various chunking strategies. -->
 <section id="experiment-overview">
-<h2>Experiment Overview<a class="headerlink" href="#experiment-overview" title="Permalink to this heading">#</a></h2>
+<h2>Experiment Overview<a class="headerlink" href="#experiment-overview" title="Link to this heading">#</a></h2>
 <!-- Certain aspects of data ingestion need to be experimented as part of the experimentation phase: -->
 <!-- # Chunking Strategy
 
@@ -466,10 +472,10 @@ There are multiple methods of ingestion, depending on the type of data. For exam
 <td><p>We will look at Accuracy and Cosine Similarity to compare the performance.</p></td>
 </tr>
 <tr class="row-odd"><td><p>📊 <strong>Data</strong></p></td>
-<td><p>The data that we will use consists of <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository.</p></td>
+<td><p>The data that we will use consists of <a class="reference internal" href="#../data/docs/code-with-engineering/"><span class="xref myst">code-with-engineering</span></a> and <a class="reference internal" href="#../data/docs/code-with-mlops/"><span class="xref myst">code-with-mlops</span></a> sections from Solution Ops repository.</p></td>
 </tr>
 <tr class="row-even"><td><p>📊 <strong>Evaluation Dataset</strong></p></td>
-<td><p><a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">300 question-answer</span></a> pairs generated from <span class="xref myst">code-with-engineering</span> and <span class="xref myst">code-with-mlops</span> sections from Solution Ops repository. See <a class="reference internal" href="5.1.generation-qa.html"><span class="doc std std-doc">Generation QA Notebook</span></a> for insights on how they were generated.</p></td>
+<td><p><a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">300 question-answer</span></a> pairs generated from <a class="reference internal" href="#../data/docs/code-with-engineering/"><span class="xref myst">code-with-engineering</span></a> and <a class="reference internal" href="#../data/docs/code-with-mlops/"><span class="xref myst">code-with-mlops</span></a> sections from Solution Ops repository. See <a class="reference internal" href="5.1.generation-qa.html"><span class="std std-doc">Generation QA Notebook</span></a> for insights on how they were generated.</p></td>
 </tr>
 </tbody>
 </table>
@@ -501,14 +507,14 @@ Read [Common Chunking Technique](https://learn.microsoft.com/en-us/azure/search/
 CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1090e1ed40c3/samples/searchEvaluation/customskills/utils/chunker/text_chunker.py -->
 </section>
 <section id="why-does-chunking-matter">
-<h2>Why does chunking matter?<a class="headerlink" href="#why-does-chunking-matter" title="Permalink to this heading">#</a></h2>
+<h2>Why does chunking matter?<a class="headerlink" href="#why-does-chunking-matter" title="Link to this heading">#</a></h2>
 <p>When processing data, splitting the source documents into chunks requires care and expertise to ensure the resulting chunks are small enough to be effective during fact retrieval but not too small so that enough context is provided during summarization.</p>
 <p><em>Why do we even need to chunk?</em> you may ask.</p>
 <p>The models used to generate embedding vectors have maximum limits on the text fragments provided as input. For example, the maximum length of input text for the Azure OpenAI embedding models is <strong>8,191</strong> tokens. Given that each token is around 4 characters of text for common OpenAI models, this maximum limit is equivalent to around 6000 words of text. If you’re using these models to generate embeddings, it’s critical that the input text stays under the limit. Partitioning your content into chunks ensures that your data can be processed by the model used for indexing and queries.</p>
 <p>In our workshop, we work with text documents. Refer to <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/#types-of-text-splitters">Types of Tet Splitters</a> for an overview of supported options from LangChain.</p>
 </section>
 <section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <p>Import necessary libraries</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -541,8 +547,11 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
-<span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="s2">&quot;..\data\docs\code-with-engineering\**\*.md&quot;</span><span class="p">),</span>
-         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="s2">&quot;..\data\docs\code-with-mlops\**\*.md&quot;</span><span class="p">)]</span>
+<span class="kn">import</span> <span class="nn">ntpath</span>
+<span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;../data/docs/code-with-engineering/**/*.md&quot;</span><span class="p">,</span><span class="s2">&quot;../data/docs/code-with-mlops/**/*.md&quot;</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">ntpath</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
 <span class="n">documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span>
     <span class="n">paths</span><span class="p">)</span>
 </pre></div>
@@ -551,13 +560,13 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </section>
 <section id="markdown-header-text-splitter">
-<h2>1. Markdown Header Text Splitter<a class="headerlink" href="#markdown-header-text-splitter" title="Permalink to this heading">#</a></h2>
+<h2>1. Markdown Header Text Splitter<a class="headerlink" href="#markdown-header-text-splitter" title="Link to this heading">#</a></h2>
 <section id="overview">
-<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h3>
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h3>
 <p>In this approach we will leverage the fact that our documents are markdown files and we will consider that the markdown pages are well structured. Therefore, we will split using the markdown headers.</p>
 </section>
 <section id="example">
-<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h3>
 <p>Let’s load LangChain’s <code class="docutils literal notranslate"><span class="pre">MarkdownHeaderTextSplitter</span></code> to split the text for us</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -605,7 +614,7 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </section>
 <section id="chunk-the-data">
-<h3>Chunk the data<a class="headerlink" href="#chunk-the-data" title="Permalink to this heading">#</a></h3>
+<h3>Chunk the data<a class="headerlink" href="#chunk-the-data" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_md_headers</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -683,32 +692,32 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
     <tr>
       <th>0</th>
       <td>chunk0_0</td>
-      <td>Engineering Fundamentals Checklist  \nThis che...</td>
-      <td>..\data\docs\code-with-engineering\ENG-FUNDAME...</td>
+      <td>Structure of a Sprint  \nThe purpose of this d...</td>
+      <td>../data/docs/code-with-engineering/SPRINT-STRU...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>chunk1_0</td>
-      <td>ISE Code-With Engineering Playbook  \nAn engin...</td>
-      <td>..\data\docs\code-with-engineering\index.md</td>
+      <td>Who We Are  \nOur team, ISE (Industry Solution...</td>
+      <td>../data/docs/code-with-engineering/ISE.md</td>
     </tr>
     <tr>
       <th>2</th>
       <td>chunk2_0</td>
-      <td>Who We Are  \nOur team, ISE (Industry Solution...</td>
-      <td>..\data\docs\code-with-engineering\ISE.md</td>
+      <td>Engineering Fundamentals Checklist  \nThis che...</td>
+      <td>../data/docs/code-with-engineering/ENG-FUNDAME...</td>
     </tr>
     <tr>
       <th>3</th>
       <td>chunk3_0</td>
-      <td>Structure of a Sprint  \nThe purpose of this d...</td>
-      <td>..\data\docs\code-with-engineering\SPRINT-STRU...</td>
+      <td>ISE Code-With Engineering Playbook  \nAn engin...</td>
+      <td>../data/docs/code-with-engineering/index.md</td>
     </tr>
     <tr>
       <th>4</th>
       <td>chunk4_0</td>
-      <td>Accessibility  \nAccessibility is a critical c...</td>
-      <td>..\data\docs\code-with-engineering\accessibili...</td>
+      <td>Work Item ID  \nFor more information about how...</td>
+      <td>../data/docs/code-with-engineering/code-review...</td>
     </tr>
   </tbody>
 </table>
@@ -716,7 +725,7 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </section>
 <section id="analysis">
-<h3>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">#</a></h3>
+<h3>Analysis<a class="headerlink" href="#analysis" title="Link to this heading">#</a></h3>
 <p>Let’s look at the distribution of lengths in the chunks.</p>
 <p>We create a new colum called chunk_text_length which contains the length of the chunk_text column.</p>
 <div class="cell docutils container">
@@ -756,72 +765,72 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
     <tr>
       <th>0</th>
       <td>chunk0_0</td>
-      <td>Engineering Fundamentals Checklist  \nThis che...</td>
-      <td>..\data\docs\code-with-engineering\ENG-FUNDAME...</td>
-      <td>793</td>
+      <td>Structure of a Sprint  \nThe purpose of this d...</td>
+      <td>../data/docs/code-with-engineering/SPRINT-STRU...</td>
+      <td>468</td>
     </tr>
     <tr>
       <th>1</th>
       <td>chunk1_0</td>
-      <td>ISE Code-With Engineering Playbook  \nAn engin...</td>
-      <td>..\data\docs\code-with-engineering\index.md</td>
-      <td>357</td>
+      <td>Who We Are  \nOur team, ISE (Industry Solution...</td>
+      <td>../data/docs/code-with-engineering/ISE.md</td>
+      <td>263</td>
     </tr>
     <tr>
       <th>2</th>
       <td>chunk2_0</td>
-      <td>Who We Are  \nOur team, ISE (Industry Solution...</td>
-      <td>..\data\docs\code-with-engineering\ISE.md</td>
-      <td>263</td>
+      <td>Engineering Fundamentals Checklist  \nThis che...</td>
+      <td>../data/docs/code-with-engineering/ENG-FUNDAME...</td>
+      <td>793</td>
     </tr>
     <tr>
       <th>3</th>
       <td>chunk3_0</td>
-      <td>Structure of a Sprint  \nThe purpose of this d...</td>
-      <td>..\data\docs\code-with-engineering\SPRINT-STRU...</td>
-      <td>468</td>
+      <td>ISE Code-With Engineering Playbook  \nAn engin...</td>
+      <td>../data/docs/code-with-engineering/index.md</td>
+      <td>357</td>
     </tr>
     <tr>
       <th>4</th>
       <td>chunk4_0</td>
-      <td>Accessibility  \nAccessibility is a critical c...</td>
-      <td>..\data\docs\code-with-engineering\accessibili...</td>
-      <td>910</td>
+      <td>Work Item ID  \nFor more information about how...</td>
+      <td>../data/docs/code-with-engineering/code-review...</td>
+      <td>325</td>
     </tr>
     <tr>
       <th>5</th>
       <td>chunk5_0</td>
-      <td>Agile documentation  \nAgile Basics: Learn or ...</td>
-      <td>..\data\docs\code-with-engineering\agile-devel...</td>
-      <td>30</td>
+      <td>FAQ  \nThis is a list of questions / frequentl...</td>
+      <td>../data/docs/code-with-engineering/code-review...</td>
+      <td>548</td>
     </tr>
     <tr>
       <th>6</th>
       <td>chunk6_0</td>
-      <td>Agile Development advanced topics  \nDocumenta...</td>
-      <td>..\data\docs\code-with-engineering\agile-devel...</td>
-      <td>22</td>
+      <td>Code Reviews  \nDevelopers working on projects...</td>
+      <td>../data/docs/code-with-engineering/code-review...</td>
+      <td>111</td>
     </tr>
     <tr>
       <th>7</th>
       <td>chunk7_0</td>
-      <td>External Feedback  \nVarious stakeholders can ...</td>
-      <td>..\data\docs\code-with-engineering\agile-devel...</td>
-      <td>79</td>
+      <td>Inclusion in Code Review  \nBelow are some poi...</td>
+      <td>../data/docs/code-with-engineering/code-review...</td>
+      <td>852</td>
     </tr>
     <tr>
       <th>8</th>
       <td>chunk8_0</td>
-      <td>Minimalism Slices  \nAlways deliver your work ...</td>
-      <td>..\data\docs\code-with-engineering\agile-devel...</td>
-      <td>275</td>
+      <td>Pull Requests  \nChanges to any main codebase ...</td>
+      <td>../data/docs/code-with-engineering/code-review...</td>
+      <td>653</td>
     </tr>
     <tr>
       <th>9</th>
       <td>chunk9_0</td>
-      <td>Advanced recommendations for Backlog Managemen...</td>
-      <td>..\data\docs\code-with-engineering\agile-devel...</td>
-      <td>11</td>
+      <td>Code Review Tools  \nCustomize ADO  \nTask boa...</td>
+      <td>../data/docs/code-with-engineering/code-review...</td>
+      <td>392</td>
     </tr>
   </tbody>
 </table>
@@ -845,9 +854,9 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </section>
 </section>
 <section id="markdown-text-splitter-using-tiktoken-encoder">
-<h2>2. Markdown Text Splitter using tiktoken encoder<a class="headerlink" href="#markdown-text-splitter-using-tiktoken-encoder" title="Permalink to this heading">#</a></h2>
+<h2>2. Markdown Text Splitter using tiktoken encoder<a class="headerlink" href="#markdown-text-splitter-using-tiktoken-encoder" title="Link to this heading">#</a></h2>
 <section id="id1">
-<h3>Overview<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>Overview<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>To decide the length of each chunk, we will look at the distribution of the document lengths and the distribution of the chunk lengths. We will then decide on a chunk length that will give us a good distribution of chunk lengths. We will use a splitter that uses the tiktoken tokenizer to split the documents into chunks. Hence we do the following:</p>
 <ol class="arabic simple">
 <li><p>Tokenize all the documents, and look at the distribution of the document lengths</p></li>
@@ -856,7 +865,7 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </ol>
 </section>
 <section id="id2">
-<h3>Example<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<h3>Example<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>Let’s load LangChain’s <code class="docutils literal notranslate"><span class="pre">MarkdownTextSplitter</span></code> to split the text for us</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -913,10 +922,11 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </section>
 <section id="id3">
-<h3>Chunk the data<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<h3>Chunk the data<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">load_documents_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ntpath</span>
+<span class="k">def</span> <span class="nf">load_md_documents_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading documents...&quot;</span><span class="p">)</span>
     <span class="n">data_documents</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;solutionops_section&quot;</span><span class="p">:</span> <span class="p">[],</span>
@@ -930,7 +940,7 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
         <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
             <span class="n">loader</span> <span class="o">=</span> <span class="n">UnstructuredFileLoader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
             <span class="n">document</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-            <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;solutionops_section&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;solutionops_section&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ntpath</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">3</span><span class="p">])</span>
             <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;document_object&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
             <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;document_text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
             <span class="n">data_documents</span><span class="p">[</span><span class="s2">&quot;document_length&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
@@ -946,9 +956,12 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
-<span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;..\data\docs\code-with-engineering\**\*.md&quot;</span><span class="p">,</span>
-         <span class="s2">&quot;..\data\docs\code-with-mlops\**\*.md&quot;</span><span class="p">]</span>
-<span class="n">markdown_documents</span> <span class="o">=</span> <span class="n">load_documents_from_folder</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+
+<span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;../data/docs/code-with-engineering/**/*.md&quot;</span><span class="p">,</span><span class="s2">&quot;../data/docs/code-with-mlops/**/*.md&quot;</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">ntpath</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+<span class="n">markdown_documents</span> <span class="o">=</span> <span class="n">load_md_documents_from_folder</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -991,42 +1004,42 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
     <tr>
       <th>0</th>
       <td>code-with-engineering</td>
-      <td>[page_content="Engineering Fundamentals Checkl...</td>
-      <td>Engineering Fundamentals Checklist\n\nThis che...</td>
-      <td>793</td>
-      <td>..\data\docs\code-with-engineering\ENG-FUNDAME...</td>
+      <td>[page_content='Structure of a Sprint\n\nThe pu...</td>
+      <td>Structure of a Sprint\n\nThe purpose of this d...</td>
+      <td>468</td>
+      <td>../data/docs/code-with-engineering/SPRINT-STRU...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>code-with-engineering</td>
-      <td>[page_content='ISE Code-With Engineering Playb...</td>
-      <td>ISE Code-With Engineering Playbook\n\nAn engin...</td>
-      <td>357</td>
-      <td>..\data\docs\code-with-engineering\index.md</td>
+      <td>[page_content='Who We Are\n\nOur team, ISE (In...</td>
+      <td>Who We Are\n\nOur team, ISE (Industry Solution...</td>
+      <td>263</td>
+      <td>../data/docs/code-with-engineering/ISE.md</td>
     </tr>
     <tr>
       <th>2</th>
       <td>code-with-engineering</td>
-      <td>[page_content='Who We Are\n\nOur team, ISE (In...</td>
-      <td>Who We Are\n\nOur team, ISE (Industry Solution...</td>
-      <td>263</td>
-      <td>..\data\docs\code-with-engineering\ISE.md</td>
+      <td>[page_content="Engineering Fundamentals Checkl...</td>
+      <td>Engineering Fundamentals Checklist\n\nThis che...</td>
+      <td>793</td>
+      <td>../data/docs/code-with-engineering/ENG-FUNDAME...</td>
     </tr>
     <tr>
       <th>3</th>
       <td>code-with-engineering</td>
-      <td>[page_content='Structure of a Sprint\n\nThe pu...</td>
-      <td>Structure of a Sprint\n\nThe purpose of this d...</td>
-      <td>468</td>
-      <td>..\data\docs\code-with-engineering\SPRINT-STRU...</td>
+      <td>[page_content='ISE Code-With Engineering Playb...</td>
+      <td>ISE Code-With Engineering Playbook\n\nAn engin...</td>
+      <td>357</td>
+      <td>../data/docs/code-with-engineering/index.md</td>
     </tr>
     <tr>
       <th>4</th>
       <td>code-with-engineering</td>
-      <td>[page_content='Accessibility\n\nAccessibility ...</td>
-      <td>Accessibility\n\nAccessibility is a critical c...</td>
-      <td>910</td>
-      <td>..\data\docs\code-with-engineering\accessibili...</td>
+      <td>[page_content="Work Item ID\n\nFor more inform...</td>
+      <td>Work Item ID\n\nFor more information about how...</td>
+      <td>325</td>
+      <td>../data/docs/code-with-engineering/code-review...</td>
     </tr>
   </tbody>
 </table>
@@ -1058,7 +1071,7 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </div>
 <p><img alt="image.png" src="_images/md_text_splitter_tokenization_lengths.png" /></p>
-<p>We decide to use chunk size = q1/2 = 360/2 = 180 tokens. so that 75%+ of the documents will be represented by at least 2 chunks.</p>
+<p>We decide to use chunk size = (quantile_1)/2 = 360/2 = 180 tokens. so that 75%+ of the documents will be represented by at least 2 chunks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_chunks_tokens</span><span class="p">(</span><span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -1099,7 +1112,7 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
 </div>
 </section>
 <section id="id4">
-<h3>Analysis<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<h3>Analysis<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_chunks_with_tokens</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">chunks_with_tokens</span><span class="p">)</span>
@@ -1135,32 +1148,32 @@ CODE: https://github.com/microsoft/rag-openai/blob/438999a5470bef7946fa1c8714ed1
     <tr>
       <th>0</th>
       <td>chunk0_0</td>
-      <td>Engineering Fundamentals Checklist\n\nThis che...</td>
-      <td>..\data\docs\code-with-engineering\ENG-FUNDAME...</td>
+      <td>Structure of a Sprint\n\nThe purpose of this d...</td>
+      <td>../data/docs/code-with-engineering/SPRINT-STRU...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>chunk0_1</td>
-      <td>More details on source control\n\nWork Item Tr...</td>
-      <td>..\data\docs\code-with-engineering\ENG-FUNDAME...</td>
+      <td>[ ] Build a Product Backlog\n\nSet up a projec...</td>
+      <td>../data/docs/code-with-engineering/SPRINT-STRU...</td>
     </tr>
     <tr>
       <th>2</th>
       <td>chunk0_2</td>
-      <td>More details on continuous integration and con...</td>
-      <td>..\data\docs\code-with-engineering\ENG-FUNDAME...</td>
+      <td>Design the first test cases\n\n[ ] Decide on b...</td>
+      <td>../data/docs/code-with-engineering/SPRINT-STRU...</td>
     </tr>
     <tr>
       <th>3</th>
       <td>chunk0_3</td>
-      <td>[ ] Logging configuration can be modified with...</td>
-      <td>..\data\docs\code-with-engineering\ENG-FUNDAME...</td>
+      <td>Day 3\n\n[ ] Agree on code style and on how to...</td>
+      <td>../data/docs/code-with-engineering/SPRINT-STRU...</td>
     </tr>
     <tr>
       <th>4</th>
       <td>chunk0_4</td>
-      <td>More details on agile development\n\nDesign Re...</td>
-      <td>..\data\docs\code-with-engineering\ENG-FUNDAME...</td>
+      <td>[ ] Agree on how to Design a feature and condu...</td>
+      <td>../data/docs/code-with-engineering/SPRINT-STRU...</td>
     </tr>
   </tbody>
 </table>
@@ -1214,15 +1227,15 @@ Concept to know:
 </section>
 </section>
 <section id="semantic-chunking">
-<h2>3. <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">Semantic Chunking</a><a class="headerlink" href="#semantic-chunking" title="Permalink to this heading">#</a></h2>
+<h2>3. <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">Semantic Chunking</a><a class="headerlink" href="#semantic-chunking" title="Link to this heading">#</a></h2>
 <section id="id5">
-<h3>Overview<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<h3>Overview<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <!-- Azure: https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept-retrieval-augumented-generation?view=doc-intel-4.0.0#semantic-chunking) -->
 <p>In the previous approach, we chose a constant value for chunk size, in a random way. We did not leverage the actual content of the document, the structure, etc. In this section, we will look at <a class="reference external" href="https://python.langchain.com/docs/modules/data_connection/document_transformers/semantic-chunker">Semantic Chunking</a> from LangChain. This approach splits the text based on semantic similarity.</p>
 <p>For insights on what it is doing, you can have a look at <a class="reference external" href="https://github.com/FullStackRetrieval-com/RetrievalTutorials/blob/main/5_Levels_Of_Text_Splitting.ipynb">Level 4. Semantic Splitting</a>.</p>
 </section>
 <section id="id6">
-<h3>Example<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<h3>Example<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
@@ -1230,8 +1243,9 @@ Concept to know:
 <span class="kn">from</span> <span class="nn">langchain_experimental.text_splitter</span> <span class="kn">import</span> <span class="n">SemanticChunker</span>
 
 <span class="n">embeddings</span> <span class="o">=</span> <span class="n">AzureOpenAIEmbeddings</span><span class="p">(</span>
-    <span class="n">azure_deployment</span><span class="o">=</span><span class="s2">&quot;embeddings&quot;</span><span class="p">,</span>
+    <span class="n">azure_deployment</span><span class="o">=</span><span class="s2">&quot;embeddings-model&quot;</span><span class="p">,</span>
     <span class="n">openai_api_version</span><span class="o">=</span><span class="s2">&quot;2023-05-15&quot;</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="n">azure_openai_key</span>
 <span class="p">)</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/docs/code-with-dataops/capabilities/analytical-systems/data-ingestion/batch-stream-ingestion/index.md&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -1272,7 +1286,7 @@ Though pull-based model for data ingestion is the most fault tolerant model, its
 </section>
 </section>
 <section id="evaluation">
-<h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h2>
+<h2>📈 Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading">#</a></h2>
 <p>In this workshop, to separate our experiments, we will take the <strong>Full Reindex</strong> strategy and we will create a new index per chunking strategy.</p>
 <p>Therefore, for each chunking strategy we will:</p>
 <ol class="arabic simple">
@@ -1286,7 +1300,7 @@ Though pull-based model for data ingestion is the most fault tolerant model, its
 <ul class="simple">
 <li><p>The pre-generated embeddings for Markdown Header Text Splitter can be found at <a class="reference download internal" download="" href="_downloads/d295485e187eb076b477aeb4e4dd33d7/fixed-size-chunks-180-30-engineering-mlops-ada.json"><span class="xref download myst">fixed-size-chunks-180-30-engineering-mlops-ada.json</span></a></p></li>
 <li><p>The pre-generated embeddings for Markdown Text Splitter using tiktoken encode can be found at <a class="reference download internal" download="" href="_downloads/0cdbe0ef61500f2626407bc52c5886ec/md-header-text-splitter-engineering-mlops-embedded-ada.json"><span class="xref download myst">md-header-text-splitter-engineering-mlops-embedded-ada</span></a></p></li>
-<li><p>The pre-generated embeddings for Semantic Chunking approach can be found at: <span class="xref myst">semantic-chunks-engineering-mlops-embedded-ada.json</span></p></li>
+<li><p>The pre-generated embeddings for Semantic Chunking approach can be found at: <a class="reference internal" href="#./output/pre-generated/embeddings/./semantic-chunks-engineering-mlops-embedded-ada.json.json"><span class="xref myst">semantic-chunks-engineering-mlops-embedded-ada.json</span></a></p></li>
 </ul>
 </div>
 <div class="cell docutils container">
@@ -1303,7 +1317,7 @@ Though pull-based model for data ingestion is the most fault tolerant model, its
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./pre-requisites.ipynb
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings for Markdown Header Text Splitter: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings for Markdown Header Text Splitter: </span><span class="si">{</span><span class="n">pregenerated_fixed_size_chunks_embeddings_ada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings for Markdown Text Splitter using tiktoken encode: </span><span class="si">{</span><span class="n">pregenerated_markdown_header_chunks_embeddings_ada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pre-generated embeddings for Semantic Chunks Splitter: </span><span class="si">{</span><span class="n">pregenerated_semantic_chunks_embeddings_ada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1319,10 +1333,10 @@ Pre-generated embeddings for Semantic Chunks Splitter: ./output/pre-generated/em
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="doc std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>.</p>
+<p>You can reuse available functions from <a class="reference internal" href="helpers/search.html"><span class="std std-doc">./helpers/search.ipynb</span></a>, such as: <em>create_index</em> and <em>upload_data</em>.</p>
 </div>
 <section id="create-3-search-indexes">
-<h3>Create 3 search indexes<a class="headerlink" href="#create-3-search-indexes" title="Permalink to this heading">#</a></h3>
+<h3>Create 3 search indexes<a class="headerlink" href="#create-3-search-indexes" title="Link to this heading">#</a></h3>
 <p>Sample code for creating a new index and uploading the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1330,17 +1344,18 @@ Pre-generated embeddings for Semantic Chunks Splitter: ./output/pre-generated/em
 
 <span class="c1"># 1. Create the new index</span>
 <span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;fixed-size-180-30&quot;</span>
-<span class="n">embedding_path</span> <span class="o">=</span> <span class="n">pregenerated_fixed_size_chunks_emebddings_ada</span>
+<span class="n">embedding_path</span> <span class="o">=</span> <span class="n">pregenerated_fixed_size_chunks_embeddings_ada</span>
 <span class="n">create_index</span><span class="p">(</span><span class="n">index_name</span><span class="p">)</span>
 
-<span class="c1"># 3. Upload the embeddings to the new index</span>
-<span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">embedding_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">)</span>
+<span class="c1"># Uncomment the following code when running the cell:</span>
+
+<span class="c1"># # 3. Upload the embeddings to the new index</span>
+<span class="c1"># upload_data(file_path=embedding_path, search_index_name=index_name)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;fixed-size-180-30&#39; created or updated
-Uploaded 3236 documents to Index: fixed-size-180-30
 </pre></div>
 </div>
 </div>
@@ -1360,13 +1375,10 @@ Uploaded 3236 documents to Index: fixed-size-180-30
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:21: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-C:\Users\adnegrau\AppData\Local\Temp\ipykernel_40316\2555628560.py:21: SyntaxWarning: invalid escape sequence &#39;\d&#39;
-  &quot;..\data\docs\code-with-engineering\**\*.md&quot;, totalNumberOfDocuments)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;semantic-chunking&#39; created or updated
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;semantic-chunking&#39; created or updated
-Uploaded 1216 documents to Index: semantic-chunking
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 1216 documents to Index: semantic-chunking
 </pre></div>
 </div>
 </div>
@@ -1376,7 +1388,7 @@ Uploaded 1216 documents to Index: semantic-chunking
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ./helpers/search.ipynb
 
 <span class="c1"># 1. Create the new index</span>
-<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;markdwon-header-chunkig&quot;</span>
+<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;markdown-header-chunking&quot;</span>
 <span class="n">embedding_path</span> <span class="o">=</span> <span class="n">pregenerated_markdown_header_chunks_embeddings_ada</span>
 <span class="n">create_index</span><span class="p">(</span><span class="n">index_name</span><span class="p">)</span>
 
@@ -1386,21 +1398,23 @@ Uploaded 1216 documents to Index: semantic-chunking
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;markdwon-header-chunkig&#39; created or updated
-Uploaded 407 documents to Index: markdwon-header-chunkig
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;markdown-header-chunking&#39; created or updated
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 407 documents to Index: markdown-header-chunking
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="evaluation-dataset">
-<h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this heading">#</a></h3>
+<h3>📊 Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Link to this heading">#</a></h3>
 <p>Note: The evaluation dataset can be found at <a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">solution-ops-200-qa.json</span></a>. The format is:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;user_prompt&quot;: &quot;&quot;, # The question
-&quot;output_prompt&quot;: &quot;&quot;, # The answer
-&quot;context&quot;: &quot;&quot;, # The relevant piece of information from a document
-&quot;chunk_id&quot;: &quot;&quot;, # The ID of the chunk
-&quot;source&quot;: &quot;&quot; # The path to the document, i.e. &quot;..\\data\\docs\\code-with-dataops\\index.md&quot;
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;user_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">ques</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span>
+<span class="nt">&quot;output_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">a</span><span class="kc">ns</span><span class="err">wer</span>
+<span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">releva</span><span class="kc">nt</span><span class="w"> </span><span class="err">piece</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="err">i</span><span class="kc">nf</span><span class="err">orma</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="w"> </span><span class="kc">fr</span><span class="err">om</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">docume</span><span class="kc">nt</span>
+<span class="nt">&quot;chunk_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">o</span><span class="kc">f</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">chu</span><span class="kc">n</span><span class="err">k</span>
+<span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">pa</span><span class="kc">t</span><span class="err">h</span><span class="w"> </span><span class="kc">t</span><span class="err">o</span><span class="w"> </span><span class="kc">t</span><span class="err">he</span><span class="w"> </span><span class="err">docume</span><span class="kc">nt</span><span class="p">,</span><span class="w"> </span><span class="err">i.e.</span><span class="w"> </span><span class="s2">&quot;..\\data\\docs\\code-with-dataops\\index.md&quot;</span>
 </pre></div>
 </div>
 <p>Let us configure the path to evaluation dataset and reload environment variables</p>
@@ -1413,7 +1427,7 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 </div>
 </section>
 <section id="evaluation-metrics">
-<h3>🎯Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this heading">#</a></h3>
+<h3>🎯Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Link to this heading">#</a></h3>
 <!-- `Retrieval_evaluation` function goes through our evaluation dataset and verifies for each question if the retrieved documents include the expected document. -->
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1444,7 +1458,8 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_metrics</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">,</span> <span class="n">embedding_function</span><span class="o">=</span><span class="n">oai_query_embedding</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ntpath</span>
+<span class="k">def</span> <span class="nf">calculate_metrics</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="p">,</span> <span class="n">embedding_function</span><span class="o">=</span><span class="n">oai_query_embedding</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Evaluate the retrieval performance of the search index using the evaluation data set.</span>
 <span class="sd">    Args:</span>
 <span class="sd">    evaluation_data_path (str): The path to the evaluation data set.</span>
@@ -1455,10 +1470,7 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 <span class="sd">    list: The cosine similarities between the expected documents and the top retrieved documents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">evaluation_data_path</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The path to the evaluation data set </span><span class="si">{</span>
-<span class="w">                </span><span class="n">evaluation_data_path</span><span class="si">}</span><span class="s2"> does not exist. Please check the path and try again.&quot;</span>
-        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The path to the evaluation data set </span><span class="si">{</span><span class="n">evaluation_data_path</span><span class="si">}</span><span class="s2"> does not exist. Please check the path and try again.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
     <span class="n">nr_correctly_retrieved_documents</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">nr_qa</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1478,7 +1490,7 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
                 <span class="n">embedding_function</span><span class="o">=</span><span class="n">embedding_function</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="n">retrieved_documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">])</span>
+            <span class="n">retrieved_documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">ntpath</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">])</span>
                                    <span class="k">for</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">search_response</span><span class="p">]</span>
             <span class="n">top_retrieved_document</span> <span class="o">=</span> <span class="n">search_response</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;chunkContentVector&quot;</span><span class="p">]</span>
 
@@ -1490,12 +1502,11 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 
             <span class="c1"># 3. If the expected document is part of the retrieved documents,</span>
             <span class="c1"># we will consider it correctly retrieved</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">expected_document</span><span class="p">)</span> <span class="ow">in</span> <span class="n">retrieved_documents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ntpath</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">expected_document</span><span class="p">)</span> <span class="ow">in</span> <span class="n">retrieved_documents</span><span class="p">:</span>
                 <span class="n">nr_correctly_retrieved_documents</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">nr_qa</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">accuracy</span> <span class="o">=</span> <span class="p">(</span><span class="n">nr_correctly_retrieved_documents</span> <span class="o">/</span> <span class="n">nr_qa</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">% of the documents were correctly retrieved from Index </span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">cosine_similarities</span>
 </pre></div>
@@ -1504,12 +1515,12 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 </div>
 </section>
 <section id="evaluate-the-markdown-header-text-splitter-took-3-min">
-<h3>👩‍💻 1. Evaluate the Markdown Header Text Splitter - took 3 min<a class="headerlink" href="#evaluate-the-markdown-header-text-splitter-took-3-min" title="Permalink to this heading">#</a></h3>
+<h3>👩‍💻 1. Evaluate the Markdown Header Text Splitter - took 3 min<a class="headerlink" href="#evaluate-the-markdown-header-text-splitter-took-3-min" title="Link to this heading">#</a></h3>
 <details markdown="1">
 <summary> 🔍 Code. It may take up to 3 minutes: </summary>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 <span class="c1"># TODO: Replace this with the name of the index you want to evaluate</span>
-<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;markdwon-header-chunkig&quot;</span>
+<span class="n">index_name</span> <span class="o">=</span> <span class="s2">&quot;markdown-header-chunking&quot;</span>
 
 <span class="n">cosine_similarities</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span>
     <span class="n">evaluation_data_path</span><span class="o">=</span><span class="n">path_to_evaulation_dataset</span><span class="p">,</span>
@@ -1530,7 +1541,7 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 - Median cosine score: 0.8036465351518314 -->
 </section>
 <section id="evaluate-the-markdown-text-splitter-using-tiktoken-encode">
-<h3>👩‍💻 2. Evaluate the Markdown Text Splitter using tiktoken encode<a class="headerlink" href="#evaluate-the-markdown-text-splitter-using-tiktoken-encode" title="Permalink to this heading">#</a></h3>
+<h3>👩‍💻 2. Evaluate the Markdown Text Splitter using tiktoken encode<a class="headerlink" href="#evaluate-the-markdown-text-splitter-using-tiktoken-encode" title="Link to this heading">#</a></h3>
 <p>Note: It’s equivalent to the first experiment.</p>
 <details markdown="1">
 <summary> 🔍 Code. It may take up to 3 minutes: </summary>
@@ -1552,7 +1563,7 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 </details>
 </section>
 <section id="evaluate-the-semantic-chunking-strategy">
-<h3>👩‍💻 3. Evaluate the semantic chunking strategy<a class="headerlink" href="#evaluate-the-semantic-chunking-strategy" title="Permalink to this heading">#</a></h3>
+<h3>👩‍💻 3. Evaluate the semantic chunking strategy<a class="headerlink" href="#evaluate-the-semantic-chunking-strategy" title="Link to this heading">#</a></h3>
 <!--
 - Accuracy: 70.33333333333334% of the documents were correctly retrieved from Index semantic-chunking.
 - Avg score:0.8640008644417442
@@ -1578,11 +1589,11 @@ Uploaded 407 documents to Index: markdwon-header-chunkig
 </section>
 </section>
 <section id="conclusions">
-<h2>💡 Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">#</a></h2>
+<h2>💡 Conclusions<a class="headerlink" href="#conclusions" title="Link to this heading">#</a></h2>
 <p>Take few moments to analyse the results.</p>
 <details markdown="1">
 <summary> 🔍 Pre-calculated results: </summary>
-<p><img alt="results.png" src="_images/chunking_results.png" /></p>
+<p><img alt="results.png" src="_images/chunking-results.png" /></p>
 </details>
 </section>
 </section>
@@ -1707,7 +1718,7 @@ By Raouf Aliouat & Adina Stoll
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>

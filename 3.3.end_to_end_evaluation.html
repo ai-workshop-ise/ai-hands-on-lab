@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>3.3. End-to-end evaluation &#8212; AI Workshop</title>
   
@@ -29,39 +28,35 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3.3.end_to_end_evaluation';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -160,7 +155,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -424,7 +430,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="end-to-end-evaluation">
-<h1>3.3. End-to-end evaluation<a class="headerlink" href="#end-to-end-evaluation" title="Permalink to this heading">#</a></h1>
+<h1>3.3. End-to-end evaluation<a class="headerlink" href="#end-to-end-evaluation" title="Link to this heading">#</a></h1>
 <!-- ## Experiment Overview
 
 | **Topic**                 | Description                                                                                                                                                                                                                                                                                                         |
@@ -434,19 +440,19 @@ document.write(`
 | 🎯 **Evaluation Metrics** | We will look at human-centric metrics ([Groundedness, Relevance, Coherence, Similarity, Fluency](https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-model-monitoring-generative-ai-evaluation-metrics?view=azureml-api-2)) using another LLM as judge approach to compare the performance |
 | 📊 **Evaluation Dataset** | 300 question-answer pairs generated from [code-with-engineering](../data/docs/code-with-engineering/) and [code-with-mlops](../data/docs/code-with-mlops/) sections from Solution Ops repository.                                                                                                                   | -->
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
-<p>In this section we will evaluate end-to-end our RAG system using human-centric metrics (<a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-model-monitoring-generative-ai-evaluation-metrics?view=azureml-api-2">Groundedness, Relevance, Coherence, Similarity, Fluency</a>). We will use those metrics to evaluate the <a class="reference internal" href="2.rag-implementation.html"><span class="doc std std-doc">baseline</span></a> approach we started with to the new RAG application which takes into account the conclusions from our previous experiments.</p>
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>In this section we will evaluate end-to-end our RAG system using human-centric metrics (<a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-model-monitoring-generative-ai-evaluation-metrics?view=azureml-api-2">Groundedness, Relevance, Coherence, Similarity, Fluency</a>). We will use those metrics to evaluate the <a class="reference internal" href="2.rag-implementation.html"><span class="std std-doc">baseline</span></a> approach we started with to the new RAG application which takes into account the conclusions from our previous experiments.</p>
 <!-- as well as [ROUGE](https://medium.com/nlplanet/two-minutes-nlp-learn-the-rouge-metric-by-examples-f179cc285499), which is a traditional evaluation metric. -->
 <!-- ### Create a new index -->
 <p>After performing the previous two experiments, we concluded the following:</p>
 <ul class="simple">
-<li><p>Based on <a class="reference internal" href="3.1.experiment_embedding.html"><span class="doc std std-doc">experiment 3.1</span></a>, the embedding model with the best score was intfloat/e5-small-v2.</p></li>
-<li><p>Based on <a class="reference internal" href="3.2.experiment_chunking.html"><span class="doc std std-doc">experiment 3.2</span></a>, the chunking strategy that returned the best results was the semantic chunking.</p></li>
+<li><p>Based on <a class="reference internal" href="3.1.experiment_embedding.html"><span class="std std-doc">experiment 3.1</span></a>, the embedding model with the best score was intfloat/e5-small-v2.</p></li>
+<li><p>Based on <a class="reference internal" href="3.2.experiment_chunking.html"><span class="std std-doc">experiment 3.2</span></a>, the chunking strategy that returned the best results was the semantic chunking.</p></li>
 </ul>
 <!--
 Let's create a new index, where we upload the data which was chunked using the semantic chunking and embedded using infloat/e5-small-v2. In the interest of time, we have prepared the data and you can find it at [semantic-chunking-engineering-mlops-e5-small-v2.json](./output/pre-generated/embeddings/semantic-chunking-engineering-mlops-e5-small-v2.json). The path to the file is configured in `pregenerated_semantic_chunks_embeddings_os` variable. -->
 <section id="generate-answers">
-<h3>Generate answers<a class="headerlink" href="#generate-answers" title="Permalink to this heading">#</a></h3>
+<h3>Generate answers<a class="headerlink" href="#generate-answers" title="Link to this heading">#</a></h3>
 <p>In order to evaluate our two systems, we will generate answers for each question in our <a class="reference download internal" download="" href="_downloads/bcdfa9bc085268b4c728951df4f5374c/qa_pairs_solutionops.json"><span class="xref download myst">evaluation dataset</span></a>.
 For each question:</p>
 <ul class="simple">
@@ -458,7 +464,7 @@ For each question:</p>
 <p>How <em>good</em> that answer is will be judged from a groundedness, relevance, coherence, similarity and fluency perspective using another LLM as judge.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In the interest of time, we have run the above steps using <a class="reference internal" href="helpers/qa.html"><span class="doc std std-doc">this helper notebook</span></a>. The answers were saved as follows:</p>
+<p>In the interest of time, we have run the above steps using <a class="reference internal" href="helpers/qa.html"><span class="std std-doc">this helper notebook</span></a>. The answers were saved as follows:</p>
 <ul class="simple">
 <li><p><a class="reference download internal" download="" href="_downloads/76dc8c6f92c5c4030edd178893ad3abe/fixed-size-chunks-180-30-engineering-mlops-ada.json"><span class="xref download myst">fixed-size-chunks-180-30-engineering-mlops-ada</span></a> holds the answers for our baseline RAG system where we used a fixed-size chunking strategy and AOI embedding model.</p></li>
 <li><p><a class="reference download internal" download="" href="_downloads/5c43f6451804fab4164e02f17a6595d3/semantic-chunking-intfloat.json"><span class="xref download myst">semantic-chunking-intfloat.json</span></a> holds the answers for the RAG system where we used semantic chunking and intfloat/e5-small-v2 embedding model.</p></li>
@@ -478,23 +484,23 @@ For each question:</p>
 </section>
 </section>
 <section id="human-centric-metrics">
-<h2>Human-Centric Metrics<a class="headerlink" href="#human-centric-metrics" title="Permalink to this heading">#</a></h2>
+<h2>Human-Centric Metrics<a class="headerlink" href="#human-centric-metrics" title="Link to this heading">#</a></h2>
 <p>To generate these metrics, we will take the <a class="reference external" href="https://arxiv.org/pdf/2311.09476.pdf">LLM as Judge approach</a> and will use another LLM as the judge.</p>
 <p>We will use MLflow open-source tool, more precisely, the <a class="reference external" href="https://mlflow.org/docs/latest/llms/llm-evaluate/index.html#mlflow-llm-evaluate">MLflow LLM Evaluate</a> API.</p>
 <section id="llm-as-judge">
-<h3><a class="reference external" href="https://mlflow.org/docs/latest/llms/llm-evaluate/index.html#metrics-with-llm-as-the-judge">LLM as Judge</a><a class="headerlink" href="#llm-as-judge" title="Permalink to this heading">#</a></h3>
+<h3><a class="reference external" href="https://mlflow.org/docs/latest/llms/llm-evaluate/index.html#metrics-with-llm-as-the-judge">LLM as Judge</a><a class="headerlink" href="#llm-as-judge" title="Link to this heading">#</a></h3>
 <p>Set the LLM model that you would like to use as judge.
 Note: This step assumes that you have previously deployed this model in your Azure OpenAI resource group.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">judge_model</span> <span class="o">=</span> <span class="s2">&quot;openai:/gpt-35-turbo&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">judge_model</span> <span class="o">=</span> <span class="s2">&quot;openai:/gpt-4&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="setup">
-<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h3>
+<h3>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
@@ -521,14 +527,14 @@ Note: This step assumes that you have previously deployed this model in your Azu
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;chat&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;judge-model&#39;
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="faithfulness-metric">
-<h3>Faithfulness metric<a class="headerlink" href="#faithfulness-metric" title="Permalink to this heading">#</a></h3>
+<h3>Faithfulness metric<a class="headerlink" href="#faithfulness-metric" title="Link to this heading">#</a></h3>
 <p>This metric evaluates how faithful the model’s generated output is to the context provided. High scores mean that the outputs contain information that is in line with the context, while low scores mean that outputs may disagree with the context (input is ignored). It uses <a class="reference external" href="https://en.wikipedia.org/wiki/Likert_scale">Likert scale</a>.</p>
 <p>This metric is similar to <a class="reference external" href="https://learn.microsoft.com/en-us/azure/machine-learning/prompt-flow/concept-model-monitoring-generative-ai-evaluation-metrics?view=azureml-api-2#groundedness">Groundedness</a> from Azure Machine Learning or Prompt Flow.</p>
 <div class="cell docutils container">
@@ -568,7 +574,7 @@ Note: This step assumes that you have previously deployed this model in your Azu
 </div>
 </section>
 <section id="relevance-metric">
-<h3>Relevance metric<a class="headerlink" href="#relevance-metric" title="Permalink to this heading">#</a></h3>
+<h3>Relevance metric<a class="headerlink" href="#relevance-metric" title="Link to this heading">#</a></h3>
 <p>This metric evaluates how relevant the model’s generated output is with respect to both the input and the provided context. High scores mean that the model has understood the context and correct extracted relevant information from the context, while low score mean that output has completely ignored the question and the context and could be hallucinating.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -583,7 +589,7 @@ Note: This step assumes that you have previously deployed this model in your Azu
 </div>
 </section>
 <section id="similarity-metric">
-<h3>Similarity metric<a class="headerlink" href="#similarity-metric" title="Permalink to this heading">#</a></h3>
+<h3>Similarity metric<a class="headerlink" href="#similarity-metric" title="Link to this heading">#</a></h3>
 <p>This metric evaluates how similar the model’s generated output is compared to the information in the ground_truth. High scores mean that your model outputs contain similar information as the ground_truth, while low scores mean that outputs may disagree with the ground_truth.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -596,7 +602,7 @@ Note: This step assumes that you have previously deployed this model in your Azu
 </div>
 </section>
 <section id="fluency-metric">
-<h3>Fluency metric<a class="headerlink" href="#fluency-metric" title="Permalink to this heading">#</a></h3>
+<h3>Fluency metric<a class="headerlink" href="#fluency-metric" title="Link to this heading">#</a></h3>
 <p>There is no pre-defined fluency metric in MLflow. However, we can create <a class="reference external" href="https://mlflow.org/docs/latest/llms/llm-evaluate/index.html#creating-custom-llm-evaluation-metrics">custom LLM metrics</a>.</p>
 <p>We will define fluency in the exact same way as it is defined in <a class="reference external" href="https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/ai/azure-ai-generative/azure/ai/generative/evaluate/pf_templates/built_in_metrics/qa/gpt_fluency_prompt.jinja2">Azure SDK for Python</a>.</p>
 <p>Therefore, fluency will measure the quality of individual sentences in the answer, and whether they are well-written and grammatically correct.</p>
@@ -665,7 +671,7 @@ Note: This step assumes that you have previously deployed this model in your Azu
 </div>
 </section>
 <section id="coherence">
-<h3>Coherence<a class="headerlink" href="#coherence" title="Permalink to this heading">#</a></h3>
+<h3>Coherence<a class="headerlink" href="#coherence" title="Link to this heading">#</a></h3>
 <p>There is no pre-defined coherence metric in MLflow. However, we can create <a class="reference external" href="https://mlflow.org/docs/latest/llms/llm-evaluate/index.html#creating-custom-llm-evaluation-metrics">custom LLM metrics</a>.</p>
 <p>We will define fluency in the exact same way as it is defined in <a class="reference external" href="https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/ai/azure-ai-generative/azure/ai/generative/evaluate/pf_templates/built_in_metrics/qa/gpt_coherence_prompt.jinja2">Azure SDK for Python</a>.</p>
 <p>Therefore, coherence of an answer will be measured by how well all the sentences fit together and sound naturally as a whole.</p>
@@ -736,18 +742,18 @@ Note: This step assumes that you have previously deployed this model in your Azu
 </section>
 </section>
 <section id="create-a-job-experiment-in-azure-machine-learning-studio">
-<h2>Create a job (experiment) in Azure Machine Learning Studio<a class="headerlink" href="#create-a-job-experiment-in-azure-machine-learning-studio" title="Permalink to this heading">#</a></h2>
+<h2>Create a job (experiment) in Azure Machine Learning Studio<a class="headerlink" href="#create-a-job-experiment-in-azure-machine-learning-studio" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%capture --no-display
-%run -i ./pre-requisites.ipynb
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-display
+<span class="o">%</span><span class="n">run</span> <span class="o">-</span><span class="n">i</span> <span class="o">./</span><span class="n">pre</span><span class="o">-</span><span class="n">requisites</span><span class="o">.</span><span class="n">ipynb</span>
 
-!az login
-ws = Workspace.get(name=workspace_name,
-                   subscription_id=subscription_id,
-                   resource_group=resource_group_name)
+<span class="err">!</span><span class="n">az</span> <span class="n">login</span>
+<span class="n">ws</span> <span class="o">=</span> <span class="n">Workspace</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">workspace_name</span><span class="p">,</span>
+                   <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">,</span>
+                   <span class="n">resource_group</span><span class="o">=</span><span class="n">resource_group_name</span><span class="p">)</span>
 
-mlflow_tracking_uri = ws.get_mlflow_tracking_uri()
+<span class="n">mlflow_tracking_uri</span> <span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">get_mlflow_tracking_uri</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -805,7 +811,7 @@ mlflow_tracking_uri = ws.get_mlflow_tracking_uri()
 </div>
 </div>
 <section id="evaluate-the-baseline-rag-solution">
-<h3>1. Evaluate the baseline RAG solution<a class="headerlink" href="#evaluate-the-baseline-rag-solution" title="Permalink to this heading">#</a></h3>
+<h3>1. Evaluate the baseline RAG solution<a class="headerlink" href="#evaluate-the-baseline-rag-solution" title="Link to this heading">#</a></h3>
 <p>The data is found at <a class="reference download internal" download="" href="_downloads/76dc8c6f92c5c4030edd178893ad3abe/fixed-size-chunks-180-30-engineering-mlops-ada.json"><span class="xref download myst">fixed-size-chunks-180-30-engineering-mlops-ada.json</span></a></p>
 <!-- Took 9 mins -->
 <details markdown="1">
@@ -828,7 +834,7 @@ mlflow_tracking_uri = ws.get_mlflow_tracking_uri()
 </ul>
 </section>
 <section id="evaluate-the-new-rag-solution">
-<h3>2. Evaluate the new RAG solution<a class="headerlink" href="#evaluate-the-new-rag-solution" title="Permalink to this heading">#</a></h3>
+<h3>2. Evaluate the new RAG solution<a class="headerlink" href="#evaluate-the-new-rag-solution" title="Link to this heading">#</a></h3>
 <p>The data is found at <a class="reference download internal" download="" href="_downloads/5c43f6451804fab4164e02f17a6595d3/semantic-chunking-intfloat.json"><span class="xref download myst">semantic-chunking-intfloat.json</span></a></p>
 <details markdown="1">
 <summary> 🔍 Code: </summary>
@@ -847,8 +853,8 @@ mlflow_tracking_uri = ws.get_mlflow_tracking_uri()
 </section>
 </section>
 <section id="conclusions">
-<h2>💡 Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">#</a></h2>
-<p>Take few moments to analyse the results.</p>
+<h2>💡 Conclusions<a class="headerlink" href="#conclusions" title="Link to this heading">#</a></h2>
+<p>Take few moments to analyse the mean results.</p>
 <details markdown="1">
 <summary> 🔍 Pre-calculated results: </summary>
 <p><img alt="results.png" src="_images/results.png" /></p>
@@ -964,7 +970,7 @@ By Raouf Aliouat & Adina Stoll
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
