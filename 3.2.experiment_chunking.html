@@ -1259,21 +1259,104 @@ Concept to know:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This group is either determined by a specific time interval or a certain size limit. Stream ingestion deals with continuous, unbounded datasets. That said, most of the current stream ingestion approaches use mini-batches to ingest data as it reduces the number of I/O operations. ## Batch Ingestion
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AuthenticationError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">27</span><span class="p">],</span> <span class="n">line</span> <span class="mi">16</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">state_of_the_union</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">text_splitter</span> <span class="o">=</span> <span class="n">SemanticChunker</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">16</span> <span class="n">docs</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">create_documents</span><span class="p">([</span><span class="n">state_of_the_union</span><span class="p">])</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="nb">print</span><span class="p">(</span><span class="n">docs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
 
-Traditionally data ingestion has been done in batches due to the limitations of the legacy systems. It still remains a popular way to ingest data for the simplicity of its implementation. Almost every ETL tool supports batch ingestion. ### Batch Ingestion Architectural Patterns
+<span class="nn">File ~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/langchain_experimental/text_splitter.py:144,</span> in <span class="ni">SemanticChunker.create_documents</span><span class="nt">(self, texts, metadatas)</span>
+<span class="g g-Whitespace">    </span><span class="mi">142</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">texts</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">143</span>     <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="ne">--&gt; </span><span class="mi">144</span>     <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">145</span>         <span class="n">metadata</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">_metadatas</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_start_index</span><span class="p">:</span>
 
-#### Pull
+<span class="nn">File ~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/langchain_experimental/text_splitter.py:98,</span> in <span class="ni">SemanticChunker.split_text</span><span class="nt">(self, text)</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span> <span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span>
+<span class="nn">     95     {&quot;sentence&quot;: x, &quot;index&quot;: i} for i, x</span> in <span class="ni">enumerate</span><span class="nt">(single_sentences_list)</span>
+<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="n">sentences</span> <span class="o">=</span> <span class="n">combine_sentences</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">98</span> <span class="n">embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">embed_documents</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span>     <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;combined_sentence&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sentences</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">102</span>     <span class="n">sentence</span><span class="p">[</span><span class="s2">&quot;combined_sentence_embedding&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-Most batch ingestion data pipelines will connect to a source system and pull data from it at regular interval. There are two common patterns for a batch job to load data from a source system, full load and delta load. - _Full load_: The job will load all the records from the source table. - _Delta load_: The job will load only the new records added since the last execution of the job. For this approach to work, the source table needs to have a watermark column. ##### Azure Blob Storage Change Feed
+<span class="nn">File ~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/langchain_openai/embeddings/base.py:480,</span> in <span class="ni">OpenAIEmbeddings.embed_documents</span><span class="nt">(self, texts, chunk_size)</span>
+<span class="g g-Whitespace">    </span><span class="mi">477</span> <span class="c1"># NOTE: to keep things simple, we assume the list may contain texts longer</span>
+<span class="g g-Whitespace">    </span><span class="mi">478</span> <span class="c1">#       than the maximum context and use length-safe embedding function.</span>
+<span class="g g-Whitespace">    </span><span class="mi">479</span> <span class="n">engine</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deployment</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">480</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_len_safe_embeddings</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 
-When the data source is Azure Blob Storage, the [Change Feed feature](https://learn.microsoft.com/azure/storage/blobs/storage-blob-change-feed) implements batch pull ingestion for either the full load or delta load scenarios. The Change Feed provides transactional logs of all the changes that occur to the blobs and the blob metadata inside of a storage account, in an efficient and scalable manner. {% if extra.ring == &#39;internal&#39; %}
-The following repo provides a generic example for how to use the blob storage change feed in a batch ingestion process. [Azure Blob Storage Change Feed - Example](https://github.com/commercial-software-engineering/blob-storage-change-feed)
-{% endif %}
+<span class="nn">File ~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/langchain_openai/embeddings/base.py:323,</span> in <span class="ni">OpenAIEmbeddings._get_len_safe_embeddings</span><span class="nt">(self, texts, engine, chunk_size)</span>
+<span class="g g-Whitespace">    </span><span class="mi">321</span> <span class="n">batched_embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="g g-Whitespace">    </span><span class="mi">322</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">_iter</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">323</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">324</span>         <span class="nb">input</span><span class="o">=</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">_chunk_size</span><span class="p">],</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_invocation_params</span>
+<span class="g g-Whitespace">    </span><span class="mi">325</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">326</span>     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">327</span>         <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
 
-#### Push
+<span class="nn">File ~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/openai/resources/embeddings.py:113,</span> in <span class="ni">Embeddings.create</span><span class="nt">(self, input, model, dimensions, encoding_format, user, extra_headers, extra_query, extra_body, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">107</span>         <span class="n">embedding</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span>  <span class="c1"># type: ignore[no-untyped-call]</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span>             <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">109</span>         <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span>     <span class="k">return</span> <span class="n">obj</span>
+<span class="ne">--&gt; </span><span class="mi">113</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_post</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">114</span>     <span class="s2">&quot;/embeddings&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">115</span>     <span class="n">body</span><span class="o">=</span><span class="n">maybe_transform</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">embedding_create_params</span><span class="o">.</span><span class="n">EmbeddingCreateParams</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">116</span>     <span class="n">options</span><span class="o">=</span><span class="n">make_request_options</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">117</span>         <span class="n">extra_headers</span><span class="o">=</span><span class="n">extra_headers</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">118</span>         <span class="n">extra_query</span><span class="o">=</span><span class="n">extra_query</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">119</span>         <span class="n">extra_body</span><span class="o">=</span><span class="n">extra_body</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">120</span>         <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">121</span>         <span class="n">post_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span>     <span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span>     <span class="n">cast_to</span><span class="o">=</span><span class="n">CreateEmbeddingResponse</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">124</span> <span class="p">)</span>
 
-Though pull-based model for data ingestion is the most fault tolerant model, its biggest drawback is lack of real-time information. The push-based model aims to solve the problem as the source system sends data to the target as soon as the data is generated.
+<span class="nn">File ~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/openai/_base_client.py:1200,</span> in <span class="ni">SyncAPIClient.post</span><span class="nt">(self, path, cast_to, body, options, files, stream, stream_cls)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1186</span> <span class="k">def</span> <span class="nf">post</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1187</span>     <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1188</span>     <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1195</span>     <span class="n">stream_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">_StreamT</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1196</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ResponseT</span> <span class="o">|</span> <span class="n">_StreamT</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1197</span>     <span class="n">opts</span> <span class="o">=</span> <span class="n">FinalRequestOptions</span><span class="o">.</span><span class="n">construct</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1198</span>         <span class="n">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">to_httpx_files</span><span class="p">(</span><span class="n">files</span><span class="p">),</span> <span class="o">**</span><span class="n">options</span>
+<span class="g g-Whitespace">   </span><span class="mi">1199</span>     <span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1200</span>     <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">ResponseT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">cast_to</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span> <span class="n">stream_cls</span><span class="o">=</span><span class="n">stream_cls</span><span class="p">))</span>
+
+<span class="nn">File ~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/openai/_base_client.py:889,</span> in <span class="ni">SyncAPIClient.request</span><span class="nt">(self, cast_to, options, remaining_retries, stream, stream_cls)</span>
+<span class="g g-Whitespace">    </span><span class="mi">880</span> <span class="k">def</span> <span class="nf">request</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">881</span>     <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">882</span>     <span class="n">cast_to</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ResponseT</span><span class="p">],</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">887</span>     <span class="n">stream_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">_StreamT</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">888</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ResponseT</span> <span class="o">|</span> <span class="n">_StreamT</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">889</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">890</span>         <span class="n">cast_to</span><span class="o">=</span><span class="n">cast_to</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">891</span>         <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">892</span>         <span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">893</span>         <span class="n">stream_cls</span><span class="o">=</span><span class="n">stream_cls</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">894</span>         <span class="n">remaining_retries</span><span class="o">=</span><span class="n">remaining_retries</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">895</span>     <span class="p">)</span>
+
+<span class="nn">File ~/handsontest/ai-hands-on-lab/.venv/lib/python3.9/site-packages/openai/_base_client.py:980,</span> in <span class="ni">SyncAPIClient._request</span><span class="nt">(self, cast_to, options, remaining_retries, stream, stream_cls)</span>
+<span class="g g-Whitespace">    </span><span class="mi">977</span>         <span class="n">err</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">979</span>     <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Re-raising status error&quot;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">980</span>     <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_status_error_from_response</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">response</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">982</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_response</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">983</span>     <span class="n">cast_to</span><span class="o">=</span><span class="n">cast_to</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">984</span>     <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">987</span>     <span class="n">stream_cls</span><span class="o">=</span><span class="n">stream_cls</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">988</span> <span class="p">)</span>
+
+<span class="ne">AuthenticationError</span>: Error code: 401 - {&#39;statusCode&#39;: 401, &#39;message&#39;: &#39;Unauthorized. Access token is missing, invalid, audience is incorrect (https://cognitiveservices.azure.com), or have expired.&#39;}
 </pre></div>
 </div>
 </div>
@@ -1356,6 +1439,7 @@ Pre-generated embeddings for Semantic Chunks Splitter: ./output/pre-generated/em
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;fixed-size-180-30&#39; created or updated
+Uploaded 3236 documents to Index: fixed-size-180-30
 </pre></div>
 </div>
 </div>
@@ -1376,9 +1460,7 @@ Pre-generated embeddings for Semantic Chunks Splitter: ./output/pre-generated/em
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;semantic-chunking&#39; created or updated
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 1216 documents to Index: semantic-chunking
+Uploaded 1216 documents to Index: semantic-chunking
 </pre></div>
 </div>
 </div>
@@ -1394,14 +1476,6 @@ Pre-generated embeddings for Semantic Chunks Splitter: ./output/pre-generated/em
 
 <span class="c1"># 3. Upload the embeddings to the new index</span>
 <span class="n">upload_data</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">embedding_path</span><span class="p">,</span> <span class="n">search_index_name</span><span class="o">=</span><span class="n">index_name</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index: &#39;markdown-header-chunking&#39; created or updated
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Uploaded 407 documents to Index: markdown-header-chunking
 </pre></div>
 </div>
 </div>
@@ -1594,6 +1668,10 @@ Pre-generated embeddings for Semantic Chunks Splitter: ./output/pre-generated/em
 <details markdown="1">
 <summary> 🔍 Pre-calculated results: </summary>
 <p><img alt="results.png" src="_images/chunking-results.png" /></p>
+<p>In terms of cosine similiraty, all strategies got a good score. However, the “Markdown Text splitter” got the highest one.  In terms of accuracy, the markdown header text splitter is falling behind with only 63% accuracy. The Semantic chunker has a reasonable accuracy of 70%, but is far behind the “Markdown text splitter” one. That is a surprising result, as intuitively, we would have expected the semantic chunking strategy got the highest score.</p>
+<p>In reality, the results of “Markdown Text splitter” are better than it probably is in practice. Can you guess why?</p>
+<p>…
+In practice, the evaluation dataset is ideally created and curated by subject-matter human experts. In this workshop, we have created synthetic data … using the markdown text splitter chunking strategy, so the results above are inherently biased. If one were to regenerate the data, one should consider to create question/answer pairs on a whole document rather than chunking every document.</p>
 </details>
 </section>
 </section>
